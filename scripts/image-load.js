@@ -5,7 +5,7 @@
 function setPortfolioImages(whichFolder)
 {
 	// the folder containing portfolio images
-	var folder = "../media/portfolio_images/" + whichFolder;
+	var folder = "../../media/portfolio_images/" + whichFolder;
 
 	// create an array for all the images
 	var loadedImages = [];
@@ -39,6 +39,6 @@ function setPortfolioImages(whichFolder)
 	{
 		// set the src image
 		subImages[i].src = loadedImages[i];
-		subImages[i].onclick = "changeImage('../media/portfolio_images/overdrive-logo.png', " + i +")";
+		subImages[i].onclick = "changeImage('../../media/portfolio_images/overdrive-logo.png', " + i +")";
 	}
 }

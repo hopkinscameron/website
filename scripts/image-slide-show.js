@@ -6,37 +6,38 @@ var currentIndex = 0;
 // the switch image timing
 var imageSwitchTimer = 3000;
 var splits = window.location.href.split('/');
-var initialPicturePath = "../media/portfolio_images/";
+var initialPicturePath = "../../media/portfolio_images/";
 
 // based on which page is currently loaded, set that picture path
-if (splits[splits.length - 1].includes("drive-on-metz"))
+if (splits[splits.length - 2].includes("drive-on-metz"))
 {
 	initialPicturePath += "driveonmetz-logo.jpg";
 }
-else if (splits[splits.length - 1].includes("forsaken"))
+else if (splits[splits.length - 2].includes("forsaken"))
 {
 	initialPicturePath += "forsaken-logo.png";
 }
-else if (splits[splits.length - 1].includes("memoryless"))
+else if (splits[splits.length - 2].includes("memoryless"))
 {
 	initialPicturePath += "memoryless-logo.jpg";
 }
-else if (splits[splits.length - 1].includes("over-drive"))
+else if (splits[splits.length - 2].includes("over-drive"))
 {
 	initialPicturePath += "overdrive-logo.png";
 }
-else if (splits[splits.length - 1].includes("road-rager"))
+else if (splits[splits.length - 2].includes("road-rager"))
 {
 	initialPicturePath += "roadrager-logo.png";
 }
-else if (splits[splits.length - 1].includes("rollaball-mod"))
+else if (splits[splits.length - 2].includes("rollaball-mod"))
 {
 	initialPicturePath += "rollaballmod-logo.png";
 }
-else if (splits[splits.length - 1].includes("squirvival"))
+else if (splits[splits.length - 2].includes("squirvival"))
 {
 	initialPicturePath += "squirvival-logo.png";
 }
+
 
 // once the script starts, set the initial picture
 changeImage(initialPicturePath, currentIndex);

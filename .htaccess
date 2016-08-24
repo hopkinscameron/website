@@ -5,4 +5,4 @@ RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^ %{REQUEST_URI}.html [NC,L]
 RewriteCond %{HTTP_HOST} !^www\. 
 RewriteRule ^(.*)$ www.%{HTTP_HOST}/$1 [R=301,L] 
-ErrorDocument 404 www.cameronhopkins.us/404.html
+ErrorDocument 404 www.cameronhopkins.us/404/

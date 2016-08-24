@@ -6,7 +6,7 @@ var currentIndex = 0;
 // the switch image timing
 var imageSwitchTimer = 3000;
 var splits = window.location.href.split('/');
-var initialPicturePath = "../../media/portfolio_images/";
+var initialPicturePath = "/media/portfolio_images/";
 
 // based on which page is currently loaded, set that picture path
 if (splits[splits.length - 2].includes("drive-on-metz"))

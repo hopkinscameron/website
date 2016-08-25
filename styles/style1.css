@@ -5,9 +5,18 @@ body {
 	background-repeat: repeat;
 }
 #body-error {
-	background-image: url("../media/404_error/404_error_ghost.png");
+	/*background-image: url("/media/404_error/404_error_ghost.png");*/
+	background-repeat: no-repeat;
+	background-size: auto;
+}
+#body-home {
+	background: url("../media/personal_images/cruise_1.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
+	image-rendering: auto;
+  	image-rendering: crisp-edges;
+  	image-rendering: optimizeSpeed;
+  	image-rendering: optimize-contrast;
 }
 #masthead-container {
 }
@@ -339,6 +348,69 @@ html>body #footer {
 	border-radius: 0px 0px 5px 5px!important;
 }
 
+/* Home Screen */
+#home {
+	margin: auto;
+}
+#home ul {
+	clear: both;
+	list-style-type: none;
+	width: 120px;
+	padding: 0;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    top: 20%;
+    left: 50%;
+    position:absolute;
+    transform: translate(-50%, -20%);
+}
+#home li {
+	height: 100%;
+	background-color: #000;
+}
+#home a {
+	font-size: large;
+	font-weight: bold;
+	text-decoration: none;
+	color: #fff;
+	display: block;
+	padding: 10px;
+	text-align: center;
+}
+#home a:hover {
+	font-weight: bold;
+	text-decoration: none;
+	color: #fff;
+	background-color: #009900;
+}
+#home a:active {
+	font-weight: bold;
+	text-decoration: none;
+	color: #fff;
+	background-color: #009900;
+}
+.image-home {
+	height: 800px;
+    width: 800px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.home-h1 {
+	font-size: xx-large;
+	color: #000;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    top: 10%;
+    left: 50%;
+    position:absolute;
+    transform: translate(-50%, -10%);
+}
+
+
 /* Right Column */
 #column_r img {
 	border: 1px solid #808080;
@@ -603,4 +675,3 @@ hr {
 .slideshow-subvideoimage-hover-shadow:hover {
 	box-shadow:0 4px 8px 0 rgba(255,255,255,0.5),0 6px 20px 0 rgba(255,255,255,0.7)!important
 }
-

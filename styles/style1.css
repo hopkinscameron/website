@@ -4,20 +4,6 @@ body {
 	background-image: url("../media/personal_images/background.jpg");
 	background-repeat: repeat;
 }
-#body-error {
-	/*background-image: url("/media/404_error/404_error_ghost.png");*/
-	background-repeat: no-repeat;
-	background-size: auto;
-}
-#body-home {
-	background: url("../media/personal_images/cruise_1.jpg");
-	background-repeat: no-repeat;
-	background-size: cover;
-	image-rendering: auto;
-  	image-rendering: crisp-edges;
-  	image-rendering: optimizeSpeed;
-  	image-rendering: optimize-contrast;
-}
 #masthead-container {
 }
 #container {
@@ -349,6 +335,15 @@ html>body #footer {
 }
 
 /* Home Screen */
+#body-home {
+	background: url("../media/personal_images/cruise_1.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	image-rendering: auto;
+  	image-rendering: crisp-edges;
+  	image-rendering: optimizeSpeed;
+  	image-rendering: optimize-contrast;
+}
 #home {
 	margin: auto;
 }
@@ -410,6 +405,47 @@ html>body #footer {
     transform: translate(-50%, -10%);
 }
 
+/* Error Screen */
+#body-error {
+	/* background-image: url("../media/404_error/404.png"); */
+	background-repeat: no-repeat;
+	background-size: auto;
+	background-color: #009900;
+}
+#body-error p.error-p {
+	color: #fff;
+	font-size: large;
+}
+#body-error a {
+	color: #fff;
+}
+#body-error a:hover {
+	color: #000;
+}
+.image-error-full-screen {
+    height: 100%;
+    width: 100%;
+}
+.image-error-center-screen {
+    top: 50%;
+    left: 50%;
+    position:absolute;
+    transform: translate(-50%, -50%);
+}
+.error-p {
+    top: 0%;
+    left: 50%;
+    position:absolute;
+    transform: translate(-50%, 0%);
+}
+
+/* Left Column */
+#column_l a {
+	color: #fff;
+}
+#column_l a:hover {
+	color: #009900;
+}
 
 /* Right Column */
 #column_r img {
@@ -512,10 +548,6 @@ hr {
     display: block;
     margin-left: auto;
     margin-right: auto;
-}
-.image-error-full-screen {
-    height: 100%;
-    width: 100%;
 }
 .image-loading {
 	height: 40px;

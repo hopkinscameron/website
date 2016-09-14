@@ -1,7 +1,9 @@
 ﻿<!DOCTYPE html>
-<html>
 
-<!-- #BeginTemplate "../master_1.dwt" -->
+<!-- Rollaball-Mod -->
+
+<html ng-app="app" ng-controller="subPortfolioController">
+
 
 <!--
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -10,57 +12,49 @@
 	<!-- Begin Head -->
 	<head>
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-		<!-- #BeginEditable "doctitle" -->
-		<title>Rollaball-Mod</title>
-		<!-- #EndEditable -->
-		<link href="/styles/style1.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
-		<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
-		<!-- for FF, Chrome, Opera -->
-		<link rel="icon" type="image/png" href="/media/personal_images/bio-pic.jpg" sizes="16x16" />
-		<link rel="icon" type="image/png" href="/media/personal_images/bio-pic.jpg" sizes="32x32" />
-		<!-- for IE -->
-		<link rel="icon" type="image/x-icon" href="/media/icons/favicon.ico" />
-		<link rel="shortcut icon" type="image/x-icon" href="/media/icons/favicon.ico"/>
-		<!-- #BeginEditable "scripts" -->
-		<!--
-			To collect end-user usage analytics about your application,
-			insert the following script into each page you want to track.
-			Place this code immediately before the closing </head> tag,
-			and before any other scripts. Your first data will appear
-			automatically in just a few seconds.
-		-->
-    	<script type="text/javascript">
+
+		<title>{{subPortfolio.title}}</title>
+
+        <!-- Begin Styles -->
+        <link href="/external-files/styles/style1.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+        <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+        <!-- End Styles -->
+
+        <!-- Begin Icons -->
+        <!-- for FF, Chrome, Opera -->
+        <link rel="icon" type="image/png" href="/external-files/media/personal-images/bio-pic.jpg" sizes="16x16" />
+        <link rel="icon" type="image/png" href="/external-files/media/personal-images/bio-pic.jpg" sizes="32x32" />
+        <!-- for IE -->
+        <link rel="icon" type="image/x-icon" href="/external-files/media/icons/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/external-files/media/icons/favicon.ico" />
+        <!-- End Icons -->
+
+        <!-- Begin Scripts -->
+        <!--
+            To collect end-user usage analytics about your application,
+            insert the following script into each page you want to track.
+            Place this code immediately before the closing </head> tag,
+            and before any other scripts. Your first data will appear
+            automatically in just a few seconds.
+        -->
+        <script type="text/javascript">
 	        var appInsights=window.appInsights||function(config){
 	            function r(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s=u.createElement(o),i,f;s.src=config.url||"https://az416426.vo.msecnd.net/scripts/a/ai.0.js";u.getElementsByTagName(o)[0].parentNode.appendChild(s);try{t.cookie=u.cookie}catch(h){}for(t.queue=[],i=["Event","Exception","Metric","PageView","Trace","Dependency"];i.length;)r("track"+i.pop());return r("setAuthenticatedUserContext"),r("clearAuthenticatedUserContext"),config.disableExceptionTracking||(i="onerror",r("_"+i),f=e[i],e[i]=function(config,r,u,e,o){var s=f&&f(config,r,u,e,o);return s!==!0&&t["_"+i](config,r,u,e,o),s}),t
 	        }({
 	            instrumentationKey:"61c041f4-27da-4972-b9f3-7ca25e71fb33"
 	        });
-	        
+
 	        window.appInsights=appInsights;
 	        appInsights.trackPageView();
-    	</script>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-		<script src="/scripts/image-locations.js"></script>
-		<script type="text/javascript">
-			function downloadJSAtOnload() 
-		    {
-		    	var imageLoad = document.createElement("script");
-		   		imageLoad.src = "/scripts/image-load.js";
-		  		document.body.appendChild(imageLoad);
-
-		    	var imageSlideShow = document.createElement("script");
-		   		imageSlideShow.src = "/scripts/image-slide-show.js";
-		  		document.body.appendChild(imageSlideShow);
-			}
-		  	if (window.addEventListener)
-		      window.addEventListener("load", downloadJSAtOnload, false);
-		  	else if (window.attachEvent)
-		      window.attachEvent("onload", downloadJSAtOnload);
-		  	else window.onload = downloadJSAtOnload;
-		</script>
-		<script src="/scripts/video-slide-show.js"></script>
-		
-		<!-- #EndEditable -->
+        </script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
+        <script src="/external-files/scripts/third-party/angular.min.js"></script>
+        <script src="/external-files/scripts/third-party/angular-route.min.js"></script>
+        <script src="/external-files/scripts/third-party/angular-sanitize.min.js"></script>
+        <script src="/external-files/scripts/third-party/jquery-1.9.1.min.js"></script>
+        <script src="/external-files/scripts/app/main.js"></script>
+        <!-- End Scripts -->
+        <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>-->
 	</head>
 	<!-- End Head -->
 	
@@ -75,10 +69,10 @@
 				<h3>Software Engineer<br />Game Designer</h3>
 			</div>
 			<!-- End Masthead -->
-			<!-- Begin iMenu -->
+
+			<!-- Begin Navigation Menu -->
 			<div id="navigation">
 				<ul>
-					<!-- #BeginEditable "menu" -->
 					<li><a href="/about/">About</a></li>
 					<li><a href="/resume/">R&eacute;sum&eacute;</a></li>
 					<li class="dropdown">
@@ -94,10 +88,9 @@
     					</div>
 					</li>
 					<li><a href="/contact/">Contact</a></li>
-					<!-- #EndEditable -->
 				</ul>
 			</div>
-			<!-- End iMenu -->
+			<!-- End Navigation Menu -->
 		</div>
 		<!-- End Masthead Container -->
 	
@@ -105,145 +98,119 @@
 		<div id="container"> 
 			<!-- Begin Center Column -->
 			<div id="column_c">
-				<!-- #BeginEditable "content" -->
-				<h2>Rollaball-Mod</h2>
-				<div></div>
-				<div></div>
-				
-				<div class="slideshow-div">
-					<div class="slideshow-image-placeholder" style="vertical-align:middle">
-						<img class="image-loading" src="/media/loading/loading-2.gif" alt="loading.gif"/>
-						<img class="slideshow-image slideshow-image-animate-fading" src="/media/portfolio_images/rollaballmod-logo.png" alt="" title=""/>
-					</div>
-					
-					<div class="slideshow-change-subimage-div">
-					    <div class="slideshow-subimage">
-					      <img class="slideshow-subimages-to-switch slideshow-subimage-hover-shadow" 
-						      src="/media/portfolio_images/rollaballmod-logo.png" 
-						      onclick="changeImage('/media/portfolio_images/rollaballmod-logo.png', 0)" alt="">
-					    </div>
-					    <div class="slideshow-subimage">
-					      <img class="slideshow-subimages-to-switch slideshow-subimage-hover-shadow" 
-						      src="/media/portfolio_images/rollaballmod/collect.png" 
-						      onclick="changeImage('/media/portfolio_images/rollaballmod/collect.png', 1)" alt="">
-					    </div>
-					    <div class="slideshow-subimage">
-					      <img class="slideshow-subimages-to-switch slideshow-subimage-hover-shadow" 
-						      src="/media/portfolio_images/rollaballmod/labyrinth.png" 
-						      onclick="changeImage('/media/portfolio_images/rollaballmod/labyrinth.png', 2)"alt="">
-					    </div>
-						<div class="slideshow-subimage">
-					      <img class="slideshow-subimages-to-switch slideshow-subimage-hover-shadow" 
-						      src="/media/portfolio_images/rollaballmod/labyrinth2.png" 
-						      onclick="changeImage('/media/portfolio_images/rollaballmod/labyrinth2.png', 3)" alt="">
-					    </div>
-						<div class="slideshow-subimage">
-					      <img class="slideshow-subimages-to-switch slideshow-subimage-hover-shadow" 
-						      src="/media/portfolio_images/rollaballmod/player.png" 
-						      onclick="changeImage('/media/portfolio_images/rollaballmod/player.png', 4)" alt="">
-					    </div>
-					</div>
-				</div>
-				<hr />
-				
-				<h3 class="sub-portfolio-h3">Overview</h3>
-				<p class="sub-portfolio-p"><i>Rollaball-Mod</i> is a modded version of the original game created by a 
-					professor in the Advaced Computer Center for the Arts and Design department at The Ohio State 
-					University. <i>Rollaball-Mod</i> was built using Unity3D. In this game, the player is trapped in a labyrinth 
-					maze, and must roll the ball throughout the level and collect the items. The user must collect all items 
-					before unlocking one final item to win the game. If the user comes across a yellow item, special 
-					abilities are awarded to help the user collect more items. Once the user collects all items, there are  
-					animals released in the labyrinth level attempting to attack the player. If successful, the player loses 
-					and has to start over, but, if the user manages to get away and return  back to home base to collect the 
-					final item, the user takes home the victory.					
-					<br /> <br />
-					An alpha web version of the game is for download <a href="https://drive.google.com/uc?export=download&amp;id=0B7OWpwFiOdB8M3NMTXMxeUtEU00https://drive.google.com/uc?export=download&amp;id=0B7OWpwFiOdB8M3NMTXMxeUtEU00">here</a>.			
-				</p>
-				<ul class="sub-portfolio-ul">
-					<li class="sub-portfolio-header-li">
-						<span class="sub-portfolio-header-span">Platform:</span>
-					</li>
-					<li class="sub-portfolio-li">
-						<span class="sub-portfolio-sub-span">Windows PC</span>
-					</li>
-					<li class="sub-portfolio-li">
-						<span class="sub-portfolio-sub-span">Mac OSX</span>
-					</li>
-					<li class="sub-portfolio-li">
-						<span class="sub-portfolio-sub-span">Web</span>
-					</li>
-				</ul>
-				<ul class="sub-portfolio-ul">
-					<li class="sub-portfolio-header-li">
-						<span class="sub-portfolio-header-span">Tools Used:</span>
-					</li>
-					<li class="sub-portfolio-li">
-						<span class="sub-portfolio-sub-span">Unity3D</span>
-					</li>
-				</ul>
-				<ul class="sub-portfolio-ul">
-					<li class="sub-portfolio-header-li">
-						<span class="sub-portfolio-header-span">Languages:</span>
-					</li>
-					<li class="sub-portfolio-li">
-						<span class="sub-portfolio-sub-span">C#</span>
-					</li>
-				</ul>
-				<ul class="sub-portfolio-ul">
-					<li class="sub-portfolio-header-li">
-						<span class="sub-portfolio-header-span">Duration:</span>
-					</li>
-					<li class="sub-portfolio-li">
-						<span class="sub-portfolio-sub-span">1 week</span>
-					</li>
-				</ul>
-				<ul class="sub-portfolio-ul">
-					<li class="sub-portfolio-header-li">
-						<span class="sub-portfolio-header-span">Completion:</span>
-					</li>
-					<li class="sub-portfolio-li">
-						<span class="sub-portfolio-sub-span">2014</span>
-					</li>
-				</ul>
-				<ul class="sub-portfolio-ul" style="clear: both">
-					<li class="sub-portfolio-header-li">
-						<span class="sub-portfolio-header-span">Team Size:</span>
-					</li>
-					<li class="sub-portfolio-li">
-						<span class="sub-portfolio-sub-span">1</span>
-					</li>
-				</ul>
-				<ul class="sub-portfolio-ul">
-					<li class="sub-portfolio-header-li">
-						<span class="sub-portfolio-header-span">Role:</span>
-					</li>
-					<li class="sub-portfolio-li">
-						<span class="sub-portfolio-sub-span">Programming, AI, HUD, UI Design, User Controls, Level Design</span>
-					</li>
-				</ul>
-				
-				<div style="clear: both"></div>
-				<!-- #EndEditable -->
+                <h2>{{subPortfolio.title}}</h2>
+                <div></div>
+                <div></div>
+
+                <div class="slideshow-div">
+                    <div class="slideshow-image-placeholder" style="vertical-align:middle">
+                        <img class="image-loading" src="/external-files/media/loading/loading-2.gif" alt="loading.gif" />
+                        <img class="slideshow-image slideshow-image-animate-fading" src="" alt="" title="" />
+                    </div>
+
+                    <div class="slideshow-change-subimage-div">
+                        <div class="slideshow-subimage" ng-repeat="image in subPortfolio.images">
+                            <img class="slideshow-subimages-to-switch slideshow-subimage-hover-shadow"
+                                 src="{{image.link}}"
+                                 ng-click="changeImage(image.link, $index)"
+                                 alt="">
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <h3 class="sub-portfolio-h3">Overview</h3>
+
+                <p class="sub-portfolio-p">
+                    <span ng-bind-html="subPortfolio.overviewContent.overview | trustHTML"></span>
+                </p>
+
+                <div ng-if="subPortfolio.overviewContent.gameDesignDocument">
+                    <p class="sub-portfolio-p">
+                        Take a look at the game design document.
+                        <a href="{{subPortfolio.overviewContent.gameDesignDocument}}" target="_blank" style="text-decoration: none;">
+                            <img class="image-portfolio-pdf" src="/external-files/media/icons/pdf-icon.png" alt="{{getDesignDocumentTitle(subPortfolio.overviewContent.gameDesignDocument)}}" title="{{getDesignDocumentTitle(subPortfolio.overviewContent.gameDesignDocument)}}" />
+                        </a>
+                    </p>
+                </div>
+
+                <div ng-if="subPortfolio.overviewContent.downloadLink">
+                    <p class="sub-portfolio-p">
+                        An alpha web version of the game is for download <a href="{{subPortfolio.overviewContent.downloadLink}}">here</a>.
+                    </p>
+                </div>
+
+                <div ng-repeat="gameData in subPortfolio.overviewContent.gameData">
+                    <div ng-if="$index == 5">
+                        <ul class="sub-portfolio-ul" style="clear: both">
+                            <li class="sub-portfolio-header-li">
+                                <span class="sub-portfolio-header-span">{{gameData.title}}</span>
+                            </li>
+                            <li class="sub-portfolio-li" ng-repeat="data in gameData.data">
+                                <span class="sub-portfolio-sub-span">{{data.text}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div ng-if="$index != 5">
+                        <ul class="sub-portfolio-ul">
+                            <li class="sub-portfolio-header-li">
+                                <span class="sub-portfolio-header-span">{{gameData.title}}</span>
+                            </li>
+                            <li class="sub-portfolio-li" ng-repeat="data in gameData.data">
+                                <span class="sub-portfolio-sub-span">{{data.text}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="clear: both"></div>
+
+                <div ng-if="subPortfolio.videoUpdates.length > 0">
+                    <hr />
+                    <h3 class="sub-portfolio-h3">{{subPortfolio.title}} Updates</h3>
+                    <iframe class="iframe-porfolio-update-video" ng-src="{{subPortfolio.startingUpdateVideo}}"></iframe>
+                    <div class="slideshow-change-subvideoimage-div">
+                        <div class="slideshow-subvideoimage" ng-repeat="video in subPortfolio.videoUpdates">
+                            <div ng-if="$index == 0">
+                                <div>
+                                    <img class="slideshow-subvideoimage-to-switch slideshow-subvideoimage-hover-shadow slideshow-subvideoimage-selected"
+                                         src="{{video.thumbnailLink}}"
+                                         ng-click="changeUpdateVideo(video.videoLink, $index)"
+                                         alt="">
+                                </div>
+                            </div>
+                            <div ng-if="$index > 0">
+                                <div>
+                                    <img class="slideshow-subvideoimage-to-switch slideshow-subvideoimage-hover-shadow"
+                                         src="{{video.thumbnailLink}}"
+                                         ng-click="changeUpdateVideo(video.videoLink, $index)"
+                                         alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="subPortfolio.trailerLink">
+                    <hr style="clear: both" />
+                    <h3 class="sub-portfolio-h3">{{subPortfolio.title}} Trailer</h3>
+                    <iframe class="iframe-porfolio-trailer-video" ng-src="{{subPortfolio.trailerVideo}}">
+                        <p>Your browser does not support iframes.</p>
+                    </iframe>
+                </div>
 				<br/>
 			</div>
 			<!-- End Center Column -->
 		</div>
 		<!-- End Container -->
 
-		<!-- Begin Footer Container -->
-		<div id="footer-container">
-			<!-- Begin Footer -->
-			<div id="footer">
-				<p>Copyright &copy; 2016 Cameron Hopkins</p>
-				<br />
-				<br />
-				<br />
-			</div>
-			<!-- End Footer -->
-		</div>
-		
-		<!-- End Footer Container -->
+        <!-- Begin Footer Container -->
+        <div id="footer-container">
+            <!-- Begin Footer -->
+            <div id="footer" ng-include="'/partials/footer.html'"></div>
+            <!-- End Footer -->
+        </div>
+        <!-- End Footer Container -->
 	</body>
 	<!-- End Body -->
-<!-- #EndTemplate -->
 </html>

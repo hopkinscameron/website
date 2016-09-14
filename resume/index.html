@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
 
-	<!-- #BeginTemplate "master_1.dwt" -->
+<!-- Resume -->
+
+<html ng-app="app" ng-controller="resumeController">
 
 <!--
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -10,18 +11,24 @@
 	<!-- Begin Head -->
 	<head>
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-		<!-- #BeginEditable "doctitle" -->
-		<title>R&eacute;sum&eacute;</title>
-		<!-- #EndEditable -->
-		<link href="/styles/style1.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+
+		<title ng-bind-html="resume.title | trustHTML"></title>
+
+        <!-- Begin Styles -->
+		<link href="/external-files/styles/style1.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
 		<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+        <!-- End Styles -->
+
+        <!-- Begin Icons -->
 		<!-- for FF, Chrome, Opera -->
-		<link rel="icon" type="image/png" href="/media/personal_images/bio-pic.jpg" sizes="16x16" />
-		<link rel="icon" type="image/png" href="/media/personal_images/bio-pic.jpg" sizes="32x32" />
+		<link rel="icon" type="image/png" href="/external-files/media/personal-images/bio-pic.jpg" sizes="16x16" />
+		<link rel="icon" type="image/png" href="/external-files/media/personal-images/bio-pic.jpg" sizes="32x32" />
 		<!-- for IE -->
-		<link rel="icon" type="image/x-icon" href="/media/icons/favicon.ico" />
-		<link rel="shortcut icon" type="image/x-icon" href="/media/icons/favicon.ico"/>
-		<!-- #BeginEditable "scripts" -->
+		<link rel="icon" type="image/x-icon" href="/external-files/media/icons/favicon.ico" />
+		<link rel="shortcut icon" type="image/x-icon" href="/external-files/media/icons/favicon.ico"/>
+        <!-- End Icons -->
+
+        <!-- Begin Scripts -->
 		<!--
 			To collect end-user usage analytics about your application,
 			insert the following script into each page you want to track.
@@ -39,7 +46,13 @@
 	        window.appInsights=appInsights;
 	        appInsights.trackPageView();
     	</script>
-		<!-- #EndEditable -->
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
+        <script src="/external-files/scripts/third-party/angular.min.js"></script>
+        <script src="/external-files/scripts/third-party/angular-route.min.js"></script>
+        <script src="/external-files/scripts/third-party/angular-sanitize.min.js"></script>
+        <script src="/external-files/scripts/third-party/jquery-1.9.1.min.js"></script>
+        <script src="/external-files/scripts/app/main.js"></script>
+        <!-- End Scripts -->
 	</head>
 	<!-- End Head -->
 	
@@ -54,10 +67,10 @@
 				<h3>Software Engineer<br />Game Designer</h3>
 			</div>
 			<!-- End Masthead -->
-			<!-- Begin iMenu -->
+
+			<!-- Begin Navigation Menu -->
 			<div id="navigation">
 				<ul>
-					<!-- #BeginEditable "menu" -->
 					<li><a href="/about/">About</a></li>
 					<li><a class="active" href="javascript:;">R&eacute;sum&eacute;</a></li>
 					<li class="dropdown">
@@ -73,10 +86,10 @@
     					</div>
 					</li>
 					<li><a href="/contact/">Contact</a></li>
-					<!-- #EndEditable -->
 				</ul>
 			</div>
-			<!-- End iMenu -->
+			<!-- End Navigation Menu -->
+
 		</div>
 		<!-- End Masthead Container -->
 	
@@ -84,9 +97,8 @@
 		<div id="container"> 
 			<!-- Begin Center Column -->
 			<div id="column_c">
-				<!-- #BeginEditable "content" -->
-				<h2>R&eacute;sum&eacute;/CV</h2>
-				<img class="image-resume" src="/media/resume_cv/hopkins-cameron-resume.png" alt="R&eacute;sum&eacute;"/>
+				<h2><span ng-bind-html="resume.title | trustHTML"></span></h2>
+				<img class="image-resume" src="{{resume.resumePictureLink}}" alt="R&eacute;sum&eacute;"/>
 				<br />
 				<div class="clearfix">
 					<div>
@@ -94,39 +106,31 @@
 							R&eacute;sum&eacute; &emsp; Full CV
 							<br />
 							&emsp;
-							<a href="/media/resume_cv/hopkins-cameron-resume.pdf" target="_blank" style="text-decoration: none;">
-								<img class="image-pdf" src="/media/icons/pdf-icon.png" alt="resume.pdf" title="resume.pdf"/>
+							<a href="{{resume.resumeLink}}" target="_blank" style="text-decoration: none;">
+								<img class="image-pdf" src="/external-files/media/icons/pdf-icon.png" alt="resume.pdf" title="resume.pdf"/>
 							</a>
 							&emsp;
 							&emsp;
-							<a href="/media/resume_cv/hopkins-cameron-cv.pdf" target="_blank" style="text-decoration: none;">
-								<img class="image-pdf" src="/media/icons/pdf-icon.png" alt="cv.pdf" title="cv.pdf"/>
+							<a href="{{resume.cvLink}}" target="_blank" style="text-decoration: none;">
+								<img class="image-pdf" src="/external-files/media/icons/pdf-icon.png" alt="cv.pdf" title="cv.pdf"/>
 							</a>
 						</h3>
 					</div>
 				</div>
 				<br />
-				<!-- #EndEditable -->
 				<br/>
 			</div>
 			<!-- End Center Column -->
 		</div>
 		<!-- End Container -->
-
-		<!-- Begin Footer Container -->
-		<div id="footer-container">
-			<!-- Begin Footer -->
-			<div id="footer">
-				<p>Copyright &copy; 2016 Cameron Hopkins</p>
-				<br />
-				<br />
-				<br />
-			</div>
-			<!-- End Footer -->
-		</div>
-		
+        
+        <!-- Begin Footer Container -->
+        <div id="footer-container">
+            <!-- Begin Footer -->
+                <div id="footer" ng-include="'/partials/footer.html'"></div>
+            <!-- End Footer -->
+        </div>
 		<!-- End Footer Container -->
 	</body>
 	<!-- End Body -->
-<!-- #EndTemplate -->
 </html>

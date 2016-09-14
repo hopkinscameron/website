@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<!--
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml">
+-->
+	<!-- Begin Head -->
+	<head>
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<!-- #BeginEditable "doctitle" -->
+		<title></title>
+		<!-- #EndEditable -->
+		<link href="styles/style1.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+		<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+		<!-- for FF, Chrome, Opera -->
+		<link rel="icon" type="image/png" href="media/personal_images/bio-pic.jpg" sizes="16x16" />
+		<link rel="icon" type="image/png" href="media/personal_images/bio-pic.jpg" sizes="32x32" />
+		<!-- for IE -->
+		<link rel="icon" type="image/x-icon" href="media/icons/favicon.ico" />
+		<link rel="shortcut icon" type="image/x-icon" href="media/icons/favicon.ico"/>
+		
+	</head>
+	<!-- End Head -->
+	
+	<!-- Begin Body -->
+	<body>
+		<hr />
+		<!-- Begin Masthead Container -->
+		<div id="masthead-container">
+			<!-- Begin Masthead -->
+			<div id="masthead">
+				<h1>Cameron Hopkins</h1>
+				<h3>Software Engineer<br />Game Designer</h3>
+			</div>
+			<!-- End Masthead -->
+			
+			<!-- Begin iMenu -->
+			<div id="navigation">
+				<ul>
+					<!-- #BeginEditable "menu" -->
+					<li><a href="index.html">About</a></li>
+					<li><a href="resume.html">R&eacute;sum&eacute;</a></li>
+					<li><a href="portfolio.html">Portfolio</a></li>
+					<li><a href="contact.html">Contact</a></li>
+					<!-- #EndEditable -->
+				</ul>
+			</div>
+			<!-- End iMenu -->
+		</div>
+		<!-- End Masthead Container -->
+	
+		<!-- Begin Container -->
+		<div id="container">
+			<!-- Begin Left Column -->
+			<div id="column_l">
+				<!-- #BeginEditable "content" -->
+				<h2>Headline 2</h2>
+				<p>insert content here</p>
+				<!-- #EndEditable -->
+			</div>
+			<!-- End Left Column -->
+			
+			<!-- Begin Right Column -->
+			<div id="column_r">
+				<!-- #BeginEditable "sidebar" -->
+				<h3>Headline 3</h3>
+				<p>insert content here</p>
+				<!-- #EndEditable -->
+			</div>
+			<!-- End Right Column -->
+		<div style="clear: both"></div>
+		<br/>
+		</div>
+		<!-- End Container -->
+
+
+		<!-- Begin Footer Container -->
+		<div id="footer-container">
+			<!-- Begin Footer -->
+			<div id="footer">
+				<p class="paragraph-footer-class">Copyright &copy; 2016 Cameron Hopkins</p>
+				<br />
+				<br />
+			</div>
+			<!-- End Footer -->
+		</div>
+		<!-- End Footer Container -->
+	</body>
+	<!-- End Body -->
+</html>

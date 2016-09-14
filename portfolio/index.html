@@ -1,8 +1,7 @@
 ﻿<!DOCTYPE html>
+<html>
 
-<!-- Portfolio -->
-
-<html ng-app="app" ng-controller="portfolioController">
+<!-- #BeginTemplate "master.dwt" -->
 
 <!--
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -11,48 +10,35 @@
 	<!-- Begin Head -->
 	<head>
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-
-		<title>{{portfolio.title}}</title>
-
-        <!-- Begin Styles -->
-        <link href="/external-files/styles/style1.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
-        <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
-        <!-- End Styles -->
-
-        <!-- Begin Icons -->
-        <!-- for FF, Chrome, Opera -->
-        <link rel="icon" type="image/png" href="/external-files/media/personal-images/bio-pic.jpg" sizes="16x16" />
-        <link rel="icon" type="image/png" href="/external-files/media/personal-images/bio-pic.jpg" sizes="32x32" />
-        <!-- for IE -->
-        <link rel="icon" type="image/x-icon" href="/external-files/media/icons/favicon.ico" />
-        <link rel="shortcut icon" type="image/x-icon" href="/external-files/media/icons/favicon.ico" />
-        <!-- End Icons -->
-
-        <!-- Begin Scripts -->
-        <!--
-        To collect end-user usage analytics about your application,
-        insert the following script into each page you want to track.
-        Place this code immediately before the closing </head> tag,
-        and before any other scripts. Your first data will appear
-        automatically in just a few seconds.
-        -->
-        <script type="text/javascript">
+		<!-- #BeginEditable "doctitle" -->
+		<title>Portfolio</title>
+		<!-- #EndEditable -->
+		<link href="/styles/style1.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+		<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+		<!-- for FF, Chrome, Opera -->
+		<link rel="icon" type="image/png" href="/media/personal_images/bio-pic.jpg" sizes="16x16" />
+		<link rel="icon" type="image/png" href="/media/personal_images/bio-pic.jpg" sizes="32x32" />
+		<!-- for IE -->
+		<link rel="icon" type="image/x-icon" href="/media/icons/favicon.ico" />
+		<link rel="shortcut icon" type="image/x-icon" href="/media/icons/favicon.ico"/>
+		
+		<!--
+			To collect end-user usage analytics about your application,
+			insert the following script into each page you want to track.
+			Place this code immediately before the closing </head> tag,
+			and before any other scripts. Your first data will appear
+			automatically in just a few seconds.
+		-->
+    	<script type="text/javascript">
 	        var appInsights=window.appInsights||function(config){
 	            function r(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s=u.createElement(o),i,f;s.src=config.url||"https://az416426.vo.msecnd.net/scripts/a/ai.0.js";u.getElementsByTagName(o)[0].parentNode.appendChild(s);try{t.cookie=u.cookie}catch(h){}for(t.queue=[],i=["Event","Exception","Metric","PageView","Trace","Dependency"];i.length;)r("track"+i.pop());return r("setAuthenticatedUserContext"),r("clearAuthenticatedUserContext"),config.disableExceptionTracking||(i="onerror",r("_"+i),f=e[i],e[i]=function(config,r,u,e,o){var s=f&&f(config,r,u,e,o);return s!==!0&&t["_"+i](config,r,u,e,o),s}),t
 	        }({
 	            instrumentationKey:"61c041f4-27da-4972-b9f3-7ca25e71fb33"
 	        });
-
+	        
 	        window.appInsights=appInsights;
 	        appInsights.trackPageView();
-        </script>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
-        <script src="/external-files/scripts/third-party/angular.min.js"></script>
-        <script src="/external-files/scripts/third-party/angular-route.min.js"></script>
-        <script src="/external-files/scripts/third-party/angular-sanitize.min.js"></script>
-        <script src="/external-files/scripts/third-party/jquery-1.9.1.min.js"></script>
-        <script src="/external-files/scripts/app/main.js"></script>
-        <!-- End Scripts -->
+    	</script>
 	</head>
 	<!-- End Head -->
 	
@@ -68,9 +54,10 @@
 			</div>
 			<!-- End Masthead -->
 			
-			<!-- Begin Navigation Menu -->
+			<!-- Begin iMenu -->
 			<div id="navigation">
 				<ul>
+					<!-- #BeginEditable "menu" -->
 					<li><a href="/about/">About</a></li>
 					<li><a href="/resume/">R&eacute;sum&eacute;</a></li>
 					<li class="dropdown">
@@ -86,6 +73,7 @@
     					</div>
 					</li>
 					<li><a href="/contact/">Contact</a></li>
+					<!-- #EndEditable -->
 				</ul>
 			</div>
 			<!-- End iMenu -->
@@ -96,37 +84,66 @@
 		<div id="container">
 			<!-- Begin Left Column -->
 			<div id="column_l">
-				<h2>{{portfolio.title}}</h2>
+				<!-- #BeginEditable "content" -->
+				<h2>Portfolio</h2>
 				<div></div>
 				<div></div>
 				
-                <div ng-repeat="portfolioItem in portfolio.portfolioItems">
-                    <div ng-if="$even">
-                        <h3 class="portfolio-h3">{{portfolioItem.title}}</h3>
-                        <a href="{{portfolioItem.subPageLink}}">
-                            <img class="image-portfolio-wide" src="{{portfolioItem.pictureLink}}" alt="{{getPictureTitle(portfolioItem.pictureLink)}}" title="{{getPictureTitle(portfolioItem.pictureLink)}}" />
-                        </a>
-                        <p class="portfolio-p"><a href="{{portfolioItem.subPageLink}}">Click me</a> for more details!</p>
-                    </div>
-                </div>
+				<h3 class="portfolio-h3">Over Drive</h3>
+				<a href="over-drive/">
+					<img class="image-portfolio-wide" src="/media/portfolio_images/overdrive-logo.png" alt="overdrive-logo.png" title="overdrive-logo.png"/>
+				</a>
+				<p class="portfolio-p"><a href="over-drive/">Click me</a> for more details!</p>
+				
+				<h3 class="portfolio-h3">Forsaken</h3>
+				<a href="forsaken/">
+					<img class="image-portfolio-wide" src="/media/portfolio_images/forsaken-logo.png" alt="forsaken-logo.png" title="forsaken-logo.png"/>
+				</a>
+				<p class="portfolio-p"><a href="forsaken/">Click me</a> for more details!</p>
+
+				<h3 class="portfolio-h3">Squirvival</h3>
+				<a href="squirvival/">
+					<img class="image-portfolio-wide" src="/media/portfolio_images/squirvival-logo.png" alt="squirvival-logo.png" title="squirvival-logo.png"/>
+				</a>
+				<p class="portfolio-p"><a href="squirvival/">Click me</a> for more details!</p>
+
+				<h3 class="portfolio-h3">Drive on Metz</h3>
+				<a href="drive-on-metz/">
+					<img class="image-portfolio-wide" src="/media/portfolio_images/driveonmetz-logo.jpg" alt="driveonmetz-logo.jpg" title="driveonmetz-logo.jpg"/>
+				</a>
+				<p class="portfolio-p"><a href="drive-on-metz/">Click me</a> for more details!</p>
+				
+				<!-- #EndEditable -->
 			</div>
 			<!-- End Left Column -->
 			
 			<!-- Begin Right Column -->
 			<div id="column_r">
-				<h2>{{portfolio.title}}</h2>
+				<!-- #BeginEditable "sidebar" -->
+				<h2>Portfolio</h2>
 				<div></div>
 				<div></div>
 				
-                <div ng-repeat="portfolioItem in portfolio.portfolioItems">
-                    <div ng-if="$odd">
-                        <h3 class="portfolio-h3">{{portfolioItem.title}}</h3>
-                        <a href="{{portfolioItem.subPageLink}}">
-                            <img class="image-portfolio-wide" src="{{portfolioItem.pictureLink}}" alt="{{getPictureTitle(portfolioItem.pictureLink)}}" title="{{getPictureTitle(portfolioItem.pictureLink)}}" />
-                        </a>
-                        <p class="portfolio-p"><a href="{{portfolioItem.subPageLink}}">Click me</a> for more details!</p>
-                    </div>
-                </div>
+				<h3 class="portfolio-h3">Road Rager</h3>
+				<a href="road-rager/">
+					<img class="image-portfolio-wide" src="/media/portfolio_images/roadrager-logo.png" alt="roadrager-logo.png" title="roadrager-logo.png"/>
+				</a>
+				<p class="portfolio-p"><a href="road-rager/">Click me</a> for more details!</p>
+				
+				<h3 class="portfolio-h3">Memoryless</h3>
+				<a href="memoryless/">
+					<img class="image-portfolio-wide" src="/media/portfolio_images/memoryless-logo.jpg" alt="memoryless-logo.jpg" title="memoryless-logo.jpg"/>
+				</a>
+				<p class="portfolio-p"><a href="memoryless/">Click me</a> for more details!</p>
+
+
+				<h3 class="portfolio-h3">Rollaball-Mod</h3>
+				<a href="rollaball-mod/">
+					<img class="image-portfolio-wide" src="/media/portfolio_images/rollaballmod-logo.png" alt="rollaballmod-logo.png" title="rollaballmod-logo.png"/>
+				</a>
+				<p class="portfolio-p"><a href="rollaball-mod/">Click me</a> for more details!</p>
+				
+				<!-- #EndEditable -->
 			</div>
 			<!-- End Right Column -->
 		<div style="clear: both"></div>
@@ -134,13 +151,19 @@
 		</div>
 		<!-- End Container -->
 
-        <!-- Begin Footer Container -->
-        <div id="footer-container">
-            <!-- Begin Footer -->
-            <div id="footer" ng-include="'/partials/footer.html'"></div>
-            <!-- End Footer -->
-        </div>
-        <!-- End Footer Container -->
+
+		<!-- Begin Footer Container -->
+		<div id="footer-container">
+			<!-- Begin Footer -->
+			<div id="footer">
+				<p class="paragraph-footer-class">Copyright &copy; 2016 Cameron Hopkins</p>
+				<br />
+				<br />
+			</div>
+			<!-- End Footer -->
+		</div>
+		<!-- End Footer Container -->
 	</body>
 	<!-- End Body -->
+<!-- #EndTemplate -->
 </html>

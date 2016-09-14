@@ -1,8 +1,5 @@
 ﻿<!DOCTYPE html>
-
-<!-- Home -->
-
-<html ng-app="app" ng-controller="homeController">
+<html>
 
 <!--
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -11,55 +8,45 @@
 	<!-- Begin Head -->
 	<head>
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-
-		<title>{{home.title}}</title>
+		<title>Cameron Hopkins</title>
 		
-        <!-- Begin Styles -->
-        <link href="/external-files/styles/style1.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
-        <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
-        <!-- End Styles -->
-
-        <!-- Begin Icons -->
-        <!-- for FF, Chrome, Opera -->
-        <link rel="icon" type="image/png" href="/external-files/media/personal-images/bio-pic.jpg" sizes="16x16" />
-        <link rel="icon" type="image/png" href="/external-files/media/personal-images/bio-pic.jpg" sizes="32x32" />
-        <!-- for IE -->
-        <link rel="icon" type="image/x-icon" href="/external-files/media/icons/favicon.ico" />
-        <link rel="shortcut icon" type="image/x-icon" href="/external-files/media/icons/favicon.ico" />
-        <!-- End Icons -->
-
-        <!-- Begin Scripts -->
-        <!--
-        To collect end-user usage analytics about your application,
-        insert the following script into each page you want to track.
-        Place this code immediately before the closing </head> tag,
-        and before any other scripts. Your first data will appear
-        automatically in just a few seconds.
-        -->
-        <script type="text/javascript">
+		<!-- styles -->
+		<link href="/styles/style1.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+		<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+		
+		<!-- for FF, Chrome, Opera -->
+		<link rel="icon" type="image/png" href="/media/personal_images/bio-pic.jpg" sizes="16x16" />
+		<link rel="icon" type="image/png" href="/media/personal_images/bio-pic.jpg" sizes="32x32" />
+		<!-- for IE -->
+		<link rel="icon" type="image/x-icon" href="/media/icons/favicon.ico" />
+		<link rel="shortcut icon" type="image/x-icon" href="/media/icons/favicon.ico"/>
+	
+		<!-- scripts -->
+		<!--
+			To collect end-user usage analytics about your application,
+			insert the following script into each page you want to track.
+			Place this code immediately before the closing </head> tag,
+			and before any other scripts. Your first data will appear
+			automatically in just a few seconds.
+		-->
+    	<script type="text/javascript">
 	        var appInsights=window.appInsights||function(config){
 	            function r(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s=u.createElement(o),i,f;s.src=config.url||"https://az416426.vo.msecnd.net/scripts/a/ai.0.js";u.getElementsByTagName(o)[0].parentNode.appendChild(s);try{t.cookie=u.cookie}catch(h){}for(t.queue=[],i=["Event","Exception","Metric","PageView","Trace","Dependency"];i.length;)r("track"+i.pop());return r("setAuthenticatedUserContext"),r("clearAuthenticatedUserContext"),config.disableExceptionTracking||(i="onerror",r("_"+i),f=e[i],e[i]=function(config,r,u,e,o){var s=f&&f(config,r,u,e,o);return s!==!0&&t["_"+i](config,r,u,e,o),s}),t
 	        }({
 	            instrumentationKey:"61c041f4-27da-4972-b9f3-7ca25e71fb33"
 	        });
-
+	        
 	        window.appInsights=appInsights;
 	        appInsights.trackPageView();
-        </script>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
-        <script src="/external-files/scripts/third-party/angular.min.js"></script>
-        <script src="/external-files/scripts/third-party/angular-route.min.js"></script>
-        <script src="/external-files/scripts/third-party/angular-sanitize.min.js"></script>
-        <script src="/external-files/scripts/third-party/jquery-1.9.1.min.js"></script>
-        <script src="/external-files/scripts/app/main.js"></script>
-        <!-- End Scripts -->
+    	</script>
 	</head>
 	<!-- End Head -->
 	
 	<!-- Begin Body -->
-	<body id="body-home" style="background: url({{home.backgroundPictureLink}});">
+	<body id="body-home">
 		<div id="home">
-			<h1 class="home-h1">{{home.welcomeText}}</h1>
+			<!-- <img class="image-home" src="media/personal_images/degree_1.jpg" alt="me-degree" /> -->
+			<h1 class="home-h1">THE PORTFOLIO OF CAMERON HOPKINS</h1>
 			<ul>
 				<li><a href="/about/">ENTER</a></li>
 			</ul>

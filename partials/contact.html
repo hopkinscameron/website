@@ -1,0 +1,56 @@
+<section ng-controller="contactController">
+    <!-- Begin Container -->
+    <div class="container">
+        <!-- Begin Center Column -->
+        <div class="body-container">
+            <h2>{{contact.title}}</h2>
+            <div></div>
+            <div></div>
+            <h3 class="header-h3">Email</h3>
+            <div class="image-container">
+                <img class="image-email" ng-src="{{contact.emailPictureLink}}" alt="Email" spinner-load />
+            </div>
+            <h3 class="header-h3">Positive Note</h3>
+            <p class="paragraph-p">{{contact.positiveNote}} <i class="em em-satisfied"></i></p>
+
+            <h3 class="header-h3">Contact Me Directly</h3>
+            <div class="form-container">
+                <form id="contact-form" method="post" action="https://script.google.com/macros/s/AKfycbx0lHzaYKANP_hcJpzTtu-ky6uAfKKjW6V7JBakRcgg6JW8XN0/exec" class="form-contact" enctype="multipart/form-data">
+                    <label for="fname">Name</label>
+                    <label class="label-contact-star">*</label>
+                    <br />
+                    <input class="input-short-contact" name="firstname" placeholder="First name" type="text">
+                    <input class="input-short-contact" name="lastname" placeholder="Last name" type="text">
+                    <br />
+                    <label for="email">Email</label>
+                    <label class="label-contact-star">*</label>
+                    <br />
+                    <input name="email" placeholder="Email" type="text">
+                    <br />
+                    <label for="subject">Subject</label>
+                    <label class="label-contact-star">*</label>
+                    <br />
+                    <input name="subject" placeholder="Subject" type="text">
+                    <br />
+                    <label for="message">Message</label>
+                    <label class="label-contact-star">*</label>
+                    <br />
+                    <textarea placeholder="Enter your message here" name="message"></textarea>
+                    <br />
+                    <input value="Send Email" type="submit" id="submit">
+                </form>
+            </div>
+            <br />
+            <div id="thank-you-message" style="display: none;">
+                <h3 class="contact-submission-complete">
+                    Thank you for your comment! I'll get back to you as soon as I can!
+                </h3>
+            </div>
+            <br />
+            <br />
+        </div>
+        <!-- End Center Column -->
+    </div>
+    <!-- End Container -->
+    <script src="/external-files/scripts/third-party/form-submission-handler.js" data-cfasync="false" type="text/javascript"></script>
+</section>

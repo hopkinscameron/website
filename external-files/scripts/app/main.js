@@ -1000,13 +1000,17 @@ function displayFooter()
 
 // switches the style of the body
 function showBodyHomeID() {
-    document.body.style = "background-color: #000"; //"background-image: url(\'" + homeBackgroundPageLink + "\');" 
+    //document.body.style = "background-color: #000"; //"background-image: url(\'" + homeBackgroundPageLink + "\');" 
+    document.body.className.replace("body-normal", "");
+    document.body.className = "body-home";
 }
 
 // switches the style of the body
 function hideBodyHomeID()
 {
-    document.body.style = "background-image: url(\'" + normalBackgroundPageLink + "\'); z-index:-1:";
+    //document.body.style = "background-image: url(\'" + normalBackgroundPageLink + "\'); z-index:-1:";
+    document.body.className.replace("body-home", "");
+    document.body.className = "body-normal";
 }
 
 // hides the header

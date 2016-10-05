@@ -222,6 +222,32 @@ body {
   	image-rendering: crisp-edges;
   	image-rendering: optimizeSpeed;
   	image-rendering: optimize-contrast;
+    background-position: center top;
+    background-attachment: fixed;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    margin: 0;
+	padding: 0;
+	border: 0;
+    background-color: #000;
+}
+.body-normal {
+	background-repeat: no-repeat;
+	background-size: cover;
+	image-rendering: auto;
+  	image-rendering: crisp-edges;
+  	image-rendering: optimizeSpeed;
+  	image-rendering: optimize-contrast;
+    background-image: url("/external-files/media/background-images/black-concrete.jpg");
+    background-position: center top;
+    background-attachment: fixed;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    margin: 0;
+	padding: 0;
+	border: 0;
 }
 .body-container {
 	width: 100%;

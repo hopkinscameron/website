@@ -315,6 +315,7 @@ app.controller('homeController', function ($scope, $http, $compile) {
         insertMetaData();
     });
 
+    // insert the meta data
     function insertMetaData() {
         // create meta tags
         var description = document.createElement("meta");
@@ -368,7 +369,34 @@ app.controller('aboutMeController', function ($scope, $http, $compile) {
         var title = "\'" + $scope.aboutme.title + "\'";
         titleDOM.setAttribute("ng-bind-html", title);
         $compile(titleDOM)($scope);
+        insertMetaData();
     });
+
+    // insert the meta data
+    function insertMetaData() {
+        // create meta tags
+        var description = document.createElement("meta");
+        description.name = "description";
+        description.content = $scope.aboutme.metaTags.description;
+        var keywords = document.createElement("meta");
+        keywords.name = "keywords";
+        keywords.content = "";
+
+        // loop through all keywords
+        for (x = 0; x < $scope.aboutme.metaTags.keywords.length; x++) {
+            // if this is the last element, don't add a comma
+            if (x == $scope.aboutme.metaTags.keywords.length - 1) {
+                keywords.content += $scope.aboutme.metaTags.keywords[x];
+            }
+            else {
+                keywords.content += $scope.aboutme.metaTags.keywords[x] + ",";
+            }
+        }
+
+        // insert the meta tags
+        document.head.appendChild(description);
+        document.head.appendChild(keywords);
+    }
 });
 
 // the Resume controller
@@ -397,7 +425,34 @@ app.controller('resumeController', function ($scope, $http, $compile) {
         var title = "\'" + $scope.resume.title + "\'";
         titleDOM.setAttribute("ng-bind-html", title);
         $compile(titleDOM)($scope);
+        insertMetaData();
     });
+
+    // insert the meta data
+    function insertMetaData() {
+        // create meta tags
+        var description = document.createElement("meta");
+        description.name = "description";
+        description.content = $scope.resume.metaTags.description;
+        var keywords = document.createElement("meta");
+        keywords.name = "keywords";
+        keywords.content = "";
+
+        // loop through all keywords
+        for (x = 0; x < $scope.resume.metaTags.keywords.length; x++) {
+            // if this is the last element, don't add a comma
+            if (x == $scope.resume.metaTags.keywords.length - 1) {
+                keywords.content += $scope.resume.metaTags.keywords[x];
+            }
+            else {
+                keywords.content += $scope.resume.metaTags.keywords[x] + ",";
+            }
+        }
+
+        // insert the meta tags
+        document.head.appendChild(description);
+        document.head.appendChild(keywords);
+    }
 });
 
 // the Portfolio controller
@@ -427,7 +482,34 @@ app.controller('portfolioController', function ($scope, $http, $compile, $rootSc
         var title = "\'" + $scope.portfolio.title + "\'";
         titleDOM.setAttribute("ng-bind-html", title);
         $compile(titleDOM)($scope);
+        insertMetaData();
     });
+
+    // insert the meta data
+    function insertMetaData() {
+        // create meta tags
+        var description = document.createElement("meta");
+        description.name = "description";
+        description.content = $scope.portfolio.metaTags.description;
+        var keywords = document.createElement("meta");
+        keywords.name = "keywords";
+        keywords.content = "";
+
+        // loop through all keywords
+        for (x = 0; x < $scope.portfolio.metaTags.keywords.length; x++) {
+            // if this is the last element, don't add a comma
+            if (x == $scope.portfolio.metaTags.keywords.length - 1) {
+                keywords.content += $scope.portfolio.metaTags.keywords[x];
+            }
+            else {
+                keywords.content += $scope.portfolio.metaTags.keywords[x] + ",";
+            }
+        }
+
+        // insert the meta tags
+        document.head.appendChild(description);
+        document.head.appendChild(keywords);
+    }
 
     // gets the title of the picture
     $scope.getPictureTitle = function (pictureLink) {
@@ -522,6 +604,7 @@ app.controller('subPortfolioController', function ($scope, $http, $filter, $sce,
         var title = "\'" + $scope.subPortfolio.title + "\'";
         titleDOM.setAttribute("ng-bind-html", title);
         $compile(titleDOM)($scope);
+        insertMetaData();
 
         // if the file has video updates
         if (data.videoUpdates.length > 0) {
@@ -540,6 +623,32 @@ app.controller('subPortfolioController', function ($scope, $http, $filter, $sce,
         // initialize
         $scope.initializeController();
     });
+
+    // insert the meta data
+    function insertMetaData() {
+        // create meta tags
+        var description = document.createElement("meta");
+        description.name = "description";
+        description.content = $scope.subPortfolio.metaTags.description;
+        var keywords = document.createElement("meta");
+        keywords.name = "keywords";
+        keywords.content = "";
+
+        // loop through all keywords
+        for (x = 0; x < $scope.subPortfolio.metaTags.keywords.length; x++) {
+            // if this is the last element, don't add a comma
+            if (x == $scope.subPortfolio.metaTags.keywords.length - 1) {
+                keywords.content += $scope.subPortfolio.metaTags.keywords[x];
+            }
+            else {
+                keywords.content += $scope.subPortfolio.metaTags.keywords[x] + ",";
+            }
+        }
+
+        // insert the meta tags
+        document.head.appendChild(description);
+        document.head.appendChild(keywords);
+    }
 
     // gets the game design document title
     $scope.getDesignDocumentTitle = function (designDocumentLink) {
@@ -777,7 +886,34 @@ app.controller('blogController', function ($scope, $http, $compile) {
         var title = "\'" + $scope.blog.title + "\'";
         titleDOM.setAttribute("ng-bind-html", title);
         $compile(titleDOM)($scope);
+        insertMetaData();
     });
+
+    // insert the meta data
+    function insertMetaData() {
+        // create meta tags
+        var description = document.createElement("meta");
+        description.name = "description";
+        description.content = $scope.blog.metaTags.description;
+        var keywords = document.createElement("meta");
+        keywords.name = "keywords";
+        keywords.content = "";
+
+        // loop through all keywords
+        for (x = 0; x < $scope.blog.metaTags.keywords.length; x++) {
+            // if this is the last element, don't add a comma
+            if (x == $scope.blog.metaTags.keywords.length - 1) {
+                keywords.content += $scope.blog.metaTags.keywords[x];
+            }
+            else {
+                keywords.content += $scope.blog.metaTags.keywords[x] + ",";
+            }
+        }
+
+        // insert the meta tags
+        document.head.appendChild(description);
+        document.head.appendChild(keywords);
+    }
 });
 
 // the Contact controller
@@ -806,7 +942,34 @@ app.controller('contactController', function ($scope, $http, $compile) {
         var title = "\'" + $scope.contact.title + "\'";
         titleDOM.setAttribute("ng-bind-html", title);
         $compile(titleDOM)($scope);
+        insertMetaData();
     });
+
+    // insert the meta data
+    function insertMetaData() {
+        // create meta tags
+        var description = document.createElement("meta");
+        description.name = "description";
+        description.content = $scope.contact.metaTags.description;
+        var keywords = document.createElement("meta");
+        keywords.name = "keywords";
+        keywords.content = "";
+
+        // loop through all keywords
+        for (x = 0; x < $scope.contact.metaTags.keywords.length; x++) {
+            // if this is the last element, don't add a comma
+            if (x == $scope.contact.metaTags.keywords.length - 1) {
+                keywords.content += $scope.contact.metaTags.keywords[x];
+            }
+            else {
+                keywords.content += $scope.contact.metaTags.keywords[x] + ",";
+            }
+        }
+
+        // insert the meta tags
+        document.head.appendChild(description);
+        document.head.appendChild(keywords);
+    }
 });
 
 // public functions
@@ -902,6 +1065,14 @@ function closeNavMenu() {
     {
         // remove class
         navOverlay.className = "closed";
+    }
+
+    // get the img and switch the image
+    var navLinkIcon = document.getElementById("nav-icon-link");
+
+    // if the icon has been found
+    if (navLinkIcon) {
+        navLinkIcon.src = "/external-files/media/icons/menu.png";
     }
 }
 

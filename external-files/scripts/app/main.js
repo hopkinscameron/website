@@ -1000,13 +1000,13 @@ function displayFooter()
 
 // switches the style of the body
 function showBodyHomeID() {
-    document.body.style = "background-image: url(\'" + homeBackgroundPageLink + "\');";
+    document.body.style = "background-color: #000"; //"background-image: url(\'" + homeBackgroundPageLink + "\');" 
 }
 
 // switches the style of the body
 function hideBodyHomeID()
 {
-    document.body.style = "background-image: url(\'" + normalBackgroundPageLink + "\');"
+    document.body.style = "background-image: url(\'" + normalBackgroundPageLink + "\'); z-index:-1:";
 }
 
 // hides the header

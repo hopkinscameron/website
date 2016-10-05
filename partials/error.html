@@ -1,0 +1,11 @@
+﻿<!-- Begin Error Page -->
+<section ng-controller="errorController" class="body-error">
+    <br />
+    <br />
+    <img class="image-error-center-horizontal img-responsive" src="{{error.error404.imageToDisplay}}" alt="error" spinner-load />
+    <br />
+    <br />
+    <h3><span ng-bind-html="error.error404.displayText | trustHTML"></span></h3>
+    <br />
+</section>
+<!-- End Error Page -->

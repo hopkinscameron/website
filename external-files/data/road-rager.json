@@ -1,0 +1,100 @@
+﻿{
+  "title": "Road Rager",
+  "images": [
+    { "link": "/external-files/media/portfolio-images/roadrager/roadrager-logo.png" },
+    { "link": "/external-files/media/portfolio-images/roadrager/use-powerup2.png" },
+    { "link": "/external-files/media/portfolio-images/roadrager/died.png" },
+    { "link": "/external-files/media/portfolio-images/roadrager/explosion.png" },
+    { "link": "/external-files/media/portfolio-images/roadrager/main-screen.png" },
+    { "link": "/external-files/media/portfolio-images/roadrager/powerup.png" },
+    { "link": "/external-files/media/portfolio-images/roadrager/use-powerup.png" }
+  ],
+  "overviewContent": {
+    "overview": "<i>Road Rager</i> is a 2D top down racing game built using Unity3D. In this game, the player controls their choice of car and uses their skills to race through traffic without causing accidents. <br /> <br />The players game score increases based on the time they can survive racing. To help the user, there are assest the user can pick up, such as a shield and a fireball, that allows the user to use these pickups to their advantage. The fireball gives the user on shot to shoot a fireball at an enemy car to stop the car from crashing into the player, causing them to lose. The shield pickup allows the user to surround themself with a shield that protects them for a short length of time. If an enemy car comes in contact with the shield, the car is destroyed, and so it the shield, but the player is safe, for now.<br /> <br />Play on different difficulty levels to test your skills and see what high score you can achieve!",
+    "gameDesignDocument": "",
+    "downloadLink": [
+    ],
+    "gameData": [
+      {
+        "title": "Platform:",
+        "data": [
+          { "text": "Windows PC" },
+          { "text": "Mac OSX" },
+          { "text": "Web" },
+          { "text": "iOS" },
+          { "text": "Android" }
+        ]
+      },
+      {
+        "title": "Tools Used:",
+        "data": [
+          { "text": "Unity3D" },
+          { "text": "Adobe Photoshop" }
+        ]
+      },
+      {
+        "title": "Languages:",
+        "data": [
+          { "text": "C#" }
+        ]
+      },
+      {
+        "title": "Duration:",
+        "data": [
+          { "text": "2 Weeks" }
+        ]
+      },
+      {
+        "title": "Completion:",
+        "data": [
+          { "text": "2015 (Partially, but will probably continue later)" }
+        ]
+      },
+      {
+        "title": "Team Size:",
+        "data": [
+          { "text": "1" }
+        ]
+      },
+      {
+        "title": "Role:",
+        "data": [
+          { "text": "Programming" },
+          { "text": "AI" },
+          { "text": "UI Design" },
+          { "text": "User Controls" }
+        ]
+      }
+    ]
+  },
+  "videoUpdates": [
+    
+  ],
+  "trailerLink": "https://www.youtube.com/embed/_FIBPxVjWOY?controls=1",
+  "metaTags": {
+    "description": "Cameron Hopkins game design portfolio.",
+    "keywords": [
+      "Cameron Hopkins",
+      "Game Design Portfolio",
+      "College",
+      "Ohio State",
+      "The Ohio State University",
+      "Coding",
+      "Programming",
+      "Java",
+      "C#",
+      "VB.Net",
+      "Android",
+      "XCode",
+      "Swift",
+      "Unity3D",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "C++",
+      "C",
+      "Video Games",
+      "Road Rager"
+    ]
+  }
+}

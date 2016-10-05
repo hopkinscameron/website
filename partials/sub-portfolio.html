@@ -1,0 +1,115 @@
+﻿<section ng-controller="subPortfolioController">
+    <!-- Begin Container -->
+    <div class="container">
+        <!-- Begin Center Column -->
+        <div class="body-container">
+            <h2>{{subPortfolio.title}}</h2>
+            <div></div>
+            <div></div>
+
+            <div id="slide-show-carousel" class="carousel slide" data-ride="carousel" data-interval="4000">
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <div id="carousel-item" class="item" ng-repeat="image in subPortfolio.images" ng-class="{'active': $index == 0}">
+                        <img ng-src="{{image.link}}" spinner-load>
+                    </div>
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#slide-show-carousel" role="button" data-slide="prev" target="_self">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#slide-show-carousel" role="button" data-slide="next" target="_self">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+                
+                <div class="carousel-indicators-container">
+                    <!-- <span class="glyphicon glyphicon-chevron-left slideshow-arrow-float-left" ng-click=""></span> -->
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#slide-show-carousel" data-slide-to="{{$index}}" ng-repeat="image in subPortfolio.images" ng-class="{'active': $index == 0}">
+                            <img class="slideshow-subimage-hover-shadow img-responsive" alt="" ng-src="{{image.link}}" spinner-load>
+                        </li>
+                    </ol>
+                    <!-- <span class="glyphicon glyphicon-chevron-right slideshow-arrow-float-right" ng-click=""></span> -->
+                </div>
+            </div>
+
+            <hr />
+
+            <h3 class="header-h3">Overview</h3>
+
+            <p class="paragraph-p">
+                <span ng-bind-html="subPortfolio.overviewContent.overview | trustHTML"></span>
+            </p>
+
+            <div ng-if="subPortfolio.overviewContent.gameDesignDocument">
+                <p class="paragraph-p">
+                    Take a look at the game design document.
+                    <a href="{{subPortfolio.overviewContent.gameDesignDocument}}" target="_blank" style="text-decoration: none;">
+                        <img class="image-portfolio-pdf" src="/external-files/media/icons/pdf-icon.png" alt="{{getDesignDocumentTitle(subPortfolio.overviewContent.gameDesignDocument)}}" title="{{getDesignDocumentTitle(subPortfolio.overviewContent.gameDesignDocument)}}" />
+                    </a>
+                </p>
+            </div>
+
+            <div ng-repeat="spDownloadData in subPortfolio.overviewContent.downloadLink track by $index">
+                <p class="paragraph-p">
+                    {{spDownloadData.text}}<a href="{{spDownloadData.link}}">here</a>.
+                </p>
+            </div>
+
+            <div class="ul-container-percentage">
+                <ul class="sub-portfolio-ul" ng-repeat="gameData in subPortfolio.overviewContent.gameData">
+                    <li class="sub-portfolio-header-li">
+                        <span class="sub-portfolio-header-span">{{gameData.title}}</span>
+                    </li>
+                    <li class="sub-portfolio-li" ng-repeat="data in gameData.data">
+                        <span class="sub-portfolio-sub-span">{{data.text}}</span>
+                    </li>
+                </ul>
+            </div>
+            <span style="clear: both"></span>
+
+            <div class="image-container">
+                <div ng-if="subPortfolio.videoUpdates.length > 0">
+                    <hr />
+                    <h3 class="header-h3">{{subPortfolio.title}} Updates</h3>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe id="subPortfolio-update-video-iframe" class="iframe-porfolio-update-video embed-responsive-item" ng-src="{{getStartingUpdateVideo()}}"></iframe>
+                    </div>
+                    <div class="slideshow-change-subvideoimage-div">
+                        <div class="slideshow-subvideoimage-div" ng-repeat="video in subPortfolio.videoUpdates">
+                            <div ng-if="$index == 0">
+                                <img class="slideshow-subvideoimage-to-switch slideshow-subvideoimage-hover-shadow slideshow-subvideoimage-selected img-responsive"
+                                     ng-src="{{video.thumbnailLink}}"
+                                     ng-click="changeUpdateVideo(video.videoLink, $index)"
+                                     alt=""
+                                     spinner-load>
+                            </div>
+                            <div ng-if="$index > 0">
+                                <img class="slideshow-subvideoimage-to-switch slideshow-subvideoimage-hover-shadow img-responsive"
+                                     ng-src="{{video.thumbnailLink}}"
+                                     ng-click="changeUpdateVideo(video.videoLink, $index)"
+                                     alt=""
+                                     spinner-load>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="subPortfolio.trailerLink">
+                <hr style="clear: both" />
+                <h3 class="header-h3">{{subPortfolio.title}} Trailer</h3>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe id="subPortfolio-trailer-iframe" class="iframe-porfolio-trailer-video embed-responsive-item" ng-src="{{getStartingTrailerVideo()}}"></iframe>
+                </div>
+            </div>
+            <br />
+        </div>
+        <!-- End Center Column -->
+    </div>
+    <!-- End Container -->
+</section>

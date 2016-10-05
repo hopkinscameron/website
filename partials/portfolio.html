@@ -1,0 +1,29 @@
+﻿<section ng-controller="portfolioController">
+    <!-- Begin Portfolio Class-->
+    <div class="portfolioClass">
+        <!-- Begin Container -->
+        <div class="container">
+            <!-- Begin Center Column -->
+            <div class="body-container">
+                <h2>{{portfolio.title}}</h2>
+                <div></div>
+                <div></div>
+
+                <div class="portfolio-item" ng-repeat="portfolioItem in portfolio.portfolioItems">
+                    <h3 class="portfolio-h3">{{portfolioItem.title}}</h3>
+                    <div class="portfolio-image-div">
+                        <a class="portfolio-link-a" href="{{currentPath}}/{{portfolioItem.subPageLink}}">
+                            <img class="image-portfolio-wide img-responsive" ng-src="{{portfolioItem.pictureLink}}" alt="{{getPictureTitle(portfolioItem.pictureLink)}}" title="{{getPictureTitle(portfolioItem.pictureLink)}}" spinner-load />
+                        </a>
+                    </div>
+                    <p class="portfolio-p"><a href="{{currentPath}}/{{portfolioItem.subPageLink}}">Click me</a> for more details!</p>
+                    <p class="portfolio-description-p">{{portfolioItem.shortDescription}}</p>
+                </div>
+                <div style="clear: both"></div>
+                <br />
+            </div>
+        </div>
+        <!-- End Container -->
+    </div>
+    <!-- End Portfolio Class-->
+</section>

@@ -476,6 +476,7 @@ li span.sub-portfolio-sub-span {
     text-align: center;
     width: 100%;
     display: inline-block;
+    background-color: red;
 }
 .ul-home {
     list-style-type: none;
@@ -527,6 +528,22 @@ li span.sub-portfolio-sub-span {
     text-align: center;
     margin-top: 120px;
     margin-bottom: 20px;
+    font-size: 3em;
+}
+.home-div {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+.home-link-to-start-page {
+    font-family: no-more-lies;
+	color: #fff;
+    background-color: #000;
+    text-align: center;
+    padding: 12px 12px;
+    text-decoration: none;
+    font-size: xx-large;
+	font-weight: bold;
 }
 .home-background-pic {
     background-repeat: no-repeat;
@@ -1032,6 +1049,19 @@ textarea {
     text-decoration: underline;
     text-decoration-color: #29a8d6;
     -moz-text-decoration-color: #29a8d6;
+}
+h1.blog-coming-soon-text {
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font-family: true-lies;
+    font-size: 5em;
+    top: 50%;
+    position: absolute;
+    transform: translateY(-50%);
+}
+h1.blog-coming-soon-text span.red-text {
+    color: red;
 }
 
 /* Animation Delays */

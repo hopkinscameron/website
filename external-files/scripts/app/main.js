@@ -24,6 +24,9 @@ var app = angular.module("app", ['ngRoute', 'ngSanitize']).filter('trustUrl', fu
 // configure using app router
 app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider, $routeParams) {
 
+    // remove index.html
+    $locationProvider.hashPrefix();
+
     $routeProvider
         .when('/', {
             templateUrl: '/partials/home.html',
@@ -79,7 +82,7 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
         /*
         $locationProvider.html5Mode({
             enabled: true,
-            requireBase: false
+            requireBase: true
         });*/
     }
 }]);

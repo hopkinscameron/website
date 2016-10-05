@@ -998,37 +998,15 @@ function displayFooter()
     footerDisplayed = true;
 }
 
-// shows the body-home id
+// switches the style of the body
 function showBodyHomeID() {
-    // change the body id
-    var body = document.getElementById("bodyPlaceHolder");
-
-    // if the id wasn't already changed
-    if (body != null) {
-        body.id = "body-home";
-        body.style = "background-image: url(\'" + homeBackgroundPageLink + "\');";
-    }
-    else {
-        body = document.getElementById("body-home");
-        body.style = "background-image: url(\'" + homeBackgroundPageLink + "\');";
-    }
+    document.body.style = "background-image: url(\'" + homeBackgroundPageLink + "\');";
 }
 
-// removes the body-home id
+// switches the style of the body
 function hideBodyHomeID()
 {
-    // change the body id
-    var body = document.getElementById("body-home");
-
-    // if the id wasn't already changed
-    if (body != null) {
-        body.id = "bodyPlaceHolder";
-        body.style = "background-image: url(\'" + normalBackgroundPageLink + "\');"
-    }
-    else {
-        body = document.getElementById("bodyPlaceHolder");
-        body.style = "background-image: url(\'" + normalBackgroundPageLink + "\');"
-    }
+    document.body.style = "background-image: url(\'" + normalBackgroundPageLink + "\');"
 }
 
 // hides the header

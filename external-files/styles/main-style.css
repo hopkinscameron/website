@@ -495,12 +495,12 @@ li span.sub-portfolio-sub-span {
         margin-left: 0px;
         margin: auto;
     }
-    .home .home-h1 {
+    .home-h1 {
         font-size: 2em;
         top: 44%;
         transform: translateY(-44%);
     }
-    .home .home-link-to-start-page {
+    .home-link-to-start-page {
         font-size: 3em;
         top: 56%;
         transform: translateY(-56%);
@@ -556,21 +556,13 @@ li span.sub-portfolio-sub-span {
     display: block;
     margin: 0 auto;
 }
-.home {
-    width: 100%;
-    height: inherit;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-}
 .home-h1 {
     font-family: wiked-grit;
 	color: #fff;
     margin: 0 auto;
     width: 100%;
     text-align: center;
-    font-size: 3em;
+    font-size: 2.5em;
     position: absolute;
     top: 45%;
     transform: translateY(-45%);
@@ -578,15 +570,13 @@ li span.sub-portfolio-sub-span {
 .home-link-to-start-page {
     font-family: wiked-grit;
 	color: #fff;
-    margin: 0 auto;
-    /*padding: 14px 24px;
-    background-color: #000;*/
     text-decoration: none;
-    font-size: 4em;
+    font-size: 3.5em;
 	font-weight: bold;
     position: absolute;
     top: 55%;
-    transform: translateY(-55%);
+    left: 50%;
+    transform: translate(-50%, -55%);
 }
 .home-background-pic {
     background-repeat: no-repeat;

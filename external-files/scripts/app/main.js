@@ -289,9 +289,6 @@ app.controller('footerController', function ($scope, $http) {
 // the Home controller
 app.controller('homeController', function ($scope, $http, $compile) {
 
-    // close the navigation menu
-    closeNavMenu();
-
     // hide the header if displayed     
     if (headerDisplayed) {
         hideHeader();
@@ -340,13 +337,16 @@ app.controller('homeController', function ($scope, $http, $compile) {
         document.head.appendChild(description);
         document.head.appendChild(keywords);
     }
+
+    // on the destruction of the controller
+    $scope.$on("$destroy", function handler() {
+        // close the navigation menu
+        closeNavMenu();
+    });
 });
 
 // the About Me controller
 app.controller('aboutMeController', function ($scope, $http, $compile) {
-
-    // close the navigation menu
-    closeNavMenu();
 
     // display the header if not displayed already
     if (!headerDisplayed) {
@@ -397,13 +397,16 @@ app.controller('aboutMeController', function ($scope, $http, $compile) {
         document.head.appendChild(description);
         document.head.appendChild(keywords);
     }
+
+    // on the destruction of the controller
+    $scope.$on("$destroy", function handler() {
+        // close the navigation menu
+        closeNavMenu();
+    });
 });
 
 // the Resume controller
 app.controller('resumeController', function ($scope, $http, $compile) {
-
-    // close the navigation menu
-    closeNavMenu();
 
     // display the header if not displayed already
     if (!headerDisplayed) {
@@ -453,13 +456,16 @@ app.controller('resumeController', function ($scope, $http, $compile) {
         document.head.appendChild(description);
         document.head.appendChild(keywords);
     }
+
+    // on the destruction of the controller
+    $scope.$on("$destroy", function handler() {
+        // close the navigation menu
+        closeNavMenu();
+    });
 });
 
 // the Portfolio controller
 app.controller('portfolioController', function ($scope, $http, $compile, $rootScope, $compile, $location) {
-
-    // close the navigation menu
-    closeNavMenu();
 
     // display the header if not displayed already
     if (!headerDisplayed) {
@@ -523,13 +529,16 @@ app.controller('portfolioController', function ($scope, $http, $compile, $rootSc
         var path = $location.path + "/" + subPageLink;
         $location.path($location.path + "/" + subPageLink);
     }
+
+    // on the destruction of the controller
+    $scope.$on("$destroy", function handler() {
+        // close the navigation menu
+        closeNavMenu();
+    });
 });
 
 // the Sub Portfolio controller
 app.controller('subPortfolioController', function ($scope, $http, $filter, $sce, $window, $compile, $routeParams, $location) {
-
-    // close the navigation menu
-    closeNavMenu();
 
     // display the header if not displayed already
     if (!headerDisplayed) {
@@ -839,6 +848,9 @@ app.controller('subPortfolioController', function ($scope, $http, $filter, $sce,
 
     // on the destruction of the controller
     $scope.$on("$destroy", function handler() {
+        // close the navigation menu
+        closeNavMenu();
+
         // clear out the timer
         $window.clearTimeout(timeoutHandle);
     });
@@ -853,9 +865,6 @@ app.controller('subPortfolioController', function ($scope, $http, $filter, $sce,
 // the Blog controller
 app.controller('blogController', function ($scope, $http, $compile) {
 
-    // close the navigation menu
-    closeNavMenu();
-
     // display the header if not displayed already
     if (headerDisplayed) {
         hideHeader();
@@ -866,18 +875,8 @@ app.controller('blogController', function ($scope, $http, $compile) {
         hideFooter();
     }
 
-    // change the body id
-    var body = document.getElementById("body-home");
-
-    // if the id wasn't already changed
-    if (body != null) {
-        body.id = "bodyPlaceHolder";
-        body.style = "background-color: #000;"
-    }
-    else {
-        body = document.getElementById("bodyPlaceHolder");
-        body.style = "background-color: #000;"
-    }
+    // hide the home body display
+    hideBodyHomeID()
 
     // get the data from the JSON file
     $http.get('/external-files/data/blog.json').success(function (data) {
@@ -914,13 +913,16 @@ app.controller('blogController', function ($scope, $http, $compile) {
         document.head.appendChild(description);
         document.head.appendChild(keywords);
     }
+
+    // on the destruction of the controller
+    $scope.$on("$destroy", function handler() {
+        // close the navigation menu
+        closeNavMenu();
+    });
 });
 
 // the Contact controller
 app.controller('contactController', function ($scope, $http, $compile) {
-
-    // close the navigation menu
-    closeNavMenu();
 
     // display the header if not displayed already
     if (!headerDisplayed) {
@@ -970,6 +972,12 @@ app.controller('contactController', function ($scope, $http, $compile) {
         document.head.appendChild(description);
         document.head.appendChild(keywords);
     }
+
+    // on the destruction of the controller
+    $scope.$on("$destroy", function handler() {
+        // close the navigation menu
+        closeNavMenu();
+    });
 });
 
 // public functions

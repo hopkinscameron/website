@@ -145,7 +145,7 @@ app.controller('errorController', function ($scope, $http, $location, $window, $
 app.controller('headerController', function ($scope, $http, $location, $window) {
 
     // the 768 media query
-    var mq = window.matchMedia("(max-width: 768px)");
+    var mq = window.matchMedia("(max-width: 767px)");
 
     // media query event handler
     if (matchMedia) {
@@ -264,9 +264,9 @@ app.controller('headerController', function ($scope, $http, $location, $window) 
     // media query change
     function WidthChange(mq) {
         if (mq.matches) {
-            // window width is at least 1050px
+            // window width is at least 767px
         } else {
-            // window width is less than 1050px
+            // window width is less than 767px
 
             // get the overlay nav
             var navOverlay = document.getElementById("overlay-nav");
@@ -274,6 +274,11 @@ app.controller('headerController', function ($scope, $http, $location, $window) 
             // remove class
             navOverlay.className = "closed";
         }
+    }
+
+    $scope.goHome = function (newPath) {
+        // go home
+        $location.path(newPath)
     }
 });
 

@@ -19,22 +19,19 @@ html {
 
 /* Masthead Container */
 .masthead {
-	text-align: center;
     padding: 0;
     margin-bottom: 0px;
     overflow: hidden;
 }
 .masthead-container {
-    width: 100%;
-    text-align: center;
     padding-bottom: 0px;
     margin-bottom: 0px;
 }
 .masthead h1 {
 	color: #fff;
 	font-size: 45px;
-	margin-top: 0px;
-	margin-bottom: 0px;
+    padding: 0px;
+    margin: 0px;
     font-family: no-more-lies;
     text-align: center;
 }
@@ -43,17 +40,8 @@ html {
 	font-size: 25px;
 	margin-top: 5px;
     margin-bottom: 10px;
-    text-align: center;
     font-family: true-lies;
-}
-.masthead a.masthead-link {
-	text-decoration: none;
-}
-.masthead a.masthead-link:hover {
-	text-decoration: none;
-}
-.masthead a.masthead-link:active {
-	text-decoration: none;
+    text-align: center;
 }
 
 /* Navigation */
@@ -77,8 +65,9 @@ html {
     text-align: center;
 }
 ul.nav-ul li {
-    width: 145px;
+    width: 140px;
     display: inline-block;
+    text-decoration: none;
 }
 li .nav-regular {
 	display: block;
@@ -152,7 +141,7 @@ li .nav-dropdown-button {
     display: block;
     color: white;
     text-align: center;
-    width: 144px;
+    width: 139px;
     padding: 12px 8px;
     text-decoration: none;
     font-size: large;
@@ -416,8 +405,8 @@ li span.sub-portfolio-sub-span {
 }
 
 /* Media Query/Screen */
-/* When the screen is less than 768px pixels wide */
-@media screen and (max-width: 768px) {
+/* When the screen is less than 767px pixels wide */
+@media screen and (max-width: 767px) {
     .navigation {
         text-align: right;
         display: block;
@@ -496,14 +485,15 @@ li span.sub-portfolio-sub-span {
         margin: auto;
     }
     .home-h1 {
-        font-size: 2em;
-        top: 44%;
-        transform: translateY(-44%);
+        font-size: 2em!important;
+        top: 44%!important;
+        transform: translateY(-44%)!important;
     }
     .home-link-to-start-page {
-        font-size: 3em;
-        top: 56%;
-        transform: translateY(-56%);
+        font-size: 3em!important;
+        top: 56%!important;
+        left: 50%;
+        transform: translate(-50%, -56%)!important;
     }
 }
 

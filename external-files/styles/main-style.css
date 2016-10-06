@@ -793,6 +793,7 @@ input[type=text], select {
     border-radius: 4px;
     box-sizing: border-box;
     font-family: "Trebuchet MS", sans-serif;
+    color: #000;
 }
 input[type=submit] {
     width: 99%;
@@ -818,6 +819,7 @@ textarea {
     border-radius: 4px;
     box-sizing: border-box;
     font-family: "Trebuchet MS", sans-serif;
+    color: #000;
 }
 .label-contact-star {
     color: red;

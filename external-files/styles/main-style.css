@@ -928,6 +928,7 @@ textarea {
 
 .carousel-indicators-container {
     position: relative;
+    z-index: 1;
 }
 .carousel-inner > .item > img,
 .carousel-inner > .item > a > img {

@@ -1,95 +1,96 @@
 ﻿<!DOCTYPE html>
 
-<!-- Index -->
-
+<!-- Begin HTML -->
 <html ng-app="app">
+    <!-- Begin Head -->
+    <head>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!--
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml">
--->
-<!-- Begin Head -->
-<head>
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title id="pageTitle"></title>
 
-    <title id="pageTitle"></title>
+        <base href="/">
 
-    <base href="/">
+        <!-- Begin Icons -->
+        <!-- for FF, Chrome, Opera -->
+        <link rel="icon" type="image/png" href="/client/media/personal-images/bio-pic.jpg" sizes="16x16" />
+        <!-- for IE -->
+        <link rel="icon" type="image/x-icon" href="/external-files/media/icons/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/external-files/media/icons/favicon.ico" />
+        <!-- End Icons -->
 
-    <!-- Begin Styles -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="/external-files/styles/main-style.css" media="screen" title="CSS" rel="stylesheet" type="text/css" />
-    <link href="/external-files/styles/third-party/animate.css" rel="stylesheet" type="text/css">
-    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet" type="text/css">
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <!-- Begin Styles -->
+        <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet" type="text/css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" rel="stylesheet">
+        <link href="/client/styles/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="/client/styles/angular-loading-bar/loading-bar.min.css" rel='stylesheet' type='text/css' media='all' />
+        <link href="/client/styles/main-style.css" media="screen" title="CSS" rel="stylesheet" type="text/css" />
+        <!-- End Styles -->
 
-    <!-- End Styles -->
+        <!-- Begin Scripts -->
+        <!--
+        To collect end-user usage analytics about your application,
+        insert the following script into each page you want to track.
+        Place this code immediately before the closing </head> tag,
+        and before any other scripts. Your first data will appear
+        automatically in just a few seconds.
+        -->
+        <script type="text/javascript">
+	            var appInsights=window.appInsights||function(config){
+	                function r(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s=u.createElement(o),i,f;s.src=config.url||"https://az416426.vo.msecnd.net/scripts/a/ai.0.js";u.getElementsByTagName(o)[0].parentNode.appendChild(s);try{t.cookie=u.cookie}catch(h){}for(t.queue=[],i=["Event","Exception","Metric","PageView","Trace","Dependency"];i.length;)r("track"+i.pop());return r("setAuthenticatedUserContext"),r("clearAuthenticatedUserContext"),config.disableExceptionTracking||(i="onerror",r("_"+i),f=e[i],e[i]=function(config,r,u,e,o){var s=f&&f(config,r,u,e,o);return s!==!0&&t["_"+i](config,r,u,e,o),s}),t
+	            }({
+	                instrumentationKey:"61c041f4-27da-4972-b9f3-7ca25e71fb33"
+	            });
 
-    <!-- Begin Icons -->
-    <!-- for FF, Chrome, Opera -->
-    <link rel="icon" type="image/png" href="/external-files/media/personal-images/bio-pic.jpg" sizes="16x16" />
-    <link rel="icon" type="image/png" href="/external-files/media/personal-images/bio-pic.jpg" sizes="32x32" />
-    <!-- for IE -->
-    <link rel="icon" type="image/x-icon" href="/external-files/media/icons/favicon.ico" />
-    <link rel="shortcut icon" type="image/x-icon" href="/external-files/media/icons/favicon.ico" />
-    <!-- End Icons -->
+	            window.appInsights=appInsights;
+	            appInsights.trackPageView();
+        </script>
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        <script src="/client/scripts/third-party-scripts/angular/angular.min.js"></script>
+        <script src="/client/scripts/third-party-scripts/angular/angular-animate.min.js"></script>
+        <script src="/client/scripts/third-party-scripts/angular/angular-cookies.min.js"></script>
+        <script src="/client/scripts/third-party-scripts/angular/angular-route.min.js"></script>
+        <script src="/client/scripts/third-party-scripts/angular/angular-sanitize.min.js"></script>
+        <script src="/client/scripts/third-party-scripts/angular/angular-touch.min.js"></script>
+        <script src='/client/scripts/third-party-scripts/angular-loading-bar/loading-bar.min.js'></script>
+        <script src="/client/scripts/app/main.js"></script>
+        <script src="/client/scripts/form-submission-handler.js"></script>
+        <script src="/client/scripts/controllers/headerController.js"></script>
+        <script src="/client/scripts/controllers/footerController.js"></script>
+        <!-- End Scripts -->
+    </head>
+    <!-- End Head -->
+    <!-- Begin Body -->
+    <body>
+        <!-- Begin Navigation -->
+        <nav>
+            <hr id="top-bar" class="top-bar" style="display: none" />
+            <!-- Begin Masthead Container -->
+            <div id="masthead-container" class="masthead-container" style="display: none;">
+                <!-- Begin Header -->
+                <div ng-include="'/client/partials/header.html'"></div>
+                <!-- End Header -->
+            </div>
+            <!-- End Masthead Container -->
+        </nav>
+        <!-- End Navigation -->
 
-    <!-- Begin Scripts -->
-    <!--
-    To collect end-user usage analytics about your application,
-    insert the following script into each page you want to track.
-    Place this code immediately before the closing </head> tag,
-    and before any other scripts. Your first data will appear
-    automatically in just a few seconds.
-    -->
-    <script type="text/javascript">
-	        var appInsights=window.appInsights||function(config){
-	            function r(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s=u.createElement(o),i,f;s.src=config.url||"https://az416426.vo.msecnd.net/scripts/a/ai.0.js";u.getElementsByTagName(o)[0].parentNode.appendChild(s);try{t.cookie=u.cookie}catch(h){}for(t.queue=[],i=["Event","Exception","Metric","PageView","Trace","Dependency"];i.length;)r("track"+i.pop());return r("setAuthenticatedUserContext"),r("clearAuthenticatedUserContext"),config.disableExceptionTracking||(i="onerror",r("_"+i),f=e[i],e[i]=function(config,r,u,e,o){var s=f&&f(config,r,u,e,o);return s!==!0&&t["_"+i](config,r,u,e,o),s}),t
-	        }({
-	            instrumentationKey:"61c041f4-27da-4972-b9f3-7ca25e71fb33"
-	        });
+        <!-- Begin NG View -->
+        <div id="main" ng-view></div>
+        <!-- End NG View -->
 
-	        window.appInsights=appInsights;
-	        appInsights.trackPageView();
-    </script>
-    <script src="/external-files/scripts/third-party/jquery-1.9.1.min.js"></script>
-    <script src="/external-files/scripts/third-party/angular.min.js"></script>
-    <script src="/external-files/scripts/third-party/angular-route.min.js"></script>
-    <script src="/external-files/scripts/third-party/angular-sanitize.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="/external-files/scripts/third-party/EQCSS.js"></script>
-    <script src="/external-files/scripts/app/main.js"></script>
-    <!-- End Scripts -->
-</head>
-<!-- End Head -->
-<!-- Begin Body -->
-<body>
-    <!-- Begin Navigation -->
-    <nav> <!--class="navbar navbar-fixed-top nav-color-background">-->
-        <hr id="top-bar" class="top-bar" style="display: none" />
-
-        <!-- Begin Masthead Container -->
-        <div id="masthead-container" class="masthead-container" style="display: none;">
-            <!-- Begin Header -->
-            <div ng-include="'/partials/header.html'"></div>
-            <!-- End Header -->
+        <!-- Begin Footer Container -->
+        <div id="footer-container" class="footer-container" style="display: none;">
+            <!-- Begin Footer -->
+            <div id="footer" ng-include="'/client/partials/footer.html'"></div>
+            <!-- End Footer -->
         </div>
-        <!-- End Masthead Container -->
-    </nav>
-    <!-- End Navigation -->
-
-    <!-- Begin NG View -->
-    <div id="main" ng-view></div>
-    <!-- End NG View -->
-
-    <!-- Begin Footer Container -->
-    <div id="footer-container" class="footer-container" style="display: none;">
-        <!-- Begin Footer -->
-        <div id="footer" ng-include="'/partials/footer.html'"></div>
-        <!-- End Footer -->
-    </div>
-    <!-- End Footer Container -->
-</body>
-<!-- End Body -->
+        <!-- End Footer Container -->
+    </body>
+    <!-- End Body -->
 </html>
+<!-- End HTML -->

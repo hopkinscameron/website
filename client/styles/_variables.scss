@@ -1,0 +1,292 @@
+/*
+    Begin Variables
+    Copy/paste any Bootstrap variables you want to overwrite and give a new value. Remove the !default in your copy
+    Only bring over Bootstrap variables when you need to overwrite them.
+    Make sure you comment any new, non-Bootstrap variables.
+*/ 
+
+/*
+    Breakpoints
+
+    Media queries are mobile-first, so read each as "when screen is greater than [size]"
+    These only apply to the grid by default. You can use them in components but they may
+    require their own breakpoints as well.
+*/
+$screen-max:    1200px; // Max width
+
+$screen-xs-int: 480;
+$screen-xs-num: $screen-xs-int+px;
+
+$screen-sm-int: 768; // Small, first column point
+$screen-sm-num: $screen-sm-int+px; 
+
+$screen-md-int: 992; // Medium
+$screen-md-num: $screen-md-int+px; 
+
+$screen-lg-int: 1200; // Large
+$screen-lg-num: $screen-lg-int+px; 
+
+
+
+
+
+/* Begin Colors */
+$brand-theme-main: #00FF00;
+$brand-theme-secondary: #FFFFFF;
+
+$color-blue:       #346094;
+$color-blue-muted: #6aa2b7;
+$color-teal:       #007a89;
+$color-teal-muted: #1e988a;
+$color-green:      #368f3f;
+$color-yellow:     #ce9f52;
+$color-orange:     #a95521;
+$color-red:        #9e2a2b;
+$color-fuchsia:    #a83d72;
+$color-purple:     #615091;
+
+$color-blue-dark:       #0b3a5d;
+$color-blue-muted-dark: #263645;
+$color-teal-dark:       #00464f;
+$color-teal-muted-dark: #3f5c58;
+$color-green-dark:      #37563c;
+$color-yellow-dark:     #5c4520;
+$color-orange-dark:     #7d4930;
+$color-red-dark:        #5d2a2c;
+$color-fuchsia-dark:    #672146;
+$color-purple-dark:     #403a60;
+
+$color-blue-accent:       #0070cd;
+$color-blue-muted-accent: #57c0e9;
+$color-teal-accent:       #3fc1cb;
+$color-teal-muted-accent: #59c3b5;
+$color-green-accent:      #6dc14a;
+$color-yellow-accent:     #ffc556;
+$color-orange-accent:     #ff661b;
+$color-red-accent:        #f32837;
+$color-fuchsia-accent:    #d630ae;
+$color-purple-accent:     #9160b5;
+
+$color-neutral-cool: #d7d8da;
+$color-neutral-warm: #d8d1c9;
+$color-black:        #000;
+
+$color-neutral-cool1: #e0e1dd;
+$color-neutral-cool2: #bcbdbc;
+$color-neutral-cool3: #87898b;
+$color-neutral-cool4: #4d4f53;
+
+$color-neutral-warm1: #e0ded8;
+$color-neutral-warm2: #b7b1a9;
+$color-neutral-warm3: #8b8178;
+$color-neutral-warm4: #544b44;
+/* End Colors */
+
+
+
+
+
+
+/* Begin Theme Colors */
+// Dark
+$dark-dark: #000;
+$dark: #2C3035;
+$dark-light: #747678;
+$dark-accent: #899F99;
+
+// Primary
+$primary-dark: #002B45;
+$primary: #1C57A5;
+$primary-light: #5BC6E8;
+$primary-accent: #00B2A9;
+
+// Secondary
+$secondary-dark: #B71234;
+$secondary: #DD4814;
+$secondary-light: #FFC3AD;
+$secondary-accent: #FDA01A;
+
+// Tertiary
+$tertiary-dark: #6A1A41;
+$tertiary: #5A447A;
+
+// Light
+$light-dark: #ADAFAF;
+$light: #C9CAC8;
+$light-light: #F5F7F9;
+$light-accent: #E0E1DD;
+
+// Accent
+$accent-dark: #416812;
+$accent: #7AB800;
+$accent-light: #D5FF82;
+$accent-accent: #D1C99D;
+
+// States
+$error: $secondary-dark;
+$valid: $accent;
+$warning: $secondary;
+$information: $primary-dark;
+$visited: $tertiary;
+
+//  Misc
+$white: #FFF;
+$bg-color: $white;
+$spot-color: #2B81B1;
+$error-color: #B71234;
+$devil: #666;
+/* End Theme Colors */
+
+
+
+
+
+
+/* 
+    Typography + Links 
+    Line height calc: http://www.pearsonified.com/typography/
+*/
+$text-color:              #333;
+
+$font-size-base:          18px;
+$font-size-small:         14px;
+$font-size-medium:        23px;
+$font-size-large:         29px;
+$font-size_xlarge:        47px;
+
+$line-height-base:        1.44; // Line height will change based on breakpoint.
+$font-path:               "./fonts";
+$font-family-sans-serif:  "Proxima-Nova","Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+$font-family-serif:       "Chronicle",Georgia,"Times New Roman","Roboto Slab",serif;
+$font-family-mono:      "Operator", "OCR A Std", "Fira Code", "Hack", Consolas, "Monaco", "Lucida Console", "Courier New", Courier, monospace;
+$font-weight-light:       200;
+
+$headings-font-weight:    400; // Weight for headers
+
+
+$link-color:            $color-blue-accent;
+$link-hover-color:      darken($link-color, 8%);
+$link-hover-decoration: underline;
+/* End Typography + Links  */ 
+
+
+
+
+
+
+/* Begin Icon Fonts */ 
+$icon-font-path: "./fonts/";
+/* End Icon Fonts */ 
+
+
+
+
+
+
+/* 
+    Begin Margin and Padding
+    Common spacing should be standard for both margins and padding.
+*/ 
+$spacing:    20px;
+$spacing-sm: 12px;
+$spacing-lg: 35px;
+$spacing-xl: 48px;
+
+$grid-gutter-width: 32px;
+
+$container-edge-padding: 16px; // Should be near half of gutter width
+/* End Margin and Padding */
+
+
+
+
+/* Begin Input Controls and Buttons */
+$input-border:                   #8a8a8a;
+$input-color-placeholder:        #b7b7b7;
+$input-bg-disabled:              #fff;
+
+$btn-default-color:              $color-blue;
+$btn-default-bg:                 #f2f2f2;
+$btn-default-border:             darken($btn-default-bg,15%);
+
+$btn-inline-color:               $brand-theme-main;
+$btn-inline-bg:                  none;
+$btn-inline-border:              $brand-theme-secondary;
+
+$btn-inline-light-color:         #e7e7e7;
+$btn-inline-light-bg:            none;
+$btn-inline-light-border:        #e7e7e7;
+/* End Input Controls and Buttons */
+
+
+
+
+
+/* Begin Panels */
+$panel-heading-padding:       10px 15px;
+/* End Panels */
+
+
+
+
+
+/* Begin Tabs */
+$nav-tabs-border-color:                     #d8d8d8;
+$nav-tabs-active-link-hover-border-color:   #d8d8d8;
+$nav-tabs-bg-color:                         #ededed;
+
+$nav-tabs-text:    $font-size-small;
+$nav-tabs-text-lg: $font-size-base;
+/* End Tabs */
+
+
+
+
+
+/* Begin Modals */
+$modal-inner-padding:         20px;
+$modal-title-padding:         20px;
+$modal-content-bg:            #fff;
+/* End Modals */
+
+
+
+
+
+/* Begin Tables */
+$table-bg-accent:             #f1f1f1;
+/* End Tables */
+
+
+
+
+
+
+/* Begin Progress Bar */
+$progress-bg:                 #f5f5f5;
+$progress-bar-color:          #fff;
+$progress-bar-bg:             $brand-theme-secondary;
+/* Begin Progress Bar */
+
+
+
+
+
+
+/* Begin Spacing */
+$spacing-base: 16px;
+$spacing-150: $spacing-base*1.5;
+$spacing-double: $spacing-base*2;
+$spacing-triple: $spacing-base*3;
+$spacing-quadruple: $spacing-base*4;
+$spacing-half: $spacing-base/2;
+$spacing-quarter: $spacing-half/2;
+
+$spacing-size-names: (base, 150, double, triple, quadruple, half, quarter);
+$spacing-sizes: ($spacing-base, $spacing-150, $spacing-double, $spacing-triple, $spacing-quadruple, $spacing-half, $spacing-quarter);
+/* End Spacing */
+
+
+
+
+/* End Variables */

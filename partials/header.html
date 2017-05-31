@@ -3,12 +3,8 @@
     <div class="header-container">
         <!-- Begin Masthead -->
         <div class="masthead">
-            <a class="masthead-link"href="#{{header.headlinerLink}}">
-                <h1>{{header.headliner}}</h1>
-            </a>
-            <a href="#{{header.headlinerLink}}">
-                <h3><span ng-bind-html="header.subHeadliner | trustHTML"></span></h3>
-            </a>
+            <h1 ng-click="goHome(header.headlinerLink)" role="button">{{header.headliner}}</h1>
+            <h3 ng-click="goHome(header.headlinerLink)" role="button"><span ng-bind-html="header.subHeadliner | trustHTML"></span></h3>
         </div>
         <!-- End Masthead -->
         <!-- Begin Navigation Menu-->

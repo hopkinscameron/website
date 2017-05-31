@@ -145,7 +145,7 @@ app.controller('errorController', function ($scope, $http, $location, $window, $
 app.controller('headerController', function ($scope, $http, $location, $window) {
 
     // the 768 media query
-    var mq = window.matchMedia("(max-width: 768px)");
+    var mq = window.matchMedia("(max-width: 767px)");
 
     // media query event handler
     if (matchMedia) {
@@ -264,9 +264,9 @@ app.controller('headerController', function ($scope, $http, $location, $window) 
     // media query change
     function WidthChange(mq) {
         if (mq.matches) {
-            // window width is at least 1050px
+            // window width is at least 767px
         } else {
-            // window width is less than 1050px
+            // window width is less than 767px
 
             // get the overlay nav
             var navOverlay = document.getElementById("overlay-nav");
@@ -274,6 +274,11 @@ app.controller('headerController', function ($scope, $http, $location, $window) 
             // remove class
             navOverlay.className = "closed";
         }
+    }
+
+    $scope.goHome = function (newPath) {
+        // go home
+        $location.path(newPath)
     }
 });
 
@@ -288,9 +293,6 @@ app.controller('footerController', function ($scope, $http) {
 
 // the Home controller
 app.controller('homeController', function ($scope, $http, $compile) {
-
-    // close the navigation menu
-    closeNavMenu();
 
     // hide the header if displayed     
     if (headerDisplayed) {
@@ -315,6 +317,7 @@ app.controller('homeController', function ($scope, $http, $compile) {
         insertMetaData();
     });
 
+    // insert the meta data
     function insertMetaData() {
         // create meta tags
         var description = document.createElement("meta");
@@ -339,13 +342,16 @@ app.controller('homeController', function ($scope, $http, $compile) {
         document.head.appendChild(description);
         document.head.appendChild(keywords);
     }
+
+    // on the destruction of the controller
+    $scope.$on("$destroy", function handler() {
+        // close the navigation menu
+        closeNavMenu();
+    });
 });
 
 // the About Me controller
 app.controller('aboutMeController', function ($scope, $http, $compile) {
-
-    // close the navigation menu
-    closeNavMenu();
 
     // display the header if not displayed already
     if (!headerDisplayed) {
@@ -368,14 +374,44 @@ app.controller('aboutMeController', function ($scope, $http, $compile) {
         var title = "\'" + $scope.aboutme.title + "\'";
         titleDOM.setAttribute("ng-bind-html", title);
         $compile(titleDOM)($scope);
+        insertMetaData();
+    });
+
+    // insert the meta data
+    function insertMetaData() {
+        // create meta tags
+        var description = document.createElement("meta");
+        description.name = "description";
+        description.content = $scope.aboutme.metaTags.description;
+        var keywords = document.createElement("meta");
+        keywords.name = "keywords";
+        keywords.content = "";
+
+        // loop through all keywords
+        for (x = 0; x < $scope.aboutme.metaTags.keywords.length; x++) {
+            // if this is the last element, don't add a comma
+            if (x == $scope.aboutme.metaTags.keywords.length - 1) {
+                keywords.content += $scope.aboutme.metaTags.keywords[x];
+            }
+            else {
+                keywords.content += $scope.aboutme.metaTags.keywords[x] + ",";
+            }
+        }
+
+        // insert the meta tags
+        document.head.appendChild(description);
+        document.head.appendChild(keywords);
+    }
+
+    // on the destruction of the controller
+    $scope.$on("$destroy", function handler() {
+        // close the navigation menu
+        closeNavMenu();
     });
 });
 
 // the Resume controller
 app.controller('resumeController', function ($scope, $http, $compile) {
-
-    // close the navigation menu
-    closeNavMenu();
 
     // display the header if not displayed already
     if (!headerDisplayed) {
@@ -397,14 +433,44 @@ app.controller('resumeController', function ($scope, $http, $compile) {
         var title = "\'" + $scope.resume.title + "\'";
         titleDOM.setAttribute("ng-bind-html", title);
         $compile(titleDOM)($scope);
+        insertMetaData();
+    });
+
+    // insert the meta data
+    function insertMetaData() {
+        // create meta tags
+        var description = document.createElement("meta");
+        description.name = "description";
+        description.content = $scope.resume.metaTags.description;
+        var keywords = document.createElement("meta");
+        keywords.name = "keywords";
+        keywords.content = "";
+
+        // loop through all keywords
+        for (x = 0; x < $scope.resume.metaTags.keywords.length; x++) {
+            // if this is the last element, don't add a comma
+            if (x == $scope.resume.metaTags.keywords.length - 1) {
+                keywords.content += $scope.resume.metaTags.keywords[x];
+            }
+            else {
+                keywords.content += $scope.resume.metaTags.keywords[x] + ",";
+            }
+        }
+
+        // insert the meta tags
+        document.head.appendChild(description);
+        document.head.appendChild(keywords);
+    }
+
+    // on the destruction of the controller
+    $scope.$on("$destroy", function handler() {
+        // close the navigation menu
+        closeNavMenu();
     });
 });
 
 // the Portfolio controller
 app.controller('portfolioController', function ($scope, $http, $compile, $rootScope, $compile, $location) {
-
-    // close the navigation menu
-    closeNavMenu();
 
     // display the header if not displayed already
     if (!headerDisplayed) {
@@ -427,7 +493,34 @@ app.controller('portfolioController', function ($scope, $http, $compile, $rootSc
         var title = "\'" + $scope.portfolio.title + "\'";
         titleDOM.setAttribute("ng-bind-html", title);
         $compile(titleDOM)($scope);
+        insertMetaData();
     });
+
+    // insert the meta data
+    function insertMetaData() {
+        // create meta tags
+        var description = document.createElement("meta");
+        description.name = "description";
+        description.content = $scope.portfolio.metaTags.description;
+        var keywords = document.createElement("meta");
+        keywords.name = "keywords";
+        keywords.content = "";
+
+        // loop through all keywords
+        for (x = 0; x < $scope.portfolio.metaTags.keywords.length; x++) {
+            // if this is the last element, don't add a comma
+            if (x == $scope.portfolio.metaTags.keywords.length - 1) {
+                keywords.content += $scope.portfolio.metaTags.keywords[x];
+            }
+            else {
+                keywords.content += $scope.portfolio.metaTags.keywords[x] + ",";
+            }
+        }
+
+        // insert the meta tags
+        document.head.appendChild(description);
+        document.head.appendChild(keywords);
+    }
 
     // gets the title of the picture
     $scope.getPictureTitle = function (pictureLink) {
@@ -441,13 +534,16 @@ app.controller('portfolioController', function ($scope, $http, $compile, $rootSc
         var path = $location.path + "/" + subPageLink;
         $location.path($location.path + "/" + subPageLink);
     }
+
+    // on the destruction of the controller
+    $scope.$on("$destroy", function handler() {
+        // close the navigation menu
+        closeNavMenu();
+    });
 });
 
 // the Sub Portfolio controller
 app.controller('subPortfolioController', function ($scope, $http, $filter, $sce, $window, $compile, $routeParams, $location) {
-
-    // close the navigation menu
-    closeNavMenu();
 
     // display the header if not displayed already
     if (!headerDisplayed) {
@@ -522,6 +618,7 @@ app.controller('subPortfolioController', function ($scope, $http, $filter, $sce,
         var title = "\'" + $scope.subPortfolio.title + "\'";
         titleDOM.setAttribute("ng-bind-html", title);
         $compile(titleDOM)($scope);
+        insertMetaData();
 
         // if the file has video updates
         if (data.videoUpdates.length > 0) {
@@ -540,6 +637,32 @@ app.controller('subPortfolioController', function ($scope, $http, $filter, $sce,
         // initialize
         $scope.initializeController();
     });
+
+    // insert the meta data
+    function insertMetaData() {
+        // create meta tags
+        var description = document.createElement("meta");
+        description.name = "description";
+        description.content = $scope.subPortfolio.metaTags.description;
+        var keywords = document.createElement("meta");
+        keywords.name = "keywords";
+        keywords.content = "";
+
+        // loop through all keywords
+        for (x = 0; x < $scope.subPortfolio.metaTags.keywords.length; x++) {
+            // if this is the last element, don't add a comma
+            if (x == $scope.subPortfolio.metaTags.keywords.length - 1) {
+                keywords.content += $scope.subPortfolio.metaTags.keywords[x];
+            }
+            else {
+                keywords.content += $scope.subPortfolio.metaTags.keywords[x] + ",";
+            }
+        }
+
+        // insert the meta tags
+        document.head.appendChild(description);
+        document.head.appendChild(keywords);
+    }
 
     // gets the game design document title
     $scope.getDesignDocumentTitle = function (designDocumentLink) {
@@ -730,6 +853,9 @@ app.controller('subPortfolioController', function ($scope, $http, $filter, $sce,
 
     // on the destruction of the controller
     $scope.$on("$destroy", function handler() {
+        // close the navigation menu
+        closeNavMenu();
+
         // clear out the timer
         $window.clearTimeout(timeoutHandle);
     });
@@ -744,9 +870,6 @@ app.controller('subPortfolioController', function ($scope, $http, $filter, $sce,
 // the Blog controller
 app.controller('blogController', function ($scope, $http, $compile) {
 
-    // close the navigation menu
-    closeNavMenu();
-
     // display the header if not displayed already
     if (headerDisplayed) {
         hideHeader();
@@ -757,18 +880,8 @@ app.controller('blogController', function ($scope, $http, $compile) {
         hideFooter();
     }
 
-    // change the body id
-    var body = document.getElementById("body-home");
-
-    // if the id wasn't already changed
-    if (body != null) {
-        body.id = "bodyPlaceHolder";
-        body.style = "background-color: #000;"
-    }
-    else {
-        body = document.getElementById("bodyPlaceHolder");
-        body.style = "background-color: #000;"
-    }
+    // hide the home body display
+    hideBodyHomeID()
 
     // get the data from the JSON file
     $http.get('/external-files/data/blog.json').success(function (data) {
@@ -777,14 +890,44 @@ app.controller('blogController', function ($scope, $http, $compile) {
         var title = "\'" + $scope.blog.title + "\'";
         titleDOM.setAttribute("ng-bind-html", title);
         $compile(titleDOM)($scope);
+        insertMetaData();
+    });
+
+    // insert the meta data
+    function insertMetaData() {
+        // create meta tags
+        var description = document.createElement("meta");
+        description.name = "description";
+        description.content = $scope.blog.metaTags.description;
+        var keywords = document.createElement("meta");
+        keywords.name = "keywords";
+        keywords.content = "";
+
+        // loop through all keywords
+        for (x = 0; x < $scope.blog.metaTags.keywords.length; x++) {
+            // if this is the last element, don't add a comma
+            if (x == $scope.blog.metaTags.keywords.length - 1) {
+                keywords.content += $scope.blog.metaTags.keywords[x];
+            }
+            else {
+                keywords.content += $scope.blog.metaTags.keywords[x] + ",";
+            }
+        }
+
+        // insert the meta tags
+        document.head.appendChild(description);
+        document.head.appendChild(keywords);
+    }
+
+    // on the destruction of the controller
+    $scope.$on("$destroy", function handler() {
+        // close the navigation menu
+        closeNavMenu();
     });
 });
 
 // the Contact controller
 app.controller('contactController', function ($scope, $http, $compile) {
-
-    // close the navigation menu
-    closeNavMenu();
 
     // display the header if not displayed already
     if (!headerDisplayed) {
@@ -806,6 +949,39 @@ app.controller('contactController', function ($scope, $http, $compile) {
         var title = "\'" + $scope.contact.title + "\'";
         titleDOM.setAttribute("ng-bind-html", title);
         $compile(titleDOM)($scope);
+        insertMetaData();
+    });
+
+    // insert the meta data
+    function insertMetaData() {
+        // create meta tags
+        var description = document.createElement("meta");
+        description.name = "description";
+        description.content = $scope.contact.metaTags.description;
+        var keywords = document.createElement("meta");
+        keywords.name = "keywords";
+        keywords.content = "";
+
+        // loop through all keywords
+        for (x = 0; x < $scope.contact.metaTags.keywords.length; x++) {
+            // if this is the last element, don't add a comma
+            if (x == $scope.contact.metaTags.keywords.length - 1) {
+                keywords.content += $scope.contact.metaTags.keywords[x];
+            }
+            else {
+                keywords.content += $scope.contact.metaTags.keywords[x] + ",";
+            }
+        }
+
+        // insert the meta tags
+        document.head.appendChild(description);
+        document.head.appendChild(keywords);
+    }
+
+    // on the destruction of the controller
+    $scope.$on("$destroy", function handler() {
+        // close the navigation menu
+        closeNavMenu();
     });
 });
 
@@ -835,37 +1011,19 @@ function displayFooter()
     footerDisplayed = true;
 }
 
-// shows the body-home id
+// switches the style of the body
 function showBodyHomeID() {
-    // change the body id
-    var body = document.getElementById("bodyPlaceHolder");
-
-    // if the id wasn't already changed
-    if (body != null) {
-        body.id = "body-home";
-        body.style = "background-image: url(\'" + homeBackgroundPageLink + "\');";
-    }
-    else {
-        body = document.getElementById("body-home");
-        body.style = "background-image: url(\'" + homeBackgroundPageLink + "\');";
-    }
+    //document.body.style = "background-color: #000"; //"background-image: url(\'" + homeBackgroundPageLink + "\');" 
+    document.body.className.replace("body-normal", "");
+    document.body.className = "body-home";
 }
 
-// removes the body-home id
+// switches the style of the body
 function hideBodyHomeID()
 {
-    // change the body id
-    var body = document.getElementById("body-home");
-
-    // if the id wasn't already changed
-    if (body != null) {
-        body.id = "bodyPlaceHolder";
-        body.style = "background-image: url(\'" + normalBackgroundPageLink + "\');"
-    }
-    else {
-        body = document.getElementById("bodyPlaceHolder");
-        body.style = "background-image: url(\'" + normalBackgroundPageLink + "\');"
-    }
+    //document.body.style = "background-image: url(\'" + normalBackgroundPageLink + "\'); z-index:-1:";
+    document.body.className.replace("body-home", "");
+    document.body.className = "body-normal";
 }
 
 // hides the header
@@ -902,6 +1060,14 @@ function closeNavMenu() {
     {
         // remove class
         navOverlay.className = "closed";
+    }
+
+    // get the img and switch the image
+    var navLinkIcon = document.getElementById("nav-icon-link");
+
+    // if the icon has been found
+    if (navLinkIcon) {
+        navLinkIcon.src = "/external-files/media/icons/menu.png";
     }
 }
 

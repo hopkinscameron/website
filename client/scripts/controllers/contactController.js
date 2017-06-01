@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('homeController', ['$scope', '$rootScope', '$compile', '$location', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $location, cfpLoadingBar, Service) {
+﻿angular.module('app').controller('contactController', ['$scope', '$rootScope', '$compile', '$location', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $location, cfpLoadingBar, Service) {
     // set jQuery
     $ = window.jQuery;
 
@@ -6,7 +6,7 @@
     Service.afterPath = $location.path();
 
     // holds the page title
-    $scope.pageTitle = "Home | " + Service.appName;
+    $scope.pageTitle = "Contact | " + Service.appName;
 
     // holds the error
     $scope.error = {
@@ -17,21 +17,21 @@
     // determines if the page is fully loaded
     $scope.pageFullyLoaded = false;
 
-    // hide the header if shown     
-    if ($rootScope.$root.showHeader) {
-        $rootScope.$root.showHeader = false;
+    // show the header if not shown     
+    if (!$rootScope.$root.showHeader) {
+        $rootScope.$root.showHeader = true;
     }
 
-    // hide the footer if shown
-    if ($rootScope.$root.showFooter) {
-        $rootScope.$root.showFooter = false;
+    // show the footer if not shown
+    if (!$rootScope.$root.showFooter) {
+        $rootScope.$root.showFooter = true;
     }
 
     // get page data
     getPageData();
 
     // on loading http intercepter start
-    $scope.start = function() {
+    $scope.start = function () {
         // start loader
         cfpLoadingBar.start();
     };
@@ -44,35 +44,35 @@
 
     // gets the page data
     function getPageData() {
-        // get home page data
-        Service.getHomePageData().then(function (responseH) {
+        // get contact page data
+        Service.getContactPageData().then(function (responseC) {
             // if returned a valid response
-            if (!responseH.error) {
+            if (!responseC.error) {
                 // set the data
-                $scope.home = responseH;
+                $scope.contact = responseC;
 
                 // setup page
                 setUpPage();
             }
             else {
                 // set error
-                $scope.pageTitle = responseH.message;
+                $scope.pageTitle = responseC.message;
 
                 // set error
                 $scope.error.error = true;
-                $scope.error.message = responseH.message;
+                $scope.error.message = responseC.message;
 
                 // setup page
                 setUpPage();
             }
         })
-        .catch(function (responseH) {
+        .catch(function (responseC) {
             // set error
-            $scope.pageTitle = responseH.message;
+            $scope.pageTitle = responseC.message;
 
             // set error
             $scope.error.error = true;
-            $scope.error.message = responseH.message;
+            $scope.error.message = responseC.message;
 
             // setup page
             setUpPage();

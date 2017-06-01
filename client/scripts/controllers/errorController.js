@@ -17,18 +17,21 @@
     // determines if the page is fully loaded
     $scope.pageFullyLoaded = false;
 
-    // hide the header if shown     
-    if ($rootScope.$root.showHeader) {
-        $rootScope.$root.showHeader = false;
+    // hide the header if displayed     
+    if (Service.headerDisplayed) {
+        Service.headerDisplayed = false;
     }
 
-    // hide the footer if shown
-    if ($rootScope.$root.showFooter) {
-        $rootScope.$root.showFooter = false;
+    // hide the footer if displayed
+    if (Service.footerDisplayed) {
+        Service.headerDisplayed = true;
     }
 
-    // get page data
-    getPageData();
+    // show the home body display
+    showBodyHomeID()
+
+    // get home page data
+    getHomePageData();
 
     // on loading http intercepter start
     $scope.start = function() {
@@ -42,13 +45,13 @@
         cfpLoadingBar.complete();
     };
 
-    // gets the page data
-    function getPageData() {
+    // gets the home page data
+    function getHomePageData() {
         // get home page data
         Service.getHomePageData().then(function (responseH) {
             // if returned a valid response
             if (!responseH.error) {
-                // set the data
+                // set the home data
                 $scope.home = responseH;
 
                 // setup page

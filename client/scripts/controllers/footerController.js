@@ -1,4 +1,7 @@
-﻿angular.module('app').controller('footerController', ['$scope', 'Service', function ($scope, OEAService) {
+﻿angular.module('app').controller('footerController', ['$scope', '$rootScope', 'Service', function ($scope, $rootScope, Service) {
+    // initialize show footer
+    $rootScope.$root.showFooter = false;
+
     // the footer backend data
     $scope.footer = {};
 
@@ -8,13 +11,13 @@
     // initializes the backend data
     function getFooterInformation() {
         // get the footer information
-        Service.getFooterInformation().then(function (responseFooter) {
+        Service.getFooterInformation().then(function (responseF) {
             // set the footer
-            $scope.footer = responseFooter;
+            $scope.footer = responseF;
         })
-        .catch( function(responseFooter) {
+        .catch(function (responseF) {
             // TODO: display something instead
-            console.log(responseFooter.message);
+            console.log(responseF.message);
         });
     };
 }]);

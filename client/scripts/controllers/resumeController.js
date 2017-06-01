@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('homeController', ['$scope', '$rootScope', '$compile', '$location', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $location, cfpLoadingBar, Service) {
+﻿angular.module('app').controller('resumeController', ['$scope', '$rootScope', '$compile', '$location', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $location, cfpLoadingBar, Service) {
     // set jQuery
     $ = window.jQuery;
 
@@ -17,14 +17,14 @@
     // determines if the page is fully loaded
     $scope.pageFullyLoaded = false;
 
-    // hide the header if shown     
-    if ($rootScope.$root.showHeader) {
-        $rootScope.$root.showHeader = false;
+    // show the header if not shown     
+    if (!$rootScope.$root.showHeader) {
+        $rootScope.$root.showHeader = true;
     }
 
-    // hide the footer if shown
-    if ($rootScope.$root.showFooter) {
-        $rootScope.$root.showFooter = false;
+    // show the footer if not shown
+    if (!$rootScope.$root.showFooter) {
+        $rootScope.$root.showFooter = true;
     }
 
     // get page data
@@ -44,35 +44,35 @@
 
     // gets the page data
     function getPageData() {
-        // get home page data
-        Service.getHomePageData().then(function (responseH) {
+        // get resume page data
+        Service.getResumePageData().then(function (responseR) {
             // if returned a valid response
-            if (!responseH.error) {
+            if (!responseR.error) {
                 // set the data
-                $scope.home = responseH;
+                $scope.resume = responseR;
 
                 // setup page
                 setUpPage();
             }
             else {
                 // set error
-                $scope.pageTitle = responseH.message;
+                $scope.pageTitle = responseR.message;
 
                 // set error
                 $scope.error.error = true;
-                $scope.error.message = responseH.message;
+                $scope.error.message = responseR.message;
 
                 // setup page
                 setUpPage();
             }
         })
-        .catch(function (responseH) {
+        .catch(function (responseR) {
             // set error
-            $scope.pageTitle = responseH.message;
+            $scope.pageTitle = responseR.message;
 
             // set error
             $scope.error.error = true;
-            $scope.error.message = responseH.message;
+            $scope.error.message = responseR.message;
 
             // setup page
             setUpPage();

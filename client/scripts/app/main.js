@@ -7,11 +7,12 @@ var footerDisplayed = false;
 var currentPageTitle = "Cameron Hopkins";
 
 // the background page link
-var normalBackgroundPageLink = "/external-files/media/background-images/black-concrete.jpg";
-var homeBackgroundPageLink = "/external-files/media/personal-images/sitting-professional.jpg";
+var normalBackgroundPageLink = "/client/media/background-images/black-concrete.jpg";
+var homeBackgroundPageLink = "/client/media/personal-images/sitting-professional.jpg";
 
 // set up the application
-var app = angular.module("app", ['ngRoute', 'ngSanitize']).filter('trustUrl', function ($sce) {
+var app = angular.module("app", ['ngRoute', 'ngSanitize', 'ngAnimate', 'angular-loading-bar'])
+    .filter('trustUrl', function ($sce) {
     return function (url) {
         return $sce.trustAsResourceUrl(url);
     };
@@ -22,60 +23,48 @@ var app = angular.module("app", ['ngRoute', 'ngSanitize']).filter('trustUrl', fu
 });
 
 // configure using app router
-app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider, $routeParams) {
+app.config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider', function ($routeProvider, $locationProvider, cfpLoadingBarProvider, $routeParams) {
+    // remove default "!" in has prefix
+    $locationProvider.hashPrefix('');
 
     // remove index.html
     $locationProvider.hashPrefix();
 
     $routeProvider
         .when('/', {
-            templateUrl: '/partials/home.html',
+            templateUrl: '/client/partials/home.html',
             controller: 'homeController'
         })
         .when('/about', {
-            templateUrl: '/partials/about.html',
-            controller: 'aboutMeController'
+            templateUrl: '/client/partials/about.html',
+            controller: 'aboutController'
         })
         .when('/resume', {
-            templateUrl: '/partials/resume.html',
+            templateUrl: '/client/partials/resume.html',
             controller: 'resumeController'
         })
         .when('/portfolio', {
-            templateUrl: '/partials/portfolio.html',
+            templateUrl: '/client/partials/portfolio.html',
             controller: 'portfolioController'
         })
         .when('/portfolio/:subPortfolioID', {
-            templateUrl: function () {
-                if (isCorrectSubUrl(window.location.hash)) {
-                    return '/partials/sub-portfolio.html';
-                }
-                else {
-                    return '/partials/error.html';
-                }
-            },
-            controller: function () {
-                if (isCorrectSubUrl(window.location.hash)) {
-                    return 'subPortfolioController';
-                }
-                else {
-                    return 'errorController';
-                }
-            }
+            templateUrl: '/client/partials/sub-portfolio.html',
+            controller: 'subPortfolioController'
         })
         .when('/blog', {
-            templateUrl: '/partials/blog.html',
+            templateUrl: '/client/partials/blog.html',
             controller: 'blogController'
         })
         .when('/contact', {
-            templateUrl: '/partials/contact.html',
+            templateUrl: '/client/partials/contact.html',
             controller: 'contactController'
         })
         .otherwise({
-            templateUrl: '/partials/error.html',
+            templateUrl: '/client/partials/error.html',
             controller: 'errorController'
         })
 
-    //check browser support
+    // check browser support
     if (window.history && window.history.pushState) {
 
         // if you don't wish to set base URL then use this
@@ -85,6 +74,12 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
             requireBase: true
         });*/
     }
+
+    // turn off spinner
+    cfpLoadingBarProvider.includeSpinner = false;
+
+    // set parent element to attached to
+    cfpLoadingBarProvider.parentSelector = '#main';
 }]);
 
 // creates a directive for loading a spinner in place of an image
@@ -104,6 +99,22 @@ app.directive('spinnerLoad', [function spinnerLoad() {
     };
 }]);
 
+// creates a directive for showing/hiding a custom tooltip
+app.directive('tooltip', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            $(element).hover(function () {
+                // on mouseenter
+                $(element).tooltip('show');
+            }, function () {
+                // on mouseleave
+                $(element).tooltip('hide');
+            });
+        }
+    };
+});
+
 // the Error Controller
 app.controller('errorController', function ($scope, $http, $location, $window, $compile) {
 
@@ -119,7 +130,7 @@ app.controller('errorController', function ($scope, $http, $location, $window, $
     hideBodyHomeID()
 
     // get the data from the JSON file
-    $http.get('/external-files/data/error.json').success(function (data) {
+    $http.get('/client/data/error.json').success(function (data) {
         $scope.error = data;
         var titleDOM = document.getElementById("pageTitle");
         var title = "\'" + "404" + "" + "\'";
@@ -141,6 +152,7 @@ app.controller('errorController', function ($scope, $http, $location, $window, $
     }
 });
 
+/*
 // the Home controller
 app.controller('homeController', function ($scope, $http, $compile) {
 
@@ -158,7 +170,7 @@ app.controller('homeController', function ($scope, $http, $compile) {
     showBodyHomeID()
 
     // get the data from the JSON file
-    $http.get('/external-files/data/home.json').success(function (data) {
+    $http.get('/client/data/home.json').success(function (data) {
         $scope.home = data;
         var titleDOM = document.getElementById("pageTitle");
         var title = "\'" + $scope.home.title + "\'";
@@ -199,706 +211,7 @@ app.controller('homeController', function ($scope, $http, $compile) {
         closeNavMenu();
     });
 });
-
-// the About Me controller
-app.controller('aboutMeController', function ($scope, $http, $compile) {
-
-    // display the header if not displayed already
-    if (!headerDisplayed) {
-        displayHeader();
-    }
-
-    // display the footer if not displayed already
-    if (!footerDisplayed) {
-        displayFooter();
-    }
-
-    // hide the home body display
-    hideBodyHomeID()
-
-
-    // get the data from the JSON file
-    $http.get('/external-files/data/about-me.json').success(function (data) {
-        $scope.aboutme = data;
-        var titleDOM = document.getElementById("pageTitle");
-        var title = "\'" + $scope.aboutme.title + "\'";
-        titleDOM.setAttribute("ng-bind-html", title);
-        $compile(titleDOM)($scope);
-        insertMetaData();
-    });
-
-    // insert the meta data
-    function insertMetaData() {
-        // create meta tags
-        var description = document.createElement("meta");
-        description.name = "description";
-        description.content = $scope.aboutme.metaTags.description;
-        var keywords = document.createElement("meta");
-        keywords.name = "keywords";
-        keywords.content = "";
-
-        // loop through all keywords
-        for (x = 0; x < $scope.aboutme.metaTags.keywords.length; x++) {
-            // if this is the last element, don't add a comma
-            if (x == $scope.aboutme.metaTags.keywords.length - 1) {
-                keywords.content += $scope.aboutme.metaTags.keywords[x];
-            }
-            else {
-                keywords.content += $scope.aboutme.metaTags.keywords[x] + ",";
-            }
-        }
-
-        // insert the meta tags
-        document.head.appendChild(description);
-        document.head.appendChild(keywords);
-    }
-
-    // on the destruction of the controller
-    $scope.$on("$destroy", function handler() {
-        // close the navigation menu
-        closeNavMenu();
-    });
-});
-
-// the Resume controller
-app.controller('resumeController', function ($scope, $http, $compile) {
-
-    // display the header if not displayed already
-    if (!headerDisplayed) {
-        displayHeader();
-    }
-
-    // display the footer if not displayed already
-    if (!footerDisplayed) {
-        displayFooter();
-    }
-
-    // hide the home body display
-    hideBodyHomeID()
-
-    // get the data from the JSON file
-    $http.get('/external-files/data/resume.json').success(function (data) {
-        $scope.resume = data;
-        var titleDOM = document.getElementById("pageTitle");
-        var title = "\'" + $scope.resume.title + "\'";
-        titleDOM.setAttribute("ng-bind-html", title);
-        $compile(titleDOM)($scope);
-        insertMetaData();
-    });
-
-    // insert the meta data
-    function insertMetaData() {
-        // create meta tags
-        var description = document.createElement("meta");
-        description.name = "description";
-        description.content = $scope.resume.metaTags.description;
-        var keywords = document.createElement("meta");
-        keywords.name = "keywords";
-        keywords.content = "";
-
-        // loop through all keywords
-        for (x = 0; x < $scope.resume.metaTags.keywords.length; x++) {
-            // if this is the last element, don't add a comma
-            if (x == $scope.resume.metaTags.keywords.length - 1) {
-                keywords.content += $scope.resume.metaTags.keywords[x];
-            }
-            else {
-                keywords.content += $scope.resume.metaTags.keywords[x] + ",";
-            }
-        }
-
-        // insert the meta tags
-        document.head.appendChild(description);
-        document.head.appendChild(keywords);
-    }
-
-    // on the destruction of the controller
-    $scope.$on("$destroy", function handler() {
-        // close the navigation menu
-        closeNavMenu();
-    });
-});
-
-// the Portfolio controller
-app.controller('portfolioController', function ($scope, $http, $compile, $rootScope, $compile, $location) {
-
-    // display the header if not displayed already
-    if (!headerDisplayed) {
-        displayHeader();
-    }
-
-    // display the footer if not displayed already
-    if (!footerDisplayed) {
-        displayFooter();
-    }
-
-    // hide the home body display
-    hideBodyHomeID()
-
-    // get the data from the JSON file
-    $http.get('/external-files/data/portfolio.json').success(function (data) {
-        $scope.portfolio = data;
-        $scope.currentPath = window.location.hash;
-        var titleDOM = document.getElementById("pageTitle");
-        var title = "\'" + $scope.portfolio.title + "\'";
-        titleDOM.setAttribute("ng-bind-html", title);
-        $compile(titleDOM)($scope);
-        insertMetaData();
-    });
-
-    // insert the meta data
-    function insertMetaData() {
-        // create meta tags
-        var description = document.createElement("meta");
-        description.name = "description";
-        description.content = $scope.portfolio.metaTags.description;
-        var keywords = document.createElement("meta");
-        keywords.name = "keywords";
-        keywords.content = "";
-
-        // loop through all keywords
-        for (x = 0; x < $scope.portfolio.metaTags.keywords.length; x++) {
-            // if this is the last element, don't add a comma
-            if (x == $scope.portfolio.metaTags.keywords.length - 1) {
-                keywords.content += $scope.portfolio.metaTags.keywords[x];
-            }
-            else {
-                keywords.content += $scope.portfolio.metaTags.keywords[x] + ",";
-            }
-        }
-
-        // insert the meta tags
-        document.head.appendChild(description);
-        document.head.appendChild(keywords);
-    }
-
-    // gets the title of the picture
-    $scope.getPictureTitle = function (pictureLink) {
-        //split string
-        var splits = pictureLink.split('/');
-        return splits[splits.length - 1];
-    };
-    
-    // go to subpage link
-    $scope.goToSubPageLink = function (subPageLink) {
-        var path = $location.path + "/" + subPageLink;
-        $location.path($location.path + "/" + subPageLink);
-    }
-
-    // on the destruction of the controller
-    $scope.$on("$destroy", function handler() {
-        // close the navigation menu
-        closeNavMenu();
-    });
-});
-
-// the Sub Portfolio controller
-app.controller('subPortfolioController', function ($scope, $http, $filter, $sce, $window, $compile, $routeParams, $location) {
-
-    // display the header if not displayed already
-    if (!headerDisplayed) {
-        displayHeader();
-    }
-
-    // display the footer if not displayed already
-    if (!footerDisplayed) {
-        displayFooter();
-    }
-    
-    // hide the home body display
-    hideBodyHomeID()
-
-    // get the parameters
-    var params = $routeParams.subPortfolioID;
-
-    // the current index of the array of images
-    var currentIndex = 0;
-
-    // the switch image timing
-    var imageSwitchTimer = 3000;
-    var initialPicturePath = "/external-files/media/portfolio-images/";
-    var jsonFilePath = "/external-files/data/";
-
-    // start fading animation
-    // wait a certain amount of seconds then call switchImage
-    var timeoutHandle = $window.setTimeout(switchImage, imageSwitchTimer);
-
-    // based on which page is currently loaded, set that picture path
-    if (params == "drive-on-metz") {
-        initialPicturePath += "driveonmetz/driveonmetz-logo.jpg";
-        jsonFilePath += "drive-on-metz.json";
-    }
-    else if (params == "forsaken") {
-        initialPicturePath += "forsaken/forsaken-logo.png";
-        jsonFilePath += "forsaken.json";
-    }
-    else if (params == "memoryless") {
-        initialPicturePath += "memoryless/memoryless-logo.jpg";
-        jsonFilePath += "memoryless.json";
-    }
-    else if (params == "over-drive") {
-        initialPicturePath += "overdrive/overdrive-logo.png";
-        jsonFilePath += "over-drive.json";
-    }
-    else if (params == "road-rager") {
-        initialPicturePath += "roadrager/roadrager-logo.png";
-        jsonFilePath += "road-rager.json";
-    }
-    else if (params == "rollaball-mod") {
-        initialPicturePath += "rollaballmod/rollaballmod-logo.png";
-        jsonFilePath += "rollaball-mod.json";
-    }
-    else if (params == "squirvival") {
-        initialPicturePath += "squirvival/squirvival-logo.png";
-        jsonFilePath += "squirvival.json";
-    }
-
-    // the initial update video link
-    var initialUpdateVideo = "";
-
-    // the initial trailer video link
-    var initialTrailerVideo = "";
-
-    // get the data from the JSON file
-    $http.get(jsonFilePath).success(function (data) {
-
-        // get the data from the JSON file
-        $scope.subPortfolio = data;
-        var titleDOM = document.getElementById("pageTitle");
-        var title = "\'" + $scope.subPortfolio.title + "\'";
-        titleDOM.setAttribute("ng-bind-html", title);
-        $compile(titleDOM)($scope);
-        insertMetaData();
-
-        // if the file has video updates
-        if (data.videoUpdates.length > 0) {
-            // set the initial video path
-            initialUpdateVideo = data.videoUpdates[0].videoLink;
-            $scope.startingUpdateVideo = $sce.trustAsResourceUrl(initialUpdateVideo);
-        }
-
-        // if the file has trailer videos
-        if (data.trailerLink.length > 0) {
-            // set the initial trailer video path
-            initialTrailerVideo = data.trailerLink;
-            $scope.trailerVideo = $sce.trustAsResourceUrl(initialTrailerVideo);
-        }
-
-        // initialize
-        $scope.initializeController();
-    });
-
-    // insert the meta data
-    function insertMetaData() {
-        // create meta tags
-        var description = document.createElement("meta");
-        description.name = "description";
-        description.content = $scope.subPortfolio.metaTags.description;
-        var keywords = document.createElement("meta");
-        keywords.name = "keywords";
-        keywords.content = "";
-
-        // loop through all keywords
-        for (x = 0; x < $scope.subPortfolio.metaTags.keywords.length; x++) {
-            // if this is the last element, don't add a comma
-            if (x == $scope.subPortfolio.metaTags.keywords.length - 1) {
-                keywords.content += $scope.subPortfolio.metaTags.keywords[x];
-            }
-            else {
-                keywords.content += $scope.subPortfolio.metaTags.keywords[x] + ",";
-            }
-        }
-
-        // insert the meta tags
-        document.head.appendChild(description);
-        document.head.appendChild(keywords);
-    }
-
-    // gets the game design document title
-    $scope.getDesignDocumentTitle = function (designDocumentLink) {
-        //split string
-        var splits = designDocumentLink.split('/');
-        return splits[splits.length - 1];
-    };
-
-    // changes the current image displayed
-    $scope.changeImage = function (imageSource, index) {
-        // get the componenets broken up
-        var splits = imageSource.split('/');
-
-        // set the current index
-        currentIndex = index;
-
-        // the image to change, display the image and change the source
-        var imageToChange = document.getElementById("slide-show-image-main");
-        if (imageToChange != null) {
-            imageToChange.style.display = "block";
-            imageToChange.src = imageSource;
-            imageToChange.title = splits[splits.length - 1];
-            imageToChange.alt = splits[splits.length - 1];
-        }
-
-        // get the subimages 
-        var subImages = document.getElementsByClassName("slideshow-subimages-to-switch");
-
-        // loop through all subimages
-        for (i = 0; i < subImages.length; i++) {
-            // remove the selected image
-            subImages[i].className = subImages[i].className.replace(" slideshow-subimage-selected", "");
-        }
-
-        // if there were elements found
-        if (subImages.length > 0)
-        {
-            // set the selected image
-            subImages[index].className += " slideshow-subimage-selected";
-        }
-
-        // clear the timeout and reset
-        $window.clearTimeout(timeoutHandle);
-        timeoutHandle = $window.setTimeout(switchImage, imageSwitchTimer);
-    };
-
-    // changes the update video
-    $scope.changeUpdateVideo = function (videoSource, index) {
-        // the video to change, change the source
-        var videoToChange = document.getElementById("subPortfolio-update-video-iframe");
-        if (videoToChange) {
-            videoToChange.src = videoSource;
-        }
-        
-        // get the subimages 
-        var subImages = document.getElementsByClassName("slideshow-subvideoimage-to-switch");
-
-        // if the images exist
-        if (subImages.length > 0)
-        {
-            // loop through all subimages
-            for (i = 0; i < subImages.length; i++) {
-                // remove the selected image
-                subImages[i].className = subImages[i].className.replace(" slideshow-subvideoimage-selected", "");
-            }
-
-            // set the selected image
-            subImages[index].className += " slideshow-subvideoimage-selected";
-        }
-    };
-
-    // initializes this specific controller
-    $scope.initializeController = function ()
-    {
-        // once the script starts, set the initial picture
-        $scope.changeImage(initialPicturePath, currentIndex);
-
-        // if there is an initial update video
-        if (initialUpdateVideo.length > 0) {
-            // once the script starts, set the initial video
-            $scope.changeUpdateVideo(initialUpdateVideo, 0);
-        }
-
-        // if there is an initial trailer video
-        if (initialTrailerVideo.length > 0) {
-            // once the script starts, set the initial video
-            var videoToChange = document.getElementById("subPortfolio-trailer-iframe");
-
-            // if the element was found
-            if (videoToChange)
-            {
-                // set the source
-                videoToChange.src = initialTrailerVideo;
-            }
-        }
-    }
-
-    // gets the starting update video
-    $scope.getStartingUpdateVideo = function () {
-        return $sce.trustAsResourceUrl(initialUpdateVideo);
-    }
-
-    // gets the starting trailer video
-    $scope.getStartingTrailerVideo = function () {
-        return $sce.trustAsResourceUrl(initialTrailerVideo);
-    }
-
-    // shift children based on multidata
-    $('.carousel[data-type="multi"] .item').each(function () {
-        var next = $(this).next();
-        if (!next.length) {
-            next = $(this).siblings(':first');
-        }
-        next.children(':first-child').clone().appendTo($(this));
-
-        for (var i = 0; i < 4; i++) {
-            next = next.next();
-            if (!next.length) {
-                next = $(this).siblings(':first');
-            }
-
-            next.children(':first-child').clone().appendTo($(this));
-        }
-    });
-
-    // normalize all carousel images
-    function carouselNormalization () {
-        var items = $('#slide-show-carousel .carousel-inner .item'), //grab all slides
-            heights = [], //create empty array to store height values
-            tallest; //create variable to make note of the tallest slide
-
-        if (items.length) {
-            function normalizeHeights() {
-                items.each(function () { //add heights to array
-                    heights.push($(this).height());
-                });
-                tallest = Math.max.apply(null, heights); //cache largest value
-                items.each(function () {
-                    $(this).css('min-height', tallest + 'px');
-                });
-            };
-            normalizeHeights();
-
-            $(window).on('resize orientationchange', function () {
-                tallest = 0, heights.length = 0; //reset vars
-                items.each(function () {
-                    $(this).css('min-height', '0'); //reset min-height
-                });
-                normalizeHeights(); //run it again 
-            });
-        }
-    }
-
-    // function that switches to the next image
-    function switchImage() {
-        // get the sub images 
-        var subImages = document.getElementsByClassName("slideshow-subimages-to-switch");
-        subImages = [];
-        // if there are sub images
-        if (subImages.length > 0) {
-            // increase the index
-            currentIndex = (currentIndex + 1) % subImages.length;
-
-            // get the componenets broken up
-            var splits = subImages[currentIndex].src.split('/');
-
-            // the image to change, display the image and change the source
-            var imageToChange = document.getElementById("slide-show-image-main");
-            imageToChange.style.display = "block";
-            imageToChange.src = subImages[currentIndex].src;
-            imageToChange.title = splits[splits.length - 1];
-            imageToChange.alt = splits[splits.length - 1];
-
-            // loop through all subimages
-            for (i = 0; i < subImages.length; i++) {
-                // remove the selected image
-                subImages[i].className = subImages[i].className.replace(" slideshow-subimage-selected", "");
-            }
-
-            // set the selected image
-            subImages[currentIndex].className += " slideshow-subimage-selected";
-        }
-
-        // wait a certain amount of seconds then call switchImage
-        $window.clearTimeout(timeoutHandle);
-        timeoutHandle = $window.setTimeout(switchImage, imageSwitchTimer);
-    }
-
-    // on the destruction of the controller
-    $scope.$on("$destroy", function handler() {
-        // close the navigation menu
-        closeNavMenu();
-
-        // clear out the timer
-        $window.clearTimeout(timeoutHandle);
-    });
-
-    // once the document is ready
-    $(document).ready(function () {
-        // normalize all carousel images
-        $window.setTimeout(carouselNormalization, 1000);
-    });
-});
-
-// the Blog controller
-app.controller('blogController', function ($scope, $http, $compile) {
-
-    // display the header if not displayed already
-    if (headerDisplayed) {
-        hideHeader();
-    }
-
-    // display the footer if not displayed already
-    if (footerDisplayed) {
-        hideFooter();
-    }
-
-    // hide the home body display
-    hideBodyHomeID()
-
-    // get the data from the JSON file
-    $http.get('/external-files/data/blog.json').success(function (data) {
-        $scope.blog = data;
-        var titleDOM = document.getElementById("pageTitle");
-        var title = "\'" + $scope.blog.title + "\'";
-        titleDOM.setAttribute("ng-bind-html", title);
-        $compile(titleDOM)($scope);
-        insertMetaData();
-    });
-
-    // insert the meta data
-    function insertMetaData() {
-        // create meta tags
-        var description = document.createElement("meta");
-        description.name = "description";
-        description.content = $scope.blog.metaTags.description;
-        var keywords = document.createElement("meta");
-        keywords.name = "keywords";
-        keywords.content = "";
-
-        // loop through all keywords
-        for (x = 0; x < $scope.blog.metaTags.keywords.length; x++) {
-            // if this is the last element, don't add a comma
-            if (x == $scope.blog.metaTags.keywords.length - 1) {
-                keywords.content += $scope.blog.metaTags.keywords[x];
-            }
-            else {
-                keywords.content += $scope.blog.metaTags.keywords[x] + ",";
-            }
-        }
-
-        // insert the meta tags
-        document.head.appendChild(description);
-        document.head.appendChild(keywords);
-    }
-
-    // on the destruction of the controller
-    $scope.$on("$destroy", function handler() {
-        // close the navigation menu
-        closeNavMenu();
-    });
-});
-
-// the Contact controller
-app.controller('contactController', function ($scope, $http, $compile) {
-
-    // display the header if not displayed already
-    if (!headerDisplayed) {
-        displayHeader();
-    }
-
-    // display the footer if not displayed already
-    if (!footerDisplayed) {
-        displayFooter();
-    }
-
-    // hide the home body display
-    hideBodyHomeID()
-
-    // get the data from the JSON file
-    $http.get('/external-files/data/contact.json').success(function (data) {
-        $scope.contact = data;
-        var titleDOM = document.getElementById("pageTitle");
-        var title = "\'" + $scope.contact.title + "\'";
-        titleDOM.setAttribute("ng-bind-html", title);
-        $compile(titleDOM)($scope);
-        insertMetaData();
-    });
-
-    // insert the meta data
-    function insertMetaData() {
-        // create meta tags
-        var description = document.createElement("meta");
-        description.name = "description";
-        description.content = $scope.contact.metaTags.description;
-        var keywords = document.createElement("meta");
-        keywords.name = "keywords";
-        keywords.content = "";
-
-        // loop through all keywords
-        for (x = 0; x < $scope.contact.metaTags.keywords.length; x++) {
-            // if this is the last element, don't add a comma
-            if (x == $scope.contact.metaTags.keywords.length - 1) {
-                keywords.content += $scope.contact.metaTags.keywords[x];
-            }
-            else {
-                keywords.content += $scope.contact.metaTags.keywords[x] + ",";
-            }
-        }
-
-        // insert the meta tags
-        document.head.appendChild(description);
-        document.head.appendChild(keywords);
-    }
-
-    // on the destruction of the controller
-    $scope.$on("$destroy", function handler() {
-        // close the navigation menu
-        closeNavMenu();
-    });
-});
-
-// public functions
-
-// displays the header
-function displayHeader()
-{
-    // display the header
-    var header = document.getElementById("masthead-container");
-    header.style.display = "";
-    var topBar = document.getElementById("top-bar");
-    topBar.style.display = "";
-
-    // show the header is currently displayed
-    headerDisplayed = true;
-}
-
-// displays the footer
-function displayFooter()
-{
-    // display the footer
-    var footer = document.getElementById("footer-container");
-    footer.style.display = "";
-
-    // show the header is currently displayed
-    footerDisplayed = true;
-}
-
-// switches the style of the body
-function showBodyHomeID() {
-    //document.body.style = "background-color: #000"; //"background-image: url(\'" + homeBackgroundPageLink + "\');" 
-    document.body.className.replace("body-normal", "");
-    document.body.className = "body-home";
-}
-
-// switches the style of the body
-function hideBodyHomeID()
-{
-    //document.body.style = "background-image: url(\'" + normalBackgroundPageLink + "\'); z-index:-1:";
-    document.body.className.replace("body-home", "");
-    document.body.className = "body-normal";
-}
-
-// hides the header
-function hideHeader()
-{
-    // hide the header
-    var header = document.getElementById("masthead-container");
-    header.style.display = "none";
-    var topBar = document.getElementById("top-bar");
-    topBar.style.display = "none";
-
-    // show the header is not currently displayed
-    headerDisplayed = false;
-}
-
-// hides the footer
-function hideFooter() {
-
-    // hide the footer
-    var footer = document.getElementById("footer-container");
-    footer.style.display = "none";
-
-    // show the footer is not currently displayed
-    footerDisplayed = false;
-}
+*/
 
 // closes the navigation menu 
 function closeNavMenu() {
@@ -918,40 +231,6 @@ function closeNavMenu() {
     // if the icon has been found
     if (navLinkIcon) {
         navLinkIcon.src = "/external-files/media/icons/menu.png";
-    }
-}
-
-// checks if the suburl data exists
-function isCorrectSubUrl(url) {
-
-    // get the location split
-    var splits = url.split("/");
-    var subUrl = splits[splits.length - 1];
-
-    // based on which page is currently loaded, set that picture path
-    if (subUrl == "drive-on-metz") {
-        return true;
-    }
-    else if (subUrl == "forsaken") {
-        return true;
-    }
-    else if (subUrl == "memoryless") {
-        return true;
-    }
-    else if (subUrl == "over-drive") {
-        return true;
-    }
-    else if (subUrl == "road-rager") {
-        return true;
-    }
-    else if (subUrl == "rollaball-mod") {
-        return true;
-    }
-    else if (subUrl == "squirvival") {
-        return true;
-    }
-    else {
-        return false;
     }
 }
 

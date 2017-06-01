@@ -1,51 +1,49 @@
 ﻿<!-- Begin Header -->
 <section ng-controller="headerController">
-    <div class="header-container">
-        <!-- Begin Masthead -->
-        <div class="masthead">
-            <h1 ng-click="goHome(header.headlinerLink)" role="button">{{header.headliner}}</h1>
-            <h3 ng-click="goHome(header.headlinerLink)" role="button"><span ng-bind-html="header.subHeadliner | trustHTML"></span></h3>
-        </div>
-        <!-- End Masthead -->
-        <!-- Begin Navigation Menu-->
-        <div class="navigation">
-            <ul class="nav-ul">
-                <li ng-class="checkIfDropdown(navItem.subNavigation, $index, header.navigation.length)" ng-repeat="navItem in header.navigation">
-                    <div ng-if="navItem.subNavigation">
-                        <a class="nav-dropdown-button navigation-hover-shadow" ng-class="isActive(navItem.pageLink)" href="#{{navItem.pageLink}}"><span ng-bind-html="navItem.title | trustHTML"></span></a>
-                        <div class="nav-dropdown-content">
-                            <div ng-repeat="dropDownItem in navItem.subNavigation">
-                                <div ng-if="$index == 0">
-                                    <a class="no-border navigation-hover-shadow" ng-class="isActive(dropDownItem.pageLink)" href="#{{navItem.pageLink}}/{{dropDownItem.pageLink}}"><span ng-bind-html="dropDownItem.title | trustHTML"></span></a>
-                                </div>
-                                <div ng-if="$index > 0 && $index < navItem.subNavigation.length - 1">
-                                    <a class="navigation-hover-shadow" ng-class="isActive(dropDownItem.pageLink)" href="#{{navItem.pageLink}}/{{dropDownItem.pageLink}}"><span ng-bind-html="dropDownItem.title | trustHTML"></span></a>
-                                </div>
-                                <div ng-if="$index == navItem.subNavigation.length - 1">
-                                    <a class="no-top-border navigation-hover-shadow" ng-class="isActive(dropDownItem.pageLink)" href="#{{navItem.pageLink}}/{{dropDownItem.pageLink}}"><span ng-bind-html="dropDownItem.title | trustHTML"></span></a>
-                                </div>
-                            </div>
+    <!-- Begin Navigation ng-if="$root.showHeader" -->
+    <nav class="navbar fixed-top navbar-toggleable-md navbar-inverse bg-inverse box-shadow--small animated animation-delay--md fadeIn" style="border-radius: 0px;" >
+        <!-- Begin Container -->
+        <div class="container">
+            <!-- Begin Navigation Bar Header -->
+            <div class="navbar-header">
+                <!-- Begin Toggle -->
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- End Toggle -->
+                <!-- Begin Navigation Bar Branding -->
+                <a class="navbar-brand" href="#/">
+                    <h5 class="h5 font-fancy-1 color-white mb-0">{{header.headliner}}</h5>
+                    <span class="h6 font-fancy-2 color-white mt-1" ng-repeat="subHeadliner in header.subHeadliners">
+                        <span ng-if="$index != 0 && $index != header.subHeadlines.length - 1"> | </span>
+                        <span>{{subHeadliner}}</span>
+                    </span>
+                </a>
+                <!-- End Navigation Bar Branding -->
+            </div>
+            <!-- End Navigation Bar Header -->
+            <!-- Begin Navigation Bar -->
+            <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                <div class="navbar-nav ml-auto">
+                    <div class="nav-item" ng-class="{'dropdown': navigation.dropdown !== undefined}" ng-repeat="navigation in header.navigation">
+                        <!-- Begin Not Dropdown -->
+                        <a class="nav-link h5 mb-0" ng-class="isActive(navigation.pageLink)" href="#{{navigation.pageLink}}" ng-if="navigation.dropdown === undefined"><span ng-bind-html="navigation.title | trustHTML"></span></a>
+                        <!-- End Not Dropdown -->
+                        <!-- Begin Dropdown -->
+                        <a class="nav-link dropdown-toggle h5 mb-0" role="button" id="navbarDropdownMenuLink{{$index}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-if="navigation.dropdown !== undefined">
+                            <span ng-bind-html="navigation.title | trustHTML"></span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink{{$index}}" ng-if="navigation.dropdown !== undefined">
+                            <a class="dropdown-item" href="#{{dropdown.pageLink}}" ng-repeat="dropdown in navigation.dropdown"><span ng-bind-html="dropdown.title | trustHTML"></span></a>
                         </div>
+                        <!-- End Dropdown -->
                     </div>
-
-                    <div ng-if="!navItem.subNavigation">
-                        <a class="nav-regular navigation-hover-shadow" ng-class="isActive(navItem.pageLink)" href="#{{navItem.pageLink}}"><span ng-bind-html="navItem.title | trustHTML"></span></a>
-                    </div>
-                </li>
-                <li class="nav-icon">
-                    <a href="javascript:;" ng-click="toggleOverlayMenu()">
-                        <img id="nav-icon-link" class="image-menu" src="/external-files/media/icons/menu.png" />
-                    </a>
-                </li>
-            </ul>
-
-            <ul id="overlay-nav" class="closed nav-ul">
-                <li ng-repeat="navItem in header.navigation">
-                    <a class="nav-regular-black navigation-hover-shadow" ng-class="isActive(navItem.pageLink)" href="#{{navItem.pageLink}}"><span ng-bind-html="navItem.title | trustHTML"></span></a>
-                </li>
-            </ul>
+                </div>
+            </div>
+            <!-- End Navigation Bar -->
         </div>
-        <!-- End Navigation Menu -->
-    </div>
+        <!-- End Container -->
+    </nav>
+    <!-- End Navigation -->
 </section>
 <!-- End Header -->

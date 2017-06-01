@@ -1,20 +1,28 @@
-﻿angular.module('app').service('OEAService', ['DataAccessService', 'DataParsingService', function (DataAccessService, DataParsingService) {
+﻿angular.module('app').service('Service', ['DataAccessService', 'DataParsingService', function (DataAccessService, DataParsingService) {
 
     // initialize the service
     var service = {};
 
-    service.appName
+    // TODO: set this in server
+    // set the application name
+    service.appName = "Cameron Hopkins";
+
     // the current path (after the hash)
     service.afterPath = "";
 
-    // determines if the header/footer is currently displaying
-    service.headerDisplayed = false;
-    service.footerDisplayed = false;
+    // shortens url
+    service.shortenURL = function (url) {
+        // shorten the url
+        return DataAccessService.shortenURL(url)
+        .catch(function (responseU) {
+            return { "error": true, "message": responseU.data.message };
+        });
+    };
 
     // get the header infomation
-    service.getHeaderInformation = function (isUser, username) {
+    service.getHeaderInformation = function () {
         // access the header information
-        return DataAccessService.getHeaderInformation("loggedIn", isUser, username).then(function (responseLI) {
+        return DataAccessService.getHeaderInformation().then(function (responseLI) {
             // parse the data
             return DataParsingService.parseRawInformation(responseLI);
         })
@@ -37,22 +45,85 @@
 
     // get home page data
     service.getHomePageData = function () {
-        // access the organization information
-        return DataAccessService.getAllPublicOrgs().then(function (responseO) {
+        // access the home page information
+        return DataAccessService.getHomePageInformation().then(function (responseH) {
             // parse the data
-            return DataParsingService.parseRawInformation(responseO);
+            return DataParsingService.parseRawInformation(responseH);
         })
-        .catch(function (responseO) {
-            return { "error": true, "message": responseO.data.message };
+        .catch(function (responseH) {
+            return { "error": true, "message": responseH.data.message };
         });
     };
 
-    // shortens url
-    service.shortenURL = function (url) {
-        // shorten the url
-        return DataAccessService.shortenURL(url)
-        .catch(function (responseU) {
-            return { "error": true, "message": responseU.data.message };
+    // get about me page data
+    service.getAboutMePageData = function () {
+        // access the about me information
+        return DataAccessService.getAboutMePageInformation().then(function (responseAM) {
+            // parse the data
+            return DataParsingService.parseRawInformation(responseAM);
+        })
+        .catch(function (responseAM) {
+            return { "error": true, "message": responseAM.data.message };
+        });
+    };
+
+    // get resume page data
+    service.getResumePageData = function () {
+        // access the resume information
+        return DataAccessService.getResumePageInformation().then(function (responseR) {
+            // parse the data
+            return DataParsingService.parseRawInformation(responseR);
+        })
+        .catch(function (responseR) {
+            return { "error": true, "message": responseR.data.message };
+        });
+    };
+
+    // get portfolio page data
+    service.getPortfolioPageData = function () {
+        // access the portfolio information
+        return DataAccessService.getPortfolioPageInformation().then(function (responseP) {
+            // parse the data
+            return DataParsingService.parseRawInformation(responseP);
+        })
+        .catch(function (responseP) {
+            return { "error": true, "message": responseP.data.message };
+        });
+    };
+
+    // get subportfolio page data
+    service.getSubPortfolioPageData = function (subPortfolioID) {
+        // access the subportfolio information
+        return DataAccessService.getSubPortfolioPageInformation(subPortfolioID).then(function (responseSP) {
+            // parse the data
+            return DataParsingService.parseRawInformation(responseSP);
+        })
+        .catch(function (responseSP) {
+            return { "error": true, "message": responseSP.data.message };
+        });
+    };
+
+    // get blog page data
+    service.getBlogPageData = function () {
+        // access the blog information
+        return DataAccessService.getBlogPageInformation().then(function (responseB) {
+            // parse the data
+            return DataParsingService.parseRawInformation(responseB);
+        })
+        .catch(function (responseB) {
+            return { "error": true, "message": responseB.data.message };
+        });
+    };
+
+    // get contact page data
+    service.getContactPageData = function () {
+        // access the contact information
+        return DataAccessService.getContactPageInformation().then(function (responseC) {
+            // parse the data
+            return DataParsingService.parseRawInformation(responseC);
+        })
+        .catch(function (responseC) {
+            return { "error": true, "message": responseC.data.message };
         });
     };
 

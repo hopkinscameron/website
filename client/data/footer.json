@@ -1,24 +1,34 @@
 ﻿{
-  "footerNote": "Copyright &copy; 2016 Cameron Hopkins",
+  "footerNote": "Copyright &copy; 2017 Cameron Hopkins",
   "socialMediaLinks": [
     {
       "type": "LinkedIn",
+      "img": "/client/media/social-media-images/linked-in.png",
+      "title": "Cameron Hopkins LinkedIn",
       "link": "https://www.linkedin.com/in/cameron-hopkins-7a67a5a4"
     },
     {
       "type": "Facebook",
+      "img": "/client/media/social-media-images/facebook.png",
+      "title": "Cameron Hopkins Facebook",
       "link": "https://www.facebook.com/cameron.hopkins.90"
     },
     {
       "type": "Instagram",
+      "img": "/client/media/social-media-images/instagram.png",
+      "title": "Cameron Hopkins Instagram",
       "link": "https://www.instagram.com/camthedragon"
     },
     {
       "type": "Twitter",
+      "img": "/client/media/social-media-images/twitter-logo-white-on-blue.png",
+      "title": "Cameron Hopkins Twitter",
       "link": "https://twitter.com/camthedragon"
     },
     {
       "type": "YouTube",
+      "img": "/client/media/social-media-images/youtube-icon.png",
+      "title": "Cameron Hopkins YouTube",
       "link":  "https://www.youtube.com/channel/UCtQ-7FNTiTIRBElvzVJyrLg"
     }
   ] 

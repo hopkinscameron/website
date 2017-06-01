@@ -1,7 +1,10 @@
 ﻿{
   "logo": "/external-files/media/personal-images/bio-pic.jpg",
   "headliner": "Cameron Hopkins",
-  "subHeadliner": "Software Engineer<br/>Game Designer",
+  "subHeadliners": [
+    "Software Engineer",
+    "Game Designer"
+  ],
   "headlinerLink": "/",
   "navigation": 
   [
@@ -16,8 +19,11 @@
     {
       "title": "Portfolio",
       "pageLink": "portfolio",
-      "subNavigation": 
-      [
+      "dropdown": [
+        {
+          "title": "Portfolio Home",
+          "pageLink": "portfolio"
+        },
         {
           "title": "Over Drive",
           "pageLink": "over-drive"

@@ -58,38 +58,34 @@
         <script src="/client/scripts/third-party-scripts/angular/angular-touch.min.js"></script>
         <script src='/client/scripts/third-party-scripts/angular-loading-bar/loading-bar.min.js'></script>
         <script src="/client/scripts/app/main.js"></script>
-        <script src="/client/scripts/form-submission-handler.js"></script>
+        <script src="/client/scripts/services/Service.js"></script>
+        <script src="/client/scripts/services/DataAccessService.js"></script>
+        <script src="/client/scripts/services/DataParsingService.js"></script>
         <script src="/client/scripts/controllers/headerController.js"></script>
         <script src="/client/scripts/controllers/footerController.js"></script>
+        <script src="/client/scripts/controllers/homeController.js"></script>
+        <script src="/client/scripts/controllers/aboutController.js"></script>
+        <script src="/client/scripts/controllers/resumeController.js"></script>
+        <script src="/client/scripts/controllers/portfolioController.js"></script>
+        <script src="/client/scripts/controllers/subPortfolioController.js"></script>
+        <script src="/client/scripts/controllers/blogController.js"></script>
+        <script src="/client/scripts/controllers/contactController.js"></script>
         <!-- End Scripts -->
     </head>
     <!-- End Head -->
     <!-- Begin Body -->
-    <body>
-        <!-- Begin Navigation -->
-        <nav>
-            <hr id="top-bar" class="top-bar" style="display: none" />
-            <!-- Begin Masthead Container -->
-            <div id="masthead-container" class="masthead-container" style="display: none;">
-                <!-- Begin Header -->
-                <div ng-include="'/client/partials/header.html'"></div>
-                <!-- End Header -->
-            </div>
-            <!-- End Masthead Container -->
-        </nav>
-        <!-- End Navigation -->
+    <body class="body-home">
+        <!-- Begin Header -->
+        <div ng-include="'/client/partials/header.html'"></div>
+        <!-- End Header -->
 
         <!-- Begin NG View -->
         <div id="main" ng-view></div>
         <!-- End NG View -->
 
-        <!-- Begin Footer Container -->
-        <div id="footer-container" class="footer-container" style="display: none;">
-            <!-- Begin Footer -->
-            <div id="footer" ng-include="'/client/partials/footer.html'"></div>
-            <!-- End Footer -->
-        </div>
-        <!-- End Footer Container -->
+        <!-- Begin Footer -->
+        <div id="footer" ng-include="'/client/partials/footer.html'"></div>
+        <!-- End Footer -->
     </body>
     <!-- End Body -->
 </html>

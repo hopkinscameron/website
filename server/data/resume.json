@@ -1,8 +1,8 @@
 ﻿{
   "title": "R&eacute;sum&eacute;",
-  "resumePictureLink": "/client/media/resume-cv/hopkins-cameron-resume.png",
-  "resumeLink": "/client/media/resume-cv/hopkins-cameron-resume.pdf",
-  "cvLink": "/client/media/resume-cv/hopkins-cameron-cv.pdf",
+  "resumePictureLink": "/media/resume-cv/hopkins-cameron-resume.png",
+  "resumeLink": "/media/resume-cv/hopkins-cameron-resume.pdf",
+  "cvLink": "/media/resume-cv/hopkins-cameron-cv.pdf",
   "metaTags": {
     "description": "Cameron Hopkins game design portfolio.",
     "keywords": [

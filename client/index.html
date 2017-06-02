@@ -8,12 +8,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <title id="pageTitle"></title>
-
-        <base href="/">
+        
+        <!-- <base href="/"> -->
 
         <!-- Begin Icons -->
         <!-- for FF, Chrome, Opera -->
-        <link rel="icon" type="image/png" href="/client/media/personal-images/bio-pic.jpg" sizes="16x16" />
+        <link rel="icon" type="image/png" href="./media/personal-images/bio-pic.jpg" sizes="16x16" />
         <!-- for IE -->
         <link rel="icon" type="image/x-icon" href="/external-files/media/icons/favicon.ico" />
         <link rel="shortcut icon" type="image/x-icon" href="/external-files/media/icons/favicon.ico" />
@@ -24,9 +24,9 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous" rel="stylesheet">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" rel="stylesheet">
-        <link href="/client/styles/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <link href="/client/styles/angular-loading-bar/loading-bar.min.css" rel='stylesheet' type='text/css' media='all' />
-        <link href="/client/styles/main-style.css" media="screen" title="CSS" rel="stylesheet" type="text/css" />
+        <link href="./styles/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="./styles/angular-loading-bar/loading-bar.min.css" rel='stylesheet' type='text/css' media='all' />
+        <link href="./styles/main-style.css" media="screen" title="CSS" rel="stylesheet" type="text/css" />
         <!-- End Styles -->
 
         <!-- Begin Scripts -->
@@ -50,33 +50,32 @@
         <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-        <script src="/client/scripts/third-party-scripts/angular/angular.min.js"></script>
-        <script src="/client/scripts/third-party-scripts/angular/angular-animate.min.js"></script>
-        <script src="/client/scripts/third-party-scripts/angular/angular-cookies.min.js"></script>
-        <script src="/client/scripts/third-party-scripts/angular/angular-route.min.js"></script>
-        <script src="/client/scripts/third-party-scripts/angular/angular-sanitize.min.js"></script>
-        <script src="/client/scripts/third-party-scripts/angular/angular-touch.min.js"></script>
-        <script src='/client/scripts/third-party-scripts/angular-loading-bar/loading-bar.min.js'></script>
-        <script src="/client/scripts/app/main.js"></script>
-        <script src="/client/scripts/services/Service.js"></script>
-        <script src="/client/scripts/services/DataAccessService.js"></script>
-        <script src="/client/scripts/services/DataParsingService.js"></script>
-        <script src="/client/scripts/controllers/headerController.js"></script>
-        <script src="/client/scripts/controllers/footerController.js"></script>
-        <script src="/client/scripts/controllers/homeController.js"></script>
-        <script src="/client/scripts/controllers/aboutController.js"></script>
-        <script src="/client/scripts/controllers/resumeController.js"></script>
-        <script src="/client/scripts/controllers/portfolioController.js"></script>
-        <script src="/client/scripts/controllers/subPortfolioController.js"></script>
-        <script src="/client/scripts/controllers/blogController.js"></script>
-        <script src="/client/scripts/controllers/contactController.js"></script>
+        <script src="./scripts/third-party-scripts/angular/angular.min.js"></script>
+        <script src="./scripts/third-party-scripts/angular/angular-animate.min.js"></script>
+        <script src="./scripts/third-party-scripts/angular/angular-cookies.min.js"></script>
+        <script src="./scripts/third-party-scripts/angular/angular-route.min.js"></script>
+        <script src="./scripts/third-party-scripts/angular/angular-sanitize.min.js"></script>
+        <script src="./scripts/third-party-scripts/angular/angular-touch.min.js"></script>
+        <script src='./scripts/third-party-scripts/angular-loading-bar/loading-bar.min.js'></script>
+        <script src="./scripts/app/main.js"></script>
+        <script src="./scripts/services/Service.js"></script>
+        <script src="./scripts/services/DataAccessService.js"></script>
+        <script src="./scripts/controllers/headerController.js"></script>
+        <script src="./scripts/controllers/footerController.js"></script>
+        <script src="./scripts/controllers/homeController.js"></script>
+        <script src="./scripts/controllers/aboutController.js"></script>
+        <script src="./scripts/controllers/resumeController.js"></script>
+        <script src="./scripts/controllers/portfolioController.js"></script>
+        <script src="./scripts/controllers/subPortfolioController.js"></script>
+        <script src="./scripts/controllers/blogController.js"></script>
+        <script src="./scripts/controllers/contactController.js"></script>
         <!-- End Scripts -->
     </head>
     <!-- End Head -->
     <!-- Begin Body -->
     <body class="body-home">
         <!-- Begin Header -->
-        <div ng-include="'/client/partials/header.html'"></div>
+        <div ng-include="'./partials/header.html'"></div>
         <!-- End Header -->
 
         <!-- Begin NG View -->
@@ -84,7 +83,7 @@
         <!-- End NG View -->
 
         <!-- Begin Footer -->
-        <div id="footer" ng-include="'/client/partials/footer.html'"></div>
+        <div id="footer" ng-include="'./partials/footer.html'"></div>
         <!-- End Footer -->
     </body>
     <!-- End Body -->

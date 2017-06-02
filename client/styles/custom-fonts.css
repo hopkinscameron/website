@@ -1,12 +1,12 @@
 ﻿@font-face {
     font-family: no-more-lies;
-    src: url('/client/media/fonts/no-more-lies.ttf');
+    src: url('./fonts/no-more-lies.ttf');
 }
 @font-face {
     font-family: true-lies;
-    src: url('/client/media/fonts/true-lies.ttf');
+    src: url('./fonts/true-lies.ttf');
 }
 @font-face {
     font-family: wiked-grit;
-    src: url('/client/media/fonts/wicked-grit.ttf');
+    src: url('./fonts/wicked-grit.ttf');
 }

@@ -26,7 +26,7 @@
     // gets the header based on type
     service.getHeaderInformation = function () {
         // set the endpoint
-        var endpoint = "/client/data/header.json"; //"/api/header";
+        var endpoint = "/api/header";
 
         // create request
         var req = {
@@ -46,7 +46,7 @@
     // gets footer information 
     service.getFooterInformation = function () {
         // set the endpoint
-        var endpoint = "/client/data/footer.json"; //"/api/footer";
+        var endpoint = "/api/footer";
 
         // create request
         var req = {
@@ -66,7 +66,7 @@
     // gets home page information 
     service.getHomePageInformation = function () {
         // set the endpoint
-        var endpoint = "/client/data/home.json"; //"/api/home";
+        var endpoint = "/api/home";
 
         // create request
         var req = {
@@ -86,7 +86,7 @@
     // gets about me page information 
     service.getAboutMePageInformation = function () {
         // set the endpoint
-        var endpoint = "/client/data/about-me.json"; //"/api/aboutMe";
+        var endpoint = "/api/about";
 
         // create request
         var req = {
@@ -106,7 +106,7 @@
     // gets resume page information 
     service.getResumePageInformation = function () {
         // set the endpoint
-        var endpoint = "/client/data/resume.json"; //"/api/resume";
+        var endpoint = "/api/resume";
 
         // create request
         var req = {
@@ -126,7 +126,7 @@
     // gets portfolio page information 
     service.getPortfolioPageInformation = function () {
         // set the endpoint
-        var endpoint = "/client/data/portfolio.json"; //"/api/portfolio";
+        var endpoint = "/api/portfolio";
 
         // create request
         var req = {
@@ -146,7 +146,7 @@
     // gets subportfolio page information 
     service.getSubPortfolioPageInformation = function (subPortfolioID) {
         // set the endpoint
-        var endpoint = "/client/data/over-drive.json"; //"/api/subportfolio?id=subPortfolioID";
+        var endpoint = "/api/subportfolio?id=" + subPortfolioID;
 
         // create request
         var req = {
@@ -166,7 +166,7 @@
     // gets blog page information 
     service.getBlogPageInformation = function () {
         // set the endpoint
-        var endpoint = "/client/data/blog.json"; //"/api/blog";
+        var endpoint = "/api/blog";
 
         // create request
         var req = {
@@ -186,7 +186,7 @@
     // gets contact page information 
     service.getContactPageInformation = function () {
         // set the endpoint
-        var endpoint = "/client/data/contact.json"; //"/api/contact";
+        var endpoint = "/api/contact";
 
         // create request
         var req = {

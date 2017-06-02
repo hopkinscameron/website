@@ -1,4 +1,4 @@
-﻿angular.module('app').service('Service', ['DataAccessService', 'DataParsingService', function (DataAccessService, DataParsingService) {
+﻿angular.module('app').service('Service', ['DataAccessService', function (DataAccessService) {
 
     // initialize the service
     var service = {};
@@ -23,8 +23,7 @@
     service.getHeaderInformation = function () {
         // access the header information
         return DataAccessService.getHeaderInformation().then(function (responseLI) {
-            // parse the data
-            return DataParsingService.parseRawInformation(responseLI);
+            return responseLI.data;
         })
         .catch(function (responseLI) {
             return { "error": true, "message": responseLI.data.message };
@@ -35,8 +34,7 @@
     service.getFooterInformation = function () {
         // access the footer information
         return DataAccessService.getFooterInformation().then(function (responseF) {
-            // parse the data
-            return DataParsingService.parseRawInformation(responseF);
+            return responseF.data;
         })
         .catch(function (responseF) {
             return { "error": true, "message": responseF.data.message };
@@ -47,8 +45,7 @@
     service.getHomePageData = function () {
         // access the home page information
         return DataAccessService.getHomePageInformation().then(function (responseH) {
-            // parse the data
-            return DataParsingService.parseRawInformation(responseH);
+            return responseH.data;
         })
         .catch(function (responseH) {
             return { "error": true, "message": responseH.data.message };
@@ -59,8 +56,7 @@
     service.getAboutMePageData = function () {
         // access the about me information
         return DataAccessService.getAboutMePageInformation().then(function (responseAM) {
-            // parse the data
-            return DataParsingService.parseRawInformation(responseAM);
+            return responseAM.data;
         })
         .catch(function (responseAM) {
             return { "error": true, "message": responseAM.data.message };
@@ -71,8 +67,7 @@
     service.getResumePageData = function () {
         // access the resume information
         return DataAccessService.getResumePageInformation().then(function (responseR) {
-            // parse the data
-            return DataParsingService.parseRawInformation(responseR);
+            return responseR.data;
         })
         .catch(function (responseR) {
             return { "error": true, "message": responseR.data.message };
@@ -83,8 +78,7 @@
     service.getPortfolioPageData = function () {
         // access the portfolio information
         return DataAccessService.getPortfolioPageInformation().then(function (responseP) {
-            // parse the data
-            return DataParsingService.parseRawInformation(responseP);
+            return responseP.data;
         })
         .catch(function (responseP) {
             return { "error": true, "message": responseP.data.message };
@@ -95,8 +89,7 @@
     service.getSubPortfolioPageData = function (subPortfolioID) {
         // access the subportfolio information
         return DataAccessService.getSubPortfolioPageInformation(subPortfolioID).then(function (responseSP) {
-            // parse the data
-            return DataParsingService.parseRawInformation(responseSP);
+            return responseSP.data;
         })
         .catch(function (responseSP) {
             return { "error": true, "message": responseSP.data.message };
@@ -107,8 +100,7 @@
     service.getBlogPageData = function () {
         // access the blog information
         return DataAccessService.getBlogPageInformation().then(function (responseB) {
-            // parse the data
-            return DataParsingService.parseRawInformation(responseB);
+            return responseB.data;
         })
         .catch(function (responseB) {
             return { "error": true, "message": responseB.data.message };
@@ -119,8 +111,7 @@
     service.getContactPageData = function () {
         // access the contact information
         return DataAccessService.getContactPageInformation().then(function (responseC) {
-            // parse the data
-            return DataParsingService.parseRawInformation(responseC);
+            return responseC.data;
         })
         .catch(function (responseC) {
             return { "error": true, "message": responseC.data.message };

@@ -1,4 +1,4 @@
-﻿@import url('/client/styles/custom-fonts.css');
+﻿@import url('./custom-fonts.css');
 
 /*New Color: #29a8d6*/
 /*Old Color: #009900*/
@@ -191,7 +191,7 @@ body {
   	image-rendering: crisp-edges;
   	image-rendering: optimizeSpeed;
   	image-rendering: optimize-contrast;
-    background-image: url("/client/media/background-images/black-concrete.jpg");
+    background-image: url("../media/background-images/black-concrete.jpg");
     background-position: center top;
     background-attachment: fixed;
     -o-background-size: cover;

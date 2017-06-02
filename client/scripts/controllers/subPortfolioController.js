@@ -218,7 +218,7 @@
     // gets the page data
     function getPageData() {
         // get subportfolio page data
-        Service.getSubPortfolioPageData().then(function (responseSP) {
+        Service.getSubPortfolioPageData(subPortfolioID).then(function (responseSP) {
             // if returned a valid response
             if (!responseSP.error) {
                 // set the data

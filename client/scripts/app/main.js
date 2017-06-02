@@ -1,16 +1,4 @@
-﻿
-// determines if the header/footer is currently displaying
-var headerDisplayed = false;
-var footerDisplayed = false;
-
-// the current page title
-var currentPageTitle = "Cameron Hopkins";
-
-// the background page link
-var normalBackgroundPageLink = "/client/media/background-images/black-concrete.jpg";
-var homeBackgroundPageLink = "/client/media/personal-images/sitting-professional.jpg";
-
-// set up the application
+﻿// set up the application
 var app = angular.module("app", ['ngRoute', 'ngSanitize', 'ngAnimate', 'angular-loading-bar'])
     .filter('trustUrl', function ($sce) {
     return function (url) {
@@ -32,35 +20,35 @@ app.config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider', func
 
     $routeProvider
         .when('/', {
-            templateUrl: '/client/partials/home.html',
+            templateUrl: './partials/home.html',
             controller: 'homeController'
         })
         .when('/about', {
-            templateUrl: '/client/partials/about.html',
+            templateUrl: './partials/about.html',
             controller: 'aboutController'
         })
         .when('/resume', {
-            templateUrl: '/client/partials/resume.html',
+            templateUrl: './partials/resume.html',
             controller: 'resumeController'
         })
         .when('/portfolio', {
-            templateUrl: '/client/partials/portfolio.html',
+            templateUrl: './partials/portfolio.html',
             controller: 'portfolioController'
         })
         .when('/portfolio/:subPortfolioID', {
-            templateUrl: '/client/partials/sub-portfolio.html',
+            templateUrl: './partials/sub-portfolio.html',
             controller: 'subPortfolioController'
         })
         .when('/blog', {
-            templateUrl: '/client/partials/blog.html',
+            templateUrl: './partials/blog.html',
             controller: 'blogController'
         })
         .when('/contact', {
-            templateUrl: '/client/partials/contact.html',
+            templateUrl: './partials/contact.html',
             controller: 'contactController'
         })
         .otherwise({
-            templateUrl: '/client/partials/error.html',
+            templateUrl: './partials/error.html',
             controller: 'errorController'
         })
 
@@ -212,27 +200,6 @@ app.controller('homeController', function ($scope, $http, $compile) {
     });
 });
 */
-
-// closes the navigation menu 
-function closeNavMenu() {
-    // get the overlay nav
-    var navOverlay = document.getElementById("overlay-nav");
-
-    // check if the navOverly is displaying
-    if (navOverlay && navOverlay.className == "open")
-    {
-        // remove class
-        navOverlay.className = "closed";
-    }
-
-    // get the img and switch the image
-    var navLinkIcon = document.getElementById("nav-icon-link");
-
-    // if the icon has been found
-    if (navLinkIcon) {
-        navLinkIcon.src = "/external-files/media/icons/menu.png";
-    }
-}
 
 // checks if on a mobile browser
 function mobileCheck()

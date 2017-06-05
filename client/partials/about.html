@@ -3,7 +3,7 @@
     <!-- Begin Container -->
     <div class="container">
         <!-- Begin Page Not Fully Loaded -->
-        <div ng-if="!pageFullyLoaded">
+        <div class="animated animation-delay--xs fadeIn" ng-if="!pageFullyLoaded">
             <div class="col-sm-4 offset-sm-4 mt-5">
                 <h4 class="text-center animated infinite jello">Getting thing ready for you...</h4>
             </div>
@@ -17,14 +17,14 @@
         </div>
         <!-- End Page Fully Loaded With Errors -->
         <!-- Begin Page Fully Loaded With No Errors -->
-        <div ng-if="pageFullyLoaded && !error.error">
+        <div class="animated animation-delay--md fadeIn" ng-if="pageFullyLoaded && !error.error">
             <!-- Begin Page Title -->
-            <h2 class="font-weight-bold text-uppercase mb-3">{{about.title}}</h2>
+            <h2 class="font-weight-bold text-uppercase mb-3"><span ng-bind-html="about.title | trustHTML"></span></h2>
             <!-- End Page Title -->
             <!-- Begin Bio -->
             <div class="card card--transparent card-block">
-                <h4 class="text-capitalize animated animation-delay--md fadeIn">Bio</h4>
-                <span class="animated animation-delay--xmd fadeInUp" ng-bind-html="about.bio | trustHTML"></span>
+                <h4 class="text-capitalize">Bio</h4>
+                <span class="pl-3 pr-3 animated animation-delay--xmd fadeInUp" ng-bind-html="about.bio | trustHTML"></span>
             </div>
             <!-- End Bio -->
             <!-- Begin Content Break -->
@@ -32,8 +32,8 @@
             <!-- End Content Break -->
             <!-- Begin Hobbies -->
             <div class="card card--transparent card-block">
-                <h4 class="text-capitalize animated animation-delay--md fadeIn">Hobbies</h4>
-                <div class="container animated animation-delay--xmd fadeInUp">
+                <h4 class="text-capitalize">Hobbies</h4>
+                <div class="pl-3 pr-3 animated animation-delay--xmd fadeInUp">
                     <ul class="list-unstyled mb-0">
                         <li ng-repeat="hobby in about.hobbies">{{hobby.text}}</li>
                     </ul>
@@ -43,10 +43,10 @@
             <!-- Begin Content Break -->
             <hr class="text-center body-bar" />
             <!-- End Content Break -->
-            <!-- Begin Favority Games -->
+            <!-- Begin Favorite Games -->
             <div class="card card--transparent card-block">
-                <h4 class="text-capitalize animated animation-delay--md fadeIn">Favorite Games</h4>
-                <div class="container animated animation-delay--xmd fadeInUp">
+                <h4 class="text-capitalize">Favorite Games</h4>
+                <div class="animated animation-delay--xmd fadeInUp">
                     <div class="col-md-3 float-left" ng-repeat="favoriteGamesData in about.favoriteGames">
                         <ul class="list-unstyled mb-0">
                             <li class="h5">
@@ -59,7 +59,7 @@
                     </div>
                 </div>
             </div>
-            <!-- End Favority Games -->
+            <!-- End Favorite Games -->
         </div>
         <!-- End Page Fully Loaded With No Errors -->
     </div>

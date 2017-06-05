@@ -195,5 +195,39 @@ router.get('/api/contact', function (req, res, next) {
 /*
 	POST
 */
+// POST send email
+// format /api/sendEmail
+router.post('/api/sendEmail', function (req, res, next) {
+	// https://script.google.com/macros/s/AKfycbx0lHzaYKANP_hcJpzTtu-ky6uAfKKjW6V7JBakRcgg6JW8XN0/exec
+
+	// validate existence
+	req.checkBody('firstName', 'First name is required').notEmpty();
+	req.checkBody('lastName', 'Last name is required').notEmpty();
+	req.checkBody('email', 'Email is required').notEmpty();
+	req.checkBody('subject', 'Subject is required').notEmpty();
+	req.checkBody('message', 'Message is required').notEmpty();
+	
+	// validate errors
+	var errors = req.validationErrors();
+
+	// if errors exist
+	if (errors) {
+		var errorText = "";
+		for(var x = 0; x < errors.length; x++) {
+			errorText += errors[x].msg + " ";
+		}
+		// send bad request
+		res.status(400).send({message: "Bad request. " + errorText});
+	}
+	else {
+		// set incoming information
+		var inUsername = req.body.username,
+			inToken = req.body.token,
+			inEventId = req.body.eventId,
+			inComment = req.body.comment;
+		
+
+	}
+});
 
 module.exports = router;

@@ -1,39 +1,61 @@
-﻿<section ng-controller="resumeController">
+﻿<!-- Begin Resume Page -->
+<section ng-controller="resumeController">
     <!-- Begin Container -->
     <div class="container">
-        <!-- Begin Center Column -->
-        <div class="body-container">
-            <h2><span ng-bind-html="resume.title | trustHTML"></span></h2>
-            <div class="image-container">
-                <img class="image-resume  img-responsive" ng-src="{{resume.resumePictureLink}}" title="R&eacute;sum&eacute;" alt="R&eacute;sum&eacute;" spinner-load />
+        <!-- Begin Page Not Fully Loaded -->
+        <div class="animated animation-delay--xs fadeIn" ng-if="!pageFullyLoaded">
+            <div class="col-sm-4 offset-sm-4 mt-5">
+                <h4 class="text-center animated infinite jello">Getting thing ready for you...</h4>
             </div>
-            <br />
-            <div class="resume-center">
-                <ul class="resume-ul">
-                    <li class="resume-header-li">
-                        <span class="aboutme-span">R&eacute;sum&eacute;</span>
-                    </li>
-                    <li class="resume-li">
-                        <a href="{{resume.resumeLink}}" target="_blank" style="text-decoration: none;">
-                            <img class="image-pdf" src="/client/media/icons/pdf-icon.png" alt="resume.pdf" title="resume.pdf" />
-                        </a>
-                    </li>
-                </ul>
-                <ul class="resume-ul">
-                    <li class="resume-header-li">
-                        <span class="aboutme-span">CV</span>
-                    </li>
-                    <li class="resume-li">
-                        <a href="{{resume.cvLink}}" target="_blank" style="text-decoration: none;">
-                            <img class="image-pdf" src="/client/media/icons/pdf-icon.png" alt="cv.pdf" title="cv.pdf" />
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div style="clear: both"></div>
-            <br />
         </div>
-        <!-- End Center Column -->
+        <!-- End Page Not Fully Loaded -->
+        <!-- Begin Page Fully Loaded With Errors -->
+        <div ng-if="pageFullyLoaded && error.error">
+            <div class="col-sm-4 offset-sm-4 mt-5">
+                <h4 class="text-center text-muted font-italic" ng-if="error.error">{{error.message}}</h4>
+            </div>
+        </div>
+        <!-- End Page Fully Loaded With Errors -->
+        <!-- Begin Page Fully Loaded With No Errors -->
+        <div class="animated animation-delay--md fadeIn" ng-if="pageFullyLoaded && !error.error">
+            <!-- Begin Page Title -->
+            <h2 class="font-weight-bold text-uppercase mb-3"><span ng-bind-html="resume.title | trustHTML"></span></h2>
+            <!-- End Page Title -->
+            <!-- Begin Resume Image -->
+            <div class="card card--transparent card-block animated animation-delay--sm fadeInUp">
+                <div class="w-100 text-center">
+                    <img class="img-fluid" width="600" height="450" ng-src="{{resume.resumePictureLink}}" title="R&eacute;sum&eacute;" alt="R&eacute;sum&eacute;" spinner-load />
+                </div>
+            </div>
+            <!-- End Resume Image -->
+            <!-- Begin Content Break -->
+            <hr class="text-center body-bar" />
+            <!-- End Content Break -->
+            <!-- Begin Resume/Curriculum Vitae Downloads -->
+            <div class="card card--transparent card-block">
+                <div class="col-md-6 offset-md-3 row">
+                    <!-- Begin Resume Download -->
+                    <div class="col text-center animated animation-delay--lg bounceInLeft">
+                        <h5 class="">R&eacute;sum&eacute;</h5>
+                        <a href="{{resume.resumeLink}}" target="_blank" style="text-decoration: none;">
+                            <img class="" width="50" height="50" src="/media/icons/pdf-icon.png" alt="resume.pdf" title="resume.pdf" />
+                        </a>
+                    </div>
+                    <!-- End Resume Download -->
+                    <!-- Begin Curriculum Vitae Download -->
+                    <div class="col text-center  animated animation-delay--lg bounceInRight">
+                        <h5 class="">Curriculum Vitae</h5>
+                        <a href="{{resume.cvLink}}" target="_blank" style="text-decoration: none;">
+                            <img class="" width="50" height="50" src="/media/icons/pdf-icon.png" alt="cv.pdf" title="cv.pdf" />
+                        </a>
+                    </div>
+                    <!-- End Curriculum Vitae Download -->
+                </div>
+            </div>
+            <!-- End Resume/Curriculum Vitae Downloads -->
+            </div>
+        <!-- End Page Fully Loaded With No Errors -->       
     </div>
     <!-- End Container -->
 </section>
+<!-- End Resume Page -->

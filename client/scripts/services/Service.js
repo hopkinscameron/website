@@ -10,6 +10,17 @@
     // the current path (after the hash)
     service.afterPath = "";
 
+    // sends email to owner (me)
+    service.sendEmailToOwner = function (emailData) {
+        // sends email to owner (me)
+        return DataAccessService.sendEmailToOwner(emailData).then(function (responseSE) {
+            return { "error": false, "message": responseSE.data.message };
+        })
+        .catch(function (responseSE) {
+            return { "error": true, "message": responseSE.data.message };
+        });
+    };
+
     // shortens url
     service.shortenURL = function (url) {
         // shorten the url

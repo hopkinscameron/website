@@ -6,7 +6,7 @@
     Service.afterPath = $location.path();
 
     // holds the page title
-    $scope.pageTitle = "Home | " + Service.appName;
+    $scope.pageTitle = "R&eacute;sum&eacute; | " + Service.appName;
 
     // holds the error
     $scope.error = {

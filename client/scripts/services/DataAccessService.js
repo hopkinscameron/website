@@ -23,6 +23,35 @@
         return $http(req);
     };
 
+    // sends email to owner (me)
+    service.sendEmailToOwner = function (emailData) {
+        // set the endpoint
+        var endpoint = "/api/sendEmail";
+
+        // the data to send
+        var data = JSON.stringify({
+            "firstName": emailData.firstName,
+            "lastName": emailData.lastName,
+            "email": emailData.email,
+            "subject": emailData.subject,
+            "message": emailData.message
+        });
+
+        // create request
+        var req = {
+            method: 'POST',
+            url: endpoint,
+            headers: {
+                'Content-Type': 'application/json; odata=verbose',
+                'Accept': 'application/json; odata=verbose'
+            },
+            data: data
+        };
+
+        // send request
+        return $http(req);
+    };
+
     // gets the header based on type
     service.getHeaderInformation = function () {
         // set the endpoint

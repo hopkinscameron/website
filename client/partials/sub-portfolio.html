@@ -1,115 +1,158 @@
-﻿<section ng-controller="subPortfolioController">
+﻿<!-- Begin Sub Portfolio Page -->
+<section ng-controller="subPortfolioController">
     <!-- Begin Container -->
     <div class="container">
-        <!-- Begin Center Column -->
-        <div class="body-container">
-            <h2>{{subPortfolio.title}}</h2>
-            <div></div>
-            <div></div>
-
-            <div id="slide-show-carousel" class="carousel slide" data-ride="carousel" data-interval="4000">
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner" role="listbox">
-                    <div id="carousel-item" class="item" ng-repeat="image in subPortfolio.images" ng-class="{'active': $index == 0}">
-                        <img ng-src="{{image.link}}" spinner-load>
-                    </div>
-                </div>
-
-                <!-- Left and right controls -->
-                <a class="left carousel-control" href="#slide-show-carousel" role="button" data-slide="prev" target="_self">
-                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#slide-show-carousel" role="button" data-slide="next" target="_self">
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-                
-                <div class="carousel-indicators-container">
-                    <!-- <span class="glyphicon glyphicon-chevron-left slideshow-arrow-float-left" ng-click=""></span> -->
-                    <!-- Indicators -->
-                    <ol class="carousel-indicators">
-                        <li data-target="#slide-show-carousel" data-slide-to="{{$index}}" ng-repeat="image in subPortfolio.images" ng-class="{'active': $index == 0}">
-                            <img class="slideshow-subimage-hover-shadow img-responsive" alt="" ng-src="{{image.link}}" spinner-load>
-                        </li>
-                    </ol>
-                    <!-- <span class="glyphicon glyphicon-chevron-right slideshow-arrow-float-right" ng-click=""></span> -->
-                </div>
+         <!-- Begin Page Not Fully Loaded -->
+        <div class="animated animation-delay--xs fadeIn" ng-if="!pageFullyLoaded">
+            <div class="col-sm-4 offset-sm-4 mt-5">
+                <h4 class="text-center animated infinite jello">Getting thing ready for you...</h4>
             </div>
-
-            <hr />
-
-            <h3 class="header-h3">Overview</h3>
-
-            <p class="paragraph-p">
-                <span ng-bind-html="subPortfolio.overviewContent.overview | trustHTML"></span>
-            </p>
-
-            <div ng-if="subPortfolio.overviewContent.gameDesignDocument">
-                <p class="paragraph-p">
-                    Take a look at the game design document.
-                    <a href="{{subPortfolio.overviewContent.gameDesignDocument}}" target="_blank" style="text-decoration: none;">
-                        <img class="image-portfolio-pdf" src="/external-files/media/icons/pdf-icon.png" alt="{{getDesignDocumentTitle(subPortfolio.overviewContent.gameDesignDocument)}}" title="{{getDesignDocumentTitle(subPortfolio.overviewContent.gameDesignDocument)}}" />
-                    </a>
-                </p>
+        </div>
+        <!-- End Page Not Fully Loaded -->
+        <!-- Begin Page Fully Loaded With Errors -->
+        <div ng-if="pageFullyLoaded && error.error">
+            <div class="col-sm-4 offset-sm-4 mt-5">
+                <h4 class="text-center text-muted font-italic" ng-if="error.error">{{error.message}}</h4>
             </div>
-
-            <div ng-repeat="spDownloadData in subPortfolio.overviewContent.downloadLink track by $index">
-                <p class="paragraph-p">
-                    {{spDownloadData.text}}<a href="{{spDownloadData.link}}">here</a>.
-                </p>
-            </div>
-
-            <div class="ul-container-percentage">
-                <ul class="sub-portfolio-ul" ng-repeat="gameData in subPortfolio.overviewContent.gameData">
-                    <li class="sub-portfolio-header-li">
-                        <span class="sub-portfolio-header-span">{{gameData.title}}</span>
-                    </li>
-                    <li class="sub-portfolio-li" ng-repeat="data in gameData.data">
-                        <span class="sub-portfolio-sub-span">{{data.text}}</span>
-                    </li>
-                </ul>
-            </div>
-            <span style="clear: both"></span>
-
-            <div class="image-container">
-                <div ng-if="subPortfolio.videoUpdates.length > 0">
-                    <hr />
-                    <h3 class="header-h3">{{subPortfolio.title}} Updates</h3>
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <iframe id="subPortfolio-update-video-iframe" class="iframe-porfolio-update-video embed-responsive-item" ng-src="{{getStartingUpdateVideo()}}"></iframe>
-                    </div>
-                    <div class="slideshow-change-subvideoimage-div">
-                        <div class="slideshow-subvideoimage-div" ng-repeat="video in subPortfolio.videoUpdates">
-                            <div ng-if="$index == 0">
-                                <img class="slideshow-subvideoimage-to-switch slideshow-subvideoimage-hover-shadow slideshow-subvideoimage-selected img-responsive"
-                                     ng-src="{{video.thumbnailLink}}"
-                                     ng-click="changeUpdateVideo(video.videoLink, $index)"
-                                     alt=""
-                                     spinner-load>
-                            </div>
-                            <div ng-if="$index > 0">
-                                <img class="slideshow-subvideoimage-to-switch slideshow-subvideoimage-hover-shadow img-responsive"
-                                     ng-src="{{video.thumbnailLink}}"
-                                     ng-click="changeUpdateVideo(video.videoLink, $index)"
-                                     alt=""
-                                     spinner-load>
+        </div>
+        <!-- End Page Fully Loaded With Errors -->
+        <!-- Begin Page Fully Loaded With No Errors -->
+        <div class="animated animation-delay--md fadeIn" ng-if="pageFullyLoaded && !error.error">
+            <!-- Begin Page Title -->
+            <h2 class="font-weight-bold text-uppercase mb-3"><span ng-bind-html="subPortfolio.title | trustHTML"></span></h2>
+            <!-- End Page Title -->
+            <!-- Begin Project Highlights -->
+            <div class="card card--transparent card-block">
+                <div class="row">
+                    <!-- Begin Image Selection -->
+                    <div class="col-md-4 float-left sub-portfolio-img-container-max-height">
+                        <div class="row">
+                            <div class="col-md-6 float-left mb-3" ng-repeat="image in subPortfolio.images">
+                                <img class="d-block img-fluid sub-portfolio-img" ng-src="{{image.link}}" ng-click="changeImage($index)" spinner-load>
                             </div>
                         </div>
                     </div>
+                    <!-- End Image Selection -->
+                    <!-- Begin Carousel -->
+                    <div class="col float-left">
+                        <div id="slide-show-carousel" class="carousel slide" data-ride="carousel" data-interval="0000">
+                            <!-- Begin Main Slide Show -->
+                            <div class="carousel-inner" role="listbox">
+                                <div class="carousel-item" ng-repeat="image in subPortfolio.images" ng-class="{'active': $index == 0}">
+                                    <img class="d-block img-fluid" ng-src="{{image.link}}" spinner-load>
+                                </div>
+                            </div>
+                            <!-- End Main Slide Show -->
+                            <!-- Begin Left and Right Controls -->
+                            <a class="carousel-control-prev" data-target="#slide-show-carousel" role="button" data-slide="prev" target="_self">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" data-target="#slide-show-carousel" role="button" data-slide="next" target="_self">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                            <!-- End Left and Right Controls -->
+                        </div>
+                    </div>
+                    <!-- End Carousel -->
                 </div>
             </div>
-
-            <div ng-if="subPortfolio.trailerLink">
-                <hr style="clear: both" />
-                <h3 class="header-h3">{{subPortfolio.title}} Trailer</h3>
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe id="subPortfolio-trailer-iframe" class="iframe-porfolio-trailer-video embed-responsive-item" ng-src="{{getStartingTrailerVideo()}}"></iframe>
+            <!-- Begin Project Highlights -->
+            <!-- Begin Content Break -->
+            <hr class="body-bar" />
+            <!-- End Content Break -->
+            <!-- Begin Overview -->
+            <div class="card card--transparent card-block">
+                <h4 class="text-capitalize">Overview</h4>
+                <p class="pl-3 pr-3" ng-bind-html="subPortfolio.overviewContent.overview | trustHTML"></p>
+                <!-- Begin Game Design Document -->
+                <div ng-if="subPortfolio.overviewContent.gameDesignDocument">
+                    <p class="pl-3 pr-3">
+                        Take a look at the game design document.
+                        <a href="{{subPortfolio.overviewContent.gameDesignDocument}}" target="_blank" style="text-decoration: none;">
+                            <img class="" width="30" height="30" src="/media/icons/pdf-icon.png" alt="{{subPortfolio.overviewContent.gameDesignDocumentTitle}}" title="{{subPortfolio.overviewContent.gameDesignDocumentTitle}}" />
+                        </a>
+                    </p>
+                </div>
+                <!-- End Game Design Document -->
+            </div>
+            <!-- End Overview -->
+            <!-- Begin Content Break -->
+            <hr class="body-bar" />
+            <!-- End Content Break -->
+            <!-- Begin Development Details -->
+            <div class="card card--transparent card-block">
+                <h4 class="text-capitalize">Development Details</h4>
+                <div class="row pl-3 pr-3">
+                    <div class="col-md-2 float-left mb-5" ng-repeat="gameData in subPortfolio.overviewContent.gameData">
+                        <ul class="list-unstyled mb-0">
+                            <li class="h5">
+                                <span class="font-italic">{{gameData.title}}</span>
+                            </li>
+                            <li class="aboutme-li" ng-repeat="data in gameData.data">
+                                <span>{{data.text}}</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <br />
+            <!-- End Development Details -->
+            <!-- Begin Content Break -->
+            <hr class="body-bar" ng-if="subPortfolio.overviewContent.downloadLinks" />
+            <!-- End Content Break -->
+            <!-- Begin Download Links -->
+            <div class="card card--transparent card-block" ng-if="subPortfolio.overviewContent.downloadLinks">
+                <h4 class="text-capitalize">Downloads</h4>
+                <ul class="list-unstyled pl-3 pr-3 mb-0">
+                    <li ng-repeat="spDownloadData in subPortfolio.overviewContent.downloadLinks">
+                        {{spDownloadData.text}} <a href="{{spDownloadData.link}}">here</a>.
+                    </li>
+                </ul>
+            </div>
+            <!-- End Download Links -->
+            <!-- Begin Content Break -->
+            <hr class="body-bar" ng-if="subPortfolio.trailerLink" />
+            <!-- End Content Break -->
+            <!-- Begin Game Trailer -->
+            <div class="card card--transparent card-block" ng-if="subPortfolio.trailerLink">
+                <h4 class="text-capitalize">{{subPortfolio.title}} Trailer</h4>
+                <div class="pl-3 pr-3">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe id="subPortfolio-trailer-iframe" class="embed-responsive-item" ng-src="{{subPortfolio.trailerLink}}" ng-if="subPortfolio.trailerLink"></iframe>
+                    </div>
+                </div>
+            </div>
+            <!-- End Game Trailer -->
+            <!-- Begin Content Break -->
+            <hr class="body-bar" ng-if="subPortfolio.videoUpdates" />
+            <!-- End Content Break -->
+            <!-- Begin Game Update Videos -->
+            <div class="card card--transparent card-block" ng-if="subPortfolio.videoUpdates">
+                <h4 class="text-capitalize">{{subPortfolio.title}} Updates</h4>
+                <div class="pl-3 pr-3">
+                    <div class="row">
+                        <!-- Begin Video Selection -->
+                        <div class="col-md-4 float-left sub-portfolio-img-container-max-height">
+                            <div class="row">
+                                <div class="col-md-6 float-left mb-3" ng-repeat="videos in subPortfolio.videoUpdates">
+                                    <img class="d-block img-fluid sub-portfolio-img" ng-src="{{videos.thumbnailLink}}" ng-click="changeVideo($index)" spinner-load>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Video Selection -->
+                        <!-- Begin Video -->
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe id="subPortfolio-trailer-iframe" class="embed-responsive-item" ng-src="{{subPortfolio.trailerLink}}" ng-if="subPortfolio.trailerLink"></iframe>
+                        </div>
+                        <!-- End Video -->
+                    </div>
+                </div>
+            </div>
+            <!-- End Game Update Videos -->
         </div>
-        <!-- End Center Column -->
+        <!-- End Page Fully Loaded With No Errors -->
     </div>
     <!-- End Container -->
 </section>
+<!-- End Sub Portfolio Page -->

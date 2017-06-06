@@ -1,29 +1,45 @@
-﻿<section ng-controller="portfolioController">
-    <!-- Begin Portfolio Class-->
-    <div class="portfolioClass">
-        <!-- Begin Container -->
-        <div class="container">
-            <!-- Begin Center Column -->
-            <div class="body-container">
-                <h2>{{portfolio.title}}</h2>
-                <div></div>
-                <div></div>
-
-                <div class="portfolio-item" ng-repeat="portfolioItem in portfolio.portfolioItems">
-                    <h3 class="portfolio-h3">{{portfolioItem.title}}</h3>
-                    <div class="portfolio-image-div">
-                        <a class="portfolio-link-a" href="{{currentPath}}/{{portfolioItem.subPageLink}}">
-                            <img class="image-portfolio-wide img-responsive" ng-src="{{portfolioItem.pictureLink}}" alt="{{getPictureTitle(portfolioItem.pictureLink)}}" title="{{getPictureTitle(portfolioItem.pictureLink)}}" spinner-load />
-                        </a>
-                    </div>
-                    <p class="portfolio-p"><a href="{{currentPath}}/{{portfolioItem.subPageLink}}">Click me</a> for more details!</p>
-                    <p class="portfolio-description-p">{{portfolioItem.shortDescription}}</p>
-                </div>
-                <div style="clear: both"></div>
-                <br />
+﻿<!-- Begin Portfolio Page -->
+<section ng-controller="portfolioController">
+    <!-- Begin Container -->
+    <div class="container">
+        <!-- Begin Page Not Fully Loaded -->
+        <div class="animated animation-delay--xs fadeIn" ng-if="!pageFullyLoaded">
+            <div class="col-sm-4 offset-sm-4 mt-5">
+                <h4 class="text-center animated infinite jello">Getting thing ready for you...</h4>
             </div>
         </div>
-        <!-- End Container -->
+        <!-- End Page Not Fully Loaded -->
+        <!-- Begin Page Fully Loaded With Errors -->
+        <div ng-if="pageFullyLoaded && error.error">
+            <div class="col-sm-4 offset-sm-4 mt-5">
+                <h4 class="text-center text-muted font-italic" ng-if="error.error">{{error.message}}</h4>
+            </div>
+        </div>
+        <!-- End Page Fully Loaded With Errors -->
+        <!-- Begin Page Fully Loaded With No Errors -->
+        <div class="animated animation-delay--md fadeIn" ng-if="pageFullyLoaded && !error.error">
+            <!-- Begin Page Title -->
+            <h2 class="font-weight-bold text-uppercase mb-3"><span ng-bind-html="portfolio.title | trustHTML"></span></h2>
+            <!-- End Page Title -->
+            <!-- Begin Portfolio Items -->
+            <div class="card card--transparent card-block">
+                <div class="row">
+                    <div class="col-md-6 float-left mb-5" ng-repeat="portfolioItem in portfolio.portfolioItems">
+                        <h3 class="text-center text-capitalize font-weight-bold">{{portfolioItem.title}}</h3>
+                        <a class="" href="#{{currentPath}}/{{portfolioItem.subPageLink}}">
+                            <img class="img-fluid w-100" ng-src="{{portfolioItem.pictureLink}}" alt="{{getPictureTitle(portfolioItem.pictureLink)}}" title="{{getPictureTitle(portfolioItem.pictureLink)}}" spinner-load />
+                        </a>
+                        <div class="col-md-6 offset-md-3 mt-2 mb-2">
+                            <p class="mb-0"><a class="" href="#{{currentPath}}/{{portfolioItem.subPageLink}}">Click me</a> for more details!</p>
+                        </div>
+                        <p class="pl-3 pr-3 mb-0">{{portfolioItem.shortDescription}}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- End Portfolio Items -->
+        </div>
+        <!-- End Page Fully Loaded With No Errors -->
     </div>
-    <!-- End Portfolio Class-->
+    <!-- End Container -->
 </section>
+<!-- End Portfolio Page -->

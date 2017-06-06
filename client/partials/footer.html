@@ -1,23 +1,27 @@
 ﻿<!-- Begin Footer -->
 <section ng-controller="footerController">
     <!-- Begin Footer Container ng-if="$root.showFooter"-->
-    <footer class="container text-center pt-5 pb-5 animated animation-delay--xs fadeIn" >
-        <!-- Begin Note -->
-        <div class="container-fluid footer-content">
-            <p class="mb-1">
-                <span ng-bind-html="footer.footerNote | trustHTML"></span>
-            </p>
+    <footer class="animated animation-delay--xs fadeIn">
+        <!-- Begin Container -->
+        <div class="container text-center pt-5 pb-5">
+            <!-- Begin Note -->
+            <div class="container-fluid footer-content">
+                <p class="mb-1">
+                    <span ng-bind-html="footer.footerNote | trustHTML"></span>
+                </p>
+            </div>
+            <!-- End Note -->
+            <!-- Begin Social Media -->
+            <div class="container-fluid footer-content" ng-if="footer.socialMediaLinks">
+                <span ng-repeat="socialMedia in footer.socialMediaLinks">
+                    <a href="{{socialMedia.link}}" target="_blank" style="text-decoration: none;">
+                        <img class="image-social-media-icon mr-1" ng-src="{{socialMedia.img}}" title="{{socialMedia.title}}" alt="{{socialMedia.title}}" ng-if="socialMedia.img.length > 0" spinner-load />
+                    </a>
+                </span>
+            </div>
+            <!-- End Social Media -->
         </div>
-        <!-- End Note -->
-        <!-- Begin Social Media -->
-        <div class="container-fluid footer-content" ng-if="footer.socialMediaLinks">
-            <span ng-repeat="socialMedia in footer.socialMediaLinks">
-                <a href="{{socialMedia.link}}" target="_blank" style="text-decoration: none;">
-                    <img class="image-social-media-icon mr-1" ng-src="{{socialMedia.img}}" title="{{socialMedia.title}}" alt="{{socialMedia.title}}" ng-if="socialMedia.img.length > 0" spinner-load />
-                </a>
-            </span>
-        </div>
-        <!-- End Social Media -->
+        <!-- End Container -->
     </footer>
     <!-- End Footer Container -->
 </section>

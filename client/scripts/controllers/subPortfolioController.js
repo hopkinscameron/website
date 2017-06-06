@@ -35,42 +35,12 @@
 
     // the switch image timing
     var imageSwitchTimer = 3000;
-    var initialPicturePath = "/client/media/portfolio-images/";
-    var jsonFilePath = "/client/data/";
+    var initialPicturePath = "/media/portfolio-images/";
+    var jsonFilePath = "/data/";
 
     // start fading animation
     // wait a certain amount of seconds then call switchImage
     var timeoutHandle = $window.setTimeout(switchImage, imageSwitchTimer);
-
-    // based on which page is currently loaded, set that picture path
-    if (subPortfolioID == "drive-on-metz") {
-        initialPicturePath += "driveonmetz/driveonmetz-logo.jpg";
-        jsonFilePath += "drive-on-metz.json";
-    }
-    else if (subPortfolioID == "forsaken") {
-        initialPicturePath += "forsaken/forsaken-logo.png";
-        jsonFilePath += "forsaken.json";
-    }
-    else if (subPortfolioID == "memoryless") {
-        initialPicturePath += "memoryless/memoryless-logo.jpg";
-        jsonFilePath += "memoryless.json";
-    }
-    else if (subPortfolioID == "over-drive") {
-        initialPicturePath += "overdrive/overdrive-logo.png";
-        jsonFilePath += "over-drive.json";
-    }
-    else if (subPortfolioID == "road-rager") {
-        initialPicturePath += "roadrager/roadrager-logo.png";
-        jsonFilePath += "road-rager.json";
-    }
-    else if (subPortfolioID == "rollaball-mod") {
-        initialPicturePath += "rollaballmod/rollaballmod-logo.png";
-        jsonFilePath += "rollaball-mod.json";
-    }
-    else if (subPortfolioID == "squirvival") {
-        initialPicturePath += "squirvival/squirvival-logo.png";
-        jsonFilePath += "squirvival.json";
-    }
 
     // the initial update video link
     var initialUpdateVideo = "";
@@ -106,7 +76,7 @@
     };
 
     // on loading http intercepter complete
-    $scope.complete = function () {
+    $scope.complete = function () {i
         // complete loader
         cfpLoadingBar.complete();
     };

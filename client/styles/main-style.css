@@ -146,8 +146,72 @@ hr.body-bar {
 /* Begin Cards */
 .card--transparent {
     background-color: transparent;
+    border: 0;
 }
 /* End Cards */
+
+/* Begin Forms */
+.form-character-count {
+    text-align: right;
+    font-size: x-small;
+    width: 100%;
+    margin: 0px;
+}
+/* End Forms */
+
+/* Begin Buttons */
+.btn-theme-primary {
+    color: #fff;
+    background-color: #29a8d6;
+    border-color: #29a8d6;
+}
+.btn-theme-primary:active {
+    background-color: #1d7696;
+    border-color: #1d7696;
+}
+.btn-theme-primary:focus, .btn-theme-primary:hover {
+    background-color: #1d7696;
+    background-position: 0 -15px;
+}
+/* End Buttons */
+
+/* Begin Links */
+/* End Links */
+
+/* Begin Carousel *
+.carousel-indicators {
+    padding: 0;
+    bottom: 0px;
+    left: 0;
+    width: 90%;
+    margin-left: 0;
+    max-height: 60px;
+    overflow: hidden;
+    position: relative;
+    padding-top: 3px;
+    padding-bottom: 1px;
+    display: block;
+    margin: 0 auto;
+}
+.carousel-indicators li.active {
+    border: medium none;
+    border-radius: 0;
+    height: 50px;
+    margin-right: 5px !important;
+    width: 100px;
+    display: inline-block;
+}
+.carousel-indicators .active img {
+    border: 2px solid #29a8d6;
+    height: 100%;
+    left: 0;
+    width: 100%;
+    opacity: 0.7;
+}*/
+.carousel-inner > .carousel-item > img, .carousel-inner > .carousel-item > a > img {
+    margin: auto;
+}
+/* End Carousel */
 
 /* Begin Navigation Styles */
 .navbar-inverse {
@@ -206,6 +270,14 @@ body {
 /* End Body Styles */
 
 /* Begin Footer Styles */
+.footer--sticky {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background-color: #f5f5f5;
+}
 .footer-content {
     color: #fff;
 }
@@ -216,6 +288,15 @@ body {
 }
 /* End Footer Styles */
 
+/* Begin Sub Portfolio Styles */
+.sub-portfolio-img-container-max-height {
+    max-height: 200px;
+    overflow-y: scroll;
+}
+.sub-portfolio-img {
+    height: 100px;
+}
+/* End Sub Portfolio Styles */
 /* Begin Media Queries */
 /* When the screen is less than 768px pixels wide */
 @media screen and (max-width: 768px) {

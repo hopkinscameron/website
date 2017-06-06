@@ -27,6 +27,9 @@
         $rootScope.$root.showFooter = true;
     }
 
+    // set current path
+    $scope.currentPath = $location.path();
+
     // get page data
     getPageData();
 

@@ -220,13 +220,14 @@ router.post('/api/sendEmail', function (req, res, next) {
 		res.status(400).send({message: "Bad request. " + errorText});
 	}
 	else {
+		/*
 		// set incoming information
 		var inUsername = req.body.username,
 			inToken = req.body.token,
 			inEventId = req.body.eventId,
 			inComment = req.body.comment;
-		
-
+		*/
+		res.status(200).send({message: "Here is some test fake success message."});
 	}
 });
 

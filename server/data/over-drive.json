@@ -1,18 +1,27 @@
 ﻿{
   "title": "Over Drive",
   "images": [
-    { "link": "/client/media/portfolio-images/overdrive/overdrive-logo.png" },
-    { "link": "/client/media/portfolio-images/overdrive/aimdownsight.png" },
-    { "link": "/client/media/portfolio-images/overdrive/bootcamp.png" },
-    { "link": "/client/media/portfolio-images/overdrive/leaderboards.png" },
-    { "link": "/client/media/portfolio-images/overdrive/loading.png" },
-    { "link": "/client/media/portfolio-images/overdrive/menu.png" },
-    { "link": "/client/media/portfolio-images/overdrive/pause.png" }
+    { "link": "/media/portfolio-images/overdrive/overdrive-logo.png" },
+    { "link": "/media/portfolio-images/overdrive/aimdownsight.png" },
+    { "link": "/media/portfolio-images/overdrive/bootcamp.png" },
+    { "link": "/media/portfolio-images/overdrive/leaderboards.png" },
+    { "link": "/media/portfolio-images/overdrive/loading.png" },
+    { "link": "/media/portfolio-images/overdrive/menu.png" },
+    { "link": "/media/portfolio-images/overdrive/pause.png" }
   ],
   "overviewContent": {
     "overview": "<i>Over Drive</i> is a first person shooter that I was developing for PC. <i>Over Drive</i> is a side project that I was working on in my spare time. With my love for first person shooters, I decided I wanted to take a stab at making my own fun FPS game. I have been working on <i>Over Drive</i> since the beginning of November 2015 and there is a lot I must tackle before this game is complete.<br /> <br />If continued, <i>Over Drive</i> will have multiple game modes the user can play such as Campaign, Survival, Boot Camp and possibly multiplayer. I would also be providing constant updates to the project and posting videos of my updates to show what's in stored for the game!",
-    "gameDesignDocument": "",
-    "downloadLink": [
+    "gameDesignDocument": "dsa",
+    "gameDesignDocumentTitle": "das",
+    "downloadLinks": [
+      {
+        "text": "Download the alpha version",
+        "link": "somelink"
+      },
+      {
+        "text": "Download the beta version",
+        "link": "somelink"
+      }
     ],
     "gameData": [
       {
@@ -80,7 +89,7 @@
       "videoLink": "https://www.youtube.com/embed/oZehf54mUys?controls=1"
     }
   ],
-  "trailerLink": "",
+  "trailerLink": "https://www.youtube.com/embed/LqKNf04Uhpc?controls=1",
   "metaTags": {
     "description": "Cameron Hopkins game design portfolio.",
     "keywords": [

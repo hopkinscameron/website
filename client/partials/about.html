@@ -28,7 +28,7 @@
             </div>
             <!-- End Bio -->
             <!-- Begin Content Break -->
-            <hr class="text-center body-bar" />
+            <hr class="body-bar" />
             <!-- End Content Break -->
             <!-- Begin Hobbies -->
             <div class="card card--transparent card-block">
@@ -41,13 +41,13 @@
             </div>
             <!-- End Hobbies -->
             <!-- Begin Content Break -->
-            <hr class="text-center body-bar" />
+            <hr class="body-bar" />
             <!-- End Content Break -->
             <!-- Begin Favorite Games -->
             <div class="card card--transparent card-block">
                 <h4 class="text-capitalize">Favorite Games</h4>
-                <div class="animated animation-delay--xmd fadeInUp">
-                    <div class="col-md-3 float-left" ng-repeat="favoriteGamesData in about.favoriteGames">
+                <div class="row pl-3 pr-3 animated animation-delay--xmd fadeInUp">
+                    <div class="col-md-3 float-left mb-5" ng-repeat="favoriteGamesData in about.favoriteGames">
                         <ul class="list-unstyled mb-0">
                             <li class="h5">
                                 <span class="font-italic">{{favoriteGamesData.type}}</span>

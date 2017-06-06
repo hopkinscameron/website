@@ -1,9 +1,7 @@
 ﻿All
-- Revamp to make bootrap instead of custom CSS
-- Add animations
-- Create server side
-- Fix API calls
 - Sometimes header doesn't display when refreshing (the timing is off)
+- Add animation when body size changes (particularly on contact page)
+- Fix so that last row of array doesn't have margin bottom
 
 Header
 - Fix "Cameron Hopkins" to be just that length and not entire length (add a div around it?!)
@@ -13,16 +11,18 @@ Footer
 
 Home
 - Hobbies Break list up into max 3 items per row
+
 About
 
 Resume
 
 Portfolio
-- Fix link to sub portfolio
 
 Sub Portfolio
+- customize scroll bar
+- fix carousel changing
 
 Blog
 
 Contact
--Finish form submission
+- Send email to self

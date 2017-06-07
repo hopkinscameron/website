@@ -228,6 +228,7 @@
                 if(!responseSE.error) {
                     // shake the login screen
                     $('#contact-form').addClass('animated fadeOutDown').one($rootScope.$root.animationEnd, function () {
+                        $('#contact-form').removeClass('animated fadeOutDown');
                         $scope.$apply(function () {
                             // show form submitted
                             $scope.contactForm.formSubmitted = true;

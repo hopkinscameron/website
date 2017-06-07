@@ -1,7 +1,7 @@
 ﻿<!-- Begin Header -->
 <section ng-controller="headerController">
-    <!-- Begin Navigation ng-if="$root.showHeader" -->
-    <nav class="navbar fixed-top navbar-toggleable-md navbar-inverse bg-inverse box-shadow--small animated animation-delay--xs fadeIn" style="border-radius: 0px;" >
+    <!-- Begin Navigation animated animation-delay--xs fadeIn -->
+    <nav class="navbar fixed-top navbar-toggleable-md navbar-inverse bg-inverse box-shadow--small" style="border-radius: 0px; height: 76px;" ng-if="$root.showHeader">
         <!-- Begin Container -->
         <div class="container">
             <!-- Begin Navigation Bar Header -->
@@ -30,11 +30,11 @@
                         <a class="nav-link h5 mb-0" ng-class="isActive(navigation.pageLink)" href="#{{navigation.pageLink}}" ng-if="navigation.dropdown === undefined"><span ng-bind-html="navigation.title | trustHTML"></span></a>
                         <!-- End Not Dropdown -->
                         <!-- Begin Dropdown -->
-                        <a class="nav-link dropdown-toggle h5 mb-0" role="button" id="navbarDropdownMenuLink{{$index}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-if="navigation.dropdown !== undefined">
+                        <a role="button" id="navbarDropdownMenuLink{{$index}}" class="nav-link dropdown-toggle h5 mb-0" ng-class="isActive(navigation.pageLink)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-if="navigation.dropdown !== undefined">
                             <span ng-bind-html="navigation.title | trustHTML"></span>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink{{$index}}" ng-if="navigation.dropdown !== undefined">
-                            <a class="dropdown-item" href="#{{dropdown.pageLink}}" ng-repeat="dropdown in navigation.dropdown"><span ng-bind-html="dropdown.title | trustHTML"></span></a>
+                            <a class="dropdown-item" ng-class="isActive(navigation.pageLink + '/' + dropdown.pageLink)" href="#{{navigation.pageLink}}/{{dropdown.pageLink}}" ng-repeat="dropdown in navigation.dropdown"><span ng-bind-html="dropdown.title | trustHTML"></span></a>
                         </div>
                         <!-- End Dropdown -->
                     </div>

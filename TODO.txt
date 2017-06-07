@@ -1,15 +1,17 @@
 ﻿All
-- Sometimes header doesn't display when refreshing (the timing is off)
 - Add animation when body size changes (particularly on contact page)
 - Fix so that last row of array doesn't have margin bottom
+- maybe add some container background colors to help distingush stuff
+- set last item in card to have no margin bottom
+- move all files necessary files to the server
 
 Header
-- Fix "Cameron Hopkins" to be just that length and not entire length (add a div around it?!)
 - Add blue shadow around hover
 
 Footer
 
 Home
+- When on home, change body to have no padding top
 - Hobbies Break list up into max 3 items per row
 
 About
@@ -20,7 +22,6 @@ Portfolio
 
 Sub Portfolio
 - customize scroll bar
-- fix carousel changing
 
 Blog
 

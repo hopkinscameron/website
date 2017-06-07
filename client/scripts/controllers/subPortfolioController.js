@@ -30,44 +30,23 @@
         $rootScope.$root.showFooter = true;
     }
 
-    // the current index of the array of images
-    var currentIndex = 0;
+    // the current project highlight image
+    $scope.currentProjectImage = undefined;
 
-    // the switch image timing
-    var imageSwitchTimer = 3000;
-    var initialPicturePath = "/media/portfolio-images/";
-    var jsonFilePath = "/data/";
+    // the current trailer video (url: the url, source: the trusted video source ($sce))
+    $scope.currentTrailerVideo = {
+        "url": undefined,
+        "source": undefined   
+    };
 
-    // start fading animation
-    // wait a certain amount of seconds then call switchImage
-    var timeoutHandle = $window.setTimeout(switchImage, imageSwitchTimer);
-
-    // the initial update video link
-    var initialUpdateVideo = "";
-
-    // the initial trailer video link
-    var initialTrailerVideo = "";
+    // the current update video
+    $scope.currentUpdateVideo = {
+        "url": undefined,
+        "source": undefined   
+    };
 
     // get page data
     getPageData();
-
-    // shift children based on multidata
-    $('.carousel[data-type="multi"] .item').each(function () {
-        var next = $(this).next();
-        if (!next.length) {
-            next = $(this).siblings(':first');
-        }
-        next.children(':first-child').clone().appendTo($(this));
-
-        for (var i = 0; i < 4; i++) {
-            next = next.next();
-            if (!next.length) {
-                next = $(this).siblings(':first');
-            }
-
-            next.children(':first-child').clone().appendTo($(this));
-        }
-    });
 
     // on loading http intercepter start
     $scope.start = function () {
@@ -81,109 +60,37 @@
         cfpLoadingBar.complete();
     };
 
-    // gets the game design document title
-    $scope.getDesignDocumentTitle = function (designDocumentLink) {
-        //split string
-        var splits = designDocumentLink.split('/');
-        return splits[splits.length - 1];
+    // determines if current image/video is active
+    $scope.isActive = function (resource, index) {
+        // if the resource matches
+        if(resource == 'highlights' && index >= 0 && index < $scope.subPortfolio.images.length) {
+            return $scope.currentProjectImage == $scope.subPortfolio.images[index].url;
+        }
+        else if(resource == 'updates' && index >= 0 && index < $scope.subPortfolio.videoUpdates.length) {
+            return $scope.currentUpdateVideo.url == $scope.subPortfolio.videoUpdates[index].url;
+        }
+
+        return false;
     };
 
     // changes the current image displayed
-    $scope.changeImage = function (imageSource, index) {
-        // get the componenets broken up
-        var splits = imageSource.split('/');
-
-        // set the current index
-        currentIndex = index;
-
-        // the image to change, display the image and change the source
-        var imageToChange = document.getElementById("slide-show-image-main");
-        if (imageToChange != null) {
-            imageToChange.style.display = "block";
-            imageToChange.src = imageSource;
-            imageToChange.title = splits[splits.length - 1];
-            imageToChange.alt = splits[splits.length - 1];
+    $scope.changeProjectHighlightImage = function (index) {
+        // if the index matches
+        if(index >= 0 && index < $scope.subPortfolio.images.length) {
+            // change image
+            $scope.currentProjectImage = $scope.subPortfolio.images[index].url;
         }
-
-        // get the subimages 
-        var subImages = document.getElementsByClassName("slideshow-subimages-to-switch");
-
-        // loop through all subimages
-        for (i = 0; i < subImages.length; i++) {
-            // remove the selected image
-            subImages[i].className = subImages[i].className.replace(" slideshow-subimage-selected", "");
-        }
-
-        // if there were elements found
-        if (subImages.length > 0) {
-            // set the selected image
-            subImages[index].className += " slideshow-subimage-selected";
-        }
-
-        // clear the timeout and reset
-        $window.clearTimeout(timeoutHandle);
-        timeoutHandle = $window.setTimeout(switchImage, imageSwitchTimer);
     };
 
     // changes the update video
-    $scope.changeUpdateVideo = function (videoSource, index) {
-        // the video to change, change the source
-        var videoToChange = document.getElementById("subPortfolio-update-video-iframe");
-        if (videoToChange) {
-            videoToChange.src = videoSource;
+    $scope.changeUpdateVideo = function (index) {
+        // if the index matches
+        if(index >= 0 && index < $scope.subPortfolio.videoUpdates.length) {
+            // change video
+            $scope.currentUpdateVideo.url = $scope.subPortfolio.videoUpdates[index].url;
+            $scope.currentUpdateVideo.source = $sce.trustAsResourceUrl($scope.subPortfolio.videoUpdates[index].url);
         }
-
-        // get the subimages 
-        var subImages = document.getElementsByClassName("slideshow-subvideoimage-to-switch");
-
-        // if the images exist
-        if (subImages.length > 0) {
-            // loop through all subimages
-            for (i = 0; i < subImages.length; i++) {
-                // remove the selected image
-                subImages[i].className = subImages[i].className.replace(" slideshow-subvideoimage-selected", "");
-            }
-
-            // set the selected image
-            subImages[index].className += " slideshow-subvideoimage-selected";
-        }
-    };
-
-    // initializes this specific controller
-    $scope.initializeController = function () {
-        // once the script starts, set the initial picture
-        $scope.changeImage(initialPicturePath, currentIndex);
-
-        // if there is an initial update video
-        if (initialUpdateVideo.length > 0) {
-            // once the script starts, set the initial video
-            $scope.changeUpdateVideo(initialUpdateVideo, 0);
-        }
-
-        // if there is an initial trailer video
-        if (initialTrailerVideo.length > 0) {
-            // once the script starts, set the initial video
-            var videoToChange = document.getElementById("subPortfolio-trailer-iframe");
-
-            // if the element was found
-            if (videoToChange) {
-                // set the source
-                videoToChange.src = initialTrailerVideo;
-            }
-        }
-    };
-
-    // gets the starting update video
-    $scope.getStartingUpdateVideo = function () {
-        return $sce.trustAsResourceUrl(initialUpdateVideo);
-    };
-
-    // gets the starting trailer video
-    $scope.getStartingTrailerVideo = function () {
-        return $sce.trustAsResourceUrl(initialTrailerVideo);
-    };
-
-    
+    };  
 
     // gets the page data
     function getPageData() {
@@ -197,22 +104,25 @@
                 // set new page title
                 $scope.pageTitle = responseSP.title + " | " + Service.appName;
 
+                // if the file has images
+                if(responseSP.images.length > 0) {
+                    // set initial video
+                    $scope.currentProjectImage = responseSP.images[0].url;
+                }
+
                 // if the file has video updates
                 if (responseSP.videoUpdates.length > 0) {
                     // set the initial video path
-                    initialUpdateVideo = responseSP.videoUpdates[0].videoLink;
-                    $scope.startingUpdateVideo = $sce.trustAsResourceUrl(initialUpdateVideo);
+                    $scope.currentUpdateVideo.url = responseSP.videoUpdates[0].url;
+                    $scope.currentUpdateVideo.source = $sce.trustAsResourceUrl(responseSP.videoUpdates[0].url);
                 }
 
                 // if the file has trailer videos
                 if (responseSP.trailerLink.length > 0) {
-                    // set the initial trailer video path
-                    initialTrailerVideo = responseSP.trailerLink;
-                    $scope.trailerVideo = $sce.trustAsResourceUrl(initialTrailerVideo);
+                    // set the initial video path
+                    $scope.currentTrailerVideo.url = responseSP.trailerLink;
+                    $scope.currentTrailerVideo.source = $sce.trustAsResourceUrl(responseSP.trailerLink);
                 }
-
-                // initialize
-                $scope.initializeController();
 
                 // setup page
                 setUpPage();
@@ -280,40 +190,5 @@
                 normalizeHeights(); //run it again 
             });
         }
-    };
-
-    // function that switches to the next image
-    function switchImage() {
-        // get the sub images 
-        var subImages = document.getElementsByClassName("slideshow-subimages-to-switch");
-        subImages = [];
-        // if there are sub images
-        if (subImages.length > 0) {
-            // increase the index
-            currentIndex = (currentIndex + 1) % subImages.length;
-
-            // get the componenets broken up
-            var splits = subImages[currentIndex].src.split('/');
-
-            // the image to change, display the image and change the source
-            var imageToChange = document.getElementById("slide-show-image-main");
-            imageToChange.style.display = "block";
-            imageToChange.src = subImages[currentIndex].src;
-            imageToChange.title = splits[splits.length - 1];
-            imageToChange.alt = splits[splits.length - 1];
-
-            // loop through all subimages
-            for (i = 0; i < subImages.length; i++) {
-                // remove the selected image
-                subImages[i].className = subImages[i].className.replace(" slideshow-subimage-selected", "");
-            }
-
-            // set the selected image
-            subImages[currentIndex].className += " slideshow-subimage-selected";
-        }
-
-        // wait a certain amount of seconds then call switchImage
-        $window.clearTimeout(timeoutHandle);
-        timeoutHandle = $window.setTimeout(switchImage, imageSwitchTimer);
     };
 }]);

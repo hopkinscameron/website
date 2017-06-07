@@ -37,9 +37,9 @@ var options = {
 // use header/body validation
 router.use(expressValidator());
 
-/*
-	GET
-*/
+/**
+ * GET
+ */
 // GET header
 // format /api/header
 router.get('/api/header', function (req, res, next) {
@@ -141,8 +141,16 @@ router.get('/api/portfolio', function (req, res, next) {
 router.get('/api/subportfolio', function (req, res, next) {
 	// if query
 	if (req.query.id) {
-		// TODO get correct file
-		fs.readFile("./server/data/over-drive.json", 'utf8', function (err, data) {
+		var file = getSubPortfolioFile(req.query.id);
+
+		// if file doesn't exist
+		if(!file) {
+			// send error
+			res.status(404).send({message: "Project not found."});
+		}
+
+		// get contents
+		fs.readFile("./server/data/" + file, 'utf8', function (err, data) {
 			// if no error 
 			if(!err) {
 				// send data
@@ -192,9 +200,9 @@ router.get('/api/contact', function (req, res, next) {
 	});
 });
 
-/*
-	POST
-*/
+/**
+ * POST
+ */
 // POST send email
 // format /api/sendEmail
 router.post('/api/sendEmail', function (req, res, next) {
@@ -230,5 +238,22 @@ router.post('/api/sendEmail', function (req, res, next) {
 		res.status(200).send({message: "Here is some test fake success message."});
 	}
 });
+
+/**
+ * Private Functions
+ */
+// gets the file location of the matching subportfolio id
+function getSubPortfolioFile(subPortfolioID) {
+	// if matching the correct id
+	if(subPortfolioID == 'drive-on-metz' || subPortfolioID == 'forsaken'
+		|| subPortfolioID == 'memoryless' || subPortfolioID == 'over-drive'
+		|| subPortfolioID == 'road-rager' || subPortfolioID == 'rollaball-mod'
+		|| subPortfolioID == 'squirvival'
+	) {
+		return subPortfolioID + ".json";
+	}
+	
+	return undefined;
+};
 
 module.exports = router;

@@ -21,10 +21,6 @@
       "pageLink": "portfolio",
       "dropdown": [
         {
-          "title": "Portfolio Home",
-          "pageLink": "portfolio"
-        },
-        {
           "title": "Over Drive",
           "pageLink": "over-drive"
         },

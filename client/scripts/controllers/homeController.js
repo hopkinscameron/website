@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('homeController', ['$scope', '$rootScope', '$compile', '$location', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $location, cfpLoadingBar, Service) {
+﻿angular.module('app').controller('homeController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $location, $timeout, cfpLoadingBar, Service) {
     // set jQuery
     $ = window.jQuery;
 
@@ -27,8 +27,43 @@
         $rootScope.$root.showFooter = false;
     }
 
+    // the initial text to display to the user
+    $scope.initialText = {
+        'id': "initialText",
+        "display": false,
+        "text": "The portfolio of Cameron Hopkins"        
+    };
+
+    // the next text to display to the user
+    $scope.secondText = {
+        'id': "secondText",
+        "display": false,
+        "text": "Enter if you dare..."        
+    };
+
+    // the enter button display settings
+    $scope.enterButton = {
+        'id': "enterButton",
+        "display": false,
+        "text": "Enter"
+    }
+
+    // set window height
+    $scope.windowHeight = {
+        "height": $( window ).height() - 90
+    }
+
     // get page data
     getPageData();
+
+    // on resize
+    angular.element(window).resize(function() {
+        $scope.$apply(function () {
+                $scope.windowHeight = {
+                "height": $( window ).height() - 90
+            }
+        });
+    });
 
     // on loading http intercepter start
     $scope.start = function() {
@@ -89,5 +124,62 @@
 
         // set page fully loaded
         $scope.pageFullyLoaded = true;
+
+        // if not an error
+        if(!$scope.error.error) {
+            // show next item
+            $timeout(function() { showNextItem($scope.initialText, 'animated animation-delay--sm fadeIn', false) }, 500);
+        }
+    };
+
+    // show next item
+    function showNextItem(item, classToAdd, hideAfter) {
+        // display
+        if(item.id == 'initialText') {
+            $scope.$apply(function () {
+                $scope.initialText.display = true;
+            });
+        }
+        else if(item.id == 'secondText') {
+            $scope.$apply(function () {
+                $scope.secondText.display = true;
+            });
+        }
+        else if(item.id == 'enterButton') {
+            $scope.$apply(function () {
+                $scope.enterButton.display = true;
+            });
+        }
+
+        // add animation
+        angular.element(document.querySelector('#' + item.id)).addClass(classToAdd).one($rootScope.$root.animationEnd, function () {
+            // if hide after complete
+            if(hideAfter) {
+                // if initial text
+                if(item.id == 'initialText') {
+                    // remove animation
+                    angular.element(document.querySelector('#' + item.id)).removeClass(classToAdd);
+
+                    $scope.$apply(function () {
+                        $scope.initialText.display = false;
+                    });
+
+                    // show next text
+                    $timeout(function() { showNextItem($scope.secondText, 'animated fadeIn', false) }, 500);
+                }
+            }
+            else {
+                // if initial text
+                if(item.id == 'initialText') {
+                    // show next text
+                    $timeout(function() { showNextItem($scope.initialText, 'animated fadeOut', true) }, 1000);
+                }
+                // if initial text
+                else if(item.id == 'secondText') {
+                    // show button
+                    $timeout(function() { showNextItem($scope.enterButton, 'animated fadeInUp', false) }, 1000);
+                }
+            }
+        });
     };
 }]);

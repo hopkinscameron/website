@@ -92,9 +92,9 @@
 /* Begin Link Styles */
 a {
 	color: #fff;
-	text-decoration: none;
+    text-decoration: none;
 }
-a:hover {
+a:hover, a:active, a:focus {
 	color: #29a8d6;
 	text-decoration: none;
 }
@@ -178,41 +178,6 @@ hr.body-bar {
 /* Begin Links */
 /* End Links */
 
-/* Begin Carousel *
-.carousel-indicators {
-    padding: 0;
-    bottom: 0px;
-    left: 0;
-    width: 90%;
-    margin-left: 0;
-    max-height: 60px;
-    overflow: hidden;
-    position: relative;
-    padding-top: 3px;
-    padding-bottom: 1px;
-    display: block;
-    margin: 0 auto;
-}
-.carousel-indicators li.active {
-    border: medium none;
-    border-radius: 0;
-    height: 50px;
-    margin-right: 5px !important;
-    width: 100px;
-    display: inline-block;
-}
-.carousel-indicators .active img {
-    border: 2px solid #29a8d6;
-    height: 100%;
-    left: 0;
-    width: 100%;
-    opacity: 0.7;
-}*/
-.carousel-inner > .carousel-item > img, .carousel-inner > .carousel-item > a > img {
-    margin: auto;
-}
-/* End Carousel */
-
 /* Begin Navigation Styles */
 .navbar-inverse {
     background-image: linear-gradient(rgb(30, 30, 30) 0px, rgb(14, 14, 14) 100%);
@@ -239,6 +204,10 @@ hr.body-bar {
     color: #fff;
 }
 .dropdown-item:hover  {
+    color: #fff;
+    background-color: #29a8d6;
+}
+.dropdown-item.active, .dropdown-item:active {
     color: #fff;
     background-color: #29a8d6;
 }
@@ -288,15 +257,29 @@ body {
 }
 /* End Footer Styles */
 
+/* Begin Home Styles */
+
+/* End Home Styles */
+
 /* Begin Sub Portfolio Styles */
 .sub-portfolio-img-container-max-height {
     max-height: 200px;
     overflow-y: scroll;
 }
+.sub-portfolio-img-max-height {
+    max-height: 200px;
+}
 .sub-portfolio-img {
     height: 100px;
+    border: 2px solid #fff;
+    opacity: 0.7;
+}
+.sub-portfolio-img.active {
+    border: 2px solid #29a8d6;
+    opacity: 1;
 }
 /* End Sub Portfolio Styles */
+
 /* Begin Media Queries */
 /* When the screen is less than 768px pixels wide */
 @media screen and (max-width: 768px) {

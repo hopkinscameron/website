@@ -3,8 +3,9 @@
 /*New Color: #29a8d6*/
 /*Old Color: #009900*/
 
-/* Begin Loading bar */
+/* Begin Loading bar top: 76px; */
 #loading-bar .bar {
+    background: #29a8d6;
     top: 76px;
 }
 /* End Loading bar */
@@ -117,6 +118,15 @@ hr.body-bar {
     border-top: 3px solid #29a8d6;
     padding: 0;
 }
+hr.blog-post-bar {
+    width: 100%;
+    display: block;
+    height: 1.5px;
+    border: 0;
+    border-top: 1.5px solid #F5F7F9;
+    padding: 0;
+    opacity: 0.05;
+}
 /* End Page Breaks */
 
 /* Begin Fonts */
@@ -147,6 +157,12 @@ hr.body-bar {
 .card--transparent {
     background-color: transparent;
     border: 0;
+}
+.card--light {
+    background-color: #d9d9d9;
+}
+.card--dark {
+    background-color: #262626;
 }
 /* End Cards */
 
@@ -236,6 +252,9 @@ body {
     padding-top: 90px; 
     min-height: 500px;
 }
+.body-home {
+    padding-top: 0px; 
+}
 /* End Body Styles */
 
 /* Begin Footer Styles */
@@ -279,6 +298,17 @@ body {
     opacity: 1;
 }
 /* End Sub Portfolio Styles */
+
+/* Begin Blog Styles */
+
+/* End Blog Styles */
+
+/* Begin Blog Post Styles */
+.blog-limit-desc {
+    max-height: 190px;
+    overflow: hidden;
+}
+/* End Blog Post Styles */
 
 /* Begin Media Queries */
 /* When the screen is less than 768px pixels wide */

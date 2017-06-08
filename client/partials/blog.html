@@ -1,6 +1,46 @@
 ﻿<!-- Begin Blog Page -->
 <section ng-controller="blogController">
-    <h3 class="blog-coming-soon">Coming soon... but for now, until it's ready, let's go back <a href="#about">home</a>.</h3>
-    <h1 class="blog-coming-soon-text">COMING <span class="red-text">SOON</span></h1>
+    <!-- Begin Container -->
+    <div class="container">
+        <!-- Begin Page Fully Loaded With Errors -->
+        <div ng-if="pageFullyLoaded && error.error">
+            <div class="col-sm-4 offset-sm-4 mt-5">
+                <h4 class="text-center text-muted font-italic" ng-if="error.error">{{error.message}}</h4>
+            </div>
+        </div>
+        <!-- End Page Fully Loaded With Errors -->
+        <!-- Begin Page Fully Loaded With No Errors -->
+        <div class="animated animation-delay--md fadeIn" ng-if="pageFullyLoaded && !error.error">
+            <!-- Begin Page Title -->
+            <h2 class="font-weight-bold text-uppercase mb-3"><span ng-bind-html="blog.title | trustHTML"></span></h2>
+            <!-- End Page Title -->
+            <!-- Begin Posts -->
+            <div class="col-md-8 offset-md-2 mb-5" ng-repeat="post in blog.posts">
+                <div class="card card--dark card-block box-shadow--small">
+                    <!-- Begin Image -->
+                    <div style="height: 200px; background: linear-gradient(180deg, rgba(255, 255, 255, 0.0) 0%, rgba(255, 255, 255, .0) 100%), url({{post.image}}); background-size: cover; background-position: center center; background-repeat: no-repeat;"></div>
+                    <!-- End Image -->
+                    <!-- Begin Content Break -->
+                    <hr class="blog-post-bar mt-5 mb-5" />
+                    <!-- End Content Break -->
+                    <!-- Begin Title -->
+                    <h4 class="text-capitalize">{{post.title}}</h4>
+                    <!-- End Title -->
+                    <!-- Begin Content Break -->
+                    <hr class="blog-post-bar mt-5 mb-5" />
+                    <!-- End Content Break -->
+                    <!-- Begin Short Body -->
+                    <p class="blog-limit-desc">{{post.body}}</p>
+                    <!-- End Short Body -->
+                    <!-- Begin View Full Post -->
+                    <a class="mt-3">View full post... <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                    <!-- End View Full Post -->
+                </div>
+            </div>
+            <!-- End Posts -->
+        </div>
+        <!-- End Page Fully Loaded With No Errors -->
+    </div>
+    <!-- End Container -->
 </section>
 <!-- End Blog Page -->

@@ -53,6 +53,14 @@
         "height": $( window ).height() - 90
     }
 
+    // get body
+    var body = angular.element(document.body);
+
+    // if not correct css, add it
+    if(body && !body.hasClass('body-home')) {
+        body.addClass('body-home');
+    }
+
     // get page data
     getPageData();
 
@@ -76,6 +84,14 @@
         // complete loader
         cfpLoadingBar.complete();
     };
+
+    // on the destruction of the controller
+    $scope.$on("$destroy", function handler() {
+        // remove class
+        if(body) {
+            body.removeClass('body-home');
+        }
+    });
 
     // gets the page data
     function getPageData() {

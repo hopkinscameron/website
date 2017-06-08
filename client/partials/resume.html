@@ -2,13 +2,6 @@
 <section ng-controller="resumeController">
     <!-- Begin Container -->
     <div class="container">
-        <!-- Begin Page Not Fully Loaded -->
-        <div class="animated animation-delay--xs fadeIn" ng-if="!pageFullyLoaded">
-            <div class="col-sm-4 offset-sm-4 mt-5">
-                <h4 class="text-center animated infinite jello">Getting thing ready for you...</h4>
-            </div>
-        </div>
-        <!-- End Page Not Fully Loaded -->
         <!-- Begin Page Fully Loaded With Errors -->
         <div ng-if="pageFullyLoaded && error.error">
             <div class="col-sm-4 offset-sm-4 mt-5">

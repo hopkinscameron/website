@@ -43,6 +43,10 @@ app.config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider', func
             templateUrl: './partials/blog.html',
             controller: 'blogController'
         })
+        .when('/blog/post/:postID', {
+            templateUrl: './partials/blogPost.html',
+            controller: 'blogPostController'
+        })
         .when('/contact', {
             templateUrl: './partials/contact.html',
             controller: 'contactController'

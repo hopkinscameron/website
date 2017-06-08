@@ -1,20 +1,22 @@
 ﻿All
-- Add animation when body size changes (particularly on contact page)
+- Add animation when body size changes (particularly on contact page && home)
 - Fix so that last row of array doesn't have margin bottom
-- maybe add some container background colors to help distingush stuff
 - set last item in card to have no margin bottom
+- maybe add some container background colors to help distingush stuff
 - move all files necessary files to the server
+- change text to a light gray instead of white
+- reorder css by alphabet
 
 Header
 - Add blue shadow around hover
+- Header doesn't show sometimes
 
 Footer
 
 Home
-- When on home, change body to have no padding top
-- Hobbies Break list up into max 3 items per row
 
 About
+- Hobbies Break list up into max 3 items per row
 
 Resume
 
@@ -24,6 +26,9 @@ Sub Portfolio
 - customize scroll bar
 
 Blog
+- work on paging /blog?page=1
+- filtering /blog?filter=(year|month|day|text)
+- add a short description to blog post object
 
 Contact
 - Send email to self

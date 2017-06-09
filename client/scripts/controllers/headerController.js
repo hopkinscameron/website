@@ -22,7 +22,16 @@ angular.module('app').controller('headerController', ['$scope', '$rootScope', '$
     $scope.isActive = function (page) {
         var windowSplit = $window.location.href.split('/');
         var pageSplit = page.split('/');
-        if (windowSplit[windowSplit.length - 1] == pageSplit[pageSplit.length - 1]) {
+        var last = windowSplit[windowSplit.length - 1];
+        var queryIndex = last.indexOf("?");
+
+        // if query
+        if(queryIndex != -1) {
+            last = last.substring(0, queryIndex);
+        }
+
+        // check if on page
+        if (last == pageSplit[pageSplit.length - 1]) {
             // set the class as active
             return "active";
         }

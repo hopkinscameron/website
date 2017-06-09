@@ -27,6 +27,11 @@
         $rootScope.$root.showFooter = true;
     }
 
+    // search query
+    $scope.search = {
+        "query": ""
+    };
+
     // get page data
     getPageData();
 
@@ -40,6 +45,58 @@
     $scope.complete = function () {
         // complete loader
         cfpLoadingBar.complete();
+    };
+
+    // searches blogs based on text
+    $scope.search = function () {
+        // if no search text
+        if($scope.search.query.length == 0) {
+            $location.search("s", null);
+        }
+        else {
+            $location.search("s", $scope.search.query);
+        }
+
+        // TODO: call API to update results
+    };
+
+    // checks if filter is active
+    $scope.isFilterActive = function(filter) {
+        var queries = $location.search();
+         // if filters exist
+        if(queries.q) {
+            return queries.q.toLowerCase().indexOf(filter) != -1;
+        }
+
+        return false;
+    };
+
+    // add/remove filter to blog posts
+    $scope.addRemoveFilter = function(filter) {
+        var queries = $location.search();
+
+        // if filters exist
+        if(queries.q) {
+            var queryArray = queries.q.toLowerCase().split('|');
+            var i = queryArray.indexOf(filter.toLowerCase());
+            
+            // if specific query exist, remove
+            if(i != -1) {
+                queryArray.splice(i, 1);
+                var q = queryArray.length > 0 ? queryArray.toString().replace(/,/g, "|") : null;
+                $location.search("q", q);
+            }
+            else {
+                // add
+                $location.search("q", queries.q + "|" + filter);
+            }
+        }
+        else {
+            // add
+            $location.search("q", filter);
+        }
+
+        // TODO: call API to update results
     };
 
     // gets the page data

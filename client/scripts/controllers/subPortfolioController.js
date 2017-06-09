@@ -6,7 +6,7 @@
     Service.afterPath = $location.path();
 
     // holds the page title
-    $scope.pageTitle = Service.appName; //" | " + Service.appName;
+    $scope.pageTitle = Service.appName;
 
     // get the parameters
     var subPortfolioID = $routeParams.subPortfolioID;

@@ -6,6 +6,7 @@
 - move all files necessary files to the server
 - change text to a light gray instead of white
 - reorder css by alphabet
+- in json data, on server side, create the URL instead of on client side
 
 Header
 - Add blue shadow around hover
@@ -27,8 +28,6 @@ Sub Portfolio
 
 Blog
 - work on paging /blog?page=1
-- filtering /blog?filter=(year|month|day|text)
-- add a short description to blog post object
 
 Contact
 - Send email to self

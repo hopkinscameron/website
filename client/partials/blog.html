@@ -21,12 +21,12 @@
                     <div class="mb-5" ng-repeat="post in blog.posts">
                         <div class="card card-inverse card--dark card-block box-shadow--small">
                             <!-- Begin Image -->
-                            <a href="#/blog/post/{{post.url}}">
+                            <a href="#/blog/post/{{post.url}}" ng-if="post.image.length > 0">
                                 <div class="blog-img--small" style="background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.15) 100%), url({{post.image}}); background-size: cover; background-position: center center; background-repeat: no-repeat;"></div>
                             </a>
                             <!-- End Image -->
                             <!-- Begin Content Break -->
-                            <hr class="blog-post-bar mt-5 mb-5" />
+                            <hr class="blog-post-bar mt-5 mb-5" ng-if="post.image.length > 0" />
                             <!-- End Content Break -->
                             <!-- Begin Title -->
                             <h4 class="card-title">{{post.title}}</h4>

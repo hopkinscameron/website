@@ -24,10 +24,12 @@ Resume
 Portfolio
 
 Sub Portfolio
-- customize scroll bar
+- customize scroll bar (or remove it)
 
 Blog
 - work on paging /blog?page=1
+
+Blog Post
 
 Contact
 - Send email to self

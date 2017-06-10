@@ -10,7 +10,7 @@
         </div>
         <!-- End Page Fully Loaded With Errors -->
         <!-- Begin Page Fully Loaded With No Errors -->
-        <div class="animated animation-delay--md fadeIn" ng-if="pageFullyLoaded && !error.error">
+        <article class="animated animation-delay--md fadeIn" ng-if="pageFullyLoaded && !error.error">
             <!-- Begin Page Title -->
             <h2 class="font-weight-bold text-uppercase mb-3">Blog Post</h2>
             <!-- End Page Title -->
@@ -18,24 +18,32 @@
             <div class="col-md-8 offset-md-2">
                 <div class="card card--dark card-block box-shadow--small">
                     <!-- Begin Image -->
-                    <div class="post-img--medium" style="background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.15) 100%), url({{post.image}}); background-size: cover; background-position: center center; background-repeat: no-repeat;"></div>
+                    <div class="post-img--medium rounded" style="background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.15) 100%), url({{post.image}}); background-size: cover; background-position: center center; background-repeat: no-repeat;" ng-if="post.image.length > 0"></div>
                     <!-- End Image -->
                     <!-- Begin Publish Date -->
-                    <span class="card-text text-italic text-outer-dash">{{post.datePublished}}</span>
+                    <div class="text-center mt-4 mb-4 divider">
+                        <div></div>
+                        <span class="card-text font-italic text-muted">Publish on: {{post.datePublished}}</span>
+                        <div></div>
+                    </div>
                     <!-- End Publish Date -->
                     <!-- Begin Title -->
-                    <h4 class="card-title">{{post.title}}</h4>
+                    <h4 class="card-title mb-0">{{post.title}}</h4>
                     <!-- End Title -->
                     <!-- Begin Author -->
-                    <span class="card-text text-italic text-outer-dash">{{post.author}}</span>
+                    <div class="text-center mt-4 mb-4 divider">
+                        <div></div>
+                        <span class="card-text font-italic text-muted">By: {{post.author}}</span>
+                        <div></div>
+                    </div>
                     <!-- End Author -->
                     <!-- Begin Body -->
-                    <p class="blockquote card-text">{{post.body}}</p>
+                    <p class="card-text post-body--dark">{{post.body}}</p>
                     <!-- End Body -->
                 </div>
             </div>
             <!-- End Post -->
-        </div>
+        </article>
         <!-- End Page Fully Loaded With No Errors -->
     </div>
     <!-- End Container -->

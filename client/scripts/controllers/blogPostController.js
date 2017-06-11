@@ -13,8 +13,10 @@
 
     // holds the error
     $scope.error = {
-        "message": "",
-        "error": false
+        "error": false,
+        "title": "",
+        "status": 404,
+        "message": ""
     };
 
     // determines if the page is fully loaded
@@ -47,6 +49,7 @@
 
     // gets the page data
     function getPageData() {
+        /*
         $scope.post = {
             "id": 1,
             "title": "quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt",
@@ -60,8 +63,9 @@
         $scope.pageTitle = $scope.post.title + " | " + Service.appName;
         // setup page
         setUpPage();
+        */
 
-        /*
+        
         // get blog page data
         Service.getBlogPostPageData(postID).then(function (responseBP) {
             // if returned a valid response
@@ -75,10 +79,10 @@
             }
             else {
                 // set error
-                $scope.pageTitle = responseBP.message;
-
-                // set error
+                $scope.pageTitle = responseBP.title;
                 $scope.error.error = true;
+                $scope.error.title = responseBP.title;
+                $scope.error.status = responseBP.status;
                 $scope.error.message = responseBP.message;
 
                 // setup page
@@ -87,16 +91,15 @@
         })
         .catch(function (responseBP) {
             // set error
-            $scope.pageTitle = responseBP.message;
-
-            // set error
+            $scope.pageTitle = responseBP.title;
             $scope.error.error = true;
+            $scope.error.title = responseBP.title;
+            $scope.error.status = responseBP.status;
             $scope.error.message = responseBP.message;
 
             // setup page
             setUpPage();
         });
-        */
     };
 
     // sets up the page

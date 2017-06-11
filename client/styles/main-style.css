@@ -80,10 +80,10 @@
 /* Begin Body Styles */
 body {
 	font-family: "Trebuchet MS", sans-serif;
-    color: #fff;
+    color: rgb(230, 230, 230);
 	background-repeat: no-repeat;
 	background-size: cover;
-    background-color: #fff;
+    background-color: #262626;
 	image-rendering: auto;
   	image-rendering: crisp-edges;
   	image-rendering: optimizeSpeed;
@@ -102,6 +102,10 @@ body {
 }
 .body-home {
     padding-top: 0px; 
+}
+.body-error {
+    background-color: #29a8d6;
+    background-image: url("");
 }
 /* End Body Styles */
 
@@ -220,12 +224,18 @@ a:hover, a:active, a:focus {
 /* End List Groups */
 
 /* Begin Navigation Styles */
+nav {
+    color: rgb(230, 230, 230);
+}
 .navbar-inverse {
     background-image: linear-gradient(rgb(30, 30, 30) 0px, rgb(14, 14, 14) 100%);
     background-repeat: repeat-x;
 }
 .navbar-inverse .navbar-nav .nav-link {
-    color: #fff;
+    color: rgb(230, 230, 230);
+}
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-toggler {
+    color: rgb(230, 230, 230);
 }
 .nav-link.active {
     color: #29a8d6 !important;
@@ -242,14 +252,14 @@ a:hover, a:active, a:focus {
     background-color: #000;
 }
 .dropdown-item {
-    color: #fff;
+    color: rgb(230, 230, 230);
 }
-.dropdown-item:hover  {
-    color: #fff;
+.dropdown-item:hover, .dropdown-item:focus {
+    color: rgb(230, 230, 230);
     background-color: #29a8d6;
 }
 .dropdown-item.active, .dropdown-item:active {
-    color: #fff;
+    color: rgb(230, 230, 230);
     background-color: #29a8d6;
 }
 /* End Navigation Styles */

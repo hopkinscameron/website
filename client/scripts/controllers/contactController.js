@@ -8,10 +8,12 @@
     // holds the page title
     $scope.pageTitle = "Contact | " + Service.appName;
 
-    // holds the error(s)
+    // holds the error
     $scope.error = {
-        "message": "",
-        "error": false
+        "error": false,
+        "title": "",
+        "status": 404,
+        "message": ""
     };
 
     // holds contact form information
@@ -266,11 +268,11 @@
             }
             else {
                 // set error
-                $scope.pageTitle = responseC.message;
-
-                // set error
+                $scope.pageTitle = responseC.title;
                 $scope.error.error = true;
-                $scope.contactForm.errors.message = responseC.message;
+                $scope.error.title = responseC.title;
+                $scope.error.status = responseC.status;
+                $scope.error.message = responseC.message;
 
                 // setup page
                 setUpPage();
@@ -278,11 +280,11 @@
         })
         .catch(function (responseC) {
             // set error
-            $scope.pageTitle = responseC.message;
-
-            // set error
+            $scope.pageTitle = responseC.title;
             $scope.error.error = true;
-            $scope.contactForm.errors.message = responseC.message;
+            $scope.error.title = responseC.title;
+            $scope.error.status = responseC.status;
+            $scope.error.message = responseC.message;
 
             // setup page
             setUpPage();

@@ -10,8 +10,10 @@
 
     // holds the error
     $scope.error = {
-        "message": "",
-        "error": false
+        "error": false,
+        "title": "",
+        "status": 404,
+        "message": ""
     };
 
     // determines if the page is fully loaded
@@ -72,10 +74,10 @@
             }
             else {
                 // set error
-                $scope.pageTitle = responseP.message;
-
-                // set error
+                $scope.pageTitle = responseP.title;
                 $scope.error.error = true;
+                $scope.error.title = responseP.title;
+                $scope.error.status = responseP.status;
                 $scope.error.message = responseP.message;
 
                 // setup page
@@ -84,10 +86,10 @@
         })
         .catch(function (responseP) {
             // set error
-            $scope.pageTitle = responseP.message;
-
-            // set error
+            $scope.pageTitle = responseP.title;
             $scope.error.error = true;
+            $scope.error.title = responseP.title;
+            $scope.error.status = responseP.status;
             $scope.error.message = responseP.message;
 
             // setup page

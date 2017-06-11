@@ -1,87 +1,53 @@
-﻿angular.module('app').controller('homeController', ['$scope', '$rootScope', '$compile', '$location', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $location, cfpLoadingBar, Service) {
-    // set jQuery
-    $ = window.jQuery;
+﻿angular.module('app').controller('errorController', ['$scope', '$compile', 'Service', function ($scope, $compile, Service) {
+    // initialize
+    //$scope.init('Page not found', 404, 'The page you are looking for does not exist');
+    $scope.pageTitle = 'Page not found' + " | " + Service.appName;
+    $scope.status = 404; 
+    $scope.message = 'The page you are looking for does not exist'; 
 
-    // set the path
-    Service.afterPath = $location.path();
+    // setup page
+    setUpPage();
 
-    // holds the page title
-    $scope.pageTitle = "Home | " + Service.appName;
+    // initialization of controller
+    $scope.init = function(title, status, message)
+    {
+        // initialize
+        $scope.pageTitle = title + " | " + Service.appName;
+        $scope.status = status; 
+        $scope.message = message; 
 
-    // holds the error
-    $scope.error = {
-        "message": "",
-        "error": false
+        // get correct error code
+        if(status == 400) {
+            $scope.image = '/media/errors/400.png';
+        }
+        else if(status == 401) {
+            $scope.image = '/media/errors/401.png';
+        }
+        else if(status == 403) {
+            $scope.image = '/media/errors/403.png';
+        }
+        else if(status == 404) {
+            $scope.image = '/media/errors/404.png';
+        }
+        else if(status == 500) {
+            $scope.image = '/media/errors/500.png';
+        }
+
+        // setup page
+        setUpPage();
     };
 
-    // determines if the page is fully loaded
-    $scope.pageFullyLoaded = false;
+    // on the destruction of the controller
+    $scope.$on("$destroy", function handler() {
+        // get body
+        var body = angular.element(document.body);
 
-    // hide the header if displayed     
-    if (Service.headerDisplayed) {
-        Service.headerDisplayed = false;
-    }
-
-    // hide the footer if displayed
-    if (Service.footerDisplayed) {
-        Service.headerDisplayed = true;
-    }
-
-    // show the home body display
-    showBodyHomeID()
-
-    // get home page data
-    getHomePageData();
-
-    // on loading http intercepter start
-    $scope.start = function() {
-        // start loader
-        cfpLoadingBar.start();
-    };
-
-    // on loading http intercepter complete
-    $scope.complete = function () {
-        // complete loader
-        cfpLoadingBar.complete();
-    };
-
-    // gets the home page data
-    function getHomePageData() {
-        // get home page data
-        Service.getHomePageData().then(function (responseH) {
-            // if returned a valid response
-            if (!responseH.error) {
-                // set the home data
-                $scope.home = responseH;
-
-                // setup page
-                setUpPage();
-            }
-            else {
-                // set error
-                $scope.pageTitle = responseH.message;
-
-                // set error
-                $scope.error.error = true;
-                $scope.error.message = responseH.message;
-
-                // setup page
-                setUpPage();
-            }
-        })
-        .catch(function (responseH) {
-            // set error
-            $scope.pageTitle = responseH.message;
-
-            // set error
-            $scope.error.error = true;
-            $scope.error.message = responseH.message;
-
-            // setup page
-            setUpPage();
-        });
-    };
-
+        // if correct css, remove it
+        if(body && body.hasClass('body-error')) {
+            body.removeClass('body-error');
+        }
+    });
+    
     // sets up the page
     function setUpPage() {
         // set up the title
@@ -90,7 +56,12 @@
         titleDOM.setAttribute("ng-bind-html", title);
         $compile(titleDOM)($scope);
 
-        // set page fully loaded
-        $scope.pageFullyLoaded = true;
+        // get body
+        var body = angular.element(document.body);
+
+        // if not correct css, add it
+        if(body && !body.hasClass('body-error')) {
+            body.addClass('body-error');
+        }
     };
 }]);

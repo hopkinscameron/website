@@ -175,7 +175,7 @@
     // gets subportfolio page information 
     service.getSubPortfolioPageInformation = function (subPortfolioID) {
         // set the endpoint
-        var endpoint = "/api/subportfolio?id=" + subPortfolioID;
+        var endpoint = "/api/portfolio?id=" + subPortfolioID;
 
         // create request
         var req = {
@@ -196,6 +196,26 @@
     service.getBlogPageInformation = function () {
         // set the endpoint
         var endpoint = "/api/blog";
+
+        // create request
+        var req = {
+            method: 'GET',
+            url: endpoint,
+            headers: {
+                'Content-Type': 'application/json; odata=verbose',
+                'Accept': 'application/json; odata=verbose'
+            },
+            data: 'undefined'
+        };
+
+        // send request
+        return $http(req);
+    };
+
+    // gets blog post page information 
+    service.getBlogPostPageInformation = function (postID) {
+        // set the endpoint
+        var endpoint = "/api/blog?id=" + postID;
 
         // create request
         var req = {

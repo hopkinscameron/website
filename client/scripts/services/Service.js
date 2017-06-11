@@ -14,10 +14,10 @@
     service.sendEmailToOwner = function (emailData) {
         // sends email to owner (me)
         return DataAccessService.sendEmailToOwner(emailData).then(function (responseSE) {
-            return { "error": false, "message": responseSE.data.message };
+            return { "error": true, "title": responseSE.data.title, "status": responseSE.status, "message": responseSE.data.message };
         })
         .catch(function (responseSE) {
-            return { "error": true, "message": responseSE.data.message };
+            return { "error": true, "title": responseSE.data.title, "status": responseSE.status, "message": responseSE.data.message };
         });
     };
 
@@ -26,7 +26,7 @@
         // shorten the url
         return DataAccessService.shortenURL(url)
         .catch(function (responseU) {
-            return { "error": true, "message": responseU.data.message };
+            return { "error": true, "title": responseU.data.title, "status": responseU.status, "message": responseU.data.message };
         });
     };
 
@@ -37,7 +37,7 @@
             return responseLI.data;
         })
         .catch(function (responseLI) {
-            return { "error": true, "message": responseLI.data.message };
+            return { "error": true, "title": responseLI.data.title, "status": responseLI.status, "message": responseLI.data.message };
         });
     };
 
@@ -48,7 +48,7 @@
             return responseF.data;
         })
         .catch(function (responseF) {
-            return { "error": true, "message": responseF.data.message };
+            return { "error": true, "title": responseF.data.title, "status": responseF.status, "message": responseF.data.message };
         });
     };
 
@@ -59,7 +59,7 @@
             return responseH.data;
         })
         .catch(function (responseH) {
-            return { "error": true, "message": responseH.data.message };
+            return { "error": true, "title": responseH.data.title, "status": responseH.status, "message": responseH.data.message };
         });
     };
 
@@ -70,7 +70,7 @@
             return responseAM.data;
         })
         .catch(function (responseAM) {
-            return { "error": true, "message": responseAM.data.message };
+            return { "error": true, "title": responseAM.data.title, "status": responseAM.status, "message": responseAM.data.message };
         });
     };
 
@@ -81,7 +81,7 @@
             return responseR.data;
         })
         .catch(function (responseR) {
-            return { "error": true, "message": responseR.data.message };
+            return { "error": true, "title": responseR.data.title, "status": responseR.status, "message": responseR.data.message };
         });
     };
 
@@ -92,7 +92,7 @@
             return responseP.data;
         })
         .catch(function (responseP) {
-            return { "error": true, "message": responseP.data.message };
+            return { "error": true, "title": responseP.data.title, "status": responseP.status, "message": responseP.data.message };
         });
     };
 
@@ -103,7 +103,7 @@
             return responseSP.data;
         })
         .catch(function (responseSP) {
-            return { "error": true, "message": responseSP.data.message };
+            return { "error": true, "title": responseSP.data.title, "status": responseSP.status, "message": responseSP.data.message };
         });
     };
 
@@ -114,7 +114,18 @@
             return responseB.data;
         })
         .catch(function (responseB) {
-            return { "error": true, "message": responseB.data.message };
+            return { "error": true, "title": responseB.data.title, "status": responseB.status, "message": responseB.data.message };
+        });
+    };
+
+    // get blog post page data
+    service.getBlogPostPageData = function (postID) {
+        // access the blog information
+        return DataAccessService.getBlogPostPageInformation(postID).then(function (responseBP) {
+            return responseBP.data;
+        })
+        .catch(function (responseBP) {
+            return { "error": true, "title": responseBP.data.title, "status": responseBP.status, "message": responseBP.data.message };
         });
     };
 
@@ -125,7 +136,7 @@
             return responseC.data;
         })
         .catch(function (responseC) {
-            return { "error": true, "message": responseC.data.message };
+            return { "error": true, "title": responseC.data.title, "status": responseC.status, "message": responseC.data.message };
         });
     };
 

@@ -4,8 +4,8 @@
     <div class="container">
         <!-- Begin Page Fully Loaded With Errors -->
         <div ng-if="pageFullyLoaded && error.error">
-            <div class="col-sm-4 offset-sm-4 mt-5">
-                <h4 class="text-center text-muted font-italic" ng-if="error.error">{{error.message}}</h4>
+            <div ng-controller="errorController" ng-init="init(error.title, error.status, error.message)">
+                <div ng-include="'/partials/error.html'"></div>
             </div>
         </div>
         <!-- End Page Fully Loaded With Errors -->
@@ -18,7 +18,7 @@
             <div class="row">
                 <!-- Begin Posts -->
                 <div class="col-md-9">
-                    <div class="mb-5" ng-repeat="post in blog.posts">
+                    <div class="" ng-class="{'mb-5': $index < blog.posts.length - 1}" ng-repeat="post in blog.posts">
                         <div class="card card-inverse card--dark card-block box-shadow--small">
                             <!-- Begin Image -->
                             <a href="#/blog/post/{{post.url}}" ng-if="post.image.length > 0">

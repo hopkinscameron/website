@@ -51,7 +51,7 @@ router.get('/api/header', function (req, res, next) {
 		}
 		else {
 			// send internal error
-			res.status(500).send({message: "Something went wrong. " + err.message});
+			res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
 		}
 	});
 });
@@ -67,7 +67,7 @@ router.get('/api/footer', function (req, res, next) {
 		}
 		else {
 			// send internal error
-			res.status(500).send({message: "Something went wrong. " + err.message});
+			res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
 		}
 	});
 });
@@ -83,7 +83,7 @@ router.get('/api/home', function (req, res, next) {
 		}
 		else {
 			// send internal error
-			res.status(500).send({message: "Something went wrong. " + err.message});
+			res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
 		}
 	});
 });
@@ -99,7 +99,7 @@ router.get('/api/about', function (req, res, next) {
 		}
 		else {
 			// send internal error
-			res.status(500).send({message: "Something went wrong. " + err.message});
+			res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
 		}
 	});
 });
@@ -115,30 +115,15 @@ router.get('/api/resume', function (req, res, next) {
 		}
 		else {
 			// send internal error
-			res.status(500).send({message: "Something went wrong. " + err.message});
+			res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
 		}
 	});
 });
 
-// GET portfolio page information
+// GET portfolio page information or subportfolio information
 // format /api/portfolio
+// format /api/portfolio?id=subPortfolioID
 router.get('/api/portfolio', function (req, res, next) {
-	fs.readFile("./server/data/portfolio.json", 'utf8', function (err, data) {
-		// if no error 
-		if(!err) {
-			// send data
-			res.end( data );
-		}
-		else {
-			// send internal error
-			res.status(500).send({message: "Something went wrong. " + err.message});
-		}
-	});
-});
-
-// GET subportfolio page information
-// format /api/subportfolio?id=subPortfolioID
-router.get('/api/subportfolio', function (req, res, next) {
 	// if query
 	if (req.query.id) {
 		var file = getSubPortfolioFile(req.query.id);
@@ -146,7 +131,9 @@ router.get('/api/subportfolio', function (req, res, next) {
 		// if file doesn't exist
 		if(!file) {
 			// send error
-			res.status(404).send({message: "Project not found."});
+			res.status(404).send({ title: "Page not found.", message: "Project not found." });
+
+			return;
 		}
 
 		// get contents
@@ -158,30 +145,72 @@ router.get('/api/subportfolio', function (req, res, next) {
 			}
 			else {
 				// send internal error
-				res.status(500).send({message: "Something went wrong. " + err.message});
+				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
 			}
 		});
 	}
 	else {
-		// send bad request
-		res.status(400).send({message: "Bad request. Please pass in a query parameter with a subportfolio identifier."});
+		fs.readFile("./server/data/portfolio.json", 'utf8', function (err, data) {
+			// if no error 
+			if(!err) {
+				// send data
+				res.end( data );
+			}
+			else {
+				// send internal error
+				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+			}
+		});
 	}
 });
 
 // GET blog page information
 // format /api/blog
+// format /api/blog?id=postID
 router.get('/api/blog', function (req, res, next) {
-	fs.readFile("./server/data/blog.json", 'utf8', function (err, data) {
-		// if no error 
-		if(!err) {
+	// if query
+	if (req.query.id) {
+		fs.readFile("./server/data/blog.json", 'utf8', function (err, data) {
+			// if err
+			if(err) {
+				res.status(500).send({ error: true, title: "Something went wrong.", message: "Something went wrong. " + err.message });
+				return;
+			}
+
+			// get post
+			var post = getBlogPost(data, req.query.id);
+
+			// if post doesn't exist
+			if(!post) {
+				// send error
+				res.status(404).send({ title: "Page not found.", message: "Blog Post not found." });
+				return;
+			}
+
+			// if err
+			if(post.error) {
+				// send error
+				res.status(500).send({ error: true, title: post.title, message: post.message });
+				return;
+			}
+
 			// send data
-			res.end( data );
-		}
-		else {
-			// send internal error
-			res.status(500).send({message: "Something went wrong. " + err.message});
-		}
-	});
+			res.end( JSON.stringify(post) );
+		});
+	}
+	else {
+		fs.readFile("./server/data/blog.json", 'utf8', function (err, data) {
+			// if no error 
+			if(!err) {
+				// send data
+				res.end( data );
+			}
+			else {
+				// send internal error
+				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+			}
+		});
+	}
 });
 
 // GET contact page information
@@ -195,7 +224,7 @@ router.get('/api/contact', function (req, res, next) {
 		}
 		else {
 			// send internal error
-			res.status(500).send({message: "Something went wrong. " + err.message});
+			res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
 		}
 	});
 });
@@ -225,7 +254,7 @@ router.post('/api/sendEmail', function (req, res, next) {
 			errorText += errors[x].msg + " ";
 		}
 		// send bad request
-		res.status(400).send({message: "Bad request. " + errorText});
+		res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
 	}
 	else {
 		/*
@@ -235,7 +264,7 @@ router.post('/api/sendEmail', function (req, res, next) {
 			inEventId = req.body.eventId,
 			inComment = req.body.comment;
 		*/
-		res.status(200).send({message: "Here is some test fake success message."});
+		res.status(200).send({ title: "Success!", message: "Here is some test fake success message." });
 	}
 });
 
@@ -251,6 +280,32 @@ function getSubPortfolioFile(subPortfolioID) {
 		|| subPortfolioID == 'squirvival'
 	) {
 		return subPortfolioID + ".json";
+	}
+	
+	return undefined;
+};
+
+// gets the blog post matching the postID
+function getBlogPost(data, postID) {
+	var jsonParse = undefined;
+
+	// parse json
+	try {
+		jsonParse = JSON.parse(data);
+
+		// if posts
+		if(jsonParse.posts) {
+			// loop through all posts
+			jsonParse.posts.forEach(function(element) {
+				if(element.url.toLowerCase() == postID.toLowerCase()) {
+					return element;
+				}
+			}, this);
+		}
+	}
+	catch (err) {
+		// send internal error
+		return { error: true, title: "Something went wrong.", message: "Something went wrong. " + err.message};
 	}
 	
 	return undefined;

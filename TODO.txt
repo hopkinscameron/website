@@ -4,9 +4,8 @@
 - set last item in card to have no margin bottom
 - maybe add some container background colors to help distingush stuff
 - move all files necessary files to the server
-- change text to a light gray instead of white
-- reorder css by alphabet
 - in json data, on server side, create the URL instead of on client side
+- set " + " | " + Service.appName;" at the end of every page title error
 
 Header
 - Add blue shadow around hover
@@ -33,3 +32,7 @@ Blog Post
 
 Contact
 - Send email to self
+
+Error
+- fix 400 error image
+- Fix reading blog.json and parsing it

@@ -1,10 +1,6 @@
 {
   "title": "Blog",
-  "filters": [
-    "year",
-    "month",
-    "day"
-  ],
+  "filters": [],
   "posts": [{
     "id": 1,
     "title": "quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt",

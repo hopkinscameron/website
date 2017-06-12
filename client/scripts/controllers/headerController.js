@@ -7,7 +7,7 @@ angular.module('app').controller('headerController', ['$scope', '$rootScope', '$
     $rootScope.$root.animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
 
     // initialize show header
-    $rootScope.$root.showHeader = false;
+    $rootScope.$root.showHeader = true;
 
     // holds the header backend data
     $scope.header = {};

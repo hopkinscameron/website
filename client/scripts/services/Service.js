@@ -108,9 +108,9 @@
     };
 
     // get blog page data
-    service.getBlogPageData = function () {
+    service.getBlogPageData = function (filter, pageNumber) {
         // access the blog information
-        return DataAccessService.getBlogPageInformation().then(function (responseB) {
+        return DataAccessService.getBlogPageInformation(filter, pageNumber).then(function (responseB) {
             return responseB.data;
         })
         .catch(function (responseB) {

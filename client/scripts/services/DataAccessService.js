@@ -193,9 +193,21 @@
     };
 
     // gets blog page information 
-    service.getBlogPageInformation = function () {
+    service.getBlogPageInformation = function (filter, pageNumber) {
         // set the endpoint
         var endpoint = "/api/blog";
+
+        // if filter
+        if(filter) {
+            endpoint += "?q=" + filter;
+        }
+
+        // if page number
+        if(pageNumber) {
+            // if filter has been applied
+            var delimeter = filter ? "&" : "?";
+            endpoint += delimeter + "page=" + pageNumber;
+        }
 
         // create request
         var req = {

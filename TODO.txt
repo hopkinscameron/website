@@ -25,7 +25,6 @@ Sub Portfolio
 - customize scroll bar (or remove it)
 
 Blog
-- work on paging /blog?page=1
 
 Blog Post
 

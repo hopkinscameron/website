@@ -1,6 +1,6 @@
 ﻿angular.module('app').controller('footerController', ['$scope', '$rootScope', 'Service', function ($scope, $rootScope, Service) {
     // initialize show footer
-    $rootScope.$root.showFooter = false;
+    $rootScope.$root.showFooter = true;
 
     // the footer backend data
     $scope.footer = {};

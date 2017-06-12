@@ -166,9 +166,10 @@ router.get('/api/portfolio', function (req, res, next) {
 
 // GET blog page information
 // format /api/blog
+// format /api/blog?q=someQuery
 // format /api/blog?id=postID
 router.get('/api/blog', function (req, res, next) {
-	// if query
+	// if query on id
 	if (req.query.id) {
 		fs.readFile("./server/data/blog.json", 'utf8', function (err, data) {
 			// if err
@@ -199,11 +200,17 @@ router.get('/api/blog', function (req, res, next) {
 		});
 	}
 	else {
+		// set page number
+		var pageNumber = req.query.page !== undefined ? req.query.page : 1;
+
 		fs.readFile("./server/data/blog.json", 'utf8', function (err, data) {
 			// if no error 
 			if(!err) {
+				// get blog with filter/page number
+				var blog = getBlogData(data, req.query.q, pageNumber);
+
 				// send data
-				res.end( data );
+				res.end( JSON.stringify(blog) );
 			}
 			else {
 				// send internal error
@@ -283,6 +290,76 @@ function getSubPortfolioFile(subPortfolioID) {
 	}
 	
 	return undefined;
+};
+
+// gets the blog data based on page
+function getBlogData (data, filter, pageNumber) {
+	var itemsPerPage = 3;
+
+	var jsonParse = undefined;
+
+	// parse json
+	try {
+		jsonParse = JSON.parse(data);
+		pageNumber = parseInt(pageNumber);
+		
+		// if posts
+		if(jsonParse.posts) {
+			// if filter
+			if(filter) {
+				jsonParse.posts = applyFilter(jsonParse.posts, filter);
+			}
+
+			// total pages
+			var totalPages = Math.ceil(jsonParse.posts.length/itemsPerPage);
+
+			// get start/end index
+			var start = (pageNumber - 1) * itemsPerPage,
+				end = start + itemsPerPage;
+			
+			// get the sliced version
+			var sliced = jsonParse.posts.slice(start, end);
+
+			// set new posts with applied start/end
+			jsonParse.posts = jsonParse.posts.slice(start, end);
+
+			// set total pages
+			jsonParse.totalPages = new Array(totalPages);
+
+			// set current page
+			jsonParse.currentPage = pageNumber;
+
+			// return a portion of array
+			return jsonParse;
+		}
+	}
+	catch (err) {
+		// send internal error
+		return { error: true, title: "Something went wrong.", message: "Something went wrong. " + err.message};
+	}
+	
+	return [];
+};
+
+// applies filter on array
+function applyFilter(arr, filter) {
+	var newArr = [];
+	var filterSplit = filter.split(" ");
+
+	// loop through array
+	for(var x = 0; x < arr.length; x++) {
+		var post = arr[x];
+
+		// based on filter, check if contains
+		if (filterSplit.some(function(text) { 
+			return post.title.indexOf(text) >= 0 || post.body.indexOf(text) || post.shortDescription.indexOf(text) || post.author.indexOf(text);
+		})) {
+			// there's at least one
+			newArr.push(post);
+		}
+	}
+
+	return newArr;
 };
 
 // gets the blog post matching the postID

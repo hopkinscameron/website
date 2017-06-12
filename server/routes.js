@@ -296,11 +296,12 @@ function getBlogPost(data, postID) {
 		// if posts
 		if(jsonParse.posts) {
 			// loop through all posts
-			jsonParse.posts.forEach(function(element) {
+			for(var x = 0; x < jsonParse.posts.length; x++) {
+				var element = jsonParse.posts[x];
 				if(element.url.toLowerCase() == postID.toLowerCase()) {
 					return element;
 				}
-			}, this);
+			}
 		}
 	}
 	catch (err) {

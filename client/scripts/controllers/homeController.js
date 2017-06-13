@@ -16,19 +16,6 @@
         "message": ""
     };
 
-    // determines if the page is fully loaded
-    $scope.pageFullyLoaded = false;
-
-    // hide the header if shown     
-    if ($rootScope.$root.showHeader) {
-        $rootScope.$root.showHeader = false;
-    }
-
-    // hide the footer if shown
-    if ($rootScope.$root.showFooter) {
-        $rootScope.$root.showFooter = false;
-    }
-
     // the initial text to display to the user
     $scope.initialText = {
         'id': "initialText",
@@ -63,9 +50,6 @@
         body.addClass('body-home');
     }
 
-    // get page data
-    getPageData();
-
     // on resize
     angular.element(window).resize(function() {
         $scope.$apply(function () {
@@ -74,7 +58,49 @@
             }
         });
     });
+    
+    // determines if the page is fully loaded
+    $scope.pageFullyLoaded = false;
 
+    // check if header/footer was initialized
+    if($rootScope.$root.showHeader === undefined || $rootScope.$root.showFooter === undefined) {
+        // refresh header
+        $rootScope.$emit("refreshHeader", {});
+
+        // refresh footer
+        $rootScope.$emit("refreshFooter", {});
+    }
+    else {
+        // initialize the page
+        initializePage();
+    }
+
+    // on header refresh
+    $rootScope.$on("headerRefreshed", function (event, data) {
+        // if footer still hasn't been initialized
+        if($rootScope.$root.showFooter === undefined) {
+            // refresh footer
+            $rootScope.$emit("refreshFooter", {});
+        }
+        else {
+            // initialize the page
+            initializePage();
+        }
+    });
+
+    // on footer refresh
+    $rootScope.$on("footerRefreshed", function (event, data) {
+        // if footer still hasn't been initialized
+        if($rootScope.$root.showHeader === undefined) {
+            // refresh header
+            $rootScope.$emit("refreshHeader", {});
+        }
+        else {
+            // initialize the page
+            initializePage();
+        }
+    });
+    
     // on loading http intercepter start
     $scope.start = function() {
         // start loader
@@ -94,6 +120,22 @@
             body.removeClass('body-home');
         }
     });
+
+    // initialize page
+    function initializePage() {
+        // hide the header if shown     
+        if ($rootScope.$root.showHeader) {
+            $rootScope.$root.showHeader = false;
+        }
+
+        // hide the footer if shown
+        if ($rootScope.$root.showFooter) {
+            $rootScope.$root.showFooter = false;
+        }
+
+        // get page data
+        getPageData();
+    };
 
     // gets the page data
     function getPageData() {

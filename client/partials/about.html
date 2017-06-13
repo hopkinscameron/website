@@ -26,11 +26,17 @@
             <!-- Begin Hobbies -->
             <div class="card card--transparent card-block">
                 <h4 class="text-capitalize">Hobbies</h4>
-                <div class="pl-3 pr-3 animated animation-delay--xmd fadeInUp">
-                    <ul class="list-unstyled mb-0">
-                        <li ng-repeat="hobby in about.hobbies">{{hobby.text}}</li>
-                    </ul>
+                
+                <div class="animated animation-delay--xmd fadeInUp">
+                    <div class="row pl-3 pr-3" ng-class="{'mb-5': $index < hobbiesMaxRowCountArray.length - 1}" ng-repeat="index in hobbiesMaxRowCountArray.length track by $index">
+                        <div class="col-md-3" ng-repeat="index in hobbiesColumnsPerRowArray track by $index">
+                            <ul class="list-unstyled">
+                                <li ng-repeat="innerIndex in hobbiesMaxListCountArray track by $index">{{about.hobbies[$index + 4 * $parent.$index].text}}</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
+                
             </div>
             <!-- End Hobbies -->
             <!-- Begin Content Break -->
@@ -39,16 +45,18 @@
             <!-- Begin Favorite Games -->
             <div class="card card--transparent card-block">
                 <h4 class="text-capitalize">Favorite Games</h4>
-                <div class="row pl-3 pr-3 animated animation-delay--xmd fadeInUp">
-                    <div class="col-md-3 float-left mb-5" ng-repeat="favoriteGamesData in about.favoriteGames">
-                        <ul class="list-unstyled mb-0">
-                            <li class="h5">
-                                <span class="font-italic">{{favoriteGamesData.type}}</span>
-                            </li>
-                            <li class="aboutme-li" ng-repeat="favoriteGame in favoriteGamesData.content">
-                                <span ng-bind-html="favoriteGame.text | trustHTML"></span>
-                            </li>
-                        </ul>
+                <div class="animated animation-delay--xmd fadeInUp">
+                    <div class="row pl-3 pr-3" ng-class="{'mb-5': $index < favoriteGamesMaxRowCountArray.length - 1}" ng-repeat="index in favoriteGamesMaxRowCountArray track by $index">
+                        <div class="col-md-3" ng-repeat="innerIndex in favoriteGamesColumnsPerRowArray track by $index">
+                            <ul class="list-unstyled mb-0">
+                                <li class="h5">
+                                    <span class="font-italic">{{about.favoriteGames[$index + favoriteGamesColumnsPerRow * $parent.$index].type}}</span>
+                                </li>
+                                <li class="" ng-repeat="favoriteGame in about.favoriteGames[$index + favoriteGamesColumnsPerRow * $parent.$index].content">
+                                    <span ng-bind-html="favoriteGame.text | trustHTML"></span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

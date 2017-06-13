@@ -17,7 +17,7 @@
             <!-- Begin Portfolio Items -->
             <div class="card card--transparent card-block">
                 <div class="row">
-                    <div class="col-md-6 float-left mb-5" ng-repeat="portfolioItem in portfolio.portfolioItems">
+                    <div class="col-md-6 mb-5" ng-repeat="portfolioItem in portfolio.portfolioItems">
                         <h3 class="text-center text-capitalize font-weight-bold">{{portfolioItem.title}}</h3>
                         <a class="" href="#{{currentPath}}/{{portfolioItem.subPageLink}}">
                             <img class="img-fluid w-100" ng-src="{{portfolioItem.pictureLink}}" alt="{{getPictureTitle(portfolioItem.pictureLink)}}" title="{{getPictureTitle(portfolioItem.pictureLink)}}" spinner-load />

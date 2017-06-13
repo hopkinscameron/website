@@ -18,16 +18,16 @@
             <div class="card card--transparent card-block">
                 <div class="row">
                     <!-- Begin Image Selection -->
-                    <div class="col-md-4 float-left">
+                    <div class="col-md-4">
                         <div class="row sub-portfolio-img-container-max-height">
-                            <div class="col-md-6 float-left mb-3" ng-repeat="image in subPortfolio.images">
+                            <div class="col-md-6 mb-3" ng-repeat="image in subPortfolio.images">
                                 <img role="button" class="d-block img-fluid mx-auto sub-portfolio-img" ng-class="{'active': isActive('highlights', $index)}" ng-src="{{image.url}}" ng-click="changeProjectHighlightImage($index)" spinner-load>
                             </div>
                         </div>
                     </div>
                     <!-- End Image Selection -->
                     <!-- Begin Full Image Selected -->
-                    <div class="col float-left">
+                    <div class="col">
                         <img class="d-block img-fluid mx-auto sub-portfolio-img-max-height" ng-src="{{currentProjectImage}}" spinner-load>
                     </div>
                     <!-- Begin Full Image Selected -->
@@ -59,13 +59,13 @@
             <!-- Begin Development Details -->
             <div class="card card--transparent card-block">
                 <h4 class="text-capitalize">Development Details</h4>
-                <div class="row pl-3 pr-3">
-                    <div class="col-md-2 float-left mb-5" ng-repeat="gameData in subPortfolio.overviewContent.gameData">
+                <div class="row pl-3 pr-3" ng-class="{'mb-5': $index < gameDataMaxRowCountArray.length - 1}" ng-repeat="index in gameDataMaxRowCountArray track by $index">
+                    <div class="col-md-2" ng-repeat="innerIndex in gameDataColumnsPerRowArray track by $index">
                         <ul class="list-unstyled mb-0">
                             <li class="h5">
-                                <span class="font-italic">{{gameData.title}}</span>
+                                <span class="font-italic">{{subPortfolio.overviewContent.gameData[$index + gameDataColumnsPerRow * $parent.$index].title}}</span>
                             </li>
-                            <li class="aboutme-li" ng-repeat="data in gameData.data">
+                            <li class="" ng-repeat="data in subPortfolio.overviewContent.gameData[$index + gameDataColumnsPerRow * $parent.$index].data">
                                 <span>{{data.text}}</span>
                             </li>
                         </ul>

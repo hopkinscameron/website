@@ -1,22 +1,19 @@
 ﻿// the Header Controller
 angular.module('app').controller('headerController', ['$scope', '$rootScope', '$location', '$window', 'Service', function ($scope, $rootScope, $location, $window, Service) {
-    // set jQuery
-    $rootScope.$root.$ = window.jQuery;
-
-    // set animations
-    $rootScope.$root.animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-
-    // initialize show header
-    $rootScope.$root.showHeader = true;
-
-    // holds the header backend data
-    $scope.header = {};
-
-    // set up all regex's
-    setUpRegex();
+    // initialize variables
+    initializeVariables();
 
     // get the header information
     getHeaderInformation();
+    
+    // on refresh
+    $rootScope.$on("refreshHeader", function (event, data) {
+        // initialize variables
+        initializeVariables();
+
+        // get the header information
+        getHeaderInformation();
+    });
 
     // checks if the page is active
     $scope.isActive = function (page) {
@@ -39,6 +36,24 @@ angular.module('app').controller('headerController', ['$scope', '$rootScope', '$
         return "";
     };
 
+    // initialize variables
+    function initializeVariables () {
+        // set jQuery
+        $rootScope.$root.$ = window.jQuery;
+
+        // set animations
+        $rootScope.$root.animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+
+        // initialize show header
+        $rootScope.$root.showHeader = false;
+
+        // holds the header backend data
+        $scope.header = {};
+
+        // set up all regex's
+        setUpRegex();
+    };
+
     // sets up the regex
     function setUpRegex() {
         // email regex
@@ -54,6 +69,9 @@ angular.module('app').controller('headerController', ['$scope', '$rootScope', '$
         Service.getHeaderInformation().then(function (responseHeader) {
             // set the header
             $scope.header = responseHeader;
+
+            // header refreshed
+            $rootScope.$emit("headerRefreshed", {});
         })
         .catch(function (responseHeader) {
             // TODO: Error out

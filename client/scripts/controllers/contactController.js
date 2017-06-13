@@ -19,7 +19,6 @@
     // holds contact form information
     $scope.contactForm = {
         "formSubmitted": false,
-        "showThankYouNote": false,
         "inputs": {
             "firstName": "C",
             "lastName": "C",
@@ -57,18 +56,44 @@
     // determines if the page is fully loaded
     $scope.pageFullyLoaded = false;
 
-    // show the header if not shown     
-    if (!$rootScope.$root.showHeader) {
-        $rootScope.$root.showHeader = true;
+    // check if header/footer was initialized
+    if($rootScope.$root.showHeader === undefined || $rootScope.$root.showFooter === undefined) {
+        // refresh header
+        $rootScope.$emit("refreshHeader", {});
+
+        // refresh footer
+        $rootScope.$emit("refreshFooter", {});
+    }
+    else {
+        // initialize the page
+        initializePage();
     }
 
-    // show the footer if not shown
-    if (!$rootScope.$root.showFooter) {
-        $rootScope.$root.showFooter = true;
-    }
+    // on header refresh
+    $rootScope.$on("headerRefreshed", function (event, data) {
+        // if footer still hasn't been initialized
+        if($rootScope.$root.showFooter === undefined) {
+            // refresh footer
+            $rootScope.$emit("refreshFooter", {});
+        }
+        else {
+            // initialize the page
+            initializePage();
+        }
+    });
 
-    // get page data
-    getPageData();
+    // on footer refresh
+    $rootScope.$on("footerRefreshed", function (event, data) {
+        // if footer still hasn't been initialized
+        if($rootScope.$root.showHeader === undefined) {
+            // refresh header
+            $rootScope.$emit("refreshHeader", {});
+        }
+        else {
+            // initialize the page
+            initializePage();
+        }
+    });
 
     // on loading http intercepter start
     $scope.start = function () {
@@ -228,15 +253,7 @@
             Service.sendEmailToOwner(emailData).then(function (responseSE) {
                 // if no error
                 if(!responseSE.error) {
-                    // shake the login screen
-                    $('#contact-form').addClass('animated fadeOutDown').one($rootScope.$root.animationEnd, function () {
-                        $('#contact-form').removeClass('animated fadeOutDown');
-                        $scope.$apply(function () {
-                            // show form submitted
-                            $scope.contactForm.formSubmitted = true;
-                            $timeout(showThankYouNote, 1500);
-                        });
-                    });
+                    $timeout(hideContactForm, 2500);
                 }
                 else {
                     // show error
@@ -254,6 +271,22 @@
         }
     };
 
+    // initialize page
+    function initializePage() {
+        // show the header if not shown     
+        if (!$rootScope.$root.showHeader) {
+            $rootScope.$root.showHeader = true;
+        }
+
+        // show the footer if not shown
+        if (!$rootScope.$root.showFooter) {
+            $rootScope.$root.showFooter = true;
+        }
+
+        // get page data
+        getPageData();
+    };
+    
     // gets the page data
     function getPageData() {
         // get contact page data
@@ -303,8 +336,17 @@
         $scope.pageFullyLoaded = true;
     };
 
+    // hide contact form
+    function hideContactForm() {
+        // collapse the form
+        $('#contact-form').collapse().on('hidden.bs.collapse', function () {
+            $timeout(showThankYouNote, 1500);
+        })
+    };
+
     // shows thank you note
     function showThankYouNote() {
-        $scope.contactForm.showThankYouNote = true;
+        $('#thank-you-message').collapse('show');
+        //$scope.contactForm.showThankYouNote = true;
     };
 }]);

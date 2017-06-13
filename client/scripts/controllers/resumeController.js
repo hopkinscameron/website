@@ -19,18 +19,44 @@
     // determines if the page is fully loaded
     $scope.pageFullyLoaded = false;
 
-    // show the header if not shown     
-    if (!$rootScope.$root.showHeader) {
-        $rootScope.$root.showHeader = true;
+    // check if header/footer was initialized
+    if($rootScope.$root.showHeader === undefined || $rootScope.$root.showFooter === undefined) {
+        // refresh header
+        $rootScope.$emit("refreshHeader", {});
+
+        // refresh footer
+        $rootScope.$emit("refreshFooter", {});
+    }
+    else {
+        // initialize the page
+        initializePage();
     }
 
-    // show the footer if not shown
-    if (!$rootScope.$root.showFooter) {
-        $rootScope.$root.showFooter = true;
-    }
+    // on header refresh
+    $rootScope.$on("headerRefreshed", function (event, data) {
+        // if footer still hasn't been initialized
+        if($rootScope.$root.showFooter === undefined) {
+            // refresh footer
+            $rootScope.$emit("refreshFooter", {});
+        }
+        else {
+            // initialize the page
+            initializePage();
+        }
+    });
 
-    // get page data
-    getPageData();
+    // on footer refresh
+    $rootScope.$on("footerRefreshed", function (event, data) {
+        // if footer still hasn't been initialized
+        if($rootScope.$root.showHeader === undefined) {
+            // refresh header
+            $rootScope.$emit("refreshHeader", {});
+        }
+        else {
+            // initialize the page
+            initializePage();
+        }
+    });
 
     // on loading http intercepter start
     $scope.start = function() {
@@ -44,6 +70,22 @@
         cfpLoadingBar.complete();
     };
 
+    // initialize page
+    function initializePage() {
+        // show the header if not shown     
+        if (!$rootScope.$root.showHeader) {
+            $rootScope.$root.showHeader = true;
+        }
+
+        // show the footer if not shown
+        if (!$rootScope.$root.showFooter) {
+            $rootScope.$root.showFooter = true;
+        }
+
+        // get page data
+        getPageData();
+    };
+    
     // gets the page data
     function getPageData() {
         // get resume page data

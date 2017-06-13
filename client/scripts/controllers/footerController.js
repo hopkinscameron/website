@@ -1,12 +1,27 @@
 ﻿angular.module('app').controller('footerController', ['$scope', '$rootScope', 'Service', function ($scope, $rootScope, Service) {
-    // initialize show footer
-    $rootScope.$root.showFooter = true;
-
-    // the footer backend data
-    $scope.footer = {};
+    // initialize variables
+    initializeVariables() ;
 
     // get the footer information
     getFooterInformation();
+
+    // on refresh
+    $rootScope.$on("refreshFooter", function (event, data) {
+        // initialize variables
+        initializeVariables() ;
+
+        // get the footer information
+        getFooterInformation();
+    });
+
+    // initialize variables
+    function initializeVariables () {
+        // initialize show footer
+        $rootScope.$root.showFooter = true;
+
+        // the footer backend data
+        $scope.footer = {};
+    };
 
     // initializes the backend data
     function getFooterInformation() {
@@ -14,6 +29,9 @@
         Service.getFooterInformation().then(function (responseF) {
             // set the footer
             $scope.footer = responseF;
+
+            // footer refreshed
+            $rootScope.$emit("footerRefreshed", {});
         })
         .catch(function (responseF) {
             // TODO: display something instead

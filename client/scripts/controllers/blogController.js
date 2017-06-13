@@ -16,19 +16,6 @@
         "message": ""
     };
 
-    // determines if the page is fully loaded
-    $scope.pageFullyLoaded = false;
-
-    // show the header if not shown     
-    if (!$rootScope.$root.showHeader) {
-        $rootScope.$root.showHeader = true;
-    }
-
-    // show the footer if not shown
-    if (!$rootScope.$root.showFooter) {
-        $rootScope.$root.showFooter = true;
-    }
-
     // search query
     $scope.searchText = {
         "query": ""
@@ -43,8 +30,47 @@
     // set page number
     var pageNumber = $location.search().page == undefined ? 1 : parseInt($location.search().page);
 
-    // get page data
-    getPageData($scope.searchText.query, $location.search().page);
+    // determines if the page is fully loaded
+    $scope.pageFullyLoaded = false;
+
+    // check if header/footer was initialized
+    if($rootScope.$root.showHeader === undefined || $rootScope.$root.showFooter === undefined) {
+        // refresh header
+        $rootScope.$emit("refreshHeader", {});
+
+        // refresh footer
+        $rootScope.$emit("refreshFooter", {});
+    }
+    else {
+        // initialize the page
+        initializePage();
+    }
+
+    // on header refresh
+    $rootScope.$on("headerRefreshed", function (event, data) {
+        // if footer still hasn't been initialized
+        if($rootScope.$root.showFooter === undefined) {
+            // refresh footer
+            $rootScope.$emit("refreshFooter", {});
+        }
+        else {
+            // initialize the page
+            initializePage();
+        }
+    });
+
+    // on footer refresh
+    $rootScope.$on("footerRefreshed", function (event, data) {
+        // if footer still hasn't been initialized
+        if($rootScope.$root.showHeader === undefined) {
+            // refresh header
+            $rootScope.$emit("refreshHeader", {});
+        }
+        else {
+            // initialize the page
+            initializePage();
+        }
+    });
 
     // on loading http intercepter start
     $scope.start = function () {
@@ -124,6 +150,22 @@
         else if(pageNumber >= threshold && index + 1 >= pageNumber - half && index + 1 < pageNumber + half) {
             return true;
         }
+    };
+
+    // initialize page
+    function initializePage() {
+        // show the header if not shown     
+        if (!$rootScope.$root.showHeader) {
+            $rootScope.$root.showHeader = true;
+        }
+
+        // show the footer if not shown
+        if (!$rootScope.$root.showFooter) {
+            $rootScope.$root.showFooter = true;
+        }
+
+        // get page data
+        getPageData($scope.searchText.query, $location.search().page);
     };
 
     // gets the page data

@@ -14,7 +14,7 @@
     service.sendEmailToOwner = function (emailData) {
         // sends email to owner (me)
         return DataAccessService.sendEmailToOwner(emailData).then(function (responseSE) {
-            return { "error": true, "title": responseSE.data.title, "status": responseSE.status, "message": responseSE.data.message };
+            return { "error": false, "title": responseSE.data.title, "status": responseSE.status, "message": responseSE.data.message };
         })
         .catch(function (responseSE) {
             return { "error": true, "title": responseSE.data.title, "status": responseSE.status, "message": responseSE.data.message };

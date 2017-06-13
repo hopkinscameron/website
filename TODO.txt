@@ -1,5 +1,4 @@
 ﻿All
-- Add animation when body size changes (particularly on contact page && home)
 - Fix so that last row of array doesn't have margin bottom
 - set last item in card to have no margin bottom
 - maybe add some container background colors to help distingush stuff
@@ -7,8 +6,6 @@
 - in json data, on server side, create the URL instead of on client side
 
 Header
-- Add blue shadow around hover
-- Header doesn't show sometimes
 
 Footer
 
@@ -23,6 +20,7 @@ Portfolio
 
 Sub Portfolio
 - customize scroll bar (or remove it)
+- add animations
 
 Blog
 

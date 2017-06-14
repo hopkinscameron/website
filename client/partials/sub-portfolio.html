@@ -16,10 +16,11 @@
             <!-- End Page Title -->
             <!-- Begin Project Highlights -->
             <div class="card card--transparent card-block">
+                <h4 class="text-capitalize">Project Highlights</h4>
                 <div class="row">
                     <!-- Begin Image Selection -->
-                    <div class="col-md-4">
-                        <div class="row sub-portfolio-img-container-max-height">
+                    <div class="col-md-4 animated animation-delay--xmd bounceInLeft">
+                        <div class="row sub-portfolio-img-container-max-height scrollbar--1">
                             <div class="col-md-6 mb-3" ng-repeat="image in subPortfolio.images">
                                 <img role="button" class="d-block img-fluid mx-auto sub-portfolio-img" ng-class="{'active': isActive('highlights', $index)}" ng-src="{{image.url}}" ng-click="changeProjectHighlightImage($index)" spinner-load>
                             </div>
@@ -27,7 +28,7 @@
                     </div>
                     <!-- End Image Selection -->
                     <!-- Begin Full Image Selected -->
-                    <div class="col">
+                    <div class="col animated animation-delay--xmd bounceInRight">
                         <img class="d-block img-fluid mx-auto sub-portfolio-img-max-height" ng-src="{{currentProjectImage}}" spinner-load>
                     </div>
                     <!-- Begin Full Image Selected -->
@@ -38,7 +39,7 @@
             <hr class="body-bar" />
             <!-- End Content Break -->
             <!-- Begin Overview -->
-            <div class="card card--transparent card-block">
+            <div class="card card--transparent card-block animated animation-delay--xmd fadeInUp">
                 <h4 class="text-capitalize">Overview</h4>
                 <span class="pl-3 pr-3" ng-class="{'mb-3': subPortfolio.overviewContent.gameDesignDocument.url.length > 0}" ng-bind-html="subPortfolio.overviewContent.overview | trustHTML"></span>
                 <!-- Begin Game Design Document -->
@@ -57,7 +58,7 @@
             <hr class="body-bar" />
             <!-- End Content Break -->
             <!-- Begin Development Details -->
-            <div class="card card--transparent card-block">
+            <div class="card card--transparent card-block animated animation-delay--xmd fadeInUp">
                 <h4 class="text-capitalize">Development Details</h4>
                 <div class="row pl-3 pr-3" ng-class="{'mb-5': $index < gameDataMaxRowCountArray.length - 1}" ng-repeat="index in gameDataMaxRowCountArray track by $index">
                     <div class="col-md-2" ng-repeat="innerIndex in gameDataColumnsPerRowArray track by $index">
@@ -77,7 +78,7 @@
             <hr class="body-bar" ng-if="subPortfolio.overviewContent.downloadLinks.length > 0" />
             <!-- End Content Break -->
             <!-- Begin Download Links -->
-            <div class="card card--transparent card-block" ng-if="subPortfolio.overviewContent.downloadLinks.length > 0">
+            <div class="card card--transparent card-block animated animation-delay--xmd fadeInUp" ng-if="subPortfolio.overviewContent.downloadLinks.length > 0">
                 <h4 class="text-capitalize">Downloads</h4>
                 <ul class="list-unstyled pl-3 pr-3 mb-0">
                     <li ng-repeat="spDownloadData in subPortfolio.overviewContent.downloadLinks">
@@ -90,7 +91,7 @@
             <hr class="body-bar" ng-if="subPortfolio.trailerLink" />
             <!-- End Content Break -->
             <!-- Begin Game Trailer -->
-            <div class="card card--transparent card-block" ng-if="subPortfolio.trailerLink">
+            <div class="card card--transparent card-block animated animation-delay--xmd fadeInUp" ng-if="subPortfolio.trailerLink">
                 <h4 class="text-capitalize">{{subPortfolio.title}} Trailer</h4>
                 <div class="pl-3 pr-3">
                     <div class="embed-responsive embed-responsive-16by9">
@@ -103,13 +104,13 @@
             <hr class="body-bar" ng-if="subPortfolio.videoUpdates.length > 0" />
             <!-- End Content Break -->
             <!-- Begin Game Update Videos -->
-            <div class="card card--transparent card-block" ng-if="subPortfolio.videoUpdates.length > 0">
+            <div class="card card--transparent card-block animated animation-delay--xmd fadeInUp" ng-if="subPortfolio.videoUpdates.length > 0">
                 <h4 class="text-capitalize">{{subPortfolio.title}} Updates</h4>
                 <div class="pl-3 pr-3">
                     <div class="row">
                         <!-- Begin Video Selection -->
                         <div class="col-md-4 float-left">
-                            <div class="row sub-portfolio-img-container-max-height">
+                            <div class="row sub-portfolio-img-container-max-height scrollbar--1">
                                 <div class="col-md-6 float-left mb-3" ng-repeat="videos in subPortfolio.videoUpdates">
                                     <img role="button" class="d-block img-fluid sub-portfolio-img" ng-class="{'active': isActive('updates', $index)}" ng-src="{{videos.thumbnail}}" ng-click="changeUpdateVideo($index)" spinner-load>
                                 </div>

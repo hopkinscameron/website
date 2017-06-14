@@ -1,9 +1,5 @@
 ﻿All
-- Fix so that last row of array doesn't have margin bottom
-- set last item in card to have no margin bottom
-- maybe add some container background colors to help distingush stuff
-- move all files necessary files to the server
-- in json data, on server side, create the URL instead of on client side
+- Fix all links to images and files
 
 Header
 
@@ -12,21 +8,18 @@ Footer
 Home
 
 About
-- Hobbies Break list up into max 3 items per row
 
 Resume
 
 Portfolio
 
 Sub Portfolio
-- customize scroll bar (or remove it)
-- add animations
 
 Blog
+- Setup a local way to post blogs
 
 Blog Post
 
 Contact
-- Send email to self
 
 Error

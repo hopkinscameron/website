@@ -26,17 +26,15 @@
             <!-- Begin Hobbies -->
             <div class="card card--transparent card-block">
                 <h4 class="text-capitalize">Hobbies</h4>
-                
                 <div class="animated animation-delay--xmd fadeInUp">
-                    <div class="row pl-3 pr-3" ng-class="{'mb-5': $index < hobbiesMaxRowCountArray.length - 1}" ng-repeat="index in hobbiesMaxRowCountArray.length track by $index">
+                    <div class="row pl-3 pr-3" ng-class="{'mb-5': $index < hobbiesMaxRowCountArray.length - 1}" ng-repeat="index in hobbiesMaxRowCountArray track by $index">
                         <div class="col-md-3" ng-repeat="index in hobbiesColumnsPerRowArray track by $index">
                             <ul class="list-unstyled">
-                                <li ng-repeat="innerIndex in hobbiesMaxListCountArray track by $index">{{about.hobbies[$index + 4 * $parent.$index].text}}</li>
+                                <li ng-repeat="innerIndex in hobbiesPerColumnsArray track by $index">{{about.hobbies[$index + (hobbiesPerColumn * $parent.$index) + (hobbiesColumnsPerRow * hobbiesPerColumn * $parent.$parent.$index)]}}</li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                
             </div>
             <!-- End Hobbies -->
             <!-- Begin Content Break -->
@@ -53,7 +51,7 @@
                                     <span class="font-italic">{{about.favoriteGames[$index + favoriteGamesColumnsPerRow * $parent.$index].type}}</span>
                                 </li>
                                 <li class="" ng-repeat="favoriteGame in about.favoriteGames[$index + favoriteGamesColumnsPerRow * $parent.$index].content">
-                                    <span ng-bind-html="favoriteGame.text | trustHTML"></span>
+                                    <span ng-bind-html="favoriteGame | trustHTML"></span>
                                 </li>
                             </ul>
                         </div>

@@ -94,11 +94,12 @@
             if (!responseAM.error) {
                 // set the data
                 $scope.about = responseAM;
-                $scope.hobbiesColumnsPerRow = 6;
+                $scope.hobbiesColumnsPerRow = 4;
                 $scope.hobbiesPerColumn = 3;
-                $scope.hobbiesMaxListCountArray = new Array(Math.ceil($scope.about.hobbies.length / $scope.hobbiesPerColumn)); // say 10 hobbies, hmlc = 4 lists
-                $scope.hobbiesMaxRowCountArray = new Array(Math.ceil($scope.hobbiesMaxListCountArray.length / $scope.hobbiesColumnsPerRow)); // 4 / 6 = 1 row
-                $scope.hobbiesColumnsPerRowArray = new Array($scope.hobbiesColumnsPerRow); // 6 per row
+                $scope.hobbiesColumnsPerRowArray = new Array($scope.hobbiesColumnsPerRow);
+                $scope.hobbiesMaxColumnCountArray = new Array(Math.ceil($scope.about.hobbies.length / $scope.hobbiesPerColumn));
+                $scope.hobbiesMaxRowCountArray = new Array(Math.ceil($scope.hobbiesMaxColumnCountArray.length / $scope.hobbiesColumnsPerRow));
+                $scope.hobbiesPerColumnsArray = new Array($scope.hobbiesPerColumn);
 
                 $scope.favoriteGamesColumnsPerRow = 4;
                 $scope.favoriteGamesMaxRowCountArray = new Array(Math.ceil($scope.about.favoriteGames.length / $scope.favoriteGamesColumnsPerRow));

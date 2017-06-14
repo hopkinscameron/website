@@ -15,7 +15,10 @@ var expressValidator = require('express-validator');
 // the secrets
 var secrets = require('./secrets');
 
-// TODO: Delete Don't Need the file system to read/write from/to files locallly
+// the ability to send emails
+var nodemailer = require('nodemailer');
+
+// the file system to read/write from/to files locallly
 var fs = require("fs");
 
 // the communication to mongo database
@@ -36,6 +39,19 @@ var options = {
 
 // use header/body validation
 router.use(expressValidator());
+
+// create reusable transporter object using the default SMTP transport
+let transporter = nodemailer.createTransport({
+    host: secrets.smtp_host,
+    port: 465,
+    secure: true, // secure:true for port 465, secure:false for port 587
+    auth: {
+        user: secrets.smtp_email,
+        pass: secrets.smtp_pass
+    },
+	proxy: 'http://localhost:3128',
+	service: 'Gmail'
+});
 
 /**
  * GET
@@ -236,6 +252,82 @@ router.get('/api/contact', function (req, res, next) {
 	});
 });
 
+// GET image file in root directory
+// format /api/images/:imageID
+router.get('/api/images/:imageID', function (req, res, next) {
+	// TODO: authentication?
+
+	// set options
+	var options = {
+		root: __dirname + '\\images\\',
+		dotfiles: 'deny',
+		headers: {
+			'x-timestamp': Date.now(),
+			'x-sent': true
+		}
+	};
+	var file = options.root + req.header.params.imageID
+	// send file
+	res.sendFile(req.header.params.imageID, options);
+});
+
+// GET image file in option 1 directory
+// format /api/images/:directoryID_1/:imageID
+router.get('/api/images/:directoryID_1/:imageID', function (req, res, next) {
+	// TODO: authentication?
+	
+	// set options
+	var options = {
+		root: __dirname + '\\images\\' + req.params.directoryID_1 + '\\',
+		dotfiles: 'deny',
+		headers: {
+			'x-timestamp': Date.now(),
+			'x-sent': true
+		}
+	};
+	var file = options.root + req.params.imageID
+	// send file
+	res.sendFile(req.params.imageID, options);
+});
+
+// GET image file in option 1 and option 2 directory
+// format /api/images/:directoryID_1/:directoryID_2/:imageID
+router.get('/api/images/:directoryID_1/:directoryID_2/:imageID', function (req, res, next) {
+	// TODO: authentication?
+
+	// set options
+	var options = {
+		root: __dirname + '\\images\\' + req.params.directoryID_1 + '\\' + req.params.directoryID_2 + '\\',
+		dotfiles: 'deny',
+		headers: {
+			'x-timestamp': Date.now(),
+			'x-sent': true
+		}
+	};
+	var file = options.root + req.params.imageID
+	// send file
+	res.sendFile(req.params.imageID, options);
+});
+
+// GET file
+// format /api/files/:fileID
+router.get('/api/files/:fileID', function (req, res, next) {
+	// TODO: authentication?
+	
+	// set options
+	var options = {
+		root: __dirname + '\\files\\',
+		dotfiles: 'deny',
+		headers: {
+			'x-timestamp': Date.now(),
+			'x-sent': true
+		}
+	};
+
+	// send file
+	res.sendFile(req.params.fileID, options);
+});
+
 /**
  * POST
  */
@@ -264,14 +356,28 @@ router.post('/api/sendEmail', function (req, res, next) {
 		res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
 	}
 	else {
-		/*
-		// set incoming information
-		var inUsername = req.body.username,
-			inToken = req.body.token,
-			inEventId = req.body.eventId,
-			inComment = req.body.comment;
-		*/
-		res.status(200).send({ title: "Success!", message: "Here is some test fake success message." });
+		var fromString = req.body.firstName + " " + req.body.lastName + "<" + req.body.email + ">";
+		
+		// setup email data with unicode symbols
+		let mailOptions = {
+			from: fromString, // sender address
+			to: secrets.personal_email, // list of receivers
+			subject: req.body.subject, // Subject line
+			text: req.body.message, // plain text body
+			html: '<p>' + req.body.message + '</p>' // html body
+		};
+
+		// send mail with defined transport object
+		transporter.sendMail(mailOptions, (error, info) => {
+			// if an internal error occured
+			if (error) {
+				// send internal error
+				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+			}
+
+			// return success
+			res.status(200).send({ title: "Success!", message: "Your email has been sent!" });
+		});		
 	}
 });
 

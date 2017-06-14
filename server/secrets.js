@@ -10,5 +10,13 @@ module.exports = {
     // the db username
     db_user: process.env.DB_USER,
     // the db password
-    db_pass: process.env.DB_PASS
+    db_pass: process.env.DB_PASS,
+    // personal email
+    personal_email: process.env.PERSONAL_EMAIL,
+    // the smtp host
+    smtp_host: process.env.SMTP_HOST,
+    // the smtp username
+    smtp_email: process.env.SMTP_EMAIL,
+    // the smtp password
+    smtp_pass: process.env.SMTP_PASS
 };

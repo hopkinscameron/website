@@ -176,6 +176,23 @@
             if (!responseB.error) {
                 // set the data
                 $scope.blog = responseB;
+                $scope.blogAnimations = new Array($scope.blog.posts.length);
+
+                // the initial delayed start time of any animation
+                var startTime = 1.5;
+
+                // the incremental start time of every animation (every animation in the array has a value greater than the last by this much)
+                var incrementTime = 1.5;
+
+                // loop through all animation timing and set the times
+                for(var x = 0; x < $scope.blogAnimations.length; x++) {
+                    
+                     $scope.blogAnimations[x] = {
+                        'animation-delay': startTime + (x * incrementTime) + 's',
+                        '-webkit-animation-delay': startTime + (x * incrementTime) + 's',
+                        '-moz-animation-delay': startTime + (x * incrementTime) + 's'
+                     };
+                }
 
                 // setup page
                 setUpPage();

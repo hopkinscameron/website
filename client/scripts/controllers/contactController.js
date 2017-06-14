@@ -20,11 +20,11 @@
     $scope.contactForm = {
         "formSubmitted": false,
         "inputs": {
-            "firstName": "C",
-            "lastName": "C",
-            "email": "C@C.COM",
-            "subject": "C",
-            "message": "C"
+            "firstName": "John",
+            "lastName": "Doe",
+            "email": "johndoedoebrobrolikewhatnow@johndoedoebrobrolikewhatnow.com",
+            "subject": "Man, this John Doe Bro",
+            "message": "Yo wassup bro, this is john doe bro. Just testing out your email to make sure it works"
         },
         "maxLength": {
             "firstName": 15,

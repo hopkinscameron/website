@@ -10,7 +10,7 @@
         </div>
         <!-- End Page Fully Loaded With Errors -->
         <!-- Begin Page Fully Loaded With No Errors -->
-        <div class="animated animation-delay--md fadeIn" ng-if="pageFullyLoaded && !error.error">
+        <div class="animated animation-delay fadeIn" ng-if="pageFullyLoaded && !error.error">
             <!-- Begin Page Title -->
             <h2 class="font-weight-bold text-uppercase mb-3"><span ng-bind-html="blog.title | trustHTML"></span></h2>
             <!-- End Page Title -->
@@ -19,7 +19,7 @@
                 <!-- Begin Posts -->
                 <div class="col-md-9">
                     <!-- Begin Posts -->
-                    <div class="" ng-class="{'mb-5': $index < blog.posts.length - 1}" ng-repeat="post in blog.posts">
+                    <div class="animated fadeInUp" ng-class="{'mb-5': $index < blog.posts.length - 1}" ng-style="blogAnimations[$index]" ng-repeat="post in blog.posts">
                         <div class="card card-inverse card--dark card-block box-shadow--small">
                             <!-- Begin Image -->
                             <a href="#/blog/post/{{post.url}}" ng-if="post.image.length > 0">

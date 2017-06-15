@@ -5,9 +5,6 @@
     // set the path
     Service.afterPath = $location.path();
 
-    // holds the page title
-    $scope.pageTitle = "R&eacute;sum&eacute; | " + Service.appName;
-
     // holds the error
     $scope.error = {
         "error": false,
@@ -94,6 +91,9 @@
             if (!responseR.error) {
                 // set the data
                 $scope.resume = responseR;
+
+                // holds the page title
+                $scope.pageTitle = "R&eacute;sum&eacute; | " + Service.appName;
 
                 // setup page
                 setUpPage();

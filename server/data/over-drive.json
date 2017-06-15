@@ -1,13 +1,13 @@
 ﻿{
   "title": "Over Drive",
   "images": [
-    { "url": "/media/portfolio-images/overdrive/overdrive-logo.png" },
-    { "url": "/media/portfolio-images/overdrive/aimdownsight.png" },
-    { "url": "/media/portfolio-images/overdrive/bootcamp.png" },
-    { "url": "/media/portfolio-images/overdrive/leaderboards.png" },
-    { "url": "/media/portfolio-images/overdrive/loading.png" },
-    { "url": "/media/portfolio-images/overdrive/menu.png" },
-    { "url": "/media/portfolio-images/overdrive/pause.png" }
+    { "url": "/images/portfolio/overdrive/overdrive-logo.png" },
+    { "url": "/images/portfolio/overdrive/aimdownsight.png" },
+    { "url": "/images/portfolio/overdrive/bootcamp.png" },
+    { "url": "/images/portfolio/overdrive/leaderboards.png" },
+    { "url": "/images/portfolio/overdrive/loading.png" },
+    { "url": "/images/portfolio/overdrive/menu.png" },
+    { "url": "/images/portfolio/overdrive/pause.png" }
   ],
   "overviewContent": {
     "overview": "<i>Over Drive</i> is a first person shooter that I was developing for PC. <i>Over Drive</i> is a side project that I was working on in my spare time. With my love for first person shooters, I decided I wanted to take a stab at making my own fun FPS game. I have been working on <i>Over Drive</i> since the beginning of November 2015 and there is a lot I must tackle before this game is complete.<br /> <br />If continued, <i>Over Drive</i> will have multiple game modes the user can play such as Campaign, Survival, Boot Camp and possibly multiplayer. I would also be providing constant updates to the project and posting videos of my updates to show what's in stored for the game!",
@@ -82,31 +82,5 @@
       "url": "https://www.youtube.com/embed/oZehf54mUys?controls=1"
     }
   ],
-  "trailerLink": "",
-  "metaTags": {
-    "description": "Cameron Hopkins game design portfolio.",
-    "keywords": [
-      "Cameron Hopkins",
-      "Game Design Portfolio",
-      "College",
-      "Ohio State",
-      "The Ohio State University",
-      "Coding",
-      "Programming",
-      "Java",
-      "C#",
-      "VB.Net",
-      "Android",
-      "XCode",
-      "Swift",
-      "Unity3D",
-      "HTML",
-      "CSS",
-      "JavaScript",
-      "C++",
-      "C",
-      "Video Games",
-      "Over Drive"
-    ]
-  }
+  "trailerLink": ""
 }

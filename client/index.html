@@ -13,16 +13,18 @@
 
         <!-- Begin Icons -->
         <!-- for FF, Chrome, Opera -->
-        <link rel="icon" type="image/png" href="/api/images/bio-pic.jpg" sizes="16x16" />
+        <link rel="icon" type="image/png" href="/images/fav-icon/favicon.jpg" sizes="16x16" />
         <!-- for IE -->
-        <link rel="icon" type="image/x-icon" href="/external-files/media/icons/favicon.ico" />
-        <link rel="shortcut icon" type="image/x-icon" href="/external-files/media/icons/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="/images/fav-icon/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/images/fav-icon/favicon.ico" />
         <!-- End Icons -->
 
         <!-- Begin Styles -->
         <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet" type="text/css">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet">
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous" rel="stylesheet">
+        <link href="./styles/boostrap/bootstrap.min.css" rel="stylesheet">
+        <link href="./styles/boostrap/bootstrap-grid.min.css" rel="stylesheet">
+        <link href="./styles/boostrap/bootstrap-reboot.min.css" rel="stylesheet">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" rel="stylesheet">
         <link href="./styles/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="./styles/angular-loading-bar/loading-bar.min.css" rel='stylesheet' type='text/css' media='all' />
@@ -81,7 +83,7 @@
         <!-- End Header -->
 
         <!-- Begin NG View -->
-        <div id="main" ng-view></div>
+        <div id="main" ng-view scroll></div>
         <!-- End NG View -->
 
         <!-- Begin Footer -->

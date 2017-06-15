@@ -5,9 +5,6 @@
     // set the path
     Service.afterPath = $location.path();
 
-    // holds the page title
-    $scope.pageTitle = "Blog | " + Service.appName;
-
     // holds the error
     $scope.error = {
         "error": false,
@@ -193,6 +190,9 @@
                         '-moz-animation-delay': startTime + (x * incrementTime) + 's'
                      };
                 }
+
+                // holds the page title
+                $scope.pageTitle = "Blog | " + Service.appName;
 
                 // setup page
                 setUpPage();

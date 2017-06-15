@@ -1,12 +1,9 @@
-﻿angular.module('app').controller('aboutController', ['$scope', '$rootScope', '$compile', '$location', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $location, cfpLoadingBar, Service) {
+﻿angular.module('app').controller('aboutController', ['$scope', '$rootScope', '$compile', '$location', '$window', 'cfpLoadingBar','Service', function ($scope, $rootScope, $compile, $location, $window, cfpLoadingBar, Service) {
     // set jQuery
     $ = window.jQuery;
 
     // set the path
     Service.afterPath = $location.path();
-
-    // holds the page title
-    $scope.pageTitle = "About Me | " + Service.appName;
 
     // holds the error
     $scope.error = {
@@ -57,6 +54,19 @@
             initializePage();
         }
     });
+    
+    // TODO: may not need, might want to remove unless I figure out how to do this
+    // on resize
+    angular.element($window).on("scroll", function() {
+        //console.log("scrolling");
+        //console.log($window.scrollY);
+        $scope.$apply(function () {
+            // 
+            if($window.scrollY >= 129 && !$scope.showHobbies) {
+                $scope.showHobbies = true;
+            }
+        });
+    });
 
     // on loading http intercepter start
     $scope.start = function() {
@@ -105,6 +115,9 @@
                 $scope.favoriteGamesMaxRowCountArray = new Array(Math.ceil($scope.about.favoriteGames.length / $scope.favoriteGamesColumnsPerRow));
                 $scope.favoriteGamesColumnsPerRowArray = new Array($scope.favoriteGamesColumnsPerRow);
                 
+                // holds the page title
+                $scope.pageTitle = "About Me | " + Service.appName;
+
                 // setup page
                 setUpPage();
             }

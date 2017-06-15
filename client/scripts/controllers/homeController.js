@@ -1,12 +1,9 @@
-﻿angular.module('app').controller('homeController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $location, $timeout, cfpLoadingBar, Service) {
+﻿angular.module('app').controller('homeController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', '$window', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $location, $timeout, $window, cfpLoadingBar, Service) {
     // set jQuery
     $ = window.jQuery;
 
     // set the path
     Service.afterPath = $location.path();
-
-    // holds the page title
-    $scope.pageTitle = "Home | " + Service.appName;
 
     // holds the error
     $scope.error = {
@@ -51,7 +48,7 @@
     }
 
     // on resize
-    angular.element(window).resize(function() {
+    angular.element($window).resize(function() {
         $scope.$apply(function () {
                 $scope.windowHeight = {
                 "height": $( window ).height() - 90
@@ -145,6 +142,9 @@
             if (!responseH.error) {
                 // set the data
                 $scope.home = responseH;
+
+                // holds the page title
+                $scope.pageTitle = "Home | " + Service.appName;
 
                 // setup page
                 setUpPage();

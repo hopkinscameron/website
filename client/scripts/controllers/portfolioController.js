@@ -5,9 +5,6 @@
     // set the path
     Service.afterPath = $location.path();
 
-    // holds the page title
-    $scope.pageTitle = "Portfolio | " + Service.appName;
-
     // holds the error
     $scope.error = {
         "error": false,
@@ -110,6 +107,26 @@
             if (!responseP.error) {
                 // set the data
                 $scope.portfolio = responseP;
+                $scope.portfolioAnimations = new Array($scope.portfolio.portfolioItems.length);
+
+                // the initial delayed start time of any animation
+                var startTime = 1.5;
+
+                // the incremental start time of every animation (every animation in the array has a value greater than the last by this much)
+                var incrementTime = 1;
+
+                // loop through all animation timing and set the times
+                for(var x = 0; x < $scope.portfolioAnimations.length; x++) {
+                    
+                     $scope.portfolioAnimations[x] = {
+                        'animation-delay': startTime + (x * incrementTime) + 's',
+                        '-webkit-animation-delay': startTime + (x * incrementTime) + 's',
+                        '-moz-animation-delay': startTime + (x * incrementTime) + 's'
+                     };
+                }
+
+                // holds the page title
+                $scope.pageTitle = "Portfolio | " + Service.appName;
 
                 // setup page
                 setUpPage();

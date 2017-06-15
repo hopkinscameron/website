@@ -18,5 +18,9 @@ module.exports = {
     // the smtp username
     smtp_email: process.env.SMTP_EMAIL,
     // the smtp password
-    smtp_pass: process.env.SMTP_PASS
+    smtp_pass: process.env.SMTP_PASS,
+    // the google shorten url key
+    google_shorten_url_key: process.env.GOOGLE_SHORTEN_URL_API_KEY,
+    // the google send email script key
+    google_send_email_script_key: process.env.GOOGLE_SEND_EMAIL_SCRIPT_KEY
 };

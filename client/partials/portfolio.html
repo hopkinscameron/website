@@ -17,15 +17,15 @@
             <!-- Begin Portfolio Items -->
             <div class="card card--transparent card-block">
                 <div class="row">
-                    <div class="col-md-6 mb-5" ng-repeat="portfolioItem in portfolio.portfolioItems">
-                        <h3 class="text-center text-capitalize font-weight-bold">{{portfolioItem.title}}</h3>
-                        <a class="" href="#{{currentPath}}/{{portfolioItem.subPageLink}}">
-                            <img class="img-fluid w-100" ng-src="{{portfolioItem.pictureLink}}" alt="{{getPictureTitle(portfolioItem.pictureLink)}}" title="{{getPictureTitle(portfolioItem.pictureLink)}}" spinner-load />
-                        </a>
-                        <div class="col-md-6 offset-md-3 mt-2 mb-2">
-                            <p class="mb-0">View more details <a class="" href="#{{currentPath}}/{{portfolioItem.subPageLink}}"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></p>
+                    <div class="col-md-6 mb-5 animated" ng-class="{'zoomInLeft': $index % 2 == 0, 'zoomInRight': $index % 2 == 1}" ng- ng-style="portfolioAnimations[$index]" ng-repeat="portfolioItem in portfolio.portfolioItems">
+                        <div class="card card-inverse card--dark card-block box-shadow--small">
+                            <h3 class="text-center text-capitalize font-weight-bold">{{portfolioItem.title}}</h3>
+                            <a class="" ng-href="#{{currentPath}}/{{portfolioItem.subPageLink}}">
+                                <img class="img-fluid w-100" ng-src="{{portfolioItem.pictureLink}}" alt="{{getPictureTitle(portfolioItem.pictureLink)}}" title="{{getPictureTitle(portfolioItem.pictureLink)}}" spinner-load />
+                            </a>
+                            <p class="text-center pl-3 pr-3 mb-2 mt-2"><a class="" ng-href="#{{currentPath}}/{{portfolioItem.subPageLink}}">View more details <i class="fa fa-arrow-right" aria-hidden="true"></i></a></p>
+                            <span class="pl-3 pr-3" ng-bind-html="portfolioItem.shortDescription | trustHTML"></span></p>
                         </div>
-                        <p class="pl-3 pr-3 mb-0">{{portfolioItem.shortDescription}}</p>
                     </div>
                 </div>
             </div>

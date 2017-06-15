@@ -46,8 +46,8 @@
                 <div ng-if="subPortfolio.overviewContent.gameDesignDocument.url.length > 0">
                     <span class="pl-3 pr-3">
                         Take a look at the game design document.
-                        <a href="{{subPortfolio.overviewContent.gameDesignDocument.url}}" target="_blank">
-                            <img class="" width="30" height="30" src="/media/icons/pdf-icon.png" alt="{{subPortfolio.overviewContent.gameDesignDocument.title}}" title="{{subPortfolio.overviewContent.gameDesignDocumentTitle}}" />
+                        <a ng-href="{{subPortfolio.overviewContent.gameDesignDocument.url}}" target="_blank">
+                            <img class="" width="30" height="30" src="/images/icons/pdf-icon.png" alt="{{subPortfolio.overviewContent.gameDesignDocument.title}}" title="{{subPortfolio.overviewContent.gameDesignDocumentTitle}}" />
                         </a>
                     </span>
                 </div>
@@ -82,7 +82,7 @@
                 <h4 class="text-capitalize">Downloads</h4>
                 <ul class="list-unstyled pl-3 pr-3 mb-0">
                     <li ng-repeat="spDownloadData in subPortfolio.overviewContent.downloadLinks">
-                        {{spDownloadData.text}} <a href="{{spDownloadData.url}}"><i class="fa fa-download" aria-hidden="true"></i></a>
+                        {{spDownloadData.text}} <a ng-href="{{spDownloadData.url}}"><i class="fa fa-download" aria-hidden="true"></i></a>
                     </li>
                 </ul>
             </div>

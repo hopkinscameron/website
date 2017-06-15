@@ -3,23 +3,43 @@
     // initialize the service
     var service = {};
 
+    // gets app name
+    service.getAppName = function () {
+        // set the endpoint
+        var endpoint = "/api/appName";
+
+        // create request
+        var req = {
+            method: 'GET',
+            url: endpoint,
+            headers: {
+                'Content-Type': 'application/json; odata=verbose',
+                'Accept': 'application/json; odata=verbose'
+            },
+            data: undefined
+        };
+
+        // send request
+        return $http(req);
+    };
+
     // shortens url
     service.shortenURL = function (url) {
-        // TODO: Change this so it's in the server instead
-
         // set the endpoint
         var endpoint = "/api/shortenUrl";
 
         // create request
         var req = {
             method: 'POST',
-            url: "https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyCYsolMwCyuBfwc40byABSx5rF0soBgRUc",
+            url: endpoint,
             headers: {
                 'Content-Type': 'application/json; odata=verbose',
                 'Accept': 'application/json; odata=verbose'
             },
             data: '{"longUrl": "' + url + '"}'
         };
+
+        // send request
         return $http(req);
     };
 

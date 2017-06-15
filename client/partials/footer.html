@@ -14,7 +14,7 @@
             <!-- Begin Social Media -->
             <div class="container-fluid footer-content" ng-if="footer.socialMediaLinks">
                 <span ng-repeat="socialMedia in footer.socialMediaLinks">
-                    <a href="{{socialMedia.link}}" target="_blank" style="text-decoration: none;">
+                    <a ng-href="{{socialMedia.link}}" target="_blank" style="text-decoration: none;">
                         <img class="image-social-media-icon mr-1" ng-src="{{socialMedia.img}}" title="{{socialMedia.title}}" alt="{{socialMedia.title}}" ng-if="socialMedia.img.length > 0" spinner-load />
                     </a>
                 </span>

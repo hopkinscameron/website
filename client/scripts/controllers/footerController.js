@@ -34,8 +34,8 @@
             $rootScope.$emit("footerRefreshed", {});
         })
         .catch(function (responseF) {
-            // TODO: display something instead
-            console.log(responseF.message);
+            // footer refreshed with error
+            $rootScope.$emit("footerRefreshed", {"error": true, "message": responseF.message});
         });
     };
 }]);

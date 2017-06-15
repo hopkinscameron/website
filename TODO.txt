@@ -1,5 +1,6 @@
 ﻿All
-- Fix all links to images and files
+- make sure everything works in firefox and image
+- Download unity 5.5.0f
 
 Header
 

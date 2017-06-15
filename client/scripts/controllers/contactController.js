@@ -5,9 +5,6 @@
     // set the path
     Service.afterPath = $location.path();
 
-    // holds the page title
-    $scope.pageTitle = "Contact | " + Service.appName;
-
     // holds the error
     $scope.error = {
         "error": false,
@@ -295,6 +292,9 @@
             if (!responseC.error) {
                 // set the data
                 $scope.contact = responseC;
+
+                // holds the page title
+                $scope.pageTitle = "Contact | " + Service.appName;
 
                 // setup page
                 setUpPage();

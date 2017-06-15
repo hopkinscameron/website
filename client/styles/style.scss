@@ -1,64 +1,14 @@
-// Bootstrap v3.3.5 (http://getbootstrap.com)
-// Copyright 2011-2015 Twitter, Inc.
-// Licensed under MIT (https://github.com/twbs/./bootstrap/blob/master/LICENSE)
+// Cameron Hopkins
+// Custom Styles
+// Licensed under MIT
 
-/* Begin Core Variables and Mixings */
+/* Begin Core Variables */
 @import "variables";
-@import "./bootstrap/variables";
-@import "./bootstrap/mixins";
-/* End Core Variables and Mixings */
+/* End Core Variables */
 
-/* Begin Reset and Dependencies */ 
-@import "./bootstrap/normalize";
-@import "./bootstrap/print";
-@import "./bootstrap/glyphicons";
-/* End Reset and Dependencies */ 
-
-/* Begin Core CSS */ 
-@import "./bootstrap/scaffolding";
-@import "./bootstrap/type";
-@import "./bootstrap/code";
-@import "./bootstrap/grid";
-@import "./bootstrap/tables";
-@import "./bootstrap/forms";
-@import "./bootstrap/buttons";
-/* End Core CSS */ 
-
-/* Begin Components */ 
-@import "./bootstrap/component-animations";
-@import "./bootstrap/dropdowns";
-@import "./bootstrap/button-groups";
-@import "./bootstrap/input-groups";
-@import "./bootstrap/navs";
-@import "./bootstrap/navbar";
-@import "./bootstrap/breadcrumbs";
-@import "./bootstrap/pagination";
-@import "./bootstrap/pager";
-@import "./bootstrap/labels";
-@import "./bootstrap/badges";
-@import "./bootstrap/jumbotron";
-@import "./bootstrap/thumbnails";
-@import "./bootstrap/alerts";
-@import "./bootstrap/progress-bars";
-@import "./bootstrap/media";
-@import "./bootstrap/list-group";
-@import "./bootstrap/panels";
-@import "./bootstrap/responsive-embed";
-@import "./bootstrap/wells";
-@import "./bootstrap/close";
-/* End Components */ 
-
-/* Begin Components w/ JavaScript */ 
-@import "./bootstrap/modals";
-@import "./bootstrap/tooltip";
-@import "./bootstrap/popovers";
-@import "./bootstrap/carousel";
-/* End Components w/ JavaScript */ 
-
-/* Begin Utility Classes */ 
-@import "./bootstrap/utilities";
-@import "./bootstrap/responsive-utilities";
-/* Begin Utility Classes */ 
+/* Begin Boostrap */
+//@import "./bootstrap/bootstrap";
+/* End Boostrap */
 
 /* Begin Custom Styles */ 
 
@@ -66,7 +16,7 @@
 
 /* Begin Animate */ 
 @import "./animate/animate";
-/* End Animate */ 
+/* End Animate  */ 
 
 // Only include the following if you're using local font files
-@import "fonts";
+//@import "fonts";

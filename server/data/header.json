@@ -1,5 +1,4 @@
 ﻿{
-  "logo": "/external-files/media/personal-images/bio-pic.jpg",
   "headliner": "Cameron Hopkins",
   "subHeadliners": [
     "Software Engineer",
@@ -20,6 +19,10 @@
       "title": "Portfolio",
       "pageLink": "portfolio",
       "dropdown": [
+        {
+          "title": "Home",
+          "pageLink": ""
+        },
         {
           "title": "Over Drive",
           "pageLink": "over-drive"

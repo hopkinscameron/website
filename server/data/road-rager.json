@@ -1,13 +1,13 @@
 ﻿{
   "title": "Road Rager",
   "images": [
-    { "url": "/media/portfolio-images/roadrager/roadrager-logo.png" },
-    { "url": "/media/portfolio-images/roadrager/use-powerup2.png" },
-    { "url": "/media/portfolio-images/roadrager/died.png" },
-    { "url": "/media/portfolio-images/roadrager/explosion.png" },
-    { "url": "/media/portfolio-images/roadrager/main-screen.png" },
-    { "url": "/media/portfolio-images/roadrager/powerup.png" },
-    { "url": "/media/portfolio-images/roadrager/use-powerup.png" }
+    { "url": "/images/portfolio/roadrager/roadrager-logo.png" },
+    { "url": "/images/portfolio/roadrager/use-powerup2.png" },
+    { "url": "/images/portfolio/roadrager/died.png" },
+    { "url": "/images/portfolio/roadrager/explosion.png" },
+    { "url": "/images/portfolio/roadrager/main-screen.png" },
+    { "url": "/images/portfolio/roadrager/powerup.png" },
+    { "url": "/images/portfolio/roadrager/use-powerup.png" }
   ],
   "overviewContent": {
     "overview": "<i>Road Rager</i> is a 2D top down racing game built using Unity3D. In this game, the player controls their choice of car and uses their skills to race through traffic without causing accidents. <br /> <br />The players game score increases based on the time they can survive racing. To help the user, there are assest the user can pick up, such as a shield and a fireball, that allows the user to use these pickups to their advantage. The fireball gives the user on shot to shoot a fireball at an enemy car to stop the car from crashing into the player, causing them to lose. The shield pickup allows the user to surround themself with a shield that protects them for a short length of time. If an enemy car comes in contact with the shield, the car is destroyed, and so it the shield, but the player is safe, for now.<br /> <br />Play on different difficulty levels to test your skills and see what high score you can achieve!",
@@ -70,31 +70,5 @@
     ]
   },
   "videoUpdates": [],
-  "trailerLink": "https://www.youtube.com/embed/_FIBPxVjWOY?controls=1",
-  "metaTags": {
-    "description": "Cameron Hopkins game design portfolio.",
-    "keywords": [
-      "Cameron Hopkins",
-      "Game Design Portfolio",
-      "College",
-      "Ohio State",
-      "The Ohio State University",
-      "Coding",
-      "Programming",
-      "Java",
-      "C#",
-      "VB.Net",
-      "Android",
-      "XCode",
-      "Swift",
-      "Unity3D",
-      "HTML",
-      "CSS",
-      "JavaScript",
-      "C++",
-      "C",
-      "Video Games",
-      "Road Rager"
-    ]
-  }
+  "trailerLink": "https://www.youtube.com/embed/_FIBPxVjWOY?controls=1"
 }

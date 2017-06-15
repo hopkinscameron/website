@@ -30,10 +30,10 @@ angular.module('app').controller('headerController', ['$scope', '$rootScope', '$
         // check if on page
         if (last == pageSplit[pageSplit.length - 1]) {
             // set the class as active
-            return "active";
+            return true;
         }
 
-        return "";
+        return false;
     };
 
     // initialize variables
@@ -65,16 +65,20 @@ angular.module('app').controller('headerController', ['$scope', '$rootScope', '$
 
     // gets the header information
     function getHeaderInformation() {
-        // get the header information
-        Service.getHeaderInformation().then(function (responseHeader) {
-            // set the header
-            $scope.header = responseHeader;
+        // set the app name
+        Service.setAppName().then(function (responseAN) {
+            // get the header information
+            Service.getHeaderInformation().then(function (responseHeader) {
+                // set the header
+                $scope.header = responseHeader;
 
-            // header refreshed
-            $rootScope.$emit("headerRefreshed", {});
-        })
-        .catch(function (responseHeader) {
-            // TODO: Error out
+                // header refreshed
+                $rootScope.$emit("headerRefreshed", {});
+            })
+            .catch(function (responseHeader) {
+                // header refreshed with error
+                $rootScope.$emit("headerRefreshed", {"error": true, "message": responseHeader.message});
+            });
         });
     };
 }]);

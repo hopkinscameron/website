@@ -12,8 +12,8 @@ var bodyParser = require('body-parser');
 // the http request validator
 var expressValidator = require('express-validator');
 
-// the secrets
-var secrets = require('./secrets');
+// the ability to create requests
+var requestPromise = require('request-promise');
 
 // the ability to send emails
 var nodemailer = require('nodemailer');
@@ -25,6 +25,9 @@ var fs = require("fs");
 var mongoose = require('mongoose'),
 	// the scheme for mongoose/mongodb
     Schema = mongoose.Schema;
+
+// the secrets
+var secrets = require('./secrets');
 
 // db connection string and options
 var options = {
@@ -56,6 +59,43 @@ let transporter = nodemailer.createTransport({
 /**
  * GET
  */
+// GET app name
+// format /api/appName
+router.get('/api/appName', function (req, res, next) {
+	fs.readFile("./server/data/app-details.json", 'utf8', function (err, data) {
+		// if no error 
+		if(!err) {
+			var appName = "";
+
+			var jsonParse = undefined;
+
+			// parse json
+			try {
+				jsonParse = JSON.parse(data);
+
+				// if appname
+				if(jsonParse.appName) {
+					appName = jsonParse.appName;
+				}
+				else {
+					appName = "Cameron Hopkins";					
+				}
+
+				// send data
+				res.end(JSON.stringify({"appName": appName}));
+			}
+			catch (err) {
+				// send internal error
+				res.status(500).send({ error: true, title: "Something went wrong.", message: "Something went wrong. " + err.message});
+			}
+		}
+		else {
+			// send internal error
+			res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+		}
+	});
+});
+
 // GET header
 // format /api/header
 router.get('/api/header', function (req, res, next) {
@@ -253,8 +293,8 @@ router.get('/api/contact', function (req, res, next) {
 });
 
 // GET image file in root directory
-// format /api/images/:imageID
-router.get('/api/images/:imageID', function (req, res, next) {
+// format /images/:imageID
+router.get('/images/:imageID', function (req, res, next) {
 	// TODO: authentication?
 
 	// set options
@@ -266,14 +306,14 @@ router.get('/api/images/:imageID', function (req, res, next) {
 			'x-sent': true
 		}
 	};
-	var file = options.root + req.header.params.imageID
+	
 	// send file
-	res.sendFile(req.header.params.imageID, options);
+	res.sendFile(req.params.imageID, options);
 });
 
 // GET image file in option 1 directory
-// format /api/images/:directoryID_1/:imageID
-router.get('/api/images/:directoryID_1/:imageID', function (req, res, next) {
+// format /images/:directoryID_1/:imageID
+router.get('/images/:directoryID_1/:imageID', function (req, res, next) {
 	// TODO: authentication?
 	
 	// set options
@@ -285,14 +325,14 @@ router.get('/api/images/:directoryID_1/:imageID', function (req, res, next) {
 			'x-sent': true
 		}
 	};
-	var file = options.root + req.params.imageID
+	
 	// send file
 	res.sendFile(req.params.imageID, options);
 });
 
 // GET image file in option 1 and option 2 directory
-// format /api/images/:directoryID_1/:directoryID_2/:imageID
-router.get('/api/images/:directoryID_1/:directoryID_2/:imageID', function (req, res, next) {
+// format /images/:directoryID_1/:directoryID_2/:imageID
+router.get('/images/:directoryID_1/:directoryID_2/:imageID', function (req, res, next) {
 	// TODO: authentication?
 
 	// set options
@@ -304,14 +344,14 @@ router.get('/api/images/:directoryID_1/:directoryID_2/:imageID', function (req, 
 			'x-sent': true
 		}
 	};
-	var file = options.root + req.params.imageID
+	
 	// send file
 	res.sendFile(req.params.imageID, options);
 });
 
 // GET file
-// format /api/files/:fileID
-router.get('/api/files/:fileID', function (req, res, next) {
+// format /files/:fileID
+router.get('/files/:fileID', function (req, res, next) {
 	// TODO: authentication?
 	
 	// set options
@@ -328,13 +368,32 @@ router.get('/api/files/:fileID', function (req, res, next) {
 	res.sendFile(req.params.fileID, options);
 });
 
+// GET file in option 1 directory
+// format /files/:directoryID_1/:fileID
+router.get('/files/:directoryID_1/:fileID', function (req, res, next) {
+	// TODO: authentication?
+	
+	// set options
+	var options = {
+		root: __dirname + '\\files\\' + req.params.directoryID_1 + '\\',
+		dotfiles: 'deny',
+		headers: {
+			'x-timestamp': Date.now(),
+			'x-sent': true
+		}
+	};
+	
+	// send file
+	res.sendFile(req.params.fileID, options);
+});
+
 /**
  * POST
  */
 // POST send email
 // format /api/sendEmail
 router.post('/api/sendEmail', function (req, res, next) {
-	// https://script.google.com/macros/s/AKfycbx0lHzaYKANP_hcJpzTtu-ky6uAfKKjW6V7JBakRcgg6JW8XN0/exec
+	//https://script.google.com/macros/s/secrets.google_send_email_script_key/exec
 
 	// validate existence
 	req.checkBody('firstName', 'First name is required').notEmpty();
@@ -378,6 +437,56 @@ router.post('/api/sendEmail', function (req, res, next) {
 			// return success
 			res.status(200).send({ title: "Success!", message: "Your email has been sent!" });
 		});		
+	}
+});
+
+// POST shorten url
+// format /api/shortenUrl
+router.post('/api/shortenUrl', function (req, res, next) {
+	// validate existence
+	req.checkBody('longUrl', 'Long url is required').notEmpty();
+
+	// validate errors
+	var errors = req.validationErrors();
+
+	// if errors exist
+	if (errors) {
+		var errorText = "";
+		for(var x = 0; x < errors.length; x++) {
+			errorText += errors[x].msg + " ";
+		}
+		// send bad request
+		res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
+	}
+	else {
+		// create request
+		var options = {
+			method: 'POST',
+			uri: "https://www.googleapis.com/urlshortener/v1/url?key=" + secrets.google_shorten_url_key,
+			headers: {
+				'Content-Type': 'application/json; odata=verbose',
+				'Accept': 'application/json; odata=verbose'
+			},
+			body: {
+				"longUrl": req.body.longUrl
+			},
+			json: true
+		};
+
+		// submit request
+		requestPromise(options).then(function (responseSU) {
+			// create return response
+			var returnReq = JSON.stringify({
+				"shortUrl": responseSU.id,
+				"longUrl": responseSU.longUrl
+			});
+
+			// send data
+			res.end( returnReq );
+		}).catch(function (responseSU) {
+			// send internal error
+			res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+		});
 	}
 });
 

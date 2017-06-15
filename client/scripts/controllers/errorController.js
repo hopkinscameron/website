@@ -18,19 +18,19 @@
 
         // get correct error code
         if(status == 400) {
-            $scope.image = '/media/errors/400.png';
+            $scope.image = '/images/errors/400.png';
         }
         else if(status == 401) {
-            $scope.image = '/media/errors/401.png';
+            $scope.image = '/images/errors/401.png';
         }
         else if(status == 403) {
-            $scope.image = '/media/errors/403.png';
+            $scope.image = '/images/errors/403.png';
         }
         else if(status == 404) {
-            $scope.image = '/media/errors/404.png';
+            $scope.image = '/images/errors/404.png';
         }
         else if(status == 500) {
-            $scope.image = '/media/errors/500.png';
+            $scope.image = '/images/errors/500.png';
         }
 
         // setup page

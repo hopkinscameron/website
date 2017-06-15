@@ -3,12 +3,22 @@
     // initialize the service
     var service = {};
 
-    // TODO: set this in server
-    // set the application name
-    service.appName = "Cameron Hopkins";
-
     // the current path (after the hash)
     service.afterPath = "";
+
+    // the app name
+    service.appName = "";
+
+    // set the application name
+    service.setAppName = function () {
+        // get app name
+        return DataAccessService.getAppName().then(function (responseAN) {
+            service.appName = responseAN.data.appName;
+        })
+        .catch(function (responseAN) {
+            service.appName = "Cameron Hopkins";
+        });
+    };
 
     // sends email to owner (me)
     service.sendEmailToOwner = function (emailData) {

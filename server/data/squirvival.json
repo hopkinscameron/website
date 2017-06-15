@@ -1,17 +1,17 @@
 ﻿{
   "title": "Squirvival",
   "images": [
-    { "url": "/media/portfolio-images/squirvival/squirvival-logo.png" },
-    { "url": "/media/portfolio-images/squirvival/main-menu.png" },
-    { "url": "/media/portfolio-images/squirvival/map.png" },
-    { "url": "/media/portfolio-images/squirvival/shoulder-cam.png" },
-    { "url": "/media/portfolio-images/squirvival/squirrels-vs-predator.png" },
-    { "url": "/media/portfolio-images/squirvival/third-person.png" }
+    { "url": "/images/portfolio/squirvival/squirvival-logo.png" },
+    { "url": "/images/portfolio/squirvival/main-menu.png" },
+    { "url": "/images/portfolio/squirvival/map.png" },
+    { "url": "/images/portfolio/squirvival/shoulder-cam.png" },
+    { "url": "/images/portfolio/squirvival/squirrels-vs-predator.png" },
+    { "url": "/images/portfolio/squirvival/third-person.png" }
   ],
   "overviewContent": {
     "overview": "<i>Squirvival</i> is a survival based game built using Unity3D. In this game, the player is to survive in the forest as long as possible and collect enough nuts to survive each coming winter while avoiding predators, unless you are said predators, in which case your job is to devour squirrels. The player must collect nuts and bring them back to their home tree. The player has the option to climb trees, pick up acorns and achieve various power ups. The player has the ability to glide, so that their descent from treetops to the ground is smooth and controlled. The forest will consist of variously arranged trees, rocks, bushes, hills and dales. There also lies predators such as eagles, foxes, bears, and wolves. The player may see boars, stags and rabbits but not need to be afraid, those are for the bigger predators to hunt, other than the player of course. Take a look at the game design document. There is a bonus mode called 'Parkour' in which the player has to bounce/jump from tree to tree to collect a single acorn. Beware not to be afraid of heights or to fall out the tree, below the trees is a pit of hot lava!",
     "gameDesignDocument": {
-      "url": "/media/game-design-documents/squirvival-game-design-document.pdf",
+      "url": "/files/game-design-documents/squirvival-game-design-document.pdf",
       "title": "Squirvival Game Design Document"
     },
     "downloadLink": [
@@ -71,31 +71,5 @@
     ]
   },
   "videoUpdates": [],
-  "trailerLink": "https://www.youtube.com/embed/EjFqC2O_GJU?controls=1",
-  "metaTags": {
-    "description": "Cameron Hopkins game design portfolio.",
-    "keywords": [
-      "Cameron Hopkins",
-      "Game Design Portfolio",
-      "College",
-      "Ohio State",
-      "The Ohio State University",
-      "Coding",
-      "Programming",
-      "Java",
-      "C#",
-      "VB.Net",
-      "Android",
-      "XCode",
-      "Swift",
-      "Unity3D",
-      "HTML",
-      "CSS",
-      "JavaScript",
-      "C++",
-      "C",
-      "Video Games",
-      "Squirvival"
-    ]
-  }
+  "trailerLink": "https://www.youtube.com/embed/EjFqC2O_GJU?controls=1"
 }

@@ -1,6 +1,8 @@
 ﻿All
 - make sure everything works in firefox and image
-- Download unity 5.5.0f
+- do font's in scss
+- switch scss so that any selectors go within side classes
+- make sure boostrap is loaded first
 
 Header
 

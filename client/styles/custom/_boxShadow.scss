@@ -1,0 +1,11 @@
+/* Begin Custom Box Shadows */
+.box-shadow--small {
+    box-shadow: 0 0 12.5px $dark-light, 0 0 12.5px $dark-accent;
+}
+.box-shadow--medium {
+    box-shadow: 0 0 25px $dark-light, 0 0 25px $dark-accent;
+}
+.box-shadow--large {
+    box-shadow: 0 0 50px $dark-light, 0 0 50px $dark-accent;
+}
+/* End Custom Box Shadows */

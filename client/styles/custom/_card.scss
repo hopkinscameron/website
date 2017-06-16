@@ -1,0 +1,24 @@
+/* Begin Custom Cards */
+.card--transparent {
+    background-color: $transparent;
+    border: 0;
+}
+.card--light {
+    background-color: $light;
+}
+.card--dark {
+    background-color: $dark;
+    .card-title {
+        color: $text-color;
+    }
+    .card-text {
+        color: $text-color;
+    }
+}
+.card-link {
+    color: $text-color;
+    &:hover {
+        color: $brand-theme-main;
+    }
+}
+/* End Custom Cards */

@@ -20,10 +20,10 @@
                 <div class="col-md-9">
                     <!-- Begin Posts -->
                     <div class="animated fadeInUp" ng-class="{'mb-5': $index < blog.posts.length - 1}" ng-style="blogAnimations[$index]" ng-repeat="post in blog.posts">
-                        <div class="card card-inverse card--dark card-block box-shadow--small">
+                        <div class="card card--dark card-block box-shadow--small">
                             <!-- Begin Image -->
                             <a ng-href="#/blog/post/{{post.url}}" ng-if="post.image.length > 0">
-                                <div class="blog-img--small" style="background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.15) 100%), url({{post.image}}); background-size: cover; background-position: center center; background-repeat: no-repeat;"></div>
+                                <div class="img--md" style="background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.15) 100%), url({{post.image}}); background-size: cover; background-position: center center; background-repeat: no-repeat;"></div>
                             </a>
                             <!-- End Image -->
                             <!-- Begin Content Break -->

@@ -1,0 +1,10 @@
+/* Begin Custom Link Styles */
+a {
+	color: $white;
+	text-decoration: none;
+}
+a:hover, a:active, a:focus {
+	color: $brand-theme-main;
+	text-decoration: none;
+}
+/* End Custom Link Styles */

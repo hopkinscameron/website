@@ -1,14 +1,11 @@
 ﻿@import url('./custom-fonts.css');
 
-/*New Color: #29a8d6*/
-/*Old Color: #009900*/
-
-/* Begin Loading bar top: 76px; */
+/* Begin Loading Bar */
 #loading-bar .bar {
     background: #29a8d6;
     top: 76px;
 }
-/* End Loading bar */
+/* End Loading Bar */
 
 .dont-break-out {
     /* These are technically the same, but use both */

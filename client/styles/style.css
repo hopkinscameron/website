@@ -12,24 +12,18 @@
     These only apply to the grid by default. You can use them in components but they may
     require their own breakpoints as well.
 */
-/* Begin Animation Delays */
-/* End Animation Delays */
+/* Begin Animation Delay Variables */
+/* End Animation Delay Variables */
+/* Begin Body Variables */
+/* End Body Variables */
+/* Begin Border Sizes Variables */
+/* End Border Sizes Variables */
 /* Begin Colors */
 /* End Colors */
 /* Begin Colors (Theme) */
 /* End Colors (Theme) */
 /* Begin Icon Fonts */
 /* End Icon Fonts */
-/* Begin Input Controls and Buttons */
-/* End Input Controls and Buttons */
-/* Begin Modals */
-/* End Modals */
-/* Begin Panels */
-/* End Panels */
-/* Begin Progress Bar */
-/* Begin Progress Bar */
-/* Begin Tables */
-/* End Tables */
 /* 
     Typography + Links 
     Line height calc: http://www.pearsonified.com/typography/
@@ -41,8 +35,6 @@
 /* End Core Variables */
 /* Begin Boostrap */
 /* End Boostrap */
-/* Begin Custom Styles */
-/* Begin Custom Styles */
 /* Begin Animate */
 @-webkit-keyframes bounce {
   0%, 20%, 50%, 80%, 100% {
@@ -4636,3 +4628,405 @@
   backface-visibility: hidden; }
 
 /* End Animate  */
+/* Begin Custom Styles */
+/* Begin Import All Custom Styles */
+/* Begin Custom Animation Delays */
+.animation-delay--xxs {
+  animation-delay: 0.125s !important;
+  -webkit-animation-delay: 0.125s !important;
+  -moz-animation-delay: 0.125s !important; }
+
+.animation-delay--xs {
+  animation-delay: 0.25s !important;
+  -webkit-animation-delay: 0.25s !important;
+  -moz-animation-delay: 0.25s !important; }
+
+.animation-delay--sm {
+  animation-delay: 0.5s !important;
+  -webkit-animation-delay: 0.5s !important;
+  -moz-animation-delay: 0.5s !important; }
+
+.animation-delay--md {
+  animation-delay: 1 !important;
+  -webkit-animation-delay: 1 !important;
+  -moz-animation-delay: 1 !important; }
+
+.animation-delay--xmd {
+  animation-delay: 1.5s !important;
+  -webkit-animation-delay: 1.5s !important;
+  -moz-animation-delay: 1.5s !important; }
+
+.animation-delay--lg {
+  animation-delay: 2s !important;
+  -webkit-animation-delay: 2s !important;
+  -moz-animation-delay: 2s !important; }
+
+.animation-delay--xl {
+  animation-delay: 4s !important;
+  -webkit-animation-delay: 4s !important;
+  -moz-animation-delay: 4s !important; }
+
+.animation-delay--xxl {
+  animation-delay: 8s !important;
+  -webkit-animation-delay: 8s !important;
+  -moz-animation-delay: 8s !important; }
+
+.animation-delay--xxxl {
+  animation-delay: 12s !important;
+  -webkit-animation-delay: 12s !important;
+  -moz-animation-delay: 12s !important; }
+
+/* End Custom Animation Delays */
+/* Begin Custom Blog Post Styles */
+.post-body--dark {
+  padding: 0.5rem 1rem;
+  border-left: 0.25rem solid #747678; }
+
+/* End Custom Blog Post Styles */
+/* Begin Custom Body Styles */
+body {
+  font-family: "Trebuchet MS", sans-serif;
+  color: #F5F7F9;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #2C3035;
+  image-rendering: auto;
+  image-rendering: crisp-edges;
+  image-rendering: optimizeSpeed;
+  image-rendering: optimize-contrast;
+  background-image: url("/images/background/black-concrete.jpg");
+  background-position: center top;
+  background-attachment: fixed;
+  -o-background-size: cover;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  padding-top: 90px;
+  min-height: 90px; }
+
+.body-home {
+  padding-top: 0; }
+
+.body-error {
+  background-color: #29a8d6;
+  background-image: url(""); }
+
+/* End Custom Body Styles */
+/* Begin Custom Box Shadows */
+.box-shadow--small {
+  box-shadow: 0 0 12.5px #747678, 0 0 12.5px #899F99; }
+
+.box-shadow--medium {
+  box-shadow: 0 0 25px #747678, 0 0 25px #899F99; }
+
+.box-shadow--large {
+  box-shadow: 0 0 50px #747678, 0 0 50px #899F99; }
+
+/* End Custom Box Shadows */
+/* Begin Custom Buttons */
+.btn-theme-primary {
+  color: #FFFFFF;
+  background-color: #29a8d6;
+  border-color: #29a8d6; }
+
+.btn-theme-primary:active {
+  background-color: #2186ab;
+  border-color: #2186ab; }
+
+.btn-theme-primary:focus, .btn-theme-primary:hover {
+  background-color: #2186ab;
+  background-position: 0 -15px; }
+
+/* End Custom Buttons */
+/* Begin Custom Cards */
+.card--transparent {
+  background-color: transparent;
+  border: 0; }
+
+.card--light {
+  background-color: #C9CAC8; }
+
+.card--dark {
+  background-color: #2C3035; }
+  .card--dark .card-title {
+    color: #F5F7F9; }
+  .card--dark .card-text {
+    color: #F5F7F9; }
+
+.card-link {
+  color: #F5F7F9; }
+  .card-link:hover {
+    color: #29a8d6; }
+
+/* End Custom Cards */
+/* Begin Custom Footer Styles */
+.footer--sticky {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  background-color: #C9CAC8; }
+
+.footer-content {
+  color: #F5F7F9; }
+
+.footer-content img {
+  height: 30px;
+  width: 30px;
+  border-radius: 2.5px; }
+
+/* End Custom Footer Styles */
+/* Begin Forms */
+.form-character-count {
+  text-align: right;
+  font-size: x-small;
+  width: 100%;
+  margin: 0px; }
+
+/* End Forms */
+/* Begin Custom List Groups */
+.list-group-item--dark {
+  background-color: #2C3035;
+  border: 1px solid #383d43; }
+
+.list-group-item--dark:hover {
+  background-color: #151719; }
+
+/* End Custom List Groups */
+/* Begin Custom Loading Bar */
+#loading-bar .bar {
+  background: #29a8d6;
+  top: 76px; }
+
+/* End Custom Loading Bar */
+/*@import "mixins";*/
+/* Begin Custom Navigation Styles */
+nav {
+  color: #F5F7F9; }
+
+.navbar-inverse {
+  background-image: linear-gradient(#1e1e1e 0px, #0e0e0e 100%);
+  background-repeat: repeat-x; }
+
+.navbar-inverse .navbar-nav .nav-link {
+  color: #F5F7F9; }
+
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-toggler {
+  color: #F5F7F9; }
+
+.nav-link.active {
+  color: #29a8d6 !important; }
+
+/*
+.nav-link:hover {
+    box-shadow: 0px 0px 10px 2px rgba(41, 168, 214, 0.75), 0px 0px 10px 2px rgba(41, 168, 214, 0.75)!important;
+	-webkit-transition: background-color .3s,color .3s,box-shadow .3s,opacity 0.3s;
+	-moz-transition: background-color .3s,color .3s,box-shadow .3s,opacity 0.3s;
+	transition: background-color .3s,color .3s,box-shadow .3s,opacity 0.3s
+}
+*/
+.dropdown-menu {
+  background-color: #000; }
+
+.dropdown-item {
+  color: #F5F7F9; }
+
+.dropdown-item:hover, .dropdown-item:focus {
+  color: #F5F7F9;
+  background-color: #29a8d6; }
+
+.dropdown-item.active, .dropdown-item:active {
+  color: #F5F7F9;
+  background-color: #29a8d6; }
+
+/* End Custom Navigation Styles */
+/* Begin Custom Pagination */
+.page-item.disabled .page-link--dark {
+  color: #F5F7F9;
+  pointer-events: none;
+  cursor: not-allowed;
+  background-color: #2C3035;
+  border-color: #434951; }
+
+.page-link--dark {
+  color: #29a8d6;
+  background-color: #2C3035;
+  border: 1px solid #434951; }
+
+.page-link--dark:focus, .page-link--dark:hover {
+  color: #F5F7F9;
+  background-color: #29a8d6;
+  border-color: #29a8d6; }
+
+.page-item.active .page-link--dark {
+  z-index: 2;
+  color: #F5F7F9;
+  background-color: #29a8d6;
+  border-color: #29a8d6; }
+
+/* End Custom Pagination */
+/* Begin Custom Scroll Bar Styles */
+.scrollbar--1::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background-color: #C9CAC8; }
+
+.scrollbar--1::-webkit-scrollbar {
+  width: 12px;
+  background-color: transparent; }
+
+.scrollbar--1::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #29a8d6;
+  /*background-image: -webkit-linear-gradient(top,#2597c1 0%, $brand-theme-main 50%, $brand-theme-main 51%,#2597c1 100%);*/ }
+
+/* End Custom Scroll Bar Styles */
+/* Begin Custom Utilities */
+/* Begin Custom Images */
+.img--xxs {
+  height: 25px; }
+
+.img--xs {
+  height: 50px; }
+
+.img--sm {
+  height: 100px; }
+
+.img--md {
+  height: 200px; }
+
+.img--lg {
+  height: 400px; }
+
+.img--xl {
+  height: 800px; }
+
+.img--xxl {
+  height: 1000px; }
+
+/* End Custom Images */
+/* Begin Custom Link Styles */
+a {
+  color: #FFF;
+  text-decoration: none; }
+
+a:hover, a:active, a:focus {
+  color: #29a8d6;
+  text-decoration: none; }
+
+/* End Custom Link Styles */
+/* Begin Custom Page Breaks */
+hr.header-bar {
+  display: block;
+  height: 7px;
+  border: 0;
+  border-top: 7px solid #29a8d6;
+  margin: 1em 0;
+  padding: 0; }
+
+hr.body-bar {
+  width: 100%;
+  display: block;
+  height: 3px;
+  border: 0;
+  border-top: 3px solid #29a8d6;
+  padding: 0; }
+
+hr.blog-post-bar {
+  width: 100%;
+  display: block;
+  height: 1.5px;
+  border: 0;
+  border-top: 1.5px solid #C9CAC8;
+  padding: 0;
+  opacity: 0.05; }
+
+/* End Custom Page Breaks */
+/* Begin Custom Text Utilities */
+.dont-break-out {
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+  /* Adds a hyphen where the word breaks, if supported (No Blink)
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+     */ }
+
+.text-outer-dash {
+  display: inline-block;
+  position: relative;
+  display: table;
+  white-space: nowrap; }
+
+.text-outer-dash:before,
+.text-outer-dash:after {
+  content: "";
+  border-top: 1px solid #C9CAC8;
+  top: 0.5em;
+  display: table-cell;
+  position: relative;
+  width: 45%; }
+
+.text-outer-dash:before {
+  right: 100%;
+  margin-right: 15px; }
+
+.text-outer-dash:after {
+  left: 100%;
+  margin-left: 15px; }
+
+.divider {
+  position: relative;
+  cursor: default;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 0; }
+
+.divider:before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 1px; }
+
+.divider > div {
+  position: relative;
+  background: #2C3035;
+  content: "";
+  height: 1px;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  z-index: 1; }
+
+.divider > span {
+  position: relative;
+  line-height: 19px;
+  font-weight: 500;
+  padding: 0 10px;
+  font-size: 14px;
+  z-index: 2;
+  border-radius: 8px; }
+
+.limit-text {
+  max-height: 190px;
+  overflow: hidden; }
+
+/* End Custom Text Utilities */
+/* End Custom Utilities */
+/* End Import All Custom Styles */
+/* Begin Custom Styles */

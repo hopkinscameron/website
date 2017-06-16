@@ -1,0 +1,27 @@
+/* Begin Custom Page Breaks */
+hr.header-bar {
+	display: block;
+    height: 7px;
+    border: 0;
+    border-top: 7px solid $brand-theme-main;
+    margin: 1em 0;
+    padding: 0;
+}
+hr.body-bar {
+    width: 100%;
+    display: block;
+    height: 3px;
+    border: 0;
+    border-top: 3px solid $brand-theme-main;
+    padding: 0;
+}
+hr.blog-post-bar {
+    width: 100%;
+    display: block;
+    height: 1.5px;
+    border: 0;
+    border-top: 1.5px solid $light;
+    padding: 0;
+    opacity: 0.05;
+}
+/* End Custom Page Breaks */

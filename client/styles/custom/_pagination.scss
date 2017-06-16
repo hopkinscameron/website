@@ -1,0 +1,25 @@
+/* Begin Custom Pagination */
+.page-item.disabled .page-link--dark {
+    color: $text-color;
+    pointer-events: none;
+    cursor: not-allowed;
+    background-color: $dark;
+    border-color: lighten($dark, 10%);
+}
+.page-link--dark {
+    color: $brand-theme-main;
+    background-color: $dark;
+    border: 1px solid lighten($dark, 10%);
+}
+.page-link--dark:focus, .page-link--dark:hover {
+    color: $text-color;
+    background-color: $brand-theme-main;
+    border-color: $brand-theme-main;
+}
+.page-item.active .page-link--dark {
+    z-index: 2;
+    color: $text-color;
+    background-color: $brand-theme-main;
+    border-color: $brand-theme-main;
+}
+/* End Custom Pagination */

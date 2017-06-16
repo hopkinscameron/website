@@ -1,0 +1,9 @@
+/* Begin Custom List Groups */
+.list-group-item--dark {
+    background-color: $dark;
+    border: $border-size-normal solid lighten($dark, 5%);
+}
+.list-group-item--dark:hover {
+    background-color: darken($dark, 10%);
+}
+/* End Custom List Groups */

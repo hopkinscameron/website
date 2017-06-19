@@ -5,36 +5,33 @@ nav {
 .navbar-inverse {
     background-image: linear-gradient(rgb(30, 30, 30) 0px, rgb(14, 14, 14) 100%);
     background-repeat: repeat-x;
+    
+    & .navbar-nav .nav-link {
+        color: $text-color;
+    }
+    & .navbar-brand, & .navbar-toggler {
+        color: $text-color;
+    }
 }
-.navbar-inverse .navbar-nav .nav-link {
-    color: $text-color;
+.nav-link {
+    &.active {
+        color: $brand-theme-main !important;
+    }
 }
-.navbar-inverse .navbar-brand, .navbar-inverse .navbar-toggler {
-    color: $text-color;
-}
-.nav-link.active {
-    color: $brand-theme-main !important;
-}
-/*
-.nav-link:hover {
-    box-shadow: 0px 0px 10px 2px rgba(41, 168, 214, 0.75), 0px 0px 10px 2px rgba(41, 168, 214, 0.75)!important;
-	-webkit-transition: background-color .3s,color .3s,box-shadow .3s,opacity 0.3s;
-	-moz-transition: background-color .3s,color .3s,box-shadow .3s,opacity 0.3s;
-	transition: background-color .3s,color .3s,box-shadow .3s,opacity 0.3s
-}
-*/
 .dropdown-menu {
     background-color: $dark-dark;
 }
 .dropdown-item {
     color: $text-color;
+    
+    &:hover, &:focus {
+        color: $text-color!important;
+        background-color: $brand-theme-main;
+    }
+    &.active, &:active {
+        color: $text-color!important;
+        background-color: $brand-theme-main;
+    }
 }
-.dropdown-item:hover, .dropdown-item:focus {
-    color: $text-color;
-    background-color: $brand-theme-main;
-}
-.dropdown-item.active, .dropdown-item:active {
-    color: $text-color;
-    background-color: $brand-theme-main;
-}
+
 /* End Custom Navigation Styles */

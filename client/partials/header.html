@@ -12,7 +12,7 @@
                 </button>
                 <!-- End Toggle -->
                 <!-- Begin Navigation Bar Branding -->
-                <a class="navbar-brand" href="#/">
+                <a class="navbar-brand decoration--never" href="#/">
                     <h5 class="h5 font-fancy-1 mb-0">{{header.headliner}}</h5>
                     <span class="h6 font-fancy-2 mt-1" ng-repeat="subHeadliner in header.subHeadliners">
                         <span ng-if="$index != 0 && $index != header.subHeadlines.length - 1"> | </span>
@@ -27,18 +27,18 @@
                 <div class="navbar-nav ml-auto">
                     <div class="nav-item" ng-class="{'dropdown': navigation.dropdown !== undefined}" ng-repeat="navigation in header.navigation">
                         <!-- Begin Not Dropdown -->
-                        <a class="nav-link h5 mb-0" ng-class="{'active': isActive(navigation.pageLink)}" ng-href="#{{navigation.pageLink}}" ng-if="navigation.dropdown === undefined"><span ng-bind-html="navigation.title | trustHTML"></span></a>
+                        <a class="nav-link decoration--never h5 mb-0" ng-class="{'active': isActive(navigation.pageLink)}" ng-href="#{{navigation.pageLink}}" ng-if="navigation.dropdown === undefined"><span ng-bind-html="navigation.title | trustHTML"></span></a>
                         <!-- End Not Dropdown -->
                         <!-- Begin Dropdown -->
-                        <a role="button" id="navbarDropdownMenuLink{{$index}}" class="nav-link dropdown-toggle h5 mb-0" ng-class="{'active': isActive(navigation.pageLink)}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-if="navigation.dropdown !== undefined">
+                        <a role="button" id="navbarDropdownMenuLink{{$index}}" class="nav-link decoration--never dropdown-toggle h5 mb-0" ng-class="{'active': isActive(navigation.pageLink)}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-if="navigation.dropdown !== undefined">
                             <span ng-bind-html="navigation.title | trustHTML"></span>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink{{$index}}" ng-if="navigation.dropdown !== undefined">
                             <!-- Begin Initial Dropdown Item (usually the dropdown home) -->
-                            <a class="dropdown-item" ng-class="{'active': isActive(navigation.pageLink)}" ng-href="#{{navigation.pageLink}}" ng-repeat="dropdown in navigation.dropdown" ng-if="$index == 0"><span ng-bind-html="dropdown.title | trustHTML"></span></a>
+                            <a class="dropdown-item decoration--never" ng-class="{'active': isActive(navigation.pageLink)}" ng-href="#{{navigation.pageLink}}" ng-repeat="dropdown in navigation.dropdown" ng-if="$index == 0"><span ng-bind-html="dropdown.title | trustHTML"></span></a>
                             <!-- End Initial Dropdown Item -->
                             <!-- Begin All Other Dropdown Items (usually the dropdown home) -->
-                            <a class="dropdown-item" ng-class="{'active': isActive(navigation.pageLink + '/' + dropdown.pageLink)}" ng-href="#{{navigation.pageLink}}/{{dropdown.pageLink}}" ng-repeat="dropdown in navigation.dropdown" ng-if="$index > 0"><span ng-bind-html="dropdown.title | trustHTML"></span></a>
+                            <a class="dropdown-item decoration--never" ng-class="{'active': isActive(navigation.pageLink + '/' + dropdown.pageLink)}" ng-href="#{{navigation.pageLink}}/{{dropdown.pageLink}}" ng-repeat="dropdown in navigation.dropdown" ng-if="$index > 0"><span ng-bind-html="dropdown.title | trustHTML"></span></a>
                             <!-- End All Other Dropdown Items -->
                         </div>
                         <!-- End Dropdown -->

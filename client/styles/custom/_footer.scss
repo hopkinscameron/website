@@ -9,10 +9,15 @@
 }
 .footer-content {
     color: $text-color;
-}
-.footer-content img {
-    height: 30px;
-    width: 30px;
-    border-radius: 2.5px;
+    
+    & img {
+        height: 30px;
+        width: 30px;
+        border-radius: 2.5px;
+    }
+    & .footer-svg {
+        width: 30px;
+        height: 30px;
+    }
 }
 /* End Custom Footer Styles */

@@ -1,8 +1,5 @@
 ﻿All
 - make sure everything works in firefox and image
-- do font's in scss
-- switch scss so that any selectors go within side classes
-- make sure boostrap is loaded first
 
 Header
 

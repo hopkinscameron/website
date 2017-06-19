@@ -160,12 +160,13 @@ $white: #FFF;
 $bg-color: $white;
 $error-color: #B71234;
 $devil: #666;
+$muted: #636c72;
 $transparent: transparent;
 /* End Colors (Theme) */
 
-/* Begin Icon Fonts */ 
+/* Begin Icon Font Path */ 
 $icon-font-path: "./fonts/";
-/* End Icon Fonts */ 
+/* End Icon Font Path */ 
 
 /* 
     Typography + Links 
@@ -193,18 +194,5 @@ $link-color:            $color-blue-accent;
 $link-hover-color:      darken($link-color, 8%);
 $link-hover-decoration: underline;
 /* End Typography + Links  */ 
-
-/* Begin Spacing */
-$spacing-base: 16px;
-$spacing-150: $spacing-base*1.5;
-$spacing-double: $spacing-base*2;
-$spacing-triple: $spacing-base*3;
-$spacing-quadruple: $spacing-base*4;
-$spacing-half: $spacing-base/2;
-$spacing-quarter: $spacing-half/2;
-
-$spacing-size-names: (base, 150, double, triple, quadruple, half, quarter);
-$spacing-sizes: ($spacing-base, $spacing-150, $spacing-double, $spacing-triple, $spacing-quadruple, $spacing-half, $spacing-quarter);
-/* End Spacing */
 
 /* End Variables */

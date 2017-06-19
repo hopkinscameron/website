@@ -24,7 +24,7 @@
     $scope.secondText = {
         'id': "secondText",
         "display": false,
-        "text": "Enter if you dare..."        
+        "text": "Come take a look..."        
     };
 
     // the enter button display settings
@@ -225,12 +225,15 @@
                     });
 
                     // show next text
-                    $timeout(function() { showNextItem($scope.secondText, 'animated fadeIn', false) }, 500);
+                    $timeout(function() { showNextItem($scope.secondText, 'animated fadeIn', false) }, 1500);
                 }
             }
             else {
                 // if initial text
                 if(item.id == 'initialText') {
+                    // remove animation
+                    angular.element(document.querySelector('#' + item.id)).removeClass(classToAdd);
+                    
                     // show next text
                     $timeout(function() { showNextItem($scope.initialText, 'animated fadeOut', true) }, 1000);
                 }

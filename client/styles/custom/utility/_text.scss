@@ -22,23 +22,23 @@
     position: relative;  
     display: table;
     white-space: nowrap;
-}
-.text-outer-dash:before,
-.text-outer-dash:after {
-    content: "";
-    border-top: 1px solid $light;
-    top: 0.5em;
-    display: table-cell;
-    position: relative;
-    width: 45%;
-}
-.text-outer-dash:before {
-    right: 100%;
-    margin-right: 15px;
-}
-.text-outer-dash:after {
-    left: 100%;
-    margin-left: 15px;
+    
+    &:before, &:after {
+        content: "";
+        border-top: 1px solid $light;
+        top: 0.5em;
+        display: table-cell;
+        position: relative;
+        width: 45%;
+    }
+    &:before {
+        right: 100%;
+        margin-right: 15px;
+    }
+    &:after {
+        left: 100%;
+        margin-left: 15px;
+    }
 }
 .divider {
     position: relative;
@@ -50,31 +50,32 @@
     -ms-flex-align: center;
     align-items: center;
     height: 0;
-}
-.divider:before {
-    position: absolute;
-    content: "";
-    width: 100%;
-    height: 1px;
-}
-.divider > div {
-    position: relative;
-    background: $dark;
-    content: "";
-    height: 1px;
-    -webkit-box-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    z-index: 1;
-}
-.divider > span {
-    position: relative;
-    line-height: 19px;
-    font-weight: 500;
-    padding: 0 10px;
-    font-size: 14px;
-    z-index: 2;
-    border-radius: $border-radius-xl;
+
+    &:before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 1px;
+    }
+    & > div {
+        position: relative;
+        background: $muted;
+        content: "";
+        height: 1px;
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        z-index: 1;
+    }
+    & > span {
+        position: relative;
+        line-height: 19px;
+        font-weight: 500;
+        padding: 0 10px;
+        font-size: 14px;
+        z-index: 2;
+        border-radius: $border-radius-xl;
+    }
 }
 .limit-text {
     max-height: 190px;

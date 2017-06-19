@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('portfolioController', ['$scope', '$rootScope', '$compile', '$location', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $location, cfpLoadingBar, Service) {
+﻿angular.module('app').controller('portfolioController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $location, $timeout, cfpLoadingBar, Service) {
     // set jQuery
     $ = window.jQuery;
 
@@ -118,11 +118,11 @@
                 // loop through all animation timing and set the times
                 for(var x = 0; x < $scope.portfolioAnimations.length; x++) {
                     
-                     $scope.portfolioAnimations[x] = {
+                    $scope.portfolioAnimations[x] = {
                         'animation-delay': startTime + (x * incrementTime) + 's',
                         '-webkit-animation-delay': startTime + (x * incrementTime) + 's',
                         '-moz-animation-delay': startTime + (x * incrementTime) + 's'
-                     };
+                    };
                 }
 
                 // holds the page title
@@ -166,5 +166,17 @@
 
         // set page fully loaded
         $scope.pageFullyLoaded = true;
+
+        // show the page after a timeout
+        $timeout(showPage, $rootScope.$root.showPageTimeout);
+    };
+
+    // shows the page
+    function showPage() {
+        // check if collapsing is already occuring
+        if(!angular.element('#pageShow').hasClass('collapsing')) {
+            // show the page
+            angular.element('#pageShow').collapse('show');
+        }
     };
 }]);

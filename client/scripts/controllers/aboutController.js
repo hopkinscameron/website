@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('aboutController', ['$scope', '$rootScope', '$compile', '$location', '$window', 'cfpLoadingBar','Service', function ($scope, $rootScope, $compile, $location, $window, cfpLoadingBar, Service) {
+﻿angular.module('app').controller('aboutController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$timeout', 'cfpLoadingBar','Service', function ($scope, $rootScope, $compile, $location, $window, $timeout, cfpLoadingBar, Service) {
     // set jQuery
     $ = window.jQuery;
 
@@ -115,9 +115,28 @@
                 $scope.favoriteGamesMaxRowCountArray = new Array(Math.ceil($scope.about.favoriteGames.length / $scope.favoriteGamesColumnsPerRow));
                 $scope.favoriteGamesColumnsPerRowArray = new Array($scope.favoriteGamesColumnsPerRow);
                 
+                // holds the animation times
+                $scope.aboutAnimations = new Array(3);
+
+                // the initial delayed start time of any animation
+                var startTime = 1.5;
+
+                // the incremental start time of every animation (every animation in the array has a value greater than the last by this much)
+                var incrementTime = 1;
+
+                // loop through all animation timing and set the times
+                for(var x = 0; x < $scope.aboutAnimations.length; x++) {
+                    
+                    $scope.aboutAnimations[x] = {
+                        'animation-delay': startTime + (x * incrementTime) + 's',
+                        '-webkit-animation-delay': startTime + (x * incrementTime) + 's',
+                        '-moz-animation-delay': startTime + (x * incrementTime) + 's'
+                    };
+                }
+
                 // holds the page title
                 $scope.pageTitle = "About Me | " + Service.appName;
-
+                
                 // setup page
                 setUpPage();
             }
@@ -156,5 +175,17 @@
 
         // set page fully loaded
         $scope.pageFullyLoaded = true;
+
+        // show the page after a timeout
+        $timeout(showPage, $rootScope.$root.showPageTimeout);
+    };
+
+    // shows the page
+    function showPage() {
+        // check if collapsing is already occuring
+        if(!angular.element('#pageShow').hasClass('collapsing')) {
+            // show the page
+            angular.element('#pageShow').collapse('show');
+        }
     };
 }]);

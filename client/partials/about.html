@@ -3,30 +3,32 @@
     <!-- Begin Container -->
     <div class="container">
         <!-- Begin Page Fully Loaded With Errors -->
-        <div ng-if="pageFullyLoaded && error.error">
+        <div id="pageShow" class="collapse" ng-if="pageFullyLoaded && error.error">
             <div ng-controller="errorController" ng-init="init(error.title, error.status, error.message)">
                 <div ng-include="'/partials/error.html'"></div>
             </div>
         </div>
         <!-- End Page Fully Loaded With Errors -->
         <!-- Begin Page Fully Loaded With No Errors -->
-        <div class="animated animation-delay--md fadeIn" ng-if="pageFullyLoaded && !error.error">
+        <div id="pageShow" class="animated animation-delay--md fadeIn collapse" ng-if="pageFullyLoaded && !error.error">
             <!-- Begin Page Title -->
             <h2 class="font-weight-bold text-uppercase mb-3"><span ng-bind-html="about.title | trustHTML"></span></h2>
             <!-- End Page Title -->
             <!-- Begin Bio -->
-            <div class="card card--transparent card-block">
-                <h4 class="text-capitalize">Bio</h4>
-                <span class="pl-3 pr-3 animated animation-delay--xmd fadeInUp" ng-bind-html="about.bio | trustHTML"></span>
+            <div class="animated fadeInUp" ng-style="aboutAnimations[0]">
+                <div class="card card--transparent card-block">
+                    <h4 class="text-capitalize">Bio</h4>
+                    <span class="pl-3 pr-3" ng-bind-html="about.bio | trustHTML"></span>
+                </div>
             </div>
             <!-- End Bio -->
-            <!-- Begin Content Break -->
-            <hr class="body-bar" />
-            <!-- End Content Break -->
             <!-- Begin Hobbies -->
-            <div class="card card--transparent card-block">
-                <h4 class="text-capitalize">Hobbies</h4>
-                <div class="animated animation-delay--xmd fadeInUp">
+            <div class="animated fadeInUp" ng-style="aboutAnimations[1]">
+                <!-- Begin Content Break -->
+                <hr class="body-bar" />
+                <!-- End Content Break -->
+                <div class="card card--transparent card-block">
+                    <h4 class="text-capitalize">Hobbies</h4>
                     <div class="row pl-3 pr-3" ng-class="{'mb-5': $index < hobbiesMaxRowCountArray.length - 1}" ng-repeat="index in hobbiesMaxRowCountArray track by $index">
                         <div class="col-md-3" ng-repeat="index in hobbiesColumnsPerRowArray track by $index">
                             <ul class="list-unstyled">
@@ -37,13 +39,13 @@
                 </div>
             </div>
             <!-- End Hobbies -->
-            <!-- Begin Content Break -->
-            <hr class="body-bar" />
-            <!-- End Content Break -->
             <!-- Begin Favorite Games -->
-            <div class="card card--transparent card-block">
-                <h4 class="text-capitalize">Favorite Games</h4>
-                <div class="animated animation-delay--xmd fadeInUp">
+            <div class="animated fadeInUp" ng-style="aboutAnimations[2]">
+                <!-- Begin Content Break -->
+                <hr class="body-bar" />
+                <!-- End Content Break -->
+                <div class="card card--transparent card-block" >
+                    <h4 class="text-capitalize">Favorite Games</h4>
                     <div class="row pl-3 pr-3" ng-class="{'mb-5': $index < favoriteGamesMaxRowCountArray.length - 1}" ng-repeat="index in favoriteGamesMaxRowCountArray track by $index">
                         <div class="col-md-3" ng-repeat="innerIndex in favoriteGamesColumnsPerRowArray track by $index">
                             <ul class="list-unstyled mb-0">

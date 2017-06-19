@@ -3,14 +3,14 @@
     <!-- Begin Container -->
     <div class="container">
         <!-- Begin Page Fully Loaded With Errors -->
-        <div ng-if="pageFullyLoaded && error.error">
+        <div id="pageShow" class="collapse" ng-if="pageFullyLoaded && error.error">
             <div ng-controller="errorController" ng-init="init(error.title, error.status, error.message)">
                 <div ng-include="'/partials/error.html'"></div>
             </div>
         </div>
         <!-- End Page Fully Loaded With Errors -->
         <!-- Begin Page Fully Loaded With No Errors -->
-        <div class="animated animation-delay--md fadeIn" ng-if="pageFullyLoaded && !error.error">
+        <div id="pageShow" class="animated animation-delay--md fadeIn collapse" ng-if="pageFullyLoaded && !error.error">
             <!-- Begin Page Title -->
             <h2 class="font-weight-bold text-uppercase mb-3"><span ng-bind-html="portfolio.title | trustHTML"></span></h2>
             <!-- End Page Title -->
@@ -18,12 +18,12 @@
             <div class="card card--transparent card-block">
                 <div class="row">
                     <div class="col-md-6 mb-5 animated" ng-class="{'zoomInLeft': $index % 2 == 0, 'zoomInRight': $index % 2 == 1}" ng- ng-style="portfolioAnimations[$index]" ng-repeat="portfolioItem in portfolio.portfolioItems">
-                        <div class="card card-inverse card--dark card-block box-shadow--small">
+                        <div class="card card--dark card-block box-shadow--small">
                             <h3 class="text-center text-capitalize font-weight-bold">{{portfolioItem.title}}</h3>
-                            <a class="" ng-href="#{{currentPath}}/{{portfolioItem.subPageLink}}">
+                            <a class="decoration--never card-link" ng-href="#{{currentPath}}/{{portfolioItem.subPageLink}}">
                                 <img class="img-fluid w-100" ng-src="{{portfolioItem.pictureLink}}" alt="{{getPictureTitle(portfolioItem.pictureLink)}}" title="{{getPictureTitle(portfolioItem.pictureLink)}}" spinner-load />
                             </a>
-                            <p class="text-center pl-3 pr-3 mb-2 mt-2"><a class="" ng-href="#{{currentPath}}/{{portfolioItem.subPageLink}}">View more details <i class="fa fa-arrow-right" aria-hidden="true"></i></a></p>
+                            <p class="text-center pl-3 pr-3 mb-2 mt-2"><a class="decoration--never card-link" ng-href="#{{currentPath}}/{{portfolioItem.subPageLink}}">View more details <i class="fa fa-arrow-right" aria-hidden="true"></i></a></p>
                             <span class="pl-3 pr-3" ng-bind-html="portfolioItem.shortDescription | trustHTML"></span></p>
                         </div>
                     </div>

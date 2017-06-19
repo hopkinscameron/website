@@ -11,9 +11,10 @@
     height: 100px;
     border: 2px solid $light;
     opacity: 0.7;
-}
-.sub-portfolio-img.active {
-    border: 2px solid $brand-theme-main;
-    opacity: 1;
+
+    &.active {
+        border: 2px solid $brand-theme-main;
+        opacity: 1;
+    }
 }
 /* End Custom Sub Portfolio Items */

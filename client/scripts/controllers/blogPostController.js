@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('blogPostController', ['$scope', '$rootScope', '$compile', '$location', 'cfpLoadingBar', '$routeParams', 'Service', function ($scope, $rootScope, $compile, $location, cfpLoadingBar, $routeParams, Service) {
+﻿angular.module('app').controller('blogPostController', ['$scope', '$rootScope', '$compile', '$location', '$routeParams', '$timeout', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $location, $routeParams, $timeout, cfpLoadingBar, Service) {
     // set jQuery
     $ = window.jQuery;
 
@@ -137,5 +137,17 @@
 
         // set page fully loaded
         $scope.pageFullyLoaded = true;
+
+        // show the page after a timeout
+        $timeout(showPage, $rootScope.$root.showPageTimeout);
+    };
+
+    // shows the page
+    function showPage() {
+        // check if collapsing is already occuring
+        if(!angular.element('#pageShow').hasClass('collapsing')) {
+            // show the page
+            angular.element('#pageShow').collapse('show');
+        }
     };
 }]);

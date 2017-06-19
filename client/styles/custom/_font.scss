@@ -1,0 +1,20 @@
+/* Begin Custom Fonts */
+@font-face {
+    font-family: no-more-lies;
+    src: url(#{$font-path}/no-more-lies.ttf);
+}
+@font-face {
+    font-family: true-lies;
+    src: url(#{$font-path}/true-lies.ttf);
+}
+@font-face {
+    font-family: wiked-grit;
+    src: url(#{$font-path}/wicked-grit.ttf);
+}
+.font-fancy-1 {
+    font-family: no-more-lies;
+}
+.font-fancy-2 {
+    font-family: true-lies;
+}
+/* End Custom Fonts */

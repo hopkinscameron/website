@@ -8,15 +8,17 @@
 }
 .card--dark {
     background-color: $dark;
-    .card-title {
+
+    & .card-title {
         color: $text-color;
     }
-    .card-text {
+    & .card-text {
         color: $text-color;
     }
 }
 .card-link {
     color: $text-color;
+
     &:hover {
         color: $brand-theme-main;
     }

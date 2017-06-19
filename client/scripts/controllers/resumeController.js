@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('resumeController', ['$scope', '$rootScope', '$compile', '$location', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $location, cfpLoadingBar, Service) {
+﻿angular.module('app').controller('resumeController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $location, $timeout, cfpLoadingBar, Service) {
     // set jQuery
     $ = window.jQuery;
 
@@ -92,6 +92,25 @@
                 // set the data
                 $scope.resume = responseR;
 
+                // holds the animation times
+                $scope.resumeAnimations = new Array(2);
+
+                // the initial delayed start time of any animation
+                var startTime = 1.5;
+
+                // the incremental start time of every animation (every animation in the array has a value greater than the last by this much)
+                var incrementTime = 1;
+
+                // loop through all animation timing and set the times
+                for(var x = 0; x < $scope.resumeAnimations.length; x++) {
+                    
+                    $scope.resumeAnimations[x] = {
+                        'animation-delay': startTime + (x * incrementTime) + 's',
+                        '-webkit-animation-delay': startTime + (x * incrementTime) + 's',
+                        '-moz-animation-delay': startTime + (x * incrementTime) + 's'
+                    };
+                }
+
                 // holds the page title
                 $scope.pageTitle = "R&eacute;sum&eacute; | " + Service.appName;
 
@@ -133,5 +152,17 @@
 
         // set page fully loaded
         $scope.pageFullyLoaded = true;
+
+        // show the page after a timeout
+        $timeout(showPage, $rootScope.$root.showPageTimeout);
+    };
+
+    // shows the page
+    function showPage() {
+        // check if collapsing is already occuring
+        if(!angular.element('#pageShow').hasClass('collapsing')) {
+            // show the page
+            angular.element('#pageShow').collapse('show');
+        }
     };
 }]);

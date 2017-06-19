@@ -44,6 +44,9 @@ angular.module('app').controller('headerController', ['$scope', '$rootScope', '$
         // set animations
         $rootScope.$root.animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
 
+        // set show page timeout (timeout before a page shows (used for collapsing body))
+        $rootScope.$root.showPageTimeout = 500;
+        
         // initialize show header
         $rootScope.$root.showHeader = false;
 

@@ -17,11 +17,11 @@
     $scope.contactForm = {
         "formSubmitted": false,
         "inputs": {
-            "firstName": "John",
-            "lastName": "Doe",
-            "email": "johndoedoebrobrolikewhatnow@johndoedoebrobrolikewhatnow.com",
-            "subject": "Man, this John Doe Bro",
-            "message": "Yo wassup bro, this is john doe bro. Just testing out your email to make sure it works"
+            "firstName": "", //"John",
+            "lastName": "", //"Doe",
+            "email": "", //"johndoedoebrobrolikewhatnow@johndoedoebrobrolikewhatnow.com",
+            "subject": "", //"Man, this John Doe Bro",
+            "message": "", //"Yo wassup bro, this is john doe bro. Just testing out your email to make sure it works"
         },
         "maxLength": {
             "firstName": 15,
@@ -141,7 +141,7 @@
             if ($scope.contactForm.inputs.firstName.length == 0) {
                 // set error
                 $scope.contactForm.errors.firstName = true;
-                $scope.contactForm.errors.error = true;
+                $scope.contactForm.errors.isError = true;
             }
         }
         // if entering the last name view
@@ -150,7 +150,7 @@
             if ($scope.contactForm.inputs.lastName.length == 0) {
                 // set error
                 $scope.contactForm.errors.lastName = true;
-                $scope.contactForm.errors.error = true;
+                $scope.contactForm.errors.isError = true;
             }
         }
         // if entering the email view
@@ -159,7 +159,7 @@
             if (!$rootScope.$root.emailRegex.test($scope.contactForm.inputs.email)) {
                 // set error
                 $scope.contactForm.errors.email = true;
-                $scope.contactForm.errors.error = true;
+                $scope.contactForm.errors.isError = true;
             }
         }
         // if entering the subject view
@@ -168,7 +168,7 @@
             if ($scope.contactForm.inputs.subject.length == 0) {
                 // set error
                 $scope.contactForm.errors.subject = true;
-                $scope.contactForm.errors.error = true;
+                $scope.contactForm.errors.isError = true;
             }
         }
         // if entering the message view
@@ -177,7 +177,7 @@
             if ($scope.contactForm.inputs.message.length == 0) {
                 // set error
                 $scope.contactForm.errors.message = true;
-                $scope.contactForm.errors.error = true;
+                $scope.contactForm.errors.isError = true;
             }
         }
 
@@ -205,7 +205,7 @@
         else {
             // remove error
             $scope.contactForm.errors.errorMessage = "";
-            $scope.contactForm.errors.error = false;
+            $scope.contactForm.errors.isError = false;
         }
     };
 
@@ -232,6 +232,9 @@
 
     // send email to owner (me)
     $scope.sendEmail = function () {
+        // check for empty values
+        checkEmptyValues();
+
         // check if an error exists
         if(!$scope.contactForm.errors.firstName && !$scope.contactForm.errors.lastName && !$scope.contactForm.errors.email && !$scope.contactForm.errors.subject && !$scope.contactForm.errors.message) {
             // disable button but setting email in transit
@@ -255,14 +258,14 @@
                 else {
                     // show error
                     $scope.contactForm.errors.errorMessage = responseSE.message;
-                    $scope.contactForm.errors.error = true;
+                    $scope.contactForm.errors.isError = true;
                     $scope.emailInTransit = false;
                 }
             })
             .catch(function (responseSE) {
                 // show error
                 $scope.contactForm.errors.errorMessage = responseSE.message;
-                $scope.contactForm.errors.error = true;
+                $scope.contactForm.errors.isError = true;
                 $scope.emailInTransit = false;
             });
         }
@@ -367,6 +370,41 @@
         }
     };
     
+    // checks for any empty values
+    function checkEmptyValues() {
+        if (!$scope.contactForm.inputs.message || $scope.contactForm.inputs.message.length == 0) {
+            // set error
+            $scope.contactForm.errors.errorMessage = "You must enter a message";
+            $scope.contactForm.errors.message = true;
+            $scope.contactForm.errors.isError = true;
+        }
+        if (!$scope.contactForm.inputs.subject || $scope.contactForm.inputs.subject.length == 0) {
+            // set error
+            $scope.contactForm.errors.errorMessage = "You must enter a subject";
+            $scope.contactForm.errors.subject = true;
+            $scope.contactForm.errors.isError = true;
+        }
+        if (!$scope.contactForm.inputs.email || $scope.contactForm.inputs.email.length == 0) {
+            // set error
+            $scope.contactForm.errors.errorMessage = "You must enter your email";
+            $scope.contactForm.errors.email = true;
+            $scope.contactForm.errors.isError = true;
+        }
+        if (!$scope.contactForm.inputs.lastName || $scope.contactForm.inputs.lastName.length == 0) {
+            // set error
+            $scope.contactForm.errors.errorMessage = "You must enter your last name";
+            $scope.contactForm.errors.lastName = true;
+            $scope.contactForm.errors.isError = true;
+        }
+        // check for any empty values
+        if (!$scope.contactForm.inputs.firstName || $scope.contactForm.inputs.firstName.length == 0) {
+            // set error
+            $scope.contactForm.errors.errorMessage = "You must enter your first name";
+            $scope.contactForm.errors.firstName = true;
+            $scope.contactForm.errors.isError = true;
+        }
+    };
+
     // hide contact form
     function hideContactForm() {
         // collapse the form

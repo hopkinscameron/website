@@ -28,6 +28,11 @@
         // set the endpoint
         var endpoint = "/api/shortenUrl";
 
+        // stringify the url data
+        var urlData = JSON.stringify({
+            "longUrl": url
+        });
+
         // create request
         var req = {
             method: 'POST',
@@ -36,7 +41,7 @@
                 'Content-Type': 'application/json; odata=verbose',
                 'Accept': 'application/json; odata=verbose'
             },
-            data: '{"longUrl": "' + url + '"}'
+            data: urlData
         };
 
         // send request
@@ -278,6 +283,110 @@
                 'Accept': 'application/json; odata=verbose'
             },
             data: 'undefined'
+        };
+
+        // send request
+        return $http(req);
+    };
+
+    // login
+    service.login = function (loginData) {
+        // set the endpoint
+        var endpoint = "/api/login";
+
+        // stringify the login data
+        var loginStrigified = JSON.stringify({
+            "username": loginData.username,
+            "password": loginData.password
+        });
+
+        // create request
+        var req = {
+            method: 'POST',
+            url: endpoint,
+            headers: {
+                'Content-Type': 'application/json; odata=verbose',
+                'Accept': 'application/json; odata=verbose'
+            },
+            data: loginStrigified
+        };
+
+        // send request
+        return $http(req);
+    };
+
+    // get admin page information
+    service.getAdminPageInformation = function () {
+        // set the endpoint
+        var endpoint = "/api/admin";
+
+        // create request
+        var req = {
+            method: 'GET',
+            url: endpoint,
+            headers: {
+                'Content-Type': 'application/json; odata=verbose',
+                'Accept': 'application/json; odata=verbose'
+            },
+            data: 'undefined'
+        };
+
+        // send request
+        return $http(req);
+    };
+
+    // save blog
+    service.saveBlog = function (blogPostData) {
+        // set the endpoint
+        var endpoint = "/api/saveBlog";
+
+        // stringify the login data
+        var blogStrigified = JSON.stringify({
+            "id": blogPostData.id,
+            "title": blogPostData.title,
+            "image": blogPostData.image,
+            "shortDescription": blogPostData.shortDescription,
+            "body": blogPostData.body
+        });
+
+        // create request
+        var req = {
+            method: 'POST',
+            url: endpoint,
+            headers: {
+                'Content-Type': 'application/json; odata=verbose',
+                'Accept': 'application/json; odata=verbose'
+            },
+            data: blogStrigified
+        };
+
+        // send request
+        return $http(req);
+    };
+
+    // post blog
+    service.postBlog = function (blogPostData) {
+        // set the endpoint
+        var endpoint = "/api/postBlog";
+
+        // stringify the login data
+        var blogStrigified = JSON.stringify({
+            "id": blogPostData.id,
+            "title": blogPostData.title,
+            "image": blogPostData.image,
+            "shortDescription": blogPostData.shortDescription,
+            "body": blogPostData.body
+        });
+
+        // create request
+        var req = {
+            method: 'POST',
+            url: endpoint,
+            headers: {
+                'Content-Type': 'application/json; odata=verbose',
+                'Accept': 'application/json; odata=verbose'
+            },
+            data: blogStrigified
         };
 
         // send request

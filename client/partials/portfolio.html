@@ -18,7 +18,7 @@
             <div class="card card--transparent card-block">
                 <div class="row">
                     <div class="col-md-6 mb-5 animated" ng-class="{'zoomInLeft': $index % 2 == 0, 'zoomInRight': $index % 2 == 1}" ng- ng-style="portfolioAnimations[$index]" ng-repeat="portfolioItem in portfolio.portfolioItems">
-                        <div class="card card--dark card-block box-shadow--small">
+                        <div class="card card--dark card-block box-shadow--sm">
                             <h3 class="text-center text-capitalize font-weight-bold">{{portfolioItem.title}}</h3>
                             <a class="decoration--never card-link" ng-href="#{{currentPath}}/{{portfolioItem.subPageLink}}">
                                 <img class="img-fluid w-100" ng-src="{{portfolioItem.pictureLink}}" alt="{{getPictureTitle(portfolioItem.pictureLink)}}" title="{{getPictureTitle(portfolioItem.pictureLink)}}" spinner-load />

@@ -1,0 +1,102 @@
+<!-- Begin Admin Page -->
+<section ng-controller="adminController">
+    <!-- Begin Container -->
+    <div class="container">
+        <!-- Begin Page Fully Loaded With Errors -->
+        <div id="pageShow" class="collapse" ng-if="pageFullyLoaded && error.error">
+            <div ng-controller="errorController" ng-init="init(error.title, error.status, error.message)">
+                <div ng-include="'/partials/error.html'"></div>
+            </div>
+        </div>
+        <!-- End Page Fully Loaded With Errors -->
+        <!-- Begin Page Fully Loaded With No Errors -->
+        <div id="pageShow" class="animated animation-delay--md fadeIn collapse" ng-if="pageFullyLoaded && !error.error">
+            <!-- Begin Blog Insert and Saved Blog Posts -->
+            <div class="row">
+                <!-- Begin Blog Insert -->
+                <div class="animated fadeInUp" ng-class="{'col-md-9': admin.savedPosts.length > 0, 'col-md-8 offset-md-2': admin.savedPosts.length == 0}" ng-style="adminAnimations[0]">
+                    <div class="card card--dark card-block box-shadow--sm">
+                        <form ng-submit="post()">
+                            <div class="form-group pl-3 pr-3">
+                                <!-- Begin Title -->
+                                <div class="form-group row">
+                                    <label class="col-2 col-form-label" for="title">Title <span style="color: red;">*</span></label>
+                                    <div class="col input-group" ng-class="{'has-danger': adminBlogPostForm.errors.firstName}">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                        </span>
+                                        <input class="form-control form-control-danger" type="text" name="title" placeholder="Title" id="title" ng-model="adminBlogPostForm.inputs.title" ng-focus="viewFocusEnter(adminBlogPostForm.views.title)" ng-blur="viewFocusLeave(adminBlogPostForm.views.title)" ng-change="checkTextLength(adminBlogPostForm.views.title)" ng-disabled="adminBlogPostForm.formSubmitted">
+                                    </div>
+                                </div>
+                                <!-- End Title -->
+                                <!-- Begin Image -->
+                                <div class="form-group row">
+                                    <label class="col-2 col-form-label" for="image">Image Link <span style="color: red;">*</span></label>
+                                    <div class="col input-group" ng-class="{'has-danger': adminBlogPostForm.errors.image}">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                                        </span>
+                                        <input class="form-control form-control-danger" type="text" name="image" placeholder="https://www.google.com/image.png" id="image" ng-model="adminBlogPostForm.inputs.image" ng-focus="viewFocusEnter(adminBlogPostForm.views.image)" ng-blur="viewFocusLeave(adminBlogPostForm.views.image)" ng-disabled="adminBlogPostForm.formSubmitted">
+                                    </div>
+                                </div>
+                                <!-- End Image -->
+                                <!-- Begin Short Description -->
+                                <div class="form-group row">
+                                    <label class="col-2 col-form-label" for="shortDescription">Short Description <span style="color: red;">*</span></label>
+                                    <div class="col input-group" ng-class="{'has-danger': adminBlogPostForm.errors.shortDescription}">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-book" aria-hidden="true"></i>
+                                        </span>
+                                        <textarea class="form-control form-control-danger" rows="5" name="shortDescription" placeholder="Insert a short description" id="shortDescription" ng-model="adminBlogPostForm.inputs.shortDescription" ng-focus="viewFocusEnter(adminBlogPostForm.views.shortDescription)" ng-blur="viewFocusLeave(adminBlogPostForm.views.shortDescription)" ng-change="checkTextLength(adminBlogPostForm.views.shortDescription)" ng-disabled="adminBlogPostForm.formSubmitted"></textarea>
+                                    </div>
+                                </div>
+                                <!-- End Short Description -->
+                                <!-- Begin Body -->
+                                <div class="form-group row">
+                                    <label class="col-2 col-form-label" for="email">Body <span style="color: red;">*</span></label>
+                                    <div class="col input-group" ng-class="{'has-danger': adminBlogPostForm.errors.message}">
+                                        <textarea id="blogTextArea" class="form-control" class="w-100" style="min-height: 400px;" ng-model="adminBlogPostForm.inputs.body" ng-disabled="adminBlogPostForm.formSubmitted"></textarea>
+                                    </div>
+                                </div>
+                                <!-- End Body -->
+                                <!-- Begin Post/Save -->
+                                <div class="row">
+                                    <!-- Begin Post -->
+                                    <div class="col text-left">
+                                        <button type="submit" class="btn btn-theme-primary" ng-disabled="adminBlogPostForm.formSubmitted || adminBlogPostForm.errors.isError">Post</button>
+                                    </div>
+                                    <!-- End Post -->
+                                    <!-- Begin Save -->
+                                    <div class="col text-right">
+                                        <button class="btn btn-theme-primary" ng-click="save()">Save</button>
+                                    </div>
+                                    <!-- End Save -->
+                                </div>
+                                <!-- End Post/Save -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- End Blog Insert -->
+                <!-- Begin Saved Blog Posts -->
+                <div class="col animated fadeInUp" ng-if="admin.savedPosts.length > 0" ng-style="adminAnimations[1]">
+                    <div class="card card--dark card-block box-shadow--sm">
+                        <div class="list-group">
+                            <div role="button" class="list-group-item list-group-item--dark admin-saved-post" ng-class="{active: isPostActive(post)}" ng-click="populateForm(post)" ng-repeat="post in admin.savedPosts">
+                                <div class="d-block w-100">
+                                    <h6 class="text-capitalize p-1 m-0"><span class="font-weight-bold">Title:</span> {{post.title}}</h6>
+                                    <h6 class="text-capitalize p-1 m-0"><span class="font-weight-bold">Date Saved:</span> {{post.dateSaved}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Saved Blog Posts -->
+            </div>
+            <!-- End Blog Insert and Saved Blog Posts -->
+        </div>
+        <!-- End Page Fully Loaded With No Errors -->
+    </div>
+    <!-- End Container -->
+</section>
+<!-- End Admin Page -->

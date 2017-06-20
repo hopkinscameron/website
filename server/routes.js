@@ -292,6 +292,23 @@ router.get('/api/contact', function (req, res, next) {
 	});
 });
 
+// GET admin page information
+// format /api/admin
+router.get('/api/admin', function (req, res, next) {
+	// TODO: check for permissions
+	fs.readFile("./server/data/savedBlogPosts.json", 'utf8', function (err, data) {
+		// if no error 
+		if(!err) {
+			// send data
+			res.end( data );
+		}
+		else {
+			// send internal error
+			res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+		}
+	});
+});
+
 // GET image file in root directory
 // format /images/:imageID
 router.get('/images/:imageID', function (req, res, next) {
@@ -437,6 +454,88 @@ router.post('/api/sendEmail', function (req, res, next) {
 			// return success
 			res.status(200).send({ title: "Success!", message: "Your email has been sent!" });
 		});		
+	}
+});
+
+// POST login
+// format /api/login
+router.post('/api/login', function (req, res, next) {
+	// validate existence
+	req.checkBody('username', 'Username is required').notEmpty();
+	req.checkBody('password', 'Password is required').notEmpty();
+	
+	// validate errors
+	var errors = req.validationErrors();
+
+	// if errors exist
+	if (errors) {
+		var errorText = "";
+		for(var x = 0; x < errors.length; x++) {
+			errorText += errors[x].msg + " ";
+		}
+		// send bad request
+		res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
+	}
+	else {
+		// TODO: attempt to login
+
+		// return success
+		res.status(200).send({ title: "Success!", message: "You have logged in successfully!" });
+	}
+});
+
+// POST save blog
+// format /api/saveBlog
+router.post('/api/saveBlog', function (req, res, next) {
+	// validate existence
+	req.checkBody('title', 'Title is required').notEmpty();
+	
+	// validate errors
+	var errors = req.validationErrors();
+
+	// if errors exist
+	if (errors) {
+		var errorText = "";
+		for(var x = 0; x < errors.length; x++) {
+			errorText += errors[x].msg + " ";
+		}
+		// send bad request
+		res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
+	}
+	else {
+		// TODO: save blog
+
+		// return success
+		res.status(200).send({ title: "Success!", message: "You have saved the blog successfully!" });
+	}
+});
+
+// POST post blog
+// format /api/postBlog
+router.post('/api/postBlog', function (req, res, next) {
+	// validate existence
+	req.checkBody('title', 'Title is required').notEmpty();
+	req.checkBody('image', 'Image is required').notEmpty();
+	req.checkBody('shortDescription', 'Short Description is required').notEmpty();
+	req.checkBody('body', 'Body is required').notEmpty();
+	
+	// validate errors
+	var errors = req.validationErrors();
+
+	// if errors exist
+	if (errors) {
+		var errorText = "";
+		for(var x = 0; x < errors.length; x++) {
+			errorText += errors[x].msg + " ";
+		}
+		// send bad request
+		res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
+	}
+	else {
+		// TODO: post blog
+
+		// return success
+		res.status(200).send({ title: "Success!", message: "You have posted the blog successfully!" });
 	}
 });
 

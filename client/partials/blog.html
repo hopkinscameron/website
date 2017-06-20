@@ -20,7 +20,7 @@
                 <div class="col-md-9">
                     <!-- Begin Posts -->
                     <div class="animated fadeInUp" ng-class="{'mb-5': $index < blog.posts.length - 1}" ng-style="blogAnimations[$index]" ng-repeat="post in blog.posts">
-                        <div class="card card--dark card-block box-shadow--small">
+                        <div class="card card--dark card-block box-shadow--sm">
                             <!-- Begin Image -->
                             <a class="decoration--never" ng-href="#/blog/post/{{post.url}}" ng-if="post.image.length > 0">
                                 <div class="img--md" style="background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.15) 100%), url({{post.image}}); background-size: cover; background-position: center center; background-repeat: no-repeat;"></div>
@@ -72,7 +72,7 @@
                 <!-- End Posts -->
                 <!-- Begin Filters -->
                 <div class="col">
-                    <div class="card card--dark card-block box-shadow--small">
+                    <div class="card card--dark card-block box-shadow--sm">
                         <!-- Begin Search Filter -->
                         <div class="input-group" ng-class="{'mb-3': blog.filters.length > 0}">
                             <input type="text" class="form-control" placeholder="Search for..." ng-model="searchText.query">

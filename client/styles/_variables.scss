@@ -41,7 +41,8 @@ $animation-delay--xxxl: 12s;
 
 /* Begin Body Variables */
 $body-padding-top: 90px;
-$body-min-height: 90px;
+$body-min-height: 400px;
+$body-main-min-height: 400px;
 /* End Body Variables */
 
 /* Begin Border Sizes Variables */
@@ -60,6 +61,14 @@ $border-radius-md: $border-radius-base * 2;
 $border-radius-lg: $border-radius-base * 4;
 $border-radius-xl: $border-radius-base * 8;
 /* End Border Sizes Variables */
+
+/* Begin Box Shadow Sizes */
+$box-shadow-xs: 6.25px;
+$box-shadow-sm: 12.5px;
+$box-shadow-md: 25px;
+$box-shadow-lg: 50px;
+$box-shadow-xl: 75px;
+/* End Box Shadow Sizes */
 
 /* Begin Colors */
 $brand-theme-main: #29a8d6;

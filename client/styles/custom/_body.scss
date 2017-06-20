@@ -20,6 +20,10 @@ body {
 	border: 0;
     padding-top: $body-padding-top; 
     min-height: $body-min-height;
+
+    & > #main {
+        min-height: $body-main-min-height;
+    }
 }
 .body-home {
     padding-top: 0; 

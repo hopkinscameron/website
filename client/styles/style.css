@@ -18,6 +18,8 @@
 /* End Body Variables */
 /* Begin Border Sizes Variables */
 /* End Border Sizes Variables */
+/* Begin Box Shadow Sizes */
+/* End Box Shadow Sizes */
 /* Begin Colors */
 /* End Colors */
 /* Begin Colors (Theme) */
@@ -4702,7 +4704,9 @@ body {
   padding: 0;
   border: 0;
   padding-top: 90px;
-  min-height: 90px; }
+  min-height: 400px; }
+  body > #main {
+    min-height: 400px; }
 
 .body-home {
   padding-top: 0; }
@@ -4713,14 +4717,30 @@ body {
 
 /* End Custom Body Styles */
 /* Begin Custom Box Shadows */
-.box-shadow--small {
+.box-shadow--xs {
+  box-shadow: 0 0 6.25px #2C3035, 0 0 6.25px #899F99; }
+  .box-shadow--xs.box-shadow--primary {
+    box-shadow: 0 0 6.25px #29a8d6, 0 0 6.25px #54b9de; }
+
+.box-shadow--sm {
   box-shadow: 0 0 12.5px #2C3035, 0 0 12.5px #899F99; }
+  .box-shadow--sm.box-shadow--primary {
+    box-shadow: 0 0 12.5px #29a8d6, 0 0 12.5px #54b9de; }
 
-.box-shadow--medium {
+.box-shadow--md {
   box-shadow: 0 0 25px #2C3035, 0 0 25px #899F99; }
+  .box-shadow--md.box-shadow--primary {
+    box-shadow: 0 0 25px #29a8d6, 0 0 25px #54b9de; }
 
-.box-shadow--large {
+.box-shadow--lg {
   box-shadow: 0 0 50px #2C3035, 0 0 50px #899F99; }
+  .box-shadow--lg.box-shadow--primary {
+    box-shadow: 0 0 50px #29a8d6, 0 0 50px #54b9de; }
+
+.box-shadow--xl {
+  box-shadow: 0 0 75px #2C3035, 0 0 75px #899F99; }
+  .box-shadow--xl.box-shadow--primary {
+    box-shadow: 0 0 75px #29a8d6, 0 0 75px #54b9de; }
 
 /* End Custom Box Shadows */
 /* Begin Custom Buttons */
@@ -4798,11 +4818,17 @@ body {
 
 /* End Custom Footer Styles */
 /* Begin Forms */
+.form-control:focus {
+  border: 1px solid #29a8d6; }
+
 .form-character-count {
   text-align: right;
   font-size: x-small;
   width: 100%;
   margin: 0px; }
+
+.form-login {
+  min-height: 400px; }
 
 /* End Forms */
 /* Begin Custom List Groups */

@@ -150,5 +150,49 @@
         });
     };
 
+    // login
+    service.login = function (loginData) {
+        // login
+        return DataAccessService.login(loginData).then(function (responseL) {
+            return responseL.data;
+        })
+        .catch(function (responseL) {
+            return { "error": true, "title": responseL.data.title, "status": responseL.status, "message": responseL.data.message };
+        });
+    };
+
+    // get admin page data
+    service.getAdminPageData = function () {
+        // access the admin information
+        return DataAccessService.getAdminPageInformation().then(function (responseA) {
+            return responseA.data;
+        })
+        .catch(function (responseA) {
+            return { "error": true, "title": responseA.data.title, "status": responseA.status, "message": responseA.data.message };
+        });
+    };
+
+    // save blog post
+    service.saveBlog = function (blogPostData) {
+        // save blog post
+        return DataAccessService.saveBlog(blogPostData).then(function (responseSB) {
+            return responseSB.data;
+        })
+        .catch(function (responseSB) {
+            return { "error": true, "title": responseSB.data.title, "status": responseSB.status, "message": responseSB.data.message };
+        });
+    };
+
+    // post blog
+    service.postBlog = function (blogPostData) {
+        // post blog
+        return DataAccessService.postBlog(blogPostData).then(function (responsePB) {
+            return responsePB.data;
+        })
+        .catch(function (responsePB) {
+            return { "error": true, "title": responsePB.data.title, "status": responsePB.status, "message": responsePB.data.message };
+        });
+    };
+
     return service;
 }]);

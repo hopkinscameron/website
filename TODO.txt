@@ -23,3 +23,16 @@ Blog Post
 Contact
 
 Error
+
+Login
+- Login with credentials
+
+Admin
+- Change form so help text is above and not to the left
+- Add text to save "Saved Posts" in the column
+- Store date/time for "Saved Posts"
+- Change to Date/Time
+- Add functionality that if you click on saved post it will populate
+- When returning the data, sort by last saved
+- Remove icons from input fields
+- Mkae sure textarea attributes work (bold, underline, color, etc.)

@@ -43,8 +43,8 @@
                     <!-- End Content Break -->
                     <div class="card card--transparent card-block">
                         <h4 class="text-capitalize">Contact Me Directly</h4>
-                        <div style="padding-bottom: 24px;" ng-if="!contactForm.errors.error"></div>
-                        <div ng-if="contactForm.errors.error">
+                        <div style="padding-bottom: 24px;" ng-if="!contactForm.errors.isError"></div>
+                        <div ng-if="contactForm.errors.isError">
                             <span style="color: red;">{{contactForm.errors.errorMessage}}</span>
                         </div>
                         <form ng-submit="sendEmail()">
@@ -73,18 +73,18 @@
                                         <span class="input-group-addon">
                                             <i class="fa fa-envelope" aria-hidden="true"></i>
                                         </span>
-                                        <input class="form-control" type="email" name="email" placeholder="example@example.com" id="email" ng-model="contactForm.inputs.email" ng-focus="viewFocusEnter(contactForm.views.email)" ng-blur="viewFocusLeave(contactForm.views.email)" ng-disabled="emailInTransit">
+                                        <input class="form-control form-control-danger" type="email" name="email" placeholder="example@example.com" id="email" ng-model="contactForm.inputs.email" ng-focus="viewFocusEnter(contactForm.views.email)" ng-blur="viewFocusLeave(contactForm.views.email)" ng-disabled="emailInTransit">
                                     </div>
                                 </div>
                                 <!-- End Email -->
                                 <!-- Begin Subject -->
                                 <div class="form-group row">
-                                    <label class="col-2 col-form-label" for="email">Subject <span style="color: red;">*</span></label>
+                                    <label class="col-2 col-form-label" for="subject">Subject <span style="color: red;">*</span></label>
                                     <div class="col input-group" ng-class="{'has-danger': contactForm.errors.subject}">
                                         <span class="input-group-addon">
                                             <i class="fa fa-book" aria-hidden="true"></i>
                                         </span>
-                                        <input class="form-control" type="text" name="subject" placeholder="I love your site!" id="subject" ng-model="contactForm.inputs.subject" ng-focus="viewFocusEnter(contactForm.views.subject)" ng-blur="viewFocusLeave(contactForm.views.subject)" ng-change="checkTextLength(contactForm.views.subject)" ng-disabled="emailInTransit">
+                                        <input class="form-control form-control-danger" type="text" name="subject" placeholder="I love your site!" id="subject" ng-model="contactForm.inputs.subject" ng-focus="viewFocusEnter(contactForm.views.subject)" ng-blur="viewFocusLeave(contactForm.views.subject)" ng-change="checkTextLength(contactForm.views.subject)" ng-disabled="emailInTransit">
                                     </div>
                                 </div>
                                 <!-- End Subject -->
@@ -100,7 +100,7 @@
                                 <!-- Begin Submit -->
                                 <div class="row">
                                     <div class="col text-right">
-                                        <button type="submit" class="btn btn-theme-primary" ng-disabled="emailInTransit">Submit</button>
+                                        <button type="submit" class="btn btn-theme-primary" ng-disabled="emailInTransit || contactForm.errors.isError">Submit</button>
                                     </div>
                                 </div>
                                 <!-- End Submit -->

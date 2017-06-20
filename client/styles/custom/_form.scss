@@ -1,8 +1,16 @@
 /* Begin Forms */
+.form-control {
+    &:focus {
+        border: 1px solid $brand-theme-main;
+    }
+}
 .form-character-count {
     text-align: right;
     font-size: x-small;
     width: 100%;
     margin: 0px;
+}
+.form-login {
+    min-height: $body-min-height;
 }
 /* End Forms */

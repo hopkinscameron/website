@@ -14,6 +14,8 @@
 */
 /* Begin Animation Delay Variables */
 /* End Animation Delay Variables */
+/* Begin Navigation Variables */
+/* End Navigation Variables */
 /* Begin Body Variables */
 /* End Body Variables */
 /* Begin Border Sizes Variables */
@@ -4703,7 +4705,7 @@ body {
   margin: 0;
   padding: 0;
   border: 0;
-  padding-top: 90px;
+  padding-top: 126px;
   min-height: 400px; }
   body > #main {
     min-height: 400px; }
@@ -4846,6 +4848,22 @@ body {
 
 /* End Custom Loading Bar */
 /*@import "mixins";*/
+/* Begin Custom Modal Styles */
+.modal {
+  top: 76px; }
+
+.modal-content--dark {
+  background-color: #747678;
+  border: 1px solid #747678; }
+  .modal-content--dark .modal-header {
+    border-bottom: 1px solid #899F99; }
+  .modal-content--dark .modal-footer {
+    border-top: 1px solid #899F99; }
+  .modal-content--dark .close {
+    color: #F5F7F9;
+    text-shadow: 0 0 0 #F5F7F9; }
+
+/* End Custom Modal Styles */
 /* Begin Custom Navigation Styles */
 nav {
   color: #F5F7F9; }
@@ -4991,9 +5009,8 @@ hr.blog-post-bar {
   display: block;
   height: 1.5px;
   border: 0;
-  border-top: 1.5px solid #C9CAC8;
-  padding: 0;
-  opacity: 0.05; }
+  border-top: 1.5px solid #636c72;
+  padding: 0; }
 
 /* End Custom Page Breaks */
 /* Begin Custom Text Utilities */
@@ -5046,12 +5063,12 @@ hr.blog-post-bar {
     position: absolute;
     content: "";
     width: 100%;
-    height: 1px; }
+    height: 1.5px; }
   .divider > div {
     position: relative;
     background: #636c72;
     content: "";
-    height: 1px;
+    height: 1.5px;
     -webkit-box-flex: 1;
     -ms-flex: 1;
     flex: 1;

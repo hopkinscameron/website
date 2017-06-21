@@ -37,6 +37,43 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
         "id": undefined
     };
 
+    // the confirmation modal
+    $scope.confirmationModal = {
+        "type": "",
+        "title": "",
+        "body": "",
+        "closeAction": ""        
+    };
+
+    // the "save post" modal attributes
+    $scope.savedPostModalAttributes = {
+        "type": "Save",
+        "title": "Successfully Saved!",
+        "body": "You have successfully saved this post.",
+        "closeAction": ""
+    }
+
+    // the "post blog" modal attributes
+    $scope.postBlogModalAttributes = {
+        "type": "Post",
+        "title": "Successful Post!",
+        "body": "You have successfully posted this blog.",
+        "closeAction": "refresh"
+    }
+
+    // when confirmation modal is being closed
+    angular.element('#confirmationModal').on('hidden.bs.modal', function (e) {
+        // if there is an action
+        if($scope.confirmationModal.closeAction == "refresh") {
+            // refresh the page
+            $window.location.reload();
+        }
+        else if($scope.confirmationModal.type == $scope.postBlogModalAttributes.type && $scope.confirmationModal.closeAction == "goToBlog") {
+            // go to blog
+            $window.location.href = "#" + $scope.confirmationModal.newBlogLink;
+        }
+    });
+    
     // determines if the page is fully loaded
     $scope.pageFullyLoaded = false;
 
@@ -91,6 +128,48 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
         cfpLoadingBar.complete();
     };
 
+    // parses date/time
+    $scope.parseDateTime = function (dateTime) {
+        try {
+            // get the time since this date
+            var timeSince = $rootScope.$root.getTimeSince(dateTime);
+
+            // if this post is more than a day old or somehow it's in the future!?!
+            if(timeSince == "" || timeSince.toLowerCase().includes("day") || timeSince.toLowerCase().includes("month") || timeSince.toLowerCase().includes("year")) {
+                // get the locale string format
+                return $rootScope.$root.parseDateTime(dateTime);
+            }
+            
+            return timeSince;
+        }
+        catch (e) {
+            return "";
+        }
+    };
+
+    // checks if post is currently active (populated)
+    $scope.isPostActive = function (savedPost) {
+        // check both ids defined and check equality on ids
+        return savedPost.id && $scope.adminBlogPostForm.id && savedPost.id == $scope.adminBlogPostForm.id
+    };
+
+    // populates form with previously saved data
+    $scope.populateForm = function (savedPost) {
+        // reset all errors
+        $scope.adminBlogPostForm.errors.title = false;
+        $scope.adminBlogPostForm.errors.shortDescription = false;
+        $scope.adminBlogPostForm.errors.body = false;
+        $scope.adminBlogPostForm.errors.isError = false;
+        $scope.adminBlogPostForm.errors.errorMessage = "";
+
+        // populate form
+        $scope.adminBlogPostForm.id = savedPost.id;
+        $scope.adminBlogPostForm.inputs.title = savedPost.title;
+        $scope.adminBlogPostForm.inputs.image = savedPost.image;
+        $scope.adminBlogPostForm.inputs.shortDescription = savedPost.shortDescription;
+        $scope.adminBlogPostForm.inputs.body = savedPost.body;
+    };
+
     // on call event when the focus enters
     $scope.viewFocusEnter = function (viewId) {
         // if entering the title view
@@ -107,56 +186,6 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
         else if (viewId == $scope.adminBlogPostForm.views.body) {
             // reset the error
             $scope.adminBlogPostForm.errors.body = false;
-        }
-    };
-
-    // on call event when the focus leaves
-    $scope.viewFocusLeave = function (viewId) {
-        // if entering the title view
-        if (viewId == $scope.adminBlogPostForm.views.title) {
-            // if user left field blank
-            if ($scope.adminBlogPostForm.inputs.title.length == 0) {
-                // set error
-                $scope.adminBlogPostForm.errors.title = true;
-                $scope.adminBlogPostForm.errors.isError = true;
-            }
-        }
-        // if entering the short description view
-        else if (viewId == $scope.adminBlogPostForm.views.shortDescription) {
-            // if user left field blank
-            if ($scope.adminBlogPostForm.inputs.shortDescription.length == 0) {
-                // set error
-                $scope.adminBlogPostForm.errors.shortDescription = true;
-                $scope.adminBlogPostForm.errors.isError = true;
-            }
-        }
-        // if entering the body view
-        else if (viewId == $scope.adminBlogPostForm.views.body) {
-            // if user left field blank
-            if ($scope.adminBlogPostForm.inputs.body.length == 0) {
-                // set error
-                $scope.adminBlogPostForm.errors.body = true;
-                $scope.adminBlogPostForm.errors.isError = true;
-            }
-        }
-        
-        // check to see if there is an error
-        if ($scope.adminBlogPostForm.errors.title) {
-            // set error
-            $scope.adminBlogPostForm.errors.errorMessage = "You must enter the title";
-        }
-        else if ($scope.adminBlogPostForm.errors.shortDescription) {
-            // set error
-            $scope.adminBlogPostForm.errors.errorMessage = "You must enter a short description";
-        }
-        else if ($scope.adminBlogPostForm.errors.body) {
-            // set error
-            $scope.adminBlogPostForm.errors.errorMessage = "You must enter a body";
-        }
-        else {
-            // remove error
-            $scope.adminBlogPostForm.errors.errorMessage = "";
-            $scope.adminBlogPostForm.errors.isError = false;
         }
     };
 
@@ -177,29 +206,64 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
             };
 
             // save blog
-            Service.saveBlog(blogPostData).then(function (responseL) {
+            Service.saveBlog(blogPostData).then(function (responseSB) {
                 // if no error
-                if(!responseL.error) {
-                    // show confirmation screen
+                if(!responseSB.error) {
+                    // update saved post list
+                    Service.getAdminPageData().then(function (responseA) {
+                        // if returned a valid response
+                        if (!responseA.error) {
+                            // set the data
+                            $scope.admin = responseA;
+
+                            // enable button showing the form has been saved
+                            $scope.adminBlogPostForm.formSubmitted = false;
+
+                            // set modal details
+                            $scope.confirmationModal.type = $scope.savedPostModalAttributes.type;
+                            $scope.confirmationModal.title = $scope.savedPostModalAttributes.title;
+                            $scope.confirmationModal.body = $scope.savedPostModalAttributes.body;
+                            $scope.confirmationModal.closeAction = $scope.savedPostModalAttributes.closeAction;
+
+                            // show confirmation modal
+                            angular.element('#confirmationModal').modal('toggle');
+                        }
+                        else {
+                            // set error
+                            $scope.pageTitle = responseA.title;
+                            $scope.error.error = true;
+                            $scope.error.title = responseA.title;
+                            $scope.error.status = responseA.status;
+                            $scope.error.message = responseA.message;
+                        }
+                    })
+                    .catch(function (responseA) {
+                        // set error
+                        $scope.pageTitle = responseA.title;
+                        $scope.error.error = true;
+                        $scope.error.title = responseA.title;
+                        $scope.error.status = responseA.status;
+                        $scope.error.message = responseA.message;
+                    });
                 }
                 else {
                     // show error
-                    $scope.adminBlogPostForm.errors.errorMessage = responseL.message;
+                    $scope.adminBlogPostForm.errors.errorMessage = responseSB.message;
                     $scope.adminBlogPostForm.errors.isError = true;
                     $scope.adminBlogPostForm.formSubmitted = false;
                 }
             })
-            .catch(function (responseL) {
+            .catch(function (responseSB) {
                 // show error
-                $scope.adminBlogPostForm.errors.errorMessage = responseL.message;
+                $scope.adminBlogPostForm.errors.errorMessage = responseSB.message;
                 $scope.adminBlogPostForm.errors.isError = true;
                 $scope.adminBlogPostForm.formSubmitted = false;
             });
         }
         else {
-            $scope.adminBlogPostForm.error.title = true;
-            $scope.adminBlogPostForm.error.isError = true;
-            $scope.adminBlogPostForm.error.message = "You must have a title before saving";
+            $scope.adminBlogPostForm.errors.title = true;
+            $scope.adminBlogPostForm.errors.isError = true;
+            $scope.adminBlogPostForm.errors.errorMessage = "You must have a title before saving";
         }
     };
 
@@ -223,21 +287,29 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
             };
 
             // post blog
-            Service.postBlog(blogPostData).then(function (responseL) {
+            Service.postBlog(blogPostData).then(function (responsePB) {
                 // if no error
-                if(!responseL.error) {
-                    // show confirmation screen
+                if(!responsePB.error) {
+                    // set modal details
+                    $scope.confirmationModal.type = $scope.postBlogModalAttributes.type;
+                    $scope.confirmationModal.title = $scope.postBlogModalAttributes.title;
+                    $scope.confirmationModal.body = $scope.postBlogModalAttributes.body;
+                    $scope.confirmationModal.closeAction = $scope.postBlogModalAttributes.closeAction;
+                    $scope.confirmationModal.newBlogLink = "/blog/post/" + responsePB.newBlogLink;
+
+                    // show confirmation modal
+                    angular.element('#confirmationModal').modal('toggle');
                 }
                 else {
                     // show error
-                    $scope.adminBlogPostForm.errors.errorMessage = responseL.message;
+                    $scope.adminBlogPostForm.errors.errorMessage = responsePB.message;
                     $scope.adminBlogPostForm.errors.isError = true;
                     $scope.adminBlogPostForm.formSubmitted = false;
                 }
             })
-            .catch(function (responseL) {
+            .catch(function (responsePB) {
                 // show error
-                $scope.adminBlogPostForm.errors.errorMessage = responseL.message;
+                $scope.adminBlogPostForm.errors.errorMessage = responsePB.message;
                 $scope.adminBlogPostForm.errors.isError = true;
                 $scope.adminBlogPostForm.formSubmitted = false;
             });

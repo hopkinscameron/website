@@ -299,8 +299,23 @@ router.get('/api/admin', function (req, res, next) {
 	fs.readFile("./server/data/savedBlogPosts.json", 'utf8', function (err, data) {
 		// if no error 
 		if(!err) {
-			// send data
-			res.end( data );
+			try {
+				// parse the json data
+				var parsedJson = JSON.parse(data);
+
+				// sort the data by date
+				parsedJson.savedPosts = sortSavedBlogs(parsedJson.savedPosts);
+
+				// stringify back
+				data = JSON.stringify(parsedJson);
+
+				// send data
+				res.end( data );
+			}
+			catch (err) {
+				// send internal error
+				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+			}
 		}
 		else {
 			// send internal error
@@ -535,7 +550,7 @@ router.post('/api/postBlog', function (req, res, next) {
 		// TODO: post blog
 
 		// return success
-		res.status(200).send({ title: "Success!", message: "You have posted the blog successfully!" });
+		res.status(200).send({ title: "Success!", message: "You have posted the blog successfully!", newBlogLink: "sed-justo-pellentesque-viverra-pede-ac-diam-cras"});
 	}
 });
 
@@ -624,6 +639,9 @@ function getBlogData (data, filter, pageNumber) {
 				jsonParse.posts = applyFilter(jsonParse.posts, filter);
 			}
 
+			// sort by date published
+			jsonParse.posts = sortPublishedBlogs(jsonParse.posts);
+
 			// total pages
 			var totalPages = Math.ceil(jsonParse.posts.length/itemsPerPage);
 
@@ -701,6 +719,60 @@ function getBlogPost(data, postID) {
 	}
 	
 	return undefined;
+};
+
+// sorts the published blogs by date (decending order)
+function sortPublishedBlogs(blogs) {
+	// sort
+	blogs.sort(function(a, b) {
+		try {
+			var dateA = new Date(a.datePublished);
+			var dateB = new Date(b.datePublished);
+
+			// compare date equality
+			if (dateA > dateB) {
+				return -1;
+			}
+			if (dateA < dateB) {
+				return 1;
+			}
+		}
+		catch (err) {
+			return -1;
+		}
+
+		// order must be equal
+		return 0;
+	});
+	
+	return blogs;
+};
+
+// sorts the saved blogs by date (decending order)
+function sortSavedBlogs(blogs) {
+	// sort
+	blogs.sort(function(a, b) {
+		try {
+			var dateA = new Date(a.dateSaved);
+			var dateB = new Date(b.dateSaved);
+
+			// compare date equality
+			if (dateA > dateB) {
+				return -1;
+			}
+			if (dateA < dateB) {
+				return 1;
+			}
+		}
+		catch (err) {
+			return -1;
+		}
+
+		// order must be equal
+		return 0;
+	});
+	
+	return blogs;
 };
 
 module.exports = router;

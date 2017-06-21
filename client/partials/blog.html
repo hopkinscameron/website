@@ -32,9 +32,13 @@
                             <!-- Begin Title -->
                             <h4 class="card-title">{{post.title}}</h4>
                             <!-- End Title -->
-                            <!-- Begin Content Break -->
-                            <hr class="blog-post-bar mt-5 mb-5" />
-                            <!-- End Content Break -->
+                            <!-- Begin Publish Date -->
+                            <div class="text-center mt-5 mb-5 divider">
+                                <div></div>
+                                <span class="card-text font-italic text-muted">Publish on: {{$root.parseDateTime(post.datePublished)}}</span>
+                                <div></div>
+                            </div>
+                            <!-- End Publish Date -->
                             <!-- Begin Short Body -->
                             <p class="card-text blog-limit-desc">{{post.shortDescription}}</p>
                             <!-- End Short Body -->

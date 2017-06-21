@@ -2,7 +2,7 @@
 #loading-bar {
     & .bar {
         background: $brand-theme-main;
-        top: 76px;
+        top: $navbar-height;
     }
 }
 /* End Custom Loading Bar */

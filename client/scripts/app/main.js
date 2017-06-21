@@ -1,5 +1,5 @@
 ﻿// set up the application
-var app = angular.module("app", ['ngRoute', 'ngSanitize', 'ngAnimate', 'angular-loading-bar'])
+var app = angular.module("app", ['ngRoute', 'ngSanitize', 'ngAnimate', 'angular-loading-bar', 'ui.tinymce'])
     .filter('trustUrl', function ($sce) {
     return function (url) {
         return $sce.trustAsResourceUrl(url);

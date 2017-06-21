@@ -23,7 +23,7 @@
                     <!-- Begin Publish Date -->
                     <div class="text-center mt-4 mb-4 divider">
                         <div></div>
-                        <span class="card-text font-italic text-muted">Publish on: {{post.datePublished}}</span>
+                        <span class="card-text font-italic text-muted">Publish on: {{$root.parseDateTime(post.datePublished)}}</span>
                         <div></div>
                     </div>
                     <!-- End Publish Date -->

@@ -39,8 +39,12 @@ $animation-delay--xxl: 8s;
 $animation-delay--xxxl: 12s;
 /* End Animation Delay Variables */
 
+/* Begin Navigation Variables */
+$navbar-height: 76px;
+/* End Navigation Variables */
+
 /* Begin Body Variables */
-$body-padding-top: 90px;
+$body-padding-top: $navbar-height + 50px;
 $body-min-height: 400px;
 $body-main-min-height: 400px;
 /* End Body Variables */
@@ -197,7 +201,6 @@ $font-family-mono:      "Operator", "OCR A Std", "Fira Code", "Hack", Consolas, 
 $font-weight-light:       200;
 
 $headings-font-weight:    400; // Weight for headers
-
 
 $link-color:            $color-blue-accent;
 $link-hover-color:      darken($link-color, 8%);

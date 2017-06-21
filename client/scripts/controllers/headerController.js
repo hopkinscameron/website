@@ -36,6 +36,100 @@ angular.module('app').controller('headerController', ['$scope', '$rootScope', '$
         return false;
     };
 
+    // get time since comment
+    $rootScope.$root.getTimeSince = function(dateToCheck) {
+        var now = new Date();
+        var dateToCheck = new Date(dateToCheck);
+
+        // get the time difference
+        var diff = Math.floor(now.getTime() - dateToCheck.getTime());
+
+        // if invalid
+        if(diff < 0) {
+            return "";
+        }
+
+        var secs = Math.floor(diff/1000);
+        var mins = Math.floor(secs/60); // seconds in a minute
+        var hours = Math.floor(secs/3600); // seconds in an hour
+        var days = Math.floor(secs/86400); // seconds in a day
+        var months = Math.floor(secs/2592000); // seconds in a month
+        var years = Math.floor(secs/31536000); // seconds in a year
+
+        // holds the time message
+        var timeSince = ""; 
+
+        // if less than a day ago
+        if(days <= 0){
+            // if less than an hour ago
+            if(hours <= 0) {
+                // if less than a minute ago
+                if(mins <= 0) {
+                    // if a second
+                    if(secs == 1) {
+                        timeSince = secs + " second ago";
+                    }
+                    else {
+                        timeSince = secs + " seconds ago";
+                    }
+                }
+                else {
+                    // if a minute
+                    if(mins == 1) {
+                        timeSince = mins + " minute ago";
+                    }
+                    else {
+                        timeSince = mins + " minutes ago";
+                    }
+                }
+            }
+            else {
+                // if an hour
+                if(hours == 1) {
+                    timeSince = hours + " hour ago";
+                }
+                else {
+                    timeSince = hours + " hours ago";
+                }
+            }
+        }
+        else {
+            // if less than a year ago
+            if(years <= 0){
+                // if less than a month ago
+                if(months <= 0) {
+                    // if a day
+                    if(days == 1) {
+                        timeSince = days + " day ago";
+                    }
+                    else {
+                        timeSince = days + " days ago";
+                    }
+                }
+                else {
+                    // if a month
+                    if(months == 1) {
+                        timeSince = months + " month ago";
+                    }
+                    else {
+                        timeSince = months + " months ago";
+                    }
+                }
+            }
+            else {
+                // if a year
+                if(years == 1) {
+                    timeSince = years + " year ago";
+                }
+                else {
+                    timeSince = years + " years ago";
+                }
+            }
+        }
+
+        return timeSince;
+    };
+
     // initialize variables
     function initializeVariables () {
         // set jQuery
@@ -49,6 +143,44 @@ angular.module('app').controller('headerController', ['$scope', '$rootScope', '$
         
         // initialize show header
         $rootScope.$root.showHeader = false;
+
+        // parses date/time
+        $rootScope.$root.parseDateTime = function (dateTime) {
+            try {
+                // get the locale string format
+                var formatted = new Date(dateTime).toLocaleString().replace(/:\d{2}\s/,' ');
+                return formatted;
+            }
+            catch (e) {
+                return "";
+            }
+        };
+
+        // tinyMCE options
+        $rootScope.$root.tinymceOptions = {
+            setup: function(editor) {           
+                editor.on("init", function() {
+                    
+                });
+                editor.on("click", function() {
+                    
+                });
+            },
+            onChange: function(e) {
+                // put logic here for keypress and cut/paste changes 
+            },
+            inline: false,
+            plugins : [
+                'advlist autolink lists link image charmap preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars code fullscreen',
+                'insertdatetime media nonbreaking save table contextmenu directionality',
+                'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+            ],
+            toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            toolbar2: 'preview media | forecolor backcolor emoticons | codesample',
+            skin: 'lightgray',
+            theme : 'modern'
+        };
 
         // holds the header backend data
         $scope.header = {};

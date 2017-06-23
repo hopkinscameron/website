@@ -292,7 +292,7 @@
     // login
     service.login = function (loginData) {
         // set the endpoint
-        var endpoint = "/api/login";
+        var endpoint = "/login";
 
         // stringify the login data
         var loginStrigified = JSON.stringify({
@@ -309,6 +309,26 @@
                 'Accept': 'application/json; odata=verbose'
             },
             data: loginStrigified
+        };
+
+        // send request
+        return $http(req);
+    };
+
+    // logout
+    service.logout = function () {
+        // set the endpoint
+        var endpoint = "/logout";
+
+        // create request
+        var req = {
+            method: 'GET',
+            url: endpoint,
+            headers: {
+                'Content-Type': 'application/json; odata=verbose',
+                'Accept': 'application/json; odata=verbose'
+            },
+            data: 'undefined'
         };
 
         // send request

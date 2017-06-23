@@ -52,13 +52,17 @@ app.config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider', func
             templateUrl: './partials/contact.html',
             controller: 'contactController'
         })
+        .when('/admin', {
+            templateUrl: './partials/admin.html',
+            controller: 'adminController'
+        })
         .when('/login', {
             templateUrl: './partials/login.html',
             controller: 'loginController'
         })
-        .when('/admin', {
-            templateUrl: './partials/admin.html',
-            controller: 'adminController'
+        .when('/logout', {
+            templateUrl: './partials/logout.html',
+            controller: 'logoutController'
         })
         .otherwise({
             templateUrl: './partials/error.html',

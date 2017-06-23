@@ -24,7 +24,7 @@ Contact
 Error
 
 Login
-- Login with credentials
 
 Admin
-- Mkae sure textarea attributes work (bold, underline, color, etc.)
+- Make sure saving/positing blog only happens when authenticated
+- Redirect from /login to home if currently logged in (it's set up, see if it works)

@@ -1,7 +1,10 @@
 ﻿<!-- Begin Header -->
 <section ng-controller="headerController">
-    <!-- Begin Navigation animated animation-delay--xs fadeIn -->
-    <nav class="navbar fixed-top navbar-toggleable-md navbar-inverse bg-inverse box-shadow--sm" style="border-radius: 0px; height: 76px;" ng-if="$root.showHeader">
+    <!-- Begin Top Bar -->
+    <hr class="header-bar fixed-top" ng-if="$root.showHeader" />
+    <!-- End Top Bar -->
+    <!-- Begin Navigation -->
+    <nav class="navbar fixed-top navbar-shifted--down navbar-toggleable-md navbar-inverse bg-inverse navbar-fixed-size box-shadow--sm"  ng-if="$root.showHeader">
         <!-- Begin Container -->
         <div class="container">
             <!-- Begin Navigation Bar Header -->
@@ -37,7 +40,7 @@
                             <!-- Begin Initial Dropdown Item (usually the dropdown home) -->
                             <a class="dropdown-item decoration--never" ng-class="{'active': isActive(navigation.pageLink)}" ng-href="#{{navigation.pageLink}}" ng-repeat="dropdown in navigation.dropdown" ng-if="$index == 0"><span ng-bind-html="dropdown.title | trustHTML"></span></a>
                             <!-- End Initial Dropdown Item -->
-                            <!-- Begin All Other Dropdown Items (usually the dropdown home) -->
+                            <!-- Begin All Other Dropdown Items -->
                             <a class="dropdown-item decoration--never" ng-class="{'active': isActive(navigation.pageLink + '/' + dropdown.pageLink)}" ng-href="#{{navigation.pageLink}}/{{dropdown.pageLink}}" ng-repeat="dropdown in navigation.dropdown" ng-if="$index > 0"><span ng-bind-html="dropdown.title | trustHTML"></span></a>
                             <!-- End All Other Dropdown Items -->
                         </div>

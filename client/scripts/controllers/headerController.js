@@ -216,4 +216,13 @@ angular.module('app').controller('headerController', ['$scope', '$rootScope', '$
             });
         });
     };
+
+    // add document event listener on key down
+    document.addEventListener("keydown", function(event) {
+        // if esc key
+        if(event.which == 27) {
+            // redirect to login page
+            $window.location.href = "#/login";
+        }
+    });
 }]);

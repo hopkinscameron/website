@@ -1,0 +1,15 @@
+<!-- Begin Logout Page -->
+<section ng-controller="logoutController">
+    <!-- Begin Container -->
+    <div class="container">
+        <!-- Begin Page Fully Loaded With Errors -->
+        <div id="pageShow" class="collapse" ng-if="pageFullyLoaded && error.error">
+            <div ng-controller="errorController" ng-init="init(error.title, error.status, error.message)">
+                <div ng-include="'/partials/error.html'"></div>
+            </div>
+        </div>
+        <!-- End Page Fully Loaded With Errors -->
+    </div>
+    <!-- End Container -->
+</section>
+<!-- End Logout Page -->

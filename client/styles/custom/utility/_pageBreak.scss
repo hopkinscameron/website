@@ -2,26 +2,27 @@
 hr {
     &.header-bar {
         display: block;
-        height: 7px;
+        height: $page-break-header-height;
         border: 0;
-        border-top: 7px solid $brand-theme-main;
-        margin: 1em 0;
+        border-top: $page-break-header-height solid $brand-theme-main;
+        margin: 0;
         padding: 0;
+        z-index: 1031;
     }
     &.body-bar {
         width: 100%;
         display: block;
-        height: 3px;
+        height: $page-break-body-height;
         border: 0;
-        border-top: 3px solid $brand-theme-main;
+        border-top: $page-break-body-height solid $brand-theme-main;
         padding: 0;
     }
     &.blog-post-bar {
         width: 100%;
         display: block;
-        height: 1.5px;
+        height: $page-break-blog-height;
         border: 0;
-        border-top: 1.5px solid $muted;
+        border-top: $page-break-blog-height solid $muted;
         padding: 0;
     }
 }

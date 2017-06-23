@@ -2,7 +2,8 @@
 #loading-bar {
     & .bar {
         background: $brand-theme-main;
-        top: $navbar-height;
+        top: $navbar-bottom;
+        height: $loading-bar-height;
     }
 }
 /* End Custom Loading Bar */

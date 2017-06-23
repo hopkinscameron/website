@@ -69,7 +69,7 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
             $window.location.reload();
         }
         else if($scope.confirmationModal.type == $scope.postBlogModalAttributes.type && $scope.confirmationModal.closeAction == "goToBlog") {
-            // go to blog
+            // redirect to blog
             $window.location.href = "#" + $scope.confirmationModal.newBlogLink;
         }
     });

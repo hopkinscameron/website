@@ -1,17 +1,5 @@
 'use strict';
 
-// the server
-var express = require('express');
-
-// the router
-var router = express.Router();
-
-// the http body parser
-var bodyParser = require('body-parser');
-
-// the http request validator
-var expressValidator = require('express-validator');
-
 // the ability to create requests
 var requestPromise = require('request-promise');
 
@@ -21,27 +9,8 @@ var nodemailer = require('nodemailer');
 // the file system to read/write from/to files locallly
 var fs = require("fs");
 
-// the communication to mongo database
-var mongoose = require('mongoose'),
-	// the scheme for mongoose/mongodb
-    Schema = mongoose.Schema;
-
 // the secrets
 var secrets = require('./secrets');
-
-// db connection string and options
-var options = {
-	db: { native_parser: true },
-	server: { poolSize: 5 },
-	user: secrets.db_user,
-	pass: secrets.db_pass
-}
-
-// Connect to MongoDB and create/use database
-//mongoose.connect(secrets.db)//, options);
-
-// use header/body validation
-router.use(expressValidator());
 
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
@@ -56,144 +25,237 @@ let transporter = nodemailer.createTransport({
 	service: 'Gmail'
 });
 
-/**
- * GET
- */
-// GET app name
-// format /api/appName
-router.get('/api/appName', function (req, res, next) {
-	fs.readFile("./server/data/app-details.json", 'utf8', function (err, data) {
-		// if no error 
-		if(!err) {
-			var appName = "";
+module.exports = function(app, passport) {
+	// =========================================================================
+    // GET =============================================================
+    // =========================================================================
+	// GET app name
+	// format /api/appName
+	app.get('/api/appName', function (req, res) {
+		fs.readFile("./server/data/app-details.json", 'utf8', function (err, data) {
+			// if no error 
+			if(!err) {
+				var appName = "";
 
-			var jsonParse = undefined;
+				var jsonParse = undefined;
 
-			// parse json
-			try {
-				jsonParse = JSON.parse(data);
+				// parse json
+				try {
+					jsonParse = JSON.parse(data);
 
-				// if appname
-				if(jsonParse.appName) {
-					appName = jsonParse.appName;
+					// if appname
+					if(jsonParse.appName) {
+						appName = jsonParse.appName;
+					}
+					else {
+						appName = "Cameron Hopkins";					
+					}
+
+					// send data
+					res.end(JSON.stringify({"appName": appName}));
+				}
+				catch (err) {
+					// send internal error
+					res.status(500).send({ error: true, title: "Something went wrong.", message: "Something went wrong. " + err.message});
+				}
+			}
+			else {
+				// send internal error
+				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+			}
+		});
+	});
+
+	// GET header
+	// format /api/header
+	app.get('/api/header', function (req, res) {
+		var headerFile = "./server/data/header.json";
+		// if user is authenticated in the session get admin header
+		if (req.isAuthenticated()){
+			headerFile = "./server/data/header_admin.json";
+		}
+
+		fs.readFile(headerFile, 'utf8', function (err, data) {
+			// if no error 
+			if(!err) {
+				// send data
+				res.end( data );
+			}
+			else {
+				// send internal error
+				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+			}
+		});
+	});
+
+	// GET footer
+	// format /api/footer
+	app.get('/api/footer', function (req, res) {
+		fs.readFile("./server/data/footer.json", 'utf8', function (err, data) {
+			// if no error 
+			if(!err) {
+				// send data
+				res.end( data );
+			}
+			else {
+				// send internal error
+				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+			}
+		});
+	});
+
+	// GET home page information
+	// format /api/home
+	app.get('/api/home', function (req, res) {
+		fs.readFile("./server/data/home.json", 'utf8', function (err, data) {
+			// if no error 
+			if(!err) {
+				// send data
+				res.end( data );
+			}
+			else {
+				// send internal error
+				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+			}
+		});
+	});
+
+	// GET abou e page information
+	// format /api/about
+	app.get('/api/about', function (req, res) {
+		fs.readFile("./server/data/about-me.json", 'utf8', function (err, data) {
+			// if no error 
+			if(!err) {
+				// send data
+				res.end( data );
+			}
+			else {
+				// send internal error
+				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+			}
+		});
+	});
+
+	// GET resume page information
+	// format /api/resume
+	app.get('/api/resume', function (req, res) {
+		fs.readFile("./server/data/resume.json", 'utf8', function (err, data) {
+			// if no error 
+			if(!err) {
+				// send data
+				res.end( data );
+			}
+			else {
+				// send internal error
+				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+			}
+		});
+	});
+
+	// GET portfolio page information or subportfolio information
+	// format /api/portfolio
+	// format /api/portfolio?id=subPortfolioID
+	app.get('/api/portfolio', function (req, res) {
+		// if query
+		if (req.query.id) {
+			var file = getSubPortfolioFile(req.query.id);
+
+			// if file doesn't exist
+			if(!file) {
+				// send error
+				res.status(404).send({ title: "Page not found.", message: "Project not found." });
+
+				return;
+			}
+
+			// get contents
+			fs.readFile("./server/data/" + file, 'utf8', function (err, data) {
+				// if no error 
+				if(!err) {
+					// send data
+					res.end( data );
 				}
 				else {
-					appName = "Cameron Hopkins";					
+					// send internal error
+					res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+				}
+			});
+		}
+		else {
+			fs.readFile("./server/data/portfolio.json", 'utf8', function (err, data) {
+				// if no error 
+				if(!err) {
+					// send data
+					res.end( data );
+				}
+				else {
+					// send internal error
+					res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+				}
+			});
+		}
+	});
+
+	// GET blog page information
+	// format /api/blog
+	// format /api/blog?q=someQuery
+	// format /api/blog?id=postID
+	app.get('/api/blog', function (req, res) {
+		// if query on id
+		if (req.query.id) {
+			fs.readFile("./server/data/blog.json", 'utf8', function (err, data) {
+				// if err
+				if(err) {
+					res.status(500).send({ error: true, title: "Something went wrong.", message: "Something went wrong. " + err.message });
+					return;
+				}
+
+				// get post
+				var post = getBlogPost(data, req.query.id);
+
+				// if post doesn't exist
+				if(!post) {
+					// send error
+					res.status(404).send({ title: "Page not found.", message: "Blog Post not found." });
+					return;
+				}
+
+				// if err
+				if(post.error) {
+					// send error
+					res.status(500).send({ error: true, title: post.title, message: post.message });
+					return;
 				}
 
 				// send data
-				res.end(JSON.stringify({"appName": appName}));
-			}
-			catch (err) {
-				// send internal error
-				res.status(500).send({ error: true, title: "Something went wrong.", message: "Something went wrong. " + err.message});
-			}
+				res.end( JSON.stringify(post) );
+			});
 		}
 		else {
-			// send internal error
-			res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+			// set page number
+			var pageNumber = req.query.page !== undefined ? req.query.page : 1;
+
+			fs.readFile("./server/data/blog.json", 'utf8', function (err, data) {
+				// if no error 
+				if(!err) {
+					// get blog with filter/page number
+					var blog = getBlogData(data, req.query.q, pageNumber);
+
+					// send data
+					res.end( JSON.stringify(blog) );
+				}
+				else {
+					// send internal error
+					res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+				}
+			});
 		}
 	});
-});
 
-// GET header
-// format /api/header
-router.get('/api/header', function (req, res, next) {
-	fs.readFile("./server/data/header.json", 'utf8', function (err, data) {
-		// if no error 
-		if(!err) {
-			// send data
-			res.end( data );
-		}
-		else {
-			// send internal error
-			res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
-		}
-	});
-});
-
-// GET footer
-// format /api/footer
-router.get('/api/footer', function (req, res, next) {
-	fs.readFile("./server/data/footer.json", 'utf8', function (err, data) {
-		// if no error 
-		if(!err) {
-			// send data
-			res.end( data );
-		}
-		else {
-			// send internal error
-			res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
-		}
-	});
-});
-
-// GET home page information
-// format /api/home
-router.get('/api/home', function (req, res, next) {
-	fs.readFile("./server/data/home.json", 'utf8', function (err, data) {
-		// if no error 
-		if(!err) {
-			// send data
-			res.end( data );
-		}
-		else {
-			// send internal error
-			res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
-		}
-	});
-});
-
-// GET abou e page information
-// format /api/about
-router.get('/api/about', function (req, res, next) {
-	fs.readFile("./server/data/about-me.json", 'utf8', function (err, data) {
-		// if no error 
-		if(!err) {
-			// send data
-			res.end( data );
-		}
-		else {
-			// send internal error
-			res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
-		}
-	});
-});
-
-// GET resume page information
-// format /api/resume
-router.get('/api/resume', function (req, res, next) {
-	fs.readFile("./server/data/resume.json", 'utf8', function (err, data) {
-		// if no error 
-		if(!err) {
-			// send data
-			res.end( data );
-		}
-		else {
-			// send internal error
-			res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
-		}
-	});
-});
-
-// GET portfolio page information or subportfolio information
-// format /api/portfolio
-// format /api/portfolio?id=subPortfolioID
-router.get('/api/portfolio', function (req, res, next) {
-	// if query
-	if (req.query.id) {
-		var file = getSubPortfolioFile(req.query.id);
-
-		// if file doesn't exist
-		if(!file) {
-			// send error
-			res.status(404).send({ title: "Page not found.", message: "Project not found." });
-
-			return;
-		}
-
-		// get contents
-		fs.readFile("./server/data/" + file, 'utf8', function (err, data) {
+	// GET contact page information
+	// format /api/contact
+	app.get('/api/contact', function (req, res) {
+		fs.readFile("./server/data/contact.json", 'utf8', function (err, data) {
 			// if no error 
 			if(!err) {
 				// send data
@@ -204,409 +266,366 @@ router.get('/api/portfolio', function (req, res, next) {
 				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
 			}
 		});
-	}
-	else {
-		fs.readFile("./server/data/portfolio.json", 'utf8', function (err, data) {
+	});
+
+	// GET admin page information
+	// format /api/admin
+	app.get('/api/admin', isLoggedIn, function (req, res) {
+		fs.readFile("./server/data/savedBlogPosts.json", 'utf8', function (err, data) {
 			// if no error 
 			if(!err) {
-				// send data
-				res.end( data );
+				try {
+					// parse the json data
+					var parsedJson = JSON.parse(data);
+
+					// sort the data by date
+					parsedJson.savedPosts = sortSavedBlogs(parsedJson.savedPosts);
+
+					// stringify back
+					data = JSON.stringify(parsedJson);
+
+					// send data
+					res.end( data );
+				}
+				catch (err) {
+					// send internal error
+					res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+				}
 			}
 			else {
 				// send internal error
 				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
 			}
 		});
-	}
-});
-
-// GET blog page information
-// format /api/blog
-// format /api/blog?q=someQuery
-// format /api/blog?id=postID
-router.get('/api/blog', function (req, res, next) {
-	// if query on id
-	if (req.query.id) {
-		fs.readFile("./server/data/blog.json", 'utf8', function (err, data) {
-			// if err
-			if(err) {
-				res.status(500).send({ error: true, title: "Something went wrong.", message: "Something went wrong. " + err.message });
-				return;
-			}
-
-			// get post
-			var post = getBlogPost(data, req.query.id);
-
-			// if post doesn't exist
-			if(!post) {
-				// send error
-				res.status(404).send({ title: "Page not found.", message: "Blog Post not found." });
-				return;
-			}
-
-			// if err
-			if(post.error) {
-				// send error
-				res.status(500).send({ error: true, title: post.title, message: post.message });
-				return;
-			}
-
-			// send data
-			res.end( JSON.stringify(post) );
-		});
-	}
-	else {
-		// set page number
-		var pageNumber = req.query.page !== undefined ? req.query.page : 1;
-
-		fs.readFile("./server/data/blog.json", 'utf8', function (err, data) {
-			// if no error 
-			if(!err) {
-				// get blog with filter/page number
-				var blog = getBlogData(data, req.query.q, pageNumber);
-
-				// send data
-				res.end( JSON.stringify(blog) );
-			}
-			else {
-				// send internal error
-				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
-			}
-		});
-	}
-});
-
-// GET contact page information
-// format /api/contact
-router.get('/api/contact', function (req, res, next) {
-	fs.readFile("./server/data/contact.json", 'utf8', function (err, data) {
-		// if no error 
-		if(!err) {
-			// send data
-			res.end( data );
-		}
-		else {
-			// send internal error
-			res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
-		}
 	});
-});
 
-// GET admin page information
-// format /api/admin
-router.get('/api/admin', function (req, res, next) {
-	// TODO: check for permissions
-	fs.readFile("./server/data/savedBlogPosts.json", 'utf8', function (err, data) {
-		// if no error 
-		if(!err) {
-			try {
-				// parse the json data
-				var parsedJson = JSON.parse(data);
+	// GET image file in root directory
+	// format /images/:imageID
+	app.get('/images/:imageID', function (req, res) {
+		// TODO: authentication?
 
-				// sort the data by date
-				parsedJson.savedPosts = sortSavedBlogs(parsedJson.savedPosts);
-
-				// stringify back
-				data = JSON.stringify(parsedJson);
-
-				// send data
-				res.end( data );
+		// set options
+		var options = {
+			root: __dirname + '\\images\\',
+			dotfiles: 'deny',
+			headers: {
+				'x-timestamp': Date.now(),
+				'x-sent': true
 			}
-			catch (err) {
-				// send internal error
-				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
-			}
-		}
-		else {
-			// send internal error
-			res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
-		}
-	});
-});
-
-// GET image file in root directory
-// format /images/:imageID
-router.get('/images/:imageID', function (req, res, next) {
-	// TODO: authentication?
-
-	// set options
-	var options = {
-		root: __dirname + '\\images\\',
-		dotfiles: 'deny',
-		headers: {
-			'x-timestamp': Date.now(),
-			'x-sent': true
-		}
-	};
-	
-	// send file
-	res.sendFile(req.params.imageID, options);
-});
-
-// GET image file in option 1 directory
-// format /images/:directoryID_1/:imageID
-router.get('/images/:directoryID_1/:imageID', function (req, res, next) {
-	// TODO: authentication?
-	
-	// set options
-	var options = {
-		root: __dirname + '\\images\\' + req.params.directoryID_1 + '\\',
-		dotfiles: 'deny',
-		headers: {
-			'x-timestamp': Date.now(),
-			'x-sent': true
-		}
-	};
-	
-	// send file
-	res.sendFile(req.params.imageID, options);
-});
-
-// GET image file in option 1 and option 2 directory
-// format /images/:directoryID_1/:directoryID_2/:imageID
-router.get('/images/:directoryID_1/:directoryID_2/:imageID', function (req, res, next) {
-	// TODO: authentication?
-
-	// set options
-	var options = {
-		root: __dirname + '\\images\\' + req.params.directoryID_1 + '\\' + req.params.directoryID_2 + '\\',
-		dotfiles: 'deny',
-		headers: {
-			'x-timestamp': Date.now(),
-			'x-sent': true
-		}
-	};
-	
-	// send file
-	res.sendFile(req.params.imageID, options);
-});
-
-// GET file
-// format /files/:fileID
-router.get('/files/:fileID', function (req, res, next) {
-	// TODO: authentication?
-	
-	// set options
-	var options = {
-		root: __dirname + '\\files\\',
-		dotfiles: 'deny',
-		headers: {
-			'x-timestamp': Date.now(),
-			'x-sent': true
-		}
-	};
-
-	// send file
-	res.sendFile(req.params.fileID, options);
-});
-
-// GET file in option 1 directory
-// format /files/:directoryID_1/:fileID
-router.get('/files/:directoryID_1/:fileID', function (req, res, next) {
-	// TODO: authentication?
-	
-	// set options
-	var options = {
-		root: __dirname + '\\files\\' + req.params.directoryID_1 + '\\',
-		dotfiles: 'deny',
-		headers: {
-			'x-timestamp': Date.now(),
-			'x-sent': true
-		}
-	};
-	
-	// send file
-	res.sendFile(req.params.fileID, options);
-});
-
-/**
- * POST
- */
-// POST send email
-// format /api/sendEmail
-router.post('/api/sendEmail', function (req, res, next) {
-	//https://script.google.com/macros/s/secrets.google_send_email_script_key/exec
-
-	// validate existence
-	req.checkBody('firstName', 'First name is required').notEmpty();
-	req.checkBody('lastName', 'Last name is required').notEmpty();
-	req.checkBody('email', 'Email is required').notEmpty();
-	req.checkBody('subject', 'Subject is required').notEmpty();
-	req.checkBody('message', 'Message is required').notEmpty();
-	
-	// validate errors
-	var errors = req.validationErrors();
-
-	// if errors exist
-	if (errors) {
-		var errorText = "";
-		for(var x = 0; x < errors.length; x++) {
-			errorText += errors[x].msg + " ";
-		}
-		// send bad request
-		res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
-	}
-	else {
-		var fromString = req.body.firstName + " " + req.body.lastName + "<" + req.body.email + ">";
+		};
 		
-		// setup email data with unicode symbols
-		let mailOptions = {
-			from: fromString, // sender address
-			to: secrets.personal_email, // list of receivers
-			subject: req.body.subject, // Subject line
-			text: req.body.message, // plain text body
-			html: '<p>' + req.body.message + '</p>' // html body
+		// send file
+		res.sendFile(req.params.imageID, options);
+	});
+
+	// GET image file in option 1 directory
+	// format /images/:directoryID_1/:imageID
+	app.get('/images/:directoryID_1/:imageID', function (req, res) {
+		// TODO: authentication?
+		
+		// set options
+		var options = {
+			root: __dirname + '\\images\\' + req.params.directoryID_1 + '\\',
+			dotfiles: 'deny',
+			headers: {
+				'x-timestamp': Date.now(),
+				'x-sent': true
+			}
+		};
+		
+		// send file
+		res.sendFile(req.params.imageID, options);
+	});
+
+	// GET image file in option 1 and option 2 directory
+	// format /images/:directoryID_1/:directoryID_2/:imageID
+	app.get('/images/:directoryID_1/:directoryID_2/:imageID', function (req, res) {
+		// TODO: authentication?
+
+		// set options
+		var options = {
+			root: __dirname + '\\images\\' + req.params.directoryID_1 + '\\' + req.params.directoryID_2 + '\\',
+			dotfiles: 'deny',
+			headers: {
+				'x-timestamp': Date.now(),
+				'x-sent': true
+			}
+		};
+		
+		// send file
+		res.sendFile(req.params.imageID, options);
+	});
+
+	// GET file
+	// format /files/:fileID
+	app.get('/files/:fileID', function (req, res) {
+		// TODO: authentication?
+		
+		// set options
+		var options = {
+			root: __dirname + '\\files\\',
+			dotfiles: 'deny',
+			headers: {
+				'x-timestamp': Date.now(),
+				'x-sent': true
+			}
 		};
 
-		// send mail with defined transport object
-		transporter.sendMail(mailOptions, (error, info) => {
-			// if an internal error occured
-			if (error) {
-				// send internal error
-				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+		// send file
+		res.sendFile(req.params.fileID, options);
+	});
+
+	// GET file in option 1 directory
+	// format /files/:directoryID_1/:fileID
+	app.get('/files/:directoryID_1/:fileID', function (req, res) {
+		// TODO: authentication?
+		
+		// set options
+		var options = {
+			root: __dirname + '\\files\\' + req.params.directoryID_1 + '\\',
+			dotfiles: 'deny',
+			headers: {
+				'x-timestamp': Date.now(),
+				'x-sent': true
 			}
+		};
+		
+		// send file
+		res.sendFile(req.params.fileID, options);
+	});
+
+	// GET login page requested
+	// format /login
+	app.get('/login', !isLoggedIn, function(req, res) {
+		// logout and remove from database
+		req.logout();
+		req.session = null;
+
+		// return success
+		res.status(200).send({ title: "Success!", message: "You have successfully logged out!" });
+	});
+
+	// GET logout the user
+	// format /logout
+	app.get('/logout', function(req, res) {
+		// logout and remove from database
+		req.logout();
+		req.session = null;
+
+		// return success
+		res.status(200).send({ title: "Success!", message: "You have successfully logged out!" });
+	});
+
+	// =========================================================================
+    // POST =============================================================
+    // =========================================================================
+	// POST send email
+	// format /api/sendEmail
+	app.post('/api/sendEmail', function (req, res) {
+		//https://script.google.com/macros/s/secrets.google_send_email_script_key/exec
+
+		// validate existence
+		req.checkBody('firstName', 'First name is required').notEmpty();
+		req.checkBody('lastName', 'Last name is required').notEmpty();
+		req.checkBody('email', 'Email is required').notEmpty();
+		req.checkBody('subject', 'Subject is required').notEmpty();
+		req.checkBody('message', 'Message is required').notEmpty();
+		
+		// validate errors
+		var errors = req.validationErrors();
+
+		// if errors exist
+		if (errors) {
+			var errorText = "";
+			for(var x = 0; x < errors.length; x++) {
+				errorText += errors[x].msg + " ";
+			}
+			// send bad request
+			res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
+		}
+		else {
+			var fromString = req.body.firstName + " " + req.body.lastName + "<" + req.body.email + ">";
+			
+			// setup email data with unicode symbols
+			let mailOptions = {
+				from: fromString, // sender address
+				to: secrets.personal_email, // list of receivers
+				subject: req.body.subject, // Subject line
+				text: req.body.message, // plain text body
+				html: '<p>' + req.body.message + '</p>' // html body
+			};
+
+			// send mail with defined transport object
+			transporter.sendMail(mailOptions, (error, info) => {
+				// if an internal error occured
+				if (error) {
+					// send internal error
+					res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+				}
+
+				// return success
+				res.status(200).send({ title: "Success!", message: "Your email has been sent!" });
+			});		
+		}
+	});
+
+	// POST save blog
+	// format /api/saveBlog
+	app.post('/api/saveBlog', isLoggedIn, function (req, res) {
+		// validate existence
+		req.checkBody('title', 'Title is required').notEmpty();
+		
+		// validate errors
+		var errors = req.validationErrors();
+
+		// if errors exist
+		if (errors) {
+			var errorText = "";
+			for(var x = 0; x < errors.length; x++) {
+				errorText += errors[x].msg + " ";
+			}
+			// send bad request
+			res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
+		}
+		else {
+			// TODO: save blog
 
 			// return success
-			res.status(200).send({ title: "Success!", message: "Your email has been sent!" });
-		});		
-	}
-});
-
-// POST login
-// format /api/login
-router.post('/api/login', function (req, res, next) {
-	// validate existence
-	req.checkBody('username', 'Username is required').notEmpty();
-	req.checkBody('password', 'Password is required').notEmpty();
-	
-	// validate errors
-	var errors = req.validationErrors();
-
-	// if errors exist
-	if (errors) {
-		var errorText = "";
-		for(var x = 0; x < errors.length; x++) {
-			errorText += errors[x].msg + " ";
+			res.status(200).send({ title: "Success!", message: "You have saved the blog successfully!" });
 		}
-		// send bad request
-		res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
-	}
-	else {
-		// TODO: attempt to login
+	});
 
-		// return success
-		res.status(200).send({ title: "Success!", message: "You have logged in successfully!" });
-	}
-});
+	// POST post blog
+	// format /api/postBlog
+	app.post('/api/postBlog', isLoggedIn, function (req, res) {
+		// validate existence
+		req.checkBody('title', 'Title is required').notEmpty();
+		req.checkBody('image', 'Image is required').notEmpty();
+		req.checkBody('shortDescription', 'Short Description is required').notEmpty();
+		req.checkBody('body', 'Body is required').notEmpty();
+		
+		// validate errors
+		var errors = req.validationErrors();
 
-// POST save blog
-// format /api/saveBlog
-router.post('/api/saveBlog', function (req, res, next) {
-	// validate existence
-	req.checkBody('title', 'Title is required').notEmpty();
-	
-	// validate errors
-	var errors = req.validationErrors();
-
-	// if errors exist
-	if (errors) {
-		var errorText = "";
-		for(var x = 0; x < errors.length; x++) {
-			errorText += errors[x].msg + " ";
+		// if errors exist
+		if (errors) {
+			var errorText = "";
+			for(var x = 0; x < errors.length; x++) {
+				errorText += errors[x].msg + " ";
+			}
+			// send bad request
+			res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
 		}
-		// send bad request
-		res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
-	}
-	else {
-		// TODO: save blog
+		else {
+			// TODO: post blog
 
-		// return success
-		res.status(200).send({ title: "Success!", message: "You have saved the blog successfully!" });
-	}
-});
-
-// POST post blog
-// format /api/postBlog
-router.post('/api/postBlog', function (req, res, next) {
-	// validate existence
-	req.checkBody('title', 'Title is required').notEmpty();
-	req.checkBody('image', 'Image is required').notEmpty();
-	req.checkBody('shortDescription', 'Short Description is required').notEmpty();
-	req.checkBody('body', 'Body is required').notEmpty();
-	
-	// validate errors
-	var errors = req.validationErrors();
-
-	// if errors exist
-	if (errors) {
-		var errorText = "";
-		for(var x = 0; x < errors.length; x++) {
-			errorText += errors[x].msg + " ";
+			// return success
+			res.status(200).send({ title: "Success!", message: "You have posted the blog successfully!", newBlogLink: "sed-justo-pellentesque-viverra-pede-ac-diam-cras"});
 		}
-		// send bad request
-		res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
-	}
-	else {
-		// TODO: post blog
+	});
 
-		// return success
-		res.status(200).send({ title: "Success!", message: "You have posted the blog successfully!", newBlogLink: "sed-justo-pellentesque-viverra-pede-ac-diam-cras"});
-	}
-});
+	// POST shorten url
+	// format /api/shortenUrl
+	app.post('/api/shortenUrl', isLoggedIn, function (req, res) {
+		// validate existence
+		req.checkBody('longUrl', 'Long url is required').notEmpty();
 
-// POST shorten url
-// format /api/shortenUrl
-router.post('/api/shortenUrl', function (req, res, next) {
-	// validate existence
-	req.checkBody('longUrl', 'Long url is required').notEmpty();
+		// validate errors
+		var errors = req.validationErrors();
 
-	// validate errors
-	var errors = req.validationErrors();
-
-	// if errors exist
-	if (errors) {
-		var errorText = "";
-		for(var x = 0; x < errors.length; x++) {
-			errorText += errors[x].msg + " ";
+		// if errors exist
+		if (errors) {
+			var errorText = "";
+			for(var x = 0; x < errors.length; x++) {
+				errorText += errors[x].msg + " ";
+			}
+			// send bad request
+			res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
 		}
-		// send bad request
-		res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
-	}
-	else {
-		// create request
-		var options = {
-			method: 'POST',
-			uri: "https://www.googleapis.com/urlshortener/v1/url?key=" + secrets.google_shorten_url_key,
-			headers: {
-				'Content-Type': 'application/json; odata=verbose',
-				'Accept': 'application/json; odata=verbose'
-			},
-			body: {
-				"longUrl": req.body.longUrl
-			},
-			json: true
-		};
+		else {
+			// create request
+			var options = {
+				method: 'POST',
+				uri: "https://www.googleapis.com/urlshortener/v1/url?key=" + secrets.google_shorten_url_key,
+				headers: {
+					'Content-Type': 'application/json; odata=verbose',
+					'Accept': 'application/json; odata=verbose'
+				},
+				body: {
+					"longUrl": req.body.longUrl
+				},
+				json: true
+			};
 
-		// submit request
-		requestPromise(options).then(function (responseSU) {
-			// create return response
-			var returnReq = JSON.stringify({
-				"shortUrl": responseSU.id,
-				"longUrl": responseSU.longUrl
+			// submit request
+			requestPromise(options).then(function (responseSU) {
+				// create return response
+				var returnReq = JSON.stringify({
+					"shortUrl": responseSU.id,
+					"longUrl": responseSU.longUrl
+				});
+
+				// send data
+				res.end( returnReq );
+			}).catch(function (responseSU) {
+				// send internal error
+				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
 			});
+		}
+	});
 
-			// send data
-			res.end( returnReq );
-		}).catch(function (responseSU) {
-			// send internal error
-			res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
-		});
-	}
-});
+	// POST sign up
+	// format /signup
+	app.post('/signup', passport.authenticate('local-signup', {
+		successRedirect : '/admin', // redirect to the secure profile section
+		failureRedirect : '/', // redirect back to the home page if there is an error
+		failureFlash : true // allow flash messages
+	}));
 
-/**
- * Private Functions
- */
+	// POST login
+	// format /login
+	/*
+	app.post('/login', passport.authenticate('local-login', {
+		successRedirect : '/admin', // redirect to the secure profile section
+		failureRedirect : '/login', // redirect back to the login page if there is an error
+		failureFlash : true // allow flash messages
+	}));*/
+	app.post('/login', function (req, res, next) {
+		passport.authenticate('local-login', function (err, user, info) {
+			// if error
+			if(err) {
+				// send internal error
+				return res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+			}
+
+			// if user is not authenticated 
+			if(!user) {
+				// send okay but no okay
+				return res.status(200).send({ error: true, title: "Incorrect username/password.", message: "Incorrect username/password." });
+			}
+
+			// return sucessful
+			return res.status(200).send({ title: "Success!", message: "Successful login." });
+
+			/*
+			// login
+			req.login(req.body.username, req.body.password, function(err) {
+				if(err) {
+					// send okay but no okay
+					res.status(200).send({ error: true, title: "Incorrect username/password.", message: "Incorrect username/password." });
+				}
+				
+				// send okay
+				res.status(200).send({ error: true, title: "Incorrect username/password.", message: "Incorrect username/password." });
+			});
+			*/
+		})(req, res, next);
+	});
+}
+
+// =========================================================================
+// Private Functions =============================================================
+// =========================================================================
 // gets the file location of the matching subportfolio id
 function getSubPortfolioFile(subPortfolioID) {
 	// if matching the correct id
@@ -775,4 +794,12 @@ function sortSavedBlogs(blogs) {
 	return blogs;
 };
 
-module.exports = router;
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+	// if user is authenticated in the session, carry on 
+	if (req.isAuthenticated())
+		return next();
+
+	// send forbidden error
+	res.status(403).send({ title: "No Access.", message: "Sorry, you do not have access to this page." });
+};

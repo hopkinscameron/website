@@ -27,6 +27,12 @@ body {
 }
 .body-home {
     padding-top: 0; 
+
+    & #loading-bar {
+        & .bar {
+            top: 0;
+        }
+    }
 }
 .body-error {
     background-color: $brand-theme-main;

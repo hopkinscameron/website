@@ -2,6 +2,13 @@
 nav {
     color: $text-color;
 }
+.navbar-fixed-size {
+    height: $navbar-height;
+    border-radius: 0;
+}
+.navbar-shifted--down {
+    top: $navbar-position;
+}
 .navbar-inverse {
     background-image: linear-gradient(rgb(30, 30, 30) 0px, rgb(14, 14, 14) 100%);
     background-repeat: repeat-x;

@@ -39,12 +39,21 @@ $animation-delay--xxl: 8s;
 $animation-delay--xxxl: 12s;
 /* End Animation Delay Variables */
 
+/* Begin Page Break Variables */
+$page-break-header-height: 7px;
+$page-break-body-height: 3px;
+$page-break-blog-height: 1.5px;
+/* End Page Break Variables */
+
 /* Begin Navigation Variables */
+$navbar-position: $page-break-header-height;
 $navbar-height: 76px;
+$navbar-bottom: $navbar-position + $navbar-height;
+$loading-bar-height: 5px;
 /* End Navigation Variables */
 
 /* Begin Body Variables */
-$body-padding-top: $navbar-height + 50px;
+$body-padding-top: $navbar-bottom + 50px;
 $body-min-height: 400px;
 $body-main-min-height: 400px;
 /* End Body Variables */

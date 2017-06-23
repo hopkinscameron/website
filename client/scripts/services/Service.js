@@ -161,6 +161,17 @@
         });
     };
 
+    // logout
+    service.logout = function () {
+        // logout
+        return DataAccessService.logout().then(function (responseL) {
+            return responseL.data;
+        })
+        .catch(function (responseL) {
+            return { "error": true, "title": responseL.data.title, "status": responseL.status, "message": responseL.data.message };
+        });
+    };
+
     // get admin page data
     service.getAdminPageData = function () {
         // access the admin information

@@ -157,8 +157,11 @@ angular.module('app').controller('loginController', ['$scope', '$rootScope', '$c
             Service.login(loginData).then(function (responseL) {
                 // if no error
                 if(!responseL.error) {
+                    // refresh header
+                    $rootScope.$emit("refreshHeader", {});
+
                     // redirect to admin page
-                    $location.path( "/admin" );
+                    $window.location.href = "#/admin";
                 }
                 else {
                     // show error

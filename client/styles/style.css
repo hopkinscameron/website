@@ -14,6 +14,8 @@
 */
 /* Begin Animation Delay Variables */
 /* End Animation Delay Variables */
+/* Begin Page Break Variables */
+/* End Page Break Variables */
 /* Begin Navigation Variables */
 /* End Navigation Variables */
 /* Begin Body Variables */
@@ -4705,13 +4707,15 @@ body {
   margin: 0;
   padding: 0;
   border: 0;
-  padding-top: 126px;
+  padding-top: 133px;
   min-height: 400px; }
   body > #main {
     min-height: 400px; }
 
 .body-home {
   padding-top: 0; }
+  .body-home #loading-bar .bar {
+    top: 0; }
 
 .body-error {
   background-color: #29a8d6;
@@ -4844,13 +4848,14 @@ body {
 /* Begin Custom Loading Bar */
 #loading-bar .bar {
   background: #29a8d6;
-  top: 76px; }
+  top: 83px;
+  height: 5px; }
 
 /* End Custom Loading Bar */
 /*@import "mixins";*/
 /* Begin Custom Modal Styles */
 .modal {
-  top: 76px; }
+  top: 83px; }
 
 .modal-content--dark {
   background-color: #747678;
@@ -4867,6 +4872,13 @@ body {
 /* Begin Custom Navigation Styles */
 nav {
   color: #F5F7F9; }
+
+.navbar-fixed-size {
+  height: 76px;
+  border-radius: 0; }
+
+.navbar-shifted--down {
+  top: 7px; }
 
 .navbar-inverse {
   background-image: linear-gradient(#1e1e1e 0px, #0e0e0e 100%);
@@ -4993,8 +5005,9 @@ hr.header-bar {
   height: 7px;
   border: 0;
   border-top: 7px solid #29a8d6;
-  margin: 1em 0;
-  padding: 0; }
+  margin: 0;
+  padding: 0;
+  z-index: 1031; }
 
 hr.body-bar {
   width: 100%;

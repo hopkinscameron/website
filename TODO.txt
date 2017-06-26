@@ -1,4 +1,7 @@
-﻿All
+﻿Future
+- Create an admin page to add a new project (sub Portfolio)
+
+All
 - make sure everything works in firefox and image
 
 Header
@@ -26,5 +29,5 @@ Error
 Login
 
 Admin
-- Make sure saving/positing blog only happens when authenticated
-- Redirect from /login to home if currently logged in (it's set up, see if it works)
+- Make sure saving blogs work
+- Make sure retreiving blogs and saved blogs work

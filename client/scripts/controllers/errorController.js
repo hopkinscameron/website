@@ -1,6 +1,5 @@
 ﻿angular.module('app').controller('errorController', ['$scope', '$compile', 'Service', function ($scope, $compile, Service) {
     // initialize
-    //$scope.init('Page not found', 404, 'The page you are looking for does not exist');
     $scope.pageTitle = 'Page not found' + " | " + Service.appName;
     $scope.status = 404; 
     $scope.message = 'The page you are looking for does not exist'; 

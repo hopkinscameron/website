@@ -1,4 +1,7 @@
 ﻿angular.module('app').controller('subPortfolioController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$routeParams', '$sce', '$timeout', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $location, $window, $routeParams, $sce, $timeout, cfpLoadingBar, Service) {
+    // determines if a page has already sent a request for load
+    var pageRequested = false;
+
     // set jQuery
     $ = window.jQuery;
 
@@ -129,8 +132,13 @@
             $rootScope.$root.showFooter = true;
         }
 
-        // get page data
-        getPageData();
+        // if page hasn't been requested yet
+        if(!pageRequested) {
+            pageRequested = true;
+
+            // get page data
+            getPageData();
+        }
     };
     
     // gets the page data

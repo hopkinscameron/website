@@ -20,53 +20,53 @@ app.config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider', func
 
     $routeProvider
         .when('/', {
-            templateUrl: './partials/home.html',
-            controller: 'homeController'
+            templateUrl: './partials/home.html'/*,
+            controller: 'homeController'*/
         })
         .when('/about', {
-            templateUrl: './partials/about.html',
-            controller: 'aboutController'
+            templateUrl: './partials/about.html'/*,
+            controller: 'aboutController'*/
         })
         .when('/resume', {
-            templateUrl: './partials/resume.html',
-            controller: 'resumeController'
+            templateUrl: './partials/resume.html'/*,
+            controller: 'resumeController'*/
         })
         .when('/portfolio', {
-            templateUrl: './partials/portfolio.html',
-            controller: 'portfolioController'
+            templateUrl: './partials/portfolio.html'/*,
+            controller: 'portfolioController'*/
         })
         .when('/portfolio/:subPortfolioID', {
-            templateUrl: './partials/sub-portfolio.html',
-            controller: 'subPortfolioController'
+            templateUrl: './partials/sub-portfolio.html'/*,
+            controller: 'subPortfolioController'*/
         })
         .when('/blog', {
-            templateUrl: './partials/blog.html',
+            templateUrl: './partials/blog.html'/*,
             controller: 'blogController'/*,
             reloadOnSearch: false*/
         })
         .when('/blog/post/:postID', {
-            templateUrl: './partials/blogPost.html',
-            controller: 'blogPostController'
+            templateUrl: './partials/blogPost.html'/*,
+            controller: 'blogPostController'*/
         })
         .when('/contact', {
-            templateUrl: './partials/contact.html',
-            controller: 'contactController'
+            templateUrl: './partials/contact.html'/*,
+            controller: 'contactController'*/
         })
         .when('/admin', {
-            templateUrl: './partials/admin.html',
-            controller: 'adminController'
+            templateUrl: './partials/admin.html'/*,
+            controller: 'adminController'*/
         })
         .when('/login', {
-            templateUrl: './partials/login.html',
-            controller: 'loginController'
+            templateUrl: './partials/login.html'/*,
+            controller: 'loginController'*/
         })
         .when('/logout', {
-            templateUrl: './partials/logout.html',
-            controller: 'logoutController'
+            templateUrl: './partials/logout.html'/*,
+            controller: 'logoutController'*/
         })
         .otherwise({
-            templateUrl: './partials/error.html',
-            controller: 'errorController'
+            templateUrl: './partials/error.html'/*,
+            controller: 'errorController'*/
         })
 
     // check browser support

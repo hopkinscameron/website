@@ -16,6 +16,11 @@ var // the communication to mongo database
  * Saved Blog Post Schema
  */ 
 var SavedBlogPostSchema = new Schema({
+    customShort: {
+        type: String,
+        required: true,
+        unique: true
+    },
     title: { 
         type: String,
         required: true,
@@ -23,22 +28,20 @@ var SavedBlogPostSchema = new Schema({
     },
     image: {
         type: String,
-        required: true,
         trim: true
     },
     shortDescription: {
         type: String,
-        required: true,
         trim: true
     },
     body: {
         type: String,
-        required: true,
         trim: true
     },
     dateSaved: {
         type: Date,
-        required: true
+        required: true,
+        default: new Date()
     }
 });
 
@@ -49,6 +52,9 @@ if (!SavedBlogPostSchema.options.toObject) {
 
 // set options for returning an object
 SavedBlogPostSchema.options.toObject.transform = function (doc, ret, options) {
+    // get the short id
+    var shortId = ret.customShort;
+
     // if hide options
     if (options.hide) {
         // go through each option and remove
@@ -56,6 +62,9 @@ SavedBlogPostSchema.options.toObject.transform = function (doc, ret, options) {
             delete ret[prop];
         });
     }
+    
+    // replace short id with blog id
+    ret.blogId = shortId;
 
     // always hide the id and version
     delete ret['_id'];

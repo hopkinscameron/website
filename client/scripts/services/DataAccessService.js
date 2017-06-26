@@ -289,6 +289,26 @@
         return $http(req);
     };
 
+    // checks if user is logged in
+    service.isUserLoggedIn = function () {
+        // set the endpoint
+        var endpoint = "/login";
+
+        // create request
+        var req = {
+            method: 'GET',
+            url: endpoint,
+            headers: {
+                'Content-Type': 'application/json; odata=verbose',
+                'Accept': 'application/json; odata=verbose'
+            },
+            data: 'undefined'
+        };
+
+        // send request
+        return $http(req);
+    };
+
     // login
     service.login = function (loginData) {
         // set the endpoint

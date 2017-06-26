@@ -150,6 +150,17 @@
         });
     };
 
+    // checks if user is logged in
+    service.isUserLoggedIn = function () {
+        // check if user is logged in
+        return DataAccessService.isUserLoggedIn().then(function (responseL) {
+            return responseL.data;
+        })
+        .catch(function (responseL) {
+            return { "error": true, "title": responseL.data.title, "status": responseL.status, "message": responseL.data.message };
+        });
+    };
+
     // login
     service.login = function (loginData) {
         // login

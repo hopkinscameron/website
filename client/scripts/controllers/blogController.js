@@ -1,4 +1,7 @@
 ﻿angular.module('app').controller('blogController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $location, $timeout, cfpLoadingBar, Service) {
+    // determines if a page has already sent a request for load
+    var pageRequested = false;
+
     // set jQuery
     $ = window.jQuery;
 
@@ -161,8 +164,13 @@
             $rootScope.$root.showFooter = true;
         }
 
-        // get page data
-        getPageData($scope.searchText.query, $location.search().page);
+        // if page hasn't been requested yet
+        if(!pageRequested) {
+            pageRequested = true;
+
+            // get page data
+            getPageData($scope.searchText.query, $location.search().page);
+        }
     };
 
     // gets the page data

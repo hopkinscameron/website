@@ -16,19 +16,18 @@ var // the communication to mongo database
  * Blog Post Schema
  */ 
 var BlogPostSchema = new Schema({
-    title: { 
+    customShort: {
         type: String,
         required: true,
-        trim: true
+        unique: true
     },
-    url: {
+    title: { 
         type: String,
         required: true,
         trim: true
     },
     image: {
         type: String,
-        required: true,
         trim: true
     },
     shortDescription: {
@@ -44,11 +43,13 @@ var BlogPostSchema = new Schema({
     author: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        default: "Cameron Hopkins"
     },
-    datePublish: {
+    datePublished: {
         type: Date,
-        required: true
+        required: true,
+        default: new Date()
     }
 });
 

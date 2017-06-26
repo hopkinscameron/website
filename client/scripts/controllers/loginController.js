@@ -1,4 +1,7 @@
 angular.module('app').controller('loginController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$timeout', 'cfpLoadingBar','Service', function ($scope, $rootScope, $compile, $location, $window, $timeout, cfpLoadingBar, Service) {
+    // determines if a page has already sent a request for load
+    var pageRequested = false;
+    
     // set jQuery
     $ = window.jQuery;
 
@@ -191,17 +194,47 @@ angular.module('app').controller('loginController', ['$scope', '$rootScope', '$c
             $rootScope.$root.showFooter = true;
         }
 
-        // get page data
-        getPageData();
+        // if page hasn't been requested yet
+        if(!pageRequested) {
+            pageRequested = true;
+
+            // get page data
+            getPageData();
+        }
     };
 
     // gets the page data
     function getPageData() {
-        // holds the page title
-        $scope.pageTitle = "Login | " + Service.appName;
-        
-        // setup page
-        setUpPage();
+        // check if user is logged in
+        Service.isUserLoggedIn().then(function (responseL) {
+            // if no error
+            if(!responseL.error) {
+                // if user is not logged in
+                if(!responseL.isLoggedIn) {
+                    // holds the page title
+                    $scope.pageTitle = "Login | " + Service.appName;
+                    
+                     // setup page
+                    setUpPage();
+                }
+                else {
+                    // redirect to admin page
+                    $window.location.href = "#/admin";
+                }
+            }
+            else {
+                // show error
+                $scope.loginForm.errors.errorMessage = responseL.message;
+                $scope.loginForm.errors.isError = true;
+                $scope.loginForm.formSubmitted = false;
+            }
+        })
+        .catch(function (responseL) {
+            // show error
+            $scope.loginForm.errors.errorMessage = responseL.message;
+            $scope.loginForm.errors.isError = true;
+            $scope.loginForm.formSubmitted = false;
+        });
     };
 
     // sets up the page

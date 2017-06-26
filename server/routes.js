@@ -12,6 +12,15 @@ var fs = require("fs");
 // the secrets
 var secrets = require('./secrets');
 
+// short id generator
+var shortid = require('shortid');
+
+// load up the Blog Post model
+var BlogPost = require('./models/model-blog-post');
+
+// load up the Saved Blog model
+var SavedBlogPost = require('./models/model-saved-blog-post');
+
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
     host: secrets.smtp_host,
@@ -203,32 +212,29 @@ module.exports = function(app, passport) {
 	app.get('/api/blog', function (req, res) {
 		// if query on id
 		if (req.query.id) {
-			fs.readFile("./server/data/blog.json", 'utf8', function (err, data) {
-				// if err
-				if(err) {
-					res.status(500).send({ error: true, title: "Something went wrong.", message: "Something went wrong. " + err.message });
-					return;
+			// find blog post based on id
+			BlogPost.findOne({ customShort : req.query.id }).exec(function(err, foundBlog) {
+				// if error occured
+				if (err) {
+					// send internal error
+					res.status(500).send({ message: "Something went wrong. Please try again later." });
 				}
+				// if blog was found
+				else if(foundBlog) {
+					// set url
+					var url = foundBlog.customShort;
 
-				// get post
-				var post = getBlogPost(data, req.query.id);
+					// make an object
+					foundBlog = foundBlog.toObject({ hide: 'customShort', transform: true });
+					foundBlog.url = url;
 
-				// if post doesn't exist
-				if(!post) {
-					// send error
-					res.status(404).send({ title: "Page not found.", message: "Blog Post not found." });
-					return;
+					// send data
+					res.end( JSON.stringify(foundBlog) );
 				}
-
-				// if err
-				if(post.error) {
-					// send error
-					res.status(500).send({ error: true, title: post.title, message: post.message });
-					return;
+				else {
+					// send not found
+					res.status(404).send({ title: "Blog does not exist.", message: "Blog does not exist" });
 				}
-
-				// send data
-				res.end( JSON.stringify(post) );
 			});
 		}
 		else {
@@ -271,30 +277,29 @@ module.exports = function(app, passport) {
 	// GET admin page information
 	// format /api/admin
 	app.get('/api/admin', isLoggedIn, function (req, res) {
-		fs.readFile("./server/data/savedBlogPosts.json", 'utf8', function (err, data) {
-			// if no error 
-			if(!err) {
-				try {
-					// parse the json data
-					var parsedJson = JSON.parse(data);
+		// find all saved blog posts
+		SavedBlogPost.find({}).exec(function(err, blogs) {
+			// if error occured
+			if (err) {
+				// send internal error
+				res.status(500).send({ message: "Something went wrong. Please try again later." });
+			}
+			// if blogs were found
+			else if(blogs) {
+				// map blogs to transform to an array of JSON
+				blogs = blogs.map(function(blog) {
+					return blog.toObject({ hide: 'customShort', transform: true });
+				});
 
-					// sort the data by date
-					parsedJson.savedPosts = sortSavedBlogs(parsedJson.savedPosts);
+				// sort
+				blogs = sortSavedBlogs(blogs);
 
-					// stringify back
-					data = JSON.stringify(parsedJson);
-
-					// send data
-					res.end( data );
-				}
-				catch (err) {
-					// send internal error
-					res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
-				}
+				// send blogs back
+				res.end(JSON.stringify({"savedPosts": blogs }));
 			}
 			else {
-				// send internal error
-				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+				// send not found
+				res.status(404).send({ title: "Blog does not exist.", message: "Blog does not exist" });
 			}
 		});
 	});
@@ -396,13 +401,16 @@ module.exports = function(app, passport) {
 
 	// GET login page requested
 	// format /login
-	app.get('/login', !isLoggedIn, function(req, res) {
-		// logout and remove from database
-		req.logout();
-		req.session = null;
-
-		// return success
-		res.status(200).send({ title: "Success!", message: "You have successfully logged out!" });
+	app.get('/login', function(req, res) {
+		// if user is not authenticated in the session, carry on 
+		if (!req.isAuthenticated()) {
+			// return success
+			res.status(200).send({ title: "Success!", message: "No logged in" });
+		}
+		else {
+			// return logged in
+			res.status(200).send({ title: "Redirect", message: "User is logged in", isLoggedIn: true });
+		}
 	});
 
 	// GET logout the user
@@ -488,10 +496,68 @@ module.exports = function(app, passport) {
 			res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
 		}
 		else {
-			// TODO: save blog
+			// check if id exists
+			if(req.body.id) {
+				// check if valid
+				if(shortid.isValid(req.body.id)) {
+					// set updated values
+					var updatedValues = {
+						"title": req.body.title,
+						"image": req.body.image,
+						"shortDescription": req.body.shortDescription,
+						"body": req.body.body
+					};
+					
+					// find the blog and update
+					SavedBlogPost.findOneAndUpdate({ customShort : req.body.id }, updatedValues).exec(function(err, savedBlog) {
+						// if there are any errors, return the error
+						if (err) {
+							// send internal error
+							res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+							return;
+						}	
 
-			// return success
-			res.status(200).send({ title: "Success!", message: "You have saved the blog successfully!" });
+						// if saved blog found
+						if(savedBlog) {
+							// return success
+							res.status(200).send({ title: "Success!", message: "You have saved the blog successfully!", blogId: savedBlog.customShort });
+						}
+						else {
+							// send bad request
+							res.status(400).send({ title: "Bad Request.", message: "Bad request. Post does not exist."});
+						}
+					});
+				}
+				else {
+					// send bad request 
+					res.status(400).send({ title: "Bad Request.", message: "Bad request. Post does not exist."});
+				}
+			}
+			else {
+				// generate a short id
+				var shortId = shortid.generate();
+
+				// create the blog
+				var savedBlog = new SavedBlogPost({
+					customShort: shortId,
+					title: req.body.title,
+					image: req.body.image,
+					shortDescription: req.body.shortDescription,
+					body: req.body.body
+				});
+
+				// save the blog
+				savedBlog.save(function(err, newSavedBlog) {
+					if (err) {
+						// send internal error
+						res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+					}
+					else {
+						// return success
+						res.status(200).send({ title: "Success!", message: "You have saved the blog successfully!", blogId: shortId });
+					}
+				});
+			}
 		}
 	});
 
@@ -500,7 +566,6 @@ module.exports = function(app, passport) {
 	app.post('/api/postBlog', isLoggedIn, function (req, res) {
 		// validate existence
 		req.checkBody('title', 'Title is required').notEmpty();
-		req.checkBody('image', 'Image is required').notEmpty();
 		req.checkBody('shortDescription', 'Short Description is required').notEmpty();
 		req.checkBody('body', 'Body is required').notEmpty();
 		
@@ -517,10 +582,86 @@ module.exports = function(app, passport) {
 			res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
 		}
 		else {
-			// TODO: post blog
+			// check if id exists
+			if(req.body.id) {
+				// check if valid
+				if(shortid.isValid(req.body.id)) {
+					// generate a short id
+					var shortId = shortid.generate();
 
-			// return success
-			res.status(200).send({ title: "Success!", message: "You have posted the blog successfully!", newBlogLink: "sed-justo-pellentesque-viverra-pede-ac-diam-cras"});
+					// create the blog
+					var blogPost = new BlogPost({
+						customShort: shortId,
+						title: req.body.title,
+						image: req.body.image,
+						shortDescription: req.body.shortDescription,
+						body: req.body.body
+					});
+
+					// posts the blog
+					blogPost.save(function(err, newPostedBlog) {
+						if (err) {
+							// send internal error
+							res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+						}
+						else {
+							// find the blog and remove
+							SavedBlogPost.findOneAndRemove({ customShort : req.body.id }).exec(function(err, savedBlog) {
+								// if there are any errors, return the error
+								if (err) {
+									// remove that posted blog
+									BlogPost.findByIdAndRemove(newPostedBlog._id).exec(function(err, postedBlog) {
+										// send internal error
+										res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+										return;
+									});
+								}
+								else {
+									// if saved blog found
+									if(savedBlog) {
+										// return success
+										res.status(200).send({ title: "Success!", message: "You have posted the blog successfully!", newBlogLink: shortId });
+									}
+									else {
+										// send bad request
+										res.status(400).send({ title: "Bad Request.", message: "Bad request. Post does not exist."});
+									}
+								}
+							});
+						}
+					});
+				}
+				else {
+					// send bad request 
+					res.status(400).send({ title: "Bad Request.", message: "Bad request. Post does not exist."});
+				}
+			}
+			else {
+				// generate a short id
+				var shortId = shortid.generate();
+
+				// create the blog
+				var blogPost = new BlogPost({
+					customShort: shortId,
+					title: req.body.title,
+					image: req.body.image,
+					shortDescription: req.body.shortDescription,
+					body: req.body.body,
+					url: shortId
+				});
+
+				// posts the blog
+				blogPost.save(function(err, newPostedBlog) {
+					if (err) {
+						// send internal error
+						res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+					}
+					else {
+						// return success
+						res.status(200).send({ title: "Success!", message: "You have posted the blog successfully!", newBlogLink: shortId });
+					}
+				});
+			}
 		}
 	});
 
@@ -584,12 +725,6 @@ module.exports = function(app, passport) {
 
 	// POST login
 	// format /login
-	/*
-	app.post('/login', passport.authenticate('local-login', {
-		successRedirect : '/admin', // redirect to the secure profile section
-		failureRedirect : '/login', // redirect back to the login page if there is an error
-		failureFlash : true // allow flash messages
-	}));*/
 	app.post('/login', function (req, res, next) {
 		passport.authenticate('local-login', function (err, user, info) {
 			// if error
@@ -606,19 +741,6 @@ module.exports = function(app, passport) {
 
 			// return sucessful
 			return res.status(200).send({ title: "Success!", message: "Successful login." });
-
-			/*
-			// login
-			req.login(req.body.username, req.body.password, function(err) {
-				if(err) {
-					// send okay but no okay
-					res.status(200).send({ error: true, title: "Incorrect username/password.", message: "Incorrect username/password." });
-				}
-				
-				// send okay
-				res.status(200).send({ error: true, title: "Incorrect username/password.", message: "Incorrect username/password." });
-			});
-			*/
 		})(req, res, next);
 	});
 }
@@ -711,33 +833,6 @@ function applyFilter(arr, filter) {
 	}
 
 	return newArr;
-};
-
-// gets the blog post matching the postID
-function getBlogPost(data, postID) {
-	var jsonParse = undefined;
-
-	// parse json
-	try {
-		jsonParse = JSON.parse(data);
-
-		// if posts
-		if(jsonParse.posts) {
-			// loop through all posts
-			for(var x = 0; x < jsonParse.posts.length; x++) {
-				var element = jsonParse.posts[x];
-				if(element.url.toLowerCase() == postID.toLowerCase()) {
-					return element;
-				}
-			}
-		}
-	}
-	catch (err) {
-		// send internal error
-		return { error: true, title: "Something went wrong.", message: "Something went wrong. " + err.message};
-	}
-	
-	return undefined;
 };
 
 // sorts the published blogs by date (decending order)

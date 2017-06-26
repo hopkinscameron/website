@@ -1,4 +1,7 @@
 angular.module('app').controller('adminController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$timeout', 'cfpLoadingBar','Service', function ($scope, $rootScope, $compile, $location, $window, $timeout, cfpLoadingBar, Service) {
+    // determines if a page has already sent a request for load
+    var pageRequested = false;
+
     // set jQuery
     $ = window.jQuery;
 
@@ -35,6 +38,35 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
             "body": false
         },
         "id": undefined
+    };
+
+    // tinyMCE options
+    $scope.tinymceOptions = {
+        setup: function(editor) {           
+            editor.on("init", function() {
+                
+            });
+            editor.on("click", function() {
+                
+            });
+            editor.on("focus", function() {
+                $scope.viewFocusEnter($scope.adminBlogPostForm.views.body);
+            });
+        },
+        onChange: function(e) {
+            // put logic here for keypress and cut/paste changes 
+        },
+        inline: false,
+        plugins : [
+            'advlist autolink lists link image charmap preview hr anchor pagebreak',
+            'searchreplace wordcount visualblocks visualchars code fullscreen',
+            'insertdatetime media nonbreaking save table contextmenu directionality',
+            'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+        ],
+        toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+        toolbar2: 'preview media | forecolor backcolor emoticons | codesample',
+        skin: 'lightgray',
+        theme : 'modern'
     };
 
     // the confirmation modal
@@ -150,7 +182,7 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
     // checks if post is currently active (populated)
     $scope.isPostActive = function (savedPost) {
         // check both ids defined and check equality on ids
-        return savedPost.id && $scope.adminBlogPostForm.id && savedPost.id == $scope.adminBlogPostForm.id
+        return savedPost.blogId && $scope.adminBlogPostForm.blogId && savedPost.blogId == $scope.adminBlogPostForm.blogId
     };
 
     // populates form with previously saved data
@@ -163,7 +195,7 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
         $scope.adminBlogPostForm.errors.errorMessage = "";
 
         // populate form
-        $scope.adminBlogPostForm.id = savedPost.id;
+        $scope.adminBlogPostForm.blogId = savedPost.blogId;
         $scope.adminBlogPostForm.inputs.title = savedPost.title;
         $scope.adminBlogPostForm.inputs.image = savedPost.image;
         $scope.adminBlogPostForm.inputs.shortDescription = savedPost.shortDescription;
@@ -187,6 +219,11 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
             // reset the error
             $scope.adminBlogPostForm.errors.body = false;
         }
+
+        // if no errors exist
+        if(!$scope.adminBlogPostForm.errors.title && !$scope.adminBlogPostForm.errors.shortDescription && !$scope.adminBlogPostForm.errors.body) {
+            $scope.adminBlogPostForm.errors.isError = false;
+        }
     };
 
     // saves the blog post
@@ -198,7 +235,7 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
 
             // the data to send
             var blogPostData = {
-                "id": $scope.adminBlogPostForm.id,
+                "id": $scope.adminBlogPostForm.blogId,
                 "title": $scope.adminBlogPostForm.inputs.title,
                 "image": $scope.adminBlogPostForm.inputs.image,
                 "shortDescription": $scope.adminBlogPostForm.inputs.shortDescription,
@@ -224,6 +261,9 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
                             $scope.confirmationModal.title = $scope.savedPostModalAttributes.title;
                             $scope.confirmationModal.body = $scope.savedPostModalAttributes.body;
                             $scope.confirmationModal.closeAction = $scope.savedPostModalAttributes.closeAction;
+
+                            // set id
+                            $scope.adminBlogPostForm.blogId = responseSB.blogId;
 
                             // show confirmation modal
                             angular.element('#confirmationModal').modal('toggle');
@@ -279,7 +319,7 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
 
             // the data to send
             var blogPostData = {
-                "id": $scope.adminBlogPostForm.id,
+                "id": $scope.adminBlogPostForm.blogId,
                 "title": $scope.adminBlogPostForm.inputs.title,
                 "image": $scope.adminBlogPostForm.inputs.image,
                 "shortDescription": $scope.adminBlogPostForm.inputs.shortDescription,
@@ -328,8 +368,13 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
             $rootScope.$root.showFooter = true;
         }
 
-        // get page data
-        getPageData();
+        // if page hasn't been requested yet
+        if(!pageRequested) {
+            pageRequested = true;
+
+            // get page data
+            getPageData();
+        }
     };
 
     // gets the page data

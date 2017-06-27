@@ -17,6 +17,15 @@
             <!-- Begin Post -->
             <div class="col-md-8 offset-md-2 animated animation-delay--xmd fadeInUp">
                 <div class="card card--dark card-block box-shadow--sm">
+                    <!-- Begin Edit Post -->
+                    <div class="row">
+                        <!-- Begin Edit Post -->
+                        <div class="col text-right" ng-if="$root.isLoggedIn">
+                            <a class="decoration--never card-link mt-3" ng-href="#/blog/post/{{post.url}}/edit">Edit post <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </div>
+                        <!-- End Edit Post -->
+                    </div>
+                    <!-- End Edit Post -->
                     <!-- Begin Image -->
                     <div class="post-img--medium rounded" style="background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.15) 100%), url({{post.image}}); background-size: cover; background-position: center center; background-repeat: no-repeat;" ng-if="post.image.length > 0"></div>
                     <!-- End Image -->
@@ -38,8 +47,17 @@
                     </div>
                     <!-- End Author -->
                     <!-- Begin Body -->
-                    <p class="card-text post-body--dark">{{post.body}}</p>
+                    <p class="card-text post-body--dark"><span ng-bind-html="post.body | trustHTML"></span></p>
                     <!-- End Body -->
+                    <!-- Begin Edit Post -->
+                    <div class="row">
+                        <!-- Begin Edit Post -->
+                        <div class="col text-right" ng-if="$root.isLoggedIn">
+                            <a class="decoration--never card-link mt-3" ng-href="#/blog/post/{{post.url}}/edit">Edit post <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </div>
+                        <!-- End Edit Post -->
+                    </div>
+                    <!-- End Edit Post -->
                 </div>
             </div>
             <!-- End Post -->

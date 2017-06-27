@@ -198,9 +198,9 @@
     };
 
     // gets subportfolio page information 
-    service.getSubPortfolioPageInformation = function (subPortfolioID) {
+    service.getSubPortfolioPageInformation = function (subPortfolioId) {
         // set the endpoint
-        var endpoint = "/api/portfolio?id=" + subPortfolioID;
+        var endpoint = "/api/portfolio?id=" + subPortfolioId;
 
         // create request
         var req = {
@@ -250,9 +250,29 @@
     };
 
     // gets blog post page information 
-    service.getBlogPostPageInformation = function (postID) {
+    service.getBlogPostPageInformation = function (postId) {
         // set the endpoint
-        var endpoint = "/api/blog?id=" + postID;
+        var endpoint = "/api/blog?id=" + postId;
+
+        // create request
+        var req = {
+            method: 'GET',
+            url: endpoint,
+            headers: {
+                'Content-Type': 'application/json; odata=verbose',
+                'Accept': 'application/json; odata=verbose'
+            },
+            data: 'undefined'
+        };
+
+        // send request
+        return $http(req);
+    };
+
+    // gets blog post edit page information 
+    service.getBlogPostEditPageInformation = function (postId) {
+        // set the endpoint
+        var endpoint = "/api/blog/post/" + postId + "/edit";
 
         // create request
         var req = {
@@ -421,6 +441,56 @@
         // create request
         var req = {
             method: 'POST',
+            url: endpoint,
+            headers: {
+                'Content-Type': 'application/json; odata=verbose',
+                'Accept': 'application/json; odata=verbose'
+            },
+            data: blogStrigified
+        };
+
+        // send request
+        return $http(req);
+    };
+
+    // discard blog post draft
+    service.discardBlogPostDraft = function (postId) {
+        // set the endpoint
+        var endpoint = "/api/discardSavedBlogDraft";
+
+        // stringify the login data
+        var blogStrigified = JSON.stringify({
+            "id": postId
+        });
+
+        // create request
+        var req = {
+            method: 'DELETE',
+            url: endpoint,
+            headers: {
+                'Content-Type': 'application/json; odata=verbose',
+                'Accept': 'application/json; odata=verbose'
+            },
+            data: blogStrigified
+        };
+
+        // send request
+        return $http(req);
+    };
+
+    // delete blog post
+    service.deleteBlogPost = function (postId) {
+        // set the endpoint
+        var endpoint = "/api/deletePublishedBlog";
+
+        // stringify the login data
+        var blogStrigified = JSON.stringify({
+            "id": postId
+        });
+
+        // create request
+        var req = {
+            method: 'DELETE',
             url: endpoint,
             headers: {
                 'Content-Type': 'application/json; odata=verbose',

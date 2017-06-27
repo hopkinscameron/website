@@ -107,9 +107,9 @@
     };
 
     // get subportfolio page data
-    service.getSubPortfolioPageData = function (subPortfolioID) {
+    service.getSubPortfolioPageData = function (subPortfolioId) {
         // access the subportfolio information
-        return DataAccessService.getSubPortfolioPageInformation(subPortfolioID).then(function (responseSP) {
+        return DataAccessService.getSubPortfolioPageInformation(subPortfolioId).then(function (responseSP) {
             return responseSP.data;
         })
         .catch(function (responseSP) {
@@ -129,9 +129,20 @@
     };
 
     // get blog post page data
-    service.getBlogPostPageData = function (postID) {
+    service.getBlogPostPageData = function (postId) {
         // access the blog information
-        return DataAccessService.getBlogPostPageInformation(postID).then(function (responseBP) {
+        return DataAccessService.getBlogPostPageInformation(postId).then(function (responseBP) {
+            return responseBP.data;
+        })
+        .catch(function (responseBP) {
+            return { "error": true, "title": responseBP.data.title, "status": responseBP.status, "message": responseBP.data.message };
+        });
+    };
+
+    // get blog post edit page data
+    service.getBlogPostEditPageData = function (postId) {
+        // access the blog information
+        return DataAccessService.getBlogPostEditPageInformation(postId).then(function (responseBP) {
             return responseBP.data;
         })
         .catch(function (responseBP) {
@@ -213,6 +224,28 @@
         })
         .catch(function (responsePB) {
             return { "error": true, "title": responsePB.data.title, "status": responsePB.status, "message": responsePB.data.message };
+        });
+    };
+
+    // discard blog post draft
+    service.discardBlogPostDraft = function (postId) {
+        // post blog
+        return DataAccessService.discardBlogPostDraft(postId).then(function (responseDP) {
+            return responseDP.data;
+        })
+        .catch(function (responseDP) {
+            return { "error": true, "title": responseDP.data.title, "status": responseDP.status, "message": responseDP.data.message };
+        });
+    };
+
+    // delete blog post
+    service.deleteBlogPost = function (postId) {
+        // post blog
+        return DataAccessService.deleteBlogPost(postId).then(function (responseDP) {
+            return responseDP.data;
+        })
+        .catch(function (responseDP) {
+            return { "error": true, "title": responseDP.data.title, "status": responseDP.status, "message": responseDP.data.message };
         });
     };
 

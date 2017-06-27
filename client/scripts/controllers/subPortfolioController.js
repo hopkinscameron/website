@@ -9,7 +9,7 @@
     Service.afterPath = $location.path();
 
     // get the parameters
-    var subPortfolioID = $routeParams.subPortfolioID;
+    var subPortfolioId = $routeParams.subPortfolioId;
 
     // holds the error
     $scope.error = {
@@ -144,7 +144,7 @@
     // gets the page data
     function getPageData() {
         // get subportfolio page data
-        Service.getSubPortfolioPageData(subPortfolioID).then(function (responseSP) {
+        Service.getSubPortfolioPageData(subPortfolioId).then(function (responseSP) {
             // if returned a valid response
             if (!responseSP.error) {
                 // set the data

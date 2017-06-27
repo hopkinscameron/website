@@ -30,7 +30,7 @@
                             <hr class="blog-post-bar mt-5 mb-5" ng-if="post.image.length > 0" />
                             <!-- End Content Break -->
                             <!-- Begin Title -->
-                            <h4 class="card-title">{{post.title}}</h4>
+                            <h4 class="card-title mb-0">{{post.title}}</h4>
                             <!-- End Title -->
                             <!-- Begin Publish Date -->
                             <div class="text-center mt-5 mb-5 divider">
@@ -40,11 +40,22 @@
                             </div>
                             <!-- End Publish Date -->
                             <!-- Begin Short Body -->
-                            <p class="card-text blog-limit-desc">{{post.shortDescription}}</p>
+                            <p class="card-text post-limit-desc">{{post.shortDescription}}</p>
                             <!-- End Short Body -->
-                            <!-- Begin View Full Post -->
-                            <a class="decoration--never card-link mt-3" ng-href="#/blog/post/{{post.url}}">View full post... <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                            <!-- End View Full Post -->
+                            <!-- Begin View Full Post/Edit Post -->
+                            <div class="row">
+                                <!-- Begin View Full Post -->
+                                <div class="col text-left">
+                                    <a class="decoration--never card-link mt-3" ng-href="#/blog/post/{{post.url}}">View full post... <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                                </div>
+                                <!-- End View Full Post -->
+                                <!-- Begin Edit Post -->
+                                <div class="col text-right" ng-if="$root.isLoggedIn">
+                                    <a class="decoration--never card-link mt-3" ng-href="#/blog/post/{{post.url}}/edit">Edit post <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                                </div>
+                                <!-- End Edit Post -->
+                            </div>
+                            <!-- End View Full Post/Edit Post -->
                         </div>
                     </div>
                     <!-- End Posts -->

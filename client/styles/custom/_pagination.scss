@@ -1,7 +1,7 @@
 /* Begin Custom Pagination */
-.page-item.disabled{
+.page-item.disabled {
     & .page-link--dark {
-        color: $text-color;
+        color: darken($text-color, 15%);
         pointer-events: none;
         cursor: not-allowed;
         background-color: $dark;

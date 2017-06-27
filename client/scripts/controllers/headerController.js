@@ -206,6 +206,7 @@ angular.module('app').controller('headerController', ['$scope', '$rootScope', '$
             Service.getHeaderInformation().then(function (responseHeader) {
                 // set the header
                 $scope.header = responseHeader;
+                $rootScope.$root.isLoggedIn = responseHeader.isLoggedIn;
 
                 // header refreshed
                 $rootScope.$emit("headerRefreshed", {});

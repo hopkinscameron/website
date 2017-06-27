@@ -1,0 +1,133 @@
+<!-- Begin Admin Page -->
+<section ng-controller="blogPostEditController">
+    <!-- Begin Container -->
+    <div class="container">
+        <!-- Begin Page Fully Loaded With Errors -->
+        <div id="pageShow" class="collapse" ng-if="pageFullyLoaded && error.error">
+            <div ng-controller="errorController" ng-init="init(error.title, error.status, error.message)">
+                <div ng-include="'/partials/error.html'"></div>
+            </div>
+        </div>
+        <!-- End Page Fully Loaded With Errors -->
+        <!-- Begin Page Fully Loaded With No Errors -->
+        <div id="pageShow" class="animated animation-delay--md fadeIn collapse" ng-if="pageFullyLoaded && !error.error">
+            <!-- Begin Blog Insert -->
+            <div class="col-md-8 offset-md-2 animated animation-delay--xmd fadeInUp">
+                <div class="card card--dark card-block box-shadow--sm">
+                    <div style="padding-bottom: 24px;" ng-if="!blogPostEditForm.errors.isError"></div>
+                    <div ng-if="blogPostEditForm.errors.isError">
+                        <span style="color: red;">{{blogPostEditForm.errors.errorMessage}}</span>
+                    </div>
+                    <form>
+                        <div class="form-group pl-3 pr-3">
+                            <!-- Begin Title -->
+                            <div class="form-group">
+                                <label class="col col-form-label" for="title">Title <span style="color: red;">*</span></label>
+                                <div class="col input-group" ng-class="{'has-danger': blogPostEditForm.errors.title}">
+                                    <input class="form-control form-control-danger" type="text" name="title" placeholder="Title" id="title" ng-model="blogPostEditForm.inputs.title" ng-focus="viewFocusEnter(blogPostEditForm.views.title)" ng-change="checkTextLength(blogPostEditForm.views.title)" ng-disabled="blogPostEditForm.formSubmitted">
+                                </div>
+                            </div>
+                            <!-- End Title -->
+                            <!-- Begin Image -->
+                            <div class="form-group">
+                                <label class="col col-form-label" for="image">Image Link</label>
+                                <div class="col input-group" ng-class="{'has-danger': blogPostEditForm.errors.image}">
+                                    <input class="form-control form-control-danger" type="text" name="image" placeholder="https://www.google.com/image.png" id="image" ng-model="blogPostEditForm.inputs.image" ng-focus="viewFocusEnter(blogPostEditForm.views.image)" ng-disabled="blogPostEditForm.formSubmitted">
+                                </div>
+                            </div>
+                            <!-- End Image -->
+                            <!-- Begin Short Description -->
+                            <div class="form-group">
+                                <label class="col col-form-label" for="shortDescription">Short Description <span style="color: red;">*</span></label>
+                                <div class="col input-group" ng-class="{'has-danger': blogPostEditForm.errors.shortDescription}">
+                                    <textarea class="form-control form-control-danger" rows="5" name="shortDescription" placeholder="Insert a short description" id="shortDescription" ng-model="blogPostEditForm.inputs.shortDescription" ng-focus="viewFocusEnter(blogPostEditForm.views.shortDescription)" ng-disabled="blogPostEditForm.formSubmitted"></textarea>
+                                </div>
+                            </div>
+                            <!-- End Short Description -->
+                            <!-- Begin Body -->
+                            <div class="form-group">
+                                <label class="col col-form-label" for="body">Body <span style="color: red;">*</span></label>
+                                <div class="col input-group" ng-class="{'has-danger': blogPostEditForm.errors.body}">
+                                    <textarea ui-tinymce="tinymceOptions" class="form-control form-control-danger" class="w-100" style="min-height: 400px;" ng-model="blogPostEditForm.inputs.body" ng-focus="viewFocusEnter(blogPostEditForm.views.body)" ng-disabled="blogPostEditForm.formSubmitted"></textarea>
+                                </div>
+                            </div>
+                            <!-- End Body -->
+                            <!-- Begin Post/Save/Delete/Discard -->
+                            <div class="row container-fluid">
+                                <!-- Begin Post -->
+                                <div class="col text-left">
+                                    <button class="btn btn-theme-primary" ng-click="post()" ng-disabled="blogPostEditForm.formSubmitted || blogPostEditForm.errors.isError">Post</button>
+                                </div>
+                                <!-- End Post -->
+                                <!-- Begin Delete -->
+                                <div class="col text-center">
+                                    <button class="btn btn-danger" ng-click="delete()">Delete Post</button>
+                                </div>
+                                <!-- End Delete -->
+                                <!-- Begin Discard Draft -->
+                                <div class="col text-center">
+                                    <button class="btn btn-warning" ng-click="discardDraft()">Discard Draft</button>
+                                </div>
+                                <!-- End Discard Draft -->
+                                <!-- Begin Save -->
+                                <div class="col text-right">
+                                    <button class="btn btn-theme-primary" ng-click="save()">Save</button>
+                                </div>
+                                <!-- End Save -->
+                            </div>
+                            <!-- End Post/Save/Delete -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- End Blog Insert -->
+        </div>
+        <!-- End Page Fully Loaded With No Errors -->
+    </div>
+    <!-- End Container -->
+    <!-- Begin Confirmation Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content modal-content--dark">
+                <!-- Begin Modal Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">{{confirmationModal.title}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- End Modal Header -->
+                <!-- Begin Modal Body -->
+                <div class="modal-body">
+                    <span ng-bind-html="confirmationModal.body | trustHTML"></span>
+                </div>
+                <!-- End Modal Body -->
+                <!-- Begin Modal Footer -->
+                <div class="modal-footer">
+                    <!-- Begin Action For Save Modal -->
+                    <button type="button" class="btn btn-theme-primary" data-dismiss="modal" ng-if="confirmationModal.type == savedPostModalAttributes.type">Okay</button>
+                    <!-- End Action For Save Modal -->
+                    <!-- Begin Action For Post Modal -->
+                    <div class="col" ng-if="confirmationModal.type == postBlogModalAttributes.type">
+                        <div class="row align-items-center">
+                            <!-- Begin Dismiss -->
+                            <div class="col text-left">
+                                <button type="button" class="btn btn-theme-primary" ng-click="confirmationModal.closeAction = 'refresh'" data-dismiss="modal">Dismiss</button>
+                            </div>
+                            <!-- End Dismiss -->
+                            <!-- Begin Take To Blog -->
+                            <div class="col text-right">
+                                <p role="button" class="mb-0" ng-click="confirmationModal.closeAction = 'goToBlog'" data-dismiss="modal">Take me to view post <i class="fa fa-arrow-right" aria-hidden="true"></i></p>
+                            </div>
+                            <!-- End Take To Blog -->
+                        </div>
+                    </div>
+                    <!-- End Action For Post Modal -->
+                </div>
+                <!-- End Modal Footer -->
+            </div>
+        </div>
+    </div>
+    <!-- End Confirmation Modal -->
+</section>
+<!-- End Admin Page -->

@@ -3,4 +3,8 @@
     padding: 0.5rem 1rem;
     border-left: 0.25rem solid $muted;
 }
+.post-limit-desc {
+    max-height: 190px;
+    overflow: hidden;
+}
 /* End Custom Blog Post Styles */

@@ -4686,6 +4686,10 @@
   padding: 0.5rem 1rem;
   border-left: 0.25rem solid #636c72; }
 
+.post-limit-desc {
+  max-height: 190px;
+  overflow: hidden; }
+
 /* End Custom Blog Post Styles */
 /* Begin Custom Body Styles */
 body {
@@ -4906,7 +4910,7 @@ nav {
 /* End Custom Navigation Styles */
 /* Begin Custom Pagination */
 .page-item.disabled .page-link--dark {
-  color: #F5F7F9;
+  color: #c5d1dc;
   pointer-events: none;
   cursor: not-allowed;
   background-color: #2C3035;

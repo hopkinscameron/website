@@ -36,7 +36,7 @@ let transporter = nodemailer.createTransport({
 
 module.exports = function(app, passport) {
 	// =========================================================================
-    // GET =============================================================
+    // GET =====================================================================
     // =========================================================================
 	// GET app name
 	// format /api/appName
@@ -79,16 +79,42 @@ module.exports = function(app, passport) {
 	// format /api/header
 	app.get('/api/header', function (req, res) {
 		var headerFile = "./server/data/header.json";
+		var auth = false;
+
 		// if user is authenticated in the session get admin header
 		if (req.isAuthenticated()){
 			headerFile = "./server/data/header_admin.json";
+			auth = true;
 		}
 
+		// read file
 		fs.readFile(headerFile, 'utf8', function (err, data) {
 			// if no error 
 			if(!err) {
-				// send data
-				res.end( data );
+				// if authenticated
+				if(auth) {
+					// the parsed data
+					var parsedData = null;
+
+					try {
+						// parse data
+						parsedData = JSON.parse(data);
+
+						// set authenticated
+						parsedData.isLoggedIn = true;
+
+						// send data
+						res.end( JSON.stringify(parsedData) );
+					}
+					catch (err) {
+						// send internal error
+						res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+					}
+				}
+				else {
+					// send data
+					res.end(data);
+				}
 			}
 			else {
 				// send internal error
@@ -163,7 +189,7 @@ module.exports = function(app, passport) {
 
 	// GET portfolio page information or subportfolio information
 	// format /api/portfolio
-	// format /api/portfolio?id=subPortfolioID
+	// format /api/portfolio?id=subPortfolioId
 	app.get('/api/portfolio', function (req, res) {
 		// if query
 		if (req.query.id) {
@@ -208,7 +234,7 @@ module.exports = function(app, passport) {
 	// GET blog page information
 	// format /api/blog
 	// format /api/blog?q=someQuery
-	// format /api/blog?id=postID
+	// format /api/blog?id=postId
 	app.get('/api/blog', function (req, res) {
 		// if query on id
 		if (req.query.id) {
@@ -238,23 +264,110 @@ module.exports = function(app, passport) {
 			});
 		}
 		else {
-			// set page number
-			var pageNumber = req.query.page !== undefined ? req.query.page : 1;
-
+			// read file
 			fs.readFile("./server/data/blog.json", 'utf8', function (err, data) {
 				// if no error 
 				if(!err) {
-					// get blog with filter/page number
-					var blog = getBlogData(data, req.query.q, pageNumber);
+					var jsonParse = undefined;
 
-					// send data
-					res.end( JSON.stringify(blog) );
+					// parse json
+					try {
+						jsonParse = JSON.parse(data);
+
+						// set page number
+						var pageNumber = req.query.page !== undefined ? req.query.page : 1;
+
+						// find blog post based on id
+						BlogPost.find({}).exec(function(err, foundBlogs) {
+							// parse the page number
+							pageNumber = parseInt(pageNumber);
+							
+							// map blogs to transform to an array of JSON
+							jsonParse.posts = foundBlogs.map(function(blog) {
+								// get the url
+								var url = blog.customShort;
+
+								// make an object
+								blog = blog.toObject({ hide: 'customShort', transform: true });
+								blog.url = url;
+								return blog;
+							});
+
+							// get the data
+							jsonParse = getBlogData(jsonParse, req.query.q, pageNumber);
+
+							// send data
+							res.end( JSON.stringify(jsonParse) );
+						});
+					}
+					catch (err) {
+						// send internal error
+						return { error: true, title: "Something went wrong.", message: "Something went wrong. " + err.message};
+					}
 				}
 				else {
 					// send internal error
 					res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
 				}
 			});
+		}
+	});
+
+	// GET blog edit page information
+	// format /api/blog/post/:postId/edit
+	app.get('/api/blog/post/:postId/edit', isLoggedIn, function (req, res) {
+		// if query on id
+		if (req.params.postId) {
+			// find blog post based on id
+			SavedBlogPost.findOne({ customShort : req.params.postId }).exec(function(err, foundSavedBlog) {
+				// if error occured
+				if (err) {
+					// send internal error
+					res.status(500).send({ message: "Something went wrong. Please try again later." });
+				}
+				// if blog was found
+				else if(foundSavedBlog) {
+					// set url
+					var url = foundSavedBlog.customShort;
+
+					// make an object
+					foundSavedBlog = foundSavedBlog.toObject({ hide: 'customShort', transform: true });
+					foundSavedBlog.url = url;
+
+					// send data
+					res.end( JSON.stringify(foundSavedBlog) );
+				}
+				else {
+					// find blog post based on id
+					BlogPost.findOne({ customShort : req.params.postId }).exec(function(err, foundBlog) {
+						// if error occured
+						if (err) {
+							// send internal error
+							res.status(500).send({ message: "Something went wrong. Please try again later." });
+						}
+						// if blog was found
+						else if(foundBlog) {
+							// set url
+							var url = foundBlog.customShort;
+
+							// make an object
+							foundBlog = foundBlog.toObject({ hide: 'customShort', transform: true });
+							foundBlog.url = url;
+
+							// send data
+							res.end( JSON.stringify(foundBlog) );
+						}
+						else {
+							// send not found
+							res.status(404).send({ title: "Blog does not exist.", message: "Blog does not exist" });
+						}
+					});
+				}
+			});	
+		}
+		else {
+			// send bad request
+			res.status(400).send({ title: "Bad Request.", message: "Bad request. Must have an id to query on"});
 		}
 	});
 
@@ -305,8 +418,8 @@ module.exports = function(app, passport) {
 	});
 
 	// GET image file in root directory
-	// format /images/:imageID
-	app.get('/images/:imageID', function (req, res) {
+	// format /images/:imageId
+	app.get('/images/:imageId', function (req, res) {
 		// TODO: authentication?
 
 		// set options
@@ -320,17 +433,17 @@ module.exports = function(app, passport) {
 		};
 		
 		// send file
-		res.sendFile(req.params.imageID, options);
+		res.sendFile(req.params.imageId, options);
 	});
 
 	// GET image file in option 1 directory
-	// format /images/:directoryID_1/:imageID
-	app.get('/images/:directoryID_1/:imageID', function (req, res) {
+	// format /images/:directoryId_1/:imageId
+	app.get('/images/:directoryId_1/:imageId', function (req, res) {
 		// TODO: authentication?
 		
 		// set options
 		var options = {
-			root: __dirname + '\\images\\' + req.params.directoryID_1 + '\\',
+			root: __dirname + '\\images\\' + req.params.directoryId_1 + '\\',
 			dotfiles: 'deny',
 			headers: {
 				'x-timestamp': Date.now(),
@@ -339,17 +452,17 @@ module.exports = function(app, passport) {
 		};
 		
 		// send file
-		res.sendFile(req.params.imageID, options);
+		res.sendFile(req.params.imageId, options);
 	});
 
 	// GET image file in option 1 and option 2 directory
-	// format /images/:directoryID_1/:directoryID_2/:imageID
-	app.get('/images/:directoryID_1/:directoryID_2/:imageID', function (req, res) {
+	// format /images/:directoryId_1/:directoryId_2/:imageId
+	app.get('/images/:directoryId_1/:directoryId_2/:imageId', function (req, res) {
 		// TODO: authentication?
 
 		// set options
 		var options = {
-			root: __dirname + '\\images\\' + req.params.directoryID_1 + '\\' + req.params.directoryID_2 + '\\',
+			root: __dirname + '\\images\\' + req.params.directoryId_1 + '\\' + req.params.directoryId_2 + '\\',
 			dotfiles: 'deny',
 			headers: {
 				'x-timestamp': Date.now(),
@@ -358,12 +471,12 @@ module.exports = function(app, passport) {
 		};
 		
 		// send file
-		res.sendFile(req.params.imageID, options);
+		res.sendFile(req.params.imageId, options);
 	});
 
 	// GET file
-	// format /files/:fileID
-	app.get('/files/:fileID', function (req, res) {
+	// format /files/:fileId
+	app.get('/files/:fileId', function (req, res) {
 		// TODO: authentication?
 		
 		// set options
@@ -377,17 +490,17 @@ module.exports = function(app, passport) {
 		};
 
 		// send file
-		res.sendFile(req.params.fileID, options);
+		res.sendFile(req.params.fileId, options);
 	});
 
 	// GET file in option 1 directory
-	// format /files/:directoryID_1/:fileID
-	app.get('/files/:directoryID_1/:fileID', function (req, res) {
+	// format /files/:directoryId_1/:fileId
+	app.get('/files/:directoryId_1/:fileId', function (req, res) {
 		// TODO: authentication?
 		
 		// set options
 		var options = {
-			root: __dirname + '\\files\\' + req.params.directoryID_1 + '\\',
+			root: __dirname + '\\files\\' + req.params.directoryId_1 + '\\',
 			dotfiles: 'deny',
 			headers: {
 				'x-timestamp': Date.now(),
@@ -396,7 +509,7 @@ module.exports = function(app, passport) {
 		};
 		
 		// send file
-		res.sendFile(req.params.fileID, options);
+		res.sendFile(req.params.fileId, options);
 	});
 
 	// GET login page requested
@@ -425,7 +538,7 @@ module.exports = function(app, passport) {
 	});
 
 	// =========================================================================
-    // POST =============================================================
+    // POST ====================================================================
     // =========================================================================
 	// POST send email
 	// format /api/sendEmail
@@ -514,17 +627,48 @@ module.exports = function(app, passport) {
 						if (err) {
 							// send internal error
 							res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
-							return;
 						}	
-
 						// if saved blog found
-						if(savedBlog) {
+						else if(savedBlog) {
 							// return success
 							res.status(200).send({ title: "Success!", message: "You have saved the blog successfully!", blogId: savedBlog.customShort });
 						}
 						else {
-							// send bad request
-							res.status(400).send({ title: "Bad Request.", message: "Bad request. Post does not exist."});
+							// check Published Posts to see if editing a publish post and decided to save
+							BlogPost.findOne({ customShort : req.body.id }).exec(function(err, publishedBlog) {
+								// if there are any errors, return the error
+								if (err) {
+									// send internal error
+									res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+								}	
+								// if saved blog found
+								else if(publishedBlog) {
+									// create the blog
+									var newSavedBlog = new SavedBlogPost({
+										"customShort": publishedBlog.customShort,
+										"title": req.body.title,
+										"image": req.body.image,
+										"shortDescription": req.body.shortDescription,
+										"body": req.body.body
+									});
+
+									// save the blog
+									newSavedBlog.save(function(err, newlySavedBlog) {
+										if (err) {
+											// send internal error
+											res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+										}
+										else {
+											// return success
+											res.status(200).send({ title: "Success!", message: "You have saved the blog successfully!", blogId: newlySavedBlog.customShort });
+										}
+									});
+								}
+								else {									
+									// send bad request
+									res.status(400).send({ title: "Bad Request.", message: "Bad request. Post does not exist."});
+								}
+							});
 						}
 					});
 				}
@@ -539,11 +683,11 @@ module.exports = function(app, passport) {
 
 				// create the blog
 				var savedBlog = new SavedBlogPost({
-					customShort: shortId,
-					title: req.body.title,
-					image: req.body.image,
-					shortDescription: req.body.shortDescription,
-					body: req.body.body
+					"customShort": shortId,
+					"title": req.body.title,
+					"image": req.body.image,
+					"shortDescription": req.body.shortDescription,
+					"body": req.body.body
 				});
 
 				// save the blog
@@ -586,48 +730,47 @@ module.exports = function(app, passport) {
 			if(req.body.id) {
 				// check if valid
 				if(shortid.isValid(req.body.id)) {
-					// generate a short id
-					var shortId = shortid.generate();
-
-					// create the blog
-					var blogPost = new BlogPost({
-						customShort: shortId,
-						title: req.body.title,
-						image: req.body.image,
-						shortDescription: req.body.shortDescription,
-						body: req.body.body
-					});
-
-					// posts the blog
-					blogPost.save(function(err, newPostedBlog) {
+					// find the blog and remove
+					SavedBlogPost.findOne({ customShort : req.body.id }).exec(function(err, savedBlog) {
+						// if there are any errors, return the error
 						if (err) {
 							// send internal error
-							res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+							res.status(500).send({ title: "Something went wrong.", message: "Unable to find saved blog." });
 						}
-						else {
-							// find the blog and remove
-							SavedBlogPost.findOneAndRemove({ customShort : req.body.id }).exec(function(err, savedBlog) {
-								// if there are any errors, return the error
+						else if (savedBlog) {
+							// create the blog
+							var blogPost = new BlogPost({
+								customShort: savedBlog.customShort,
+								title: req.body.title,
+								image: req.body.image,
+								shortDescription: req.body.shortDescription,
+								body: req.body.body
+							});
+
+							// posts the blog
+							blogPost.save(function(err, newPostedBlog) {
 								if (err) {
-									// remove that posted blog
-									BlogPost.findByIdAndRemove(newPostedBlog._id).exec(function(err, postedBlog) {
-										// send internal error
-										res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
-										return;
-									});
+									// send internal error
+									res.status(500).send({ title: "Something went wrong.", message: "Unable to post the blog." });
 								}
 								else {
-									// if saved blog found
-									if(savedBlog) {
-										// return success
-										res.status(200).send({ title: "Success!", message: "You have posted the blog successfully!", newBlogLink: shortId });
-									}
-									else {
-										// send bad request
-										res.status(400).send({ title: "Bad Request.", message: "Bad request. Post does not exist."});
-									}
+									// find the blog and remove
+									SavedBlogPost.findOneAndRemove({ customShort : savedBlog.customShort }).exec(function(err, removedSavedBlog) {
+										if (err) {
+											// send internal error
+											res.status(500).send({ title: "Something went wrong.", message: "Blog posted but unable to remove the saved blog." });
+										}
+										else {
+											// return success
+											res.status(200).send({ title: "Success!", message: "You have posted the blog successfully!", newBlogLink: newPostedBlog.customShort });
+										}
+									});
 								}
 							});
+						}
+						else {
+							// send bad request
+							res.status(400).send({ title: "Bad Request.", message: "Bad request. Post does not exist."});
 						}
 					});
 				}
@@ -743,75 +886,144 @@ module.exports = function(app, passport) {
 			return res.status(200).send({ title: "Success!", message: "Successful login." });
 		})(req, res, next);
 	});
+
+	// =========================================================================
+    // DELETE ==================================================================
+    // =========================================================================
+	// DELETE discards saved blog draft
+	// format /api/deleteSavedBlog
+	app.delete('/api/discardSavedBlogDraft', isLoggedIn, function (req, res) {
+		// validate existence
+		req.checkBody('id', 'Id is required').notEmpty();
+		
+		// validate errors
+		var errors = req.validationErrors();
+
+		// if errors exist
+		if (errors) {
+			var errorText = "";
+			for(var x = 0; x < errors.length; x++) {
+				errorText += errors[x].msg + " ";
+			}
+			// send bad request
+			res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
+		}
+		else {
+			// find the blog and remove
+			SavedBlogPost.findOneAndRemove({ customShort : req.body.id }).exec(function(err, removedSavedBlog) {
+				if (err) {
+					// send internal error
+					res.status(500).send({ title: "Something went wrong.", message: "Blog posted but unable to remove the saved blog." });
+				}
+				else if(removedSavedBlog) {
+					// return success
+					res.status(200).send({ title: "Success!", message: "You have deleted the blog successfully!"});
+				}
+				else {
+					// send bad request 
+					res.status(400).send({ title: "Bad Request.", message: "Bad request. Post does not exist."});
+				}
+			});
+		}
+	});
+
+	// DELETE deleted published blog
+	// format /api/deletePublishedBlog
+	app.delete('/api/deletePublishedBlog', isLoggedIn, function (req, res) {
+		// validate existence
+		req.checkBody('id', 'Id is required').notEmpty();
+		
+		// validate errors
+		var errors = req.validationErrors();
+
+		// if errors exist
+		if (errors) {
+			var errorText = "";
+			for(var x = 0; x < errors.length; x++) {
+				errorText += errors[x].msg + " ";
+			}
+			// send bad request
+			res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
+		}
+		else {
+			// find the blog and remove
+			BlogPost.findOneAndRemove({ customShort : req.body.id }).exec(function(err, removedPostedBlog) {
+				if (err) {
+					// send internal error
+					res.status(500).send({ title: "Something went wrong.", message: "Blog posted but unable to remove the saved blog." });
+				}
+				else if(removedPostedBlog) {
+					// return success
+					res.status(200).send({ title: "Success!", message: "You have deleted the blog successfully!"});
+				}
+				else {
+					// send bad request 
+					res.status(400).send({ title: "Bad Request.", message: "Bad request. Post does not exist."});
+				}
+			});
+		}
+	});
 }
 
 // =========================================================================
-// Private Functions =============================================================
+// Private Functions =======================================================
 // =========================================================================
 // gets the file location of the matching subportfolio id
-function getSubPortfolioFile(subPortfolioID) {
+function getSubPortfolioFile(subPortfolioId) {
 	// if matching the correct id
-	if(subPortfolioID == 'drive-on-metz' || subPortfolioID == 'forsaken'
-		|| subPortfolioID == 'memoryless' || subPortfolioID == 'over-drive'
-		|| subPortfolioID == 'road-rager' || subPortfolioID == 'rollaball-mod'
-		|| subPortfolioID == 'squirvival'
+	if(subPortfolioId == 'drive-on-metz' || subPortfolioId == 'forsaken'
+		|| subPortfolioId == 'memoryless' || subPortfolioId == 'over-drive'
+		|| subPortfolioId == 'road-rager' || subPortfolioId == 'rollaball-mod'
+		|| subPortfolioId == 'squirvival'
 	) {
-		return subPortfolioID + ".json";
+		return subPortfolioId + ".json";
 	}
 	
 	return undefined;
 };
 
 // gets the blog data based on page
-function getBlogData (data, filter, pageNumber) {
-	var itemsPerPage = 3;
+function getBlogData (blog, filter, pageNumber) {
+	var itemsPerPage = 1;
 
-	var jsonParse = undefined;
+	// set default values
+	blog.totalPages = 0;
+	blog.currentPage = 0;
 
-	// parse json
-	try {
-		jsonParse = JSON.parse(data);
-		pageNumber = parseInt(pageNumber);
-		
-		// if posts
-		if(jsonParse.posts) {
-			// if filter
-			if(filter) {
-				jsonParse.posts = applyFilter(jsonParse.posts, filter);
-			}
-
-			// sort by date published
-			jsonParse.posts = sortPublishedBlogs(jsonParse.posts);
-
-			// total pages
-			var totalPages = Math.ceil(jsonParse.posts.length/itemsPerPage);
-
-			// get start/end index
-			var start = (pageNumber - 1) * itemsPerPage,
-				end = start + itemsPerPage;
-			
-			// get the sliced version
-			var sliced = jsonParse.posts.slice(start, end);
-
-			// set new posts with applied start/end
-			jsonParse.posts = jsonParse.posts.slice(start, end);
-
-			// set total pages
-			jsonParse.totalPages = new Array(totalPages);
-
-			// set current page
-			jsonParse.currentPage = pageNumber;
-
-			// return a portion of array
-			return jsonParse;
+	// if posts
+	if(blog.posts.length > 0) {
+		// if filter
+		if(filter) {
+			blog.posts = applyFilter(blog.posts, filter);
 		}
-	}
-	catch (err) {
-		// send internal error
-		return { error: true, title: "Something went wrong.", message: "Something went wrong. " + err.message};
+
+		// sort by date published
+		blog.posts = sortPublishedBlogs(blog.posts);
+
+		// total pages
+		var totalPages = Math.ceil(blog.posts.length/itemsPerPage);
+
+		// get start/end index
+		var start = (pageNumber - 1) * itemsPerPage,
+			end = start + itemsPerPage;
+		
+		// get the sliced version
+		var sliced = blog.posts.slice(start, end);
+
+		// set new posts with applied start/end
+		blog.posts = blog.posts.slice(start, end);
+
+		// set total pages
+		blog.totalPages = new Array(totalPages);
+
+		// set current page
+		blog.currentPage = pageNumber;
+
+		// return a portion of array
+		return blog;
 	}
 	
-	return [];
+	return blog;
 };
 
 // applies filter on array

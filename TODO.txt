@@ -29,5 +29,6 @@ Error
 Login
 
 Admin
-- Make sure saving blogs work
-- Make sure retreiving blogs and saved blogs work
+- On blog page, the paging highlight is not the correct color
+- Actually discard saved changes -> redirect to post page
+- Actually delete a post -> redirect to all blogs page

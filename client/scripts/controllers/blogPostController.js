@@ -12,7 +12,7 @@
     $scope.pageTitle = Service.appName;
 
     // get the parameters
-    var postID = $routeParams.postID;
+    var postId = $routeParams.postId;
 
     // holds the error
     $scope.error = {
@@ -75,7 +75,7 @@
         // complete loader
         cfpLoadingBar.complete();
     };
-
+    
     // initialize page
     function initializePage() {
         // show the header if not shown     
@@ -100,7 +100,7 @@
     // gets the page data
     function getPageData() {        
         // get blog page data
-        Service.getBlogPostPageData(postID).then(function (responseBP) {
+        Service.getBlogPostPageData(postId).then(function (responseBP) {
             // if returned a valid response
             if (!responseBP.error) {
                 // set the data

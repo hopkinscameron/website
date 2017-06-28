@@ -30,9 +30,10 @@
 /* End Colors (Theme) */
 /* Begin Icon Font Path */
 /* End Icon Font Path */
+/* Begin ngDialog */
+/* Begin ngDialog */
 /* 
     Typography + Links 
-    Line height calc: http://www.pearsonified.com/typography/
 */
 /* End Typography + Links  */
 /* End Variables */
@@ -4908,6 +4909,14 @@ nav {
     background-color: #29a8d6; }
 
 /* End Custom Navigation Styles */
+/* Begin Custom ngDialog */
+.ngdialog.ngdialog-theme-default.custom-width .ngdialog-content {
+  width: 600px; }
+
+.ngdialog.ngdialog-theme-plain.custom-width .ngdialog-content {
+  width: 600px; }
+
+/* End Custom ngDialog */
 /* Begin Custom Pagination */
 .page-item.disabled .page-link--dark {
   color: #c5d1dc;
@@ -4915,6 +4924,12 @@ nav {
   cursor: not-allowed;
   background-color: #2C3035;
   border-color: #434951; }
+
+.page-item.active .page-link--dark {
+  z-index: 2;
+  color: #F5F7F9;
+  background-color: #29a8d6;
+  border-color: #29a8d6; }
 
 .page-link--dark {
   color: #29a8d6;
@@ -4924,12 +4939,6 @@ nav {
     color: #F5F7F9;
     background-color: #29a8d6;
     border-color: #29a8d6; }
-
-.page-item.active.page-link--dark {
-  z-index: 2;
-  color: #F5F7F9;
-  background-color: #29a8d6;
-  border-color: #29a8d6; }
 
 /* End Custom Pagination */
 /* Begin Custom Scroll Bar Styles */
@@ -4997,8 +5006,6 @@ a {
   text-decoration: underline; }
   a.decoration--never {
     text-decoration: none; }
-    a.decoration--never:hover, a.decoration--never:active, a.decoration--never:focus {
-      color: #29a8d6; }
   a:hover, a:active, a:focus {
     color: #29a8d6; }
 

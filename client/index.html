@@ -28,6 +28,9 @@
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" rel="stylesheet">
         <link href="./styles/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="./styles/angular-loading-bar/loading-bar.min.css" rel='stylesheet' type='text/css' media='all' />
+        <link href="./styles/ng-dialog/ngDialog.min.css" rel="stylesheet" type="text/css">
+        <link href="./styles/ng-dialog/ngDialog-theme-default.min.css" rel="stylesheet" type="text/css">
+        <link href="./styles/ng-dialog/ngDialog-theme-plain.min.css" rel="stylesheet" type="text/css">
         <link href="./styles/style.css" media="screen" title="CSS" rel="stylesheet" type="text/css" />
         <!-- End Styles -->
 
@@ -61,31 +64,35 @@
         <script src='./scripts/third-party-scripts/angular-loading-bar/loading-bar.min.js'></script>
         <script src="./scripts/third-party-scripts/tinymce/tinymce.js"></script>
         <script src="./scripts/third-party-scripts/angular-ui-tinymce/src/tinymce.js"></script>
+        <script src="./scripts/third-party-scripts/ng-dialog/ngDialog.min.js"></script>
         <script src="./scripts/app/main.js"></script>
         <script src="./scripts/services/Service.js"></script>
         <script src="./scripts/services/DataAccessService.js"></script>
-        <script src="./scripts/controllers/errorController.js"></script>
-        <script src="./scripts/controllers/headerController.js"></script>
-        <script src="./scripts/controllers/footerController.js"></script>
-        <script src="./scripts/controllers/homeController.js"></script>
-        <script src="./scripts/controllers/aboutController.js"></script>
-        <script src="./scripts/controllers/resumeController.js"></script>
-        <script src="./scripts/controllers/portfolioController.js"></script>
-        <script src="./scripts/controllers/subPortfolioController.js"></script>
-        <script src="./scripts/controllers/blogController.js"></script>
-        <script src="./scripts/controllers/blogPostController.js"></script>
-        <script src="./scripts/controllers/blogPostEditController.js"></script>
-        <script src="./scripts/controllers/contactController.js"></script>
-        <script src="./scripts/controllers/adminController.js"></script>
-        <script src="./scripts/controllers/loginController.js"></script>
-        <script src="./scripts/controllers/logoutController.js"></script>
+        <script src="./scripts/controllers/error/errorController.js"></script>
+        <script src="./scripts/controllers/header-footer/headerController.js"></script>
+        <script src="./scripts/controllers/header-footer/footerController.js"></script>
+        <script src="./scripts/controllers/main/homeController.js"></script>
+        <script src="./scripts/controllers/main/aboutController.js"></script>
+        <script src="./scripts/controllers/main/resumeController.js"></script>
+        <script src="./scripts/controllers/main/portfolioController.js"></script>
+        <script src="./scripts/controllers/main/subPortfolioController.js"></script>
+        <script src="./scripts/controllers/main/blog/blogController.js"></script>
+        <script src="./scripts/controllers/main/blog/blogPostController.js"></script>
+        <script src="./scripts/controllers/main/blog/blogPostEditController.js"></script>
+        <script src="./scripts/controllers/main/contactController.js"></script>
+        <script src="./scripts/controllers/admin/adminController.js"></script>
+        <script src="./scripts/controllers/admin/loginController.js"></script>
+        <script src="./scripts/controllers/admin/logoutController.js"></script>
+        <script src="./scripts/controllers/dialogs/dialogErrorController.js"></script>
+        <script src="./scripts/controllers/dialogs/dialogSuccessController.js"></script>
+        <script src="./scripts/controllers/dialogs/dialogWarningController.js"></script>
         <!-- End Scripts -->
     </head>
     <!-- End Head -->
     <!-- Begin Body -->
     <body class="">
         <!-- Begin Header -->
-        <div ng-include="'./partials/header.html'"></div>
+        <div ng-include="'./partials/header-footer/header.html'"></div>
         <!-- End Header -->
 
         <!-- Begin NG View -->
@@ -93,7 +100,7 @@
         <!-- End NG View -->
 
         <!-- Begin Footer -->
-        <div id="footer" ng-include="'./partials/footer.html'"></div>
+        <div id="footer" ng-include="'./partials/header-footer/footer.html'"></div>
         <!-- End Footer -->
     </body>
     <!-- End Body -->

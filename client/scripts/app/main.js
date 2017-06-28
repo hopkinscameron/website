@@ -1,5 +1,5 @@
 ﻿// set up the application
-var app = angular.module("app", ['ngRoute', 'ngSanitize', 'ngAnimate', 'angular-loading-bar', 'ui.tinymce'])
+var app = angular.module("app", ['ngRoute', 'ngSanitize', 'ngAnimate', , 'ngDialog', 'angular-loading-bar', 'ui.tinymce'])
     .filter('trustUrl', function ($sce) {
     return function (url) {
         return $sce.trustAsResourceUrl(url);
@@ -20,44 +20,44 @@ app.config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider', func
 
     $routeProvider
         .when('/', {
-            templateUrl: './partials/home.html'
+            templateUrl: './partials/main/home.html'
         })
         .when('/about', {
-            templateUrl: './partials/about.html'
+            templateUrl: './partials/main/about.html'
         })
         .when('/resume', {
-            templateUrl: './partials/resume.html'
+            templateUrl: './partials/main/resume.html'
         })
         .when('/portfolio', {
-            templateUrl: './partials/portfolio.html'
+            templateUrl: './partials/main/portfolio.html'
         })
         .when('/portfolio/:subPortfolioId', {
-            templateUrl: './partials/sub-portfolio.html'
+            templateUrl: './partials/main/sub-portfolio.html'
         })
         .when('/blog', {
-            templateUrl: './partials/blog.html'/*,
+            templateUrl: './partials/main/blog/blog.html'/*,
             reloadOnSearch: false*/
         })
         .when('/blog/post/:postId', {
-            templateUrl: './partials/blogPost.html'
+            templateUrl: './partials/main/blog/blogPost.html'
         })
         .when('/blog/post/:postId/edit', {
-            templateUrl: './partials/blogPostEdit.html'
+            templateUrl: './partials/main/blog/blogPostEdit.html'
         })
         .when('/contact', {
-            templateUrl: './partials/contact.html'
+            templateUrl: './partials/main/contact.html'
         })
         .when('/admin', {
-            templateUrl: './partials/admin.html'
+            templateUrl: './partials/admin/admin.html'
         })
         .when('/login', {
-            templateUrl: './partials/login.html'
+            templateUrl: './partials/admin/login.html'
         })
         .when('/logout', {
-            templateUrl: './partials/logout.html'
+            templateUrl: './partials/admin/logout.html'
         })
         .otherwise({
-            templateUrl: './partials/error.html'
+            templateUrl: './partials/error/error.html'
         })
 
     // check browser support

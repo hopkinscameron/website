@@ -4,10 +4,7 @@ a {
 	text-decoration: underline;
 
 	&.decoration--never {
-		text-decoration: none;
-		&:hover, &:active, &:focus {
-			color: $brand-theme-main;
-		}
+		text-decoration: none;	
 	}
 	&:hover, &:active, &:focus {
 		color: $brand-theme-main;

@@ -236,10 +236,12 @@ module.exports = function(app, passport) {
 	// format /api/blog?q=someQuery
 	// format /api/blog?id=postId
 	app.get('/api/blog', function (req, res) {
+		var postId = req.query.id;
+		
 		// if query on id
-		if (req.query.id) {
+		if (postId) {
 			// find blog post based on id
-			BlogPost.findOne({ customShort : req.query.id }).exec(function(err, foundBlog) {
+			BlogPost.findOne({ customShort : postId }).exec(function(err, foundBlog) {
 				// if error occured
 				if (err) {
 					// send internal error
@@ -609,10 +611,13 @@ module.exports = function(app, passport) {
 			res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
 		}
 		else {
+			// set post id
+			var postId = req.body.id;
+
 			// check if id exists
-			if(req.body.id) {
+			if(postId) {
 				// check if valid
-				if(shortid.isValid(req.body.id)) {
+				if(shortid.isValid(postId)) {
 					// set updated values
 					var updatedValues = {
 						"title": req.body.title,
@@ -622,7 +627,7 @@ module.exports = function(app, passport) {
 					};
 					
 					// find the blog and update
-					SavedBlogPost.findOneAndUpdate({ customShort : req.body.id }, updatedValues).exec(function(err, savedBlog) {
+					SavedBlogPost.findOneAndUpdate({ customShort : postId }, updatedValues).exec(function(err, savedBlog) {
 						// if there are any errors, return the error
 						if (err) {
 							// send internal error
@@ -630,12 +635,19 @@ module.exports = function(app, passport) {
 						}	
 						// if saved blog found
 						else if(savedBlog) {
-							// return success
-							res.status(200).send({ title: "Success!", message: "You have saved the blog successfully!", blogId: savedBlog.customShort });
+							// set url
+							var url = savedBlog.customShort;
+
+							// make an object
+							savedBlog = savedBlog.toObject({ hide: 'customShort', transform: true });
+							savedBlog.url = url;
+
+							// send success with blog data
+							res.end( JSON.stringify(savedBlog) );
 						}
 						else {
 							// check Published Posts to see if editing a publish post and decided to save
-							BlogPost.findOne({ customShort : req.body.id }).exec(function(err, publishedBlog) {
+							BlogPost.findOne({ customShort : postId }).exec(function(err, publishedBlog) {
 								// if there are any errors, return the error
 								if (err) {
 									// send internal error
@@ -659,8 +671,15 @@ module.exports = function(app, passport) {
 											res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
 										}
 										else {
-											// return success
-											res.status(200).send({ title: "Success!", message: "You have saved the blog successfully!", blogId: newlySavedBlog.customShort });
+											// set url
+											var url = newlySavedBlog.customShort;
+
+											// make an object
+											newlySavedBlog = newlySavedBlog.toObject({ hide: 'customShort', transform: true });
+											newlySavedBlog.url = url;
+
+											// send success with blog data
+											res.end( JSON.stringify(newlySavedBlog) );
 										}
 									});
 								}
@@ -697,8 +716,15 @@ module.exports = function(app, passport) {
 						res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
 					}
 					else {
-						// return success
-						res.status(200).send({ title: "Success!", message: "You have saved the blog successfully!", blogId: shortId });
+						// set url
+						var url = newSavedBlog.customShort;
+
+						// make an object
+						newSavedBlog = newSavedBlog.toObject({ hide: 'customShort', transform: true });
+						newSavedBlog.url = url;
+
+						// send success with blog data
+						res.end( JSON.stringify(newSavedBlog) );
 					}
 				});
 			}
@@ -726,12 +752,15 @@ module.exports = function(app, passport) {
 			res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
 		}
 		else {
+			// set post id
+			var postId = req.body.id;
+
 			// check if id exists
-			if(req.body.id) {
+			if(postId) {
 				// check if valid
-				if(shortid.isValid(req.body.id)) {
+				if(shortid.isValid(postId)) {
 					// find the blog and remove
-					SavedBlogPost.findOne({ customShort : req.body.id }).exec(function(err, savedBlog) {
+					SavedBlogPost.findOne({ customShort : postId }).exec(function(err, savedBlog) {
 						// if there are any errors, return the error
 						if (err) {
 							// send internal error
@@ -761,8 +790,15 @@ module.exports = function(app, passport) {
 											res.status(500).send({ title: "Something went wrong.", message: "Blog posted but unable to remove the saved blog." });
 										}
 										else {
-											// return success
-											res.status(200).send({ title: "Success!", message: "You have posted the blog successfully!", newBlogLink: newPostedBlog.customShort });
+											// set url
+											var url = newPostedBlog.customShort;
+
+											// make an object
+											newPostedBlog = newPostedBlog.toObject({ hide: 'customShort', transform: true });
+											newPostedBlog.url = url;
+
+											// send success with blog data
+											res.end( JSON.stringify(newPostedBlog) );
 										}
 									});
 								}
@@ -800,8 +836,15 @@ module.exports = function(app, passport) {
 						res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
 					}
 					else {
-						// return success
-						res.status(200).send({ title: "Success!", message: "You have posted the blog successfully!", newBlogLink: shortId });
+						// set url
+						var url = newPostedBlog.customShort;
+
+						// make an object
+						newPostedBlog = newPostedBlog.toObject({ hide: 'customShort', transform: true });
+						newPostedBlog.url = url;
+
+						// send success with blog data
+						res.end( JSON.stringify(newPostedBlog) );
 					}
 				});
 			}
@@ -909,8 +952,11 @@ module.exports = function(app, passport) {
 			res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
 		}
 		else {
+			// set post id
+			var postId = req.body.id;
+
 			// find the blog and remove
-			SavedBlogPost.findOneAndRemove({ customShort : req.body.id }).exec(function(err, removedSavedBlog) {
+			SavedBlogPost.findOneAndRemove({ customShort : postId }).exec(function(err, removedSavedBlog) {
 				if (err) {
 					// send internal error
 					res.status(500).send({ title: "Something went wrong.", message: "Blog posted but unable to remove the saved blog." });
@@ -946,8 +992,11 @@ module.exports = function(app, passport) {
 			res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
 		}
 		else {
+			// set post id
+			var postId = req.body.id;
+
 			// find the blog and remove
-			BlogPost.findOneAndRemove({ customShort : req.body.id }).exec(function(err, removedPostedBlog) {
+			BlogPost.findOneAndRemove({ customShort : postId }).exec(function(err, removedPostedBlog) {
 				if (err) {
 					// send internal error
 					res.status(500).send({ title: "Something went wrong.", message: "Blog posted but unable to remove the saved blog." });

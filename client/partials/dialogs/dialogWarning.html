@@ -1,0 +1,44 @@
+﻿<!-- Begin Warning Dialog -->
+<section>
+    <form class="">
+        <!-- Begin Title Container -->
+        <div class="container">
+            <!-- Begin Warning Title -->
+            <h3 class="">{{warningHead}}</h3>
+            <!-- Begin Warning Title -->
+        </div>
+        <!-- End Title Container -->
+        <!-- Begin Body Container -->
+        <div class="container">
+            <!-- Begin Warning Body -->
+            <p>{{warningBody}}</p>
+            <!-- Begin Warning Body -->
+            <!-- Begin Discard Blog Draft Controller -->
+            <div class="row align-items-center text-center" ng-if="dialogDiscardBlogDraftController">
+                <!-- Begin No/Yes Buttons -->
+                <div class="col text-left">
+                    <button type="button" class="btn btn-theme-primary" ng-click="cancel()">No, let me keep this just in case</button>
+                </div>
+                <div class="col text-right">
+                    <button type="button" class="btn btn-danger" ng-click="discardDraft()">Yes, discard</button>
+                </div>
+                <!-- Begin No/Yes Buttons -->
+            </div>
+            <!-- End Discard Blog Draft Controller -->
+            <!-- Begin Delete Blog Controller -->
+            <div class="row align-items-center text-center" ng-if="dialogDeleteBlogController">
+                <!-- Begin No/Yes Buttons -->
+                <div class="col text-left">
+                    <button type="button" class="btn btn-theme-primary" ng-click="cancel()">No, let me keep this just in case</button>
+                </div>
+                <div class="col text-right">
+                    <button type="button" class="btn btn-danger" ng-click="deleteBlog()">Yes, delete it all</button>
+                </div>
+                <!-- Begin No/Yes Buttons -->
+            </div>
+            <!-- End Delete Blog Controller -->
+        </div>
+        <!-- End Body Container -->
+    </form>
+</section>
+<!-- End Warning Dialog -->

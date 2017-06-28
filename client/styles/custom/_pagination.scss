@@ -8,20 +8,20 @@
         border-color: lighten($dark, 10%);
     }
 } 
+.page-item.active {
+    & .page-link--dark {
+        z-index: 2;
+        color: $text-color;
+        background-color: $brand-theme-main;
+        border-color: $brand-theme-main;
+    }
+}
 .page-link--dark {
     color: $brand-theme-main;
     background-color: $dark;
     border: 1px solid lighten($dark, 10%);
 
     &:focus, &:hover {
-        color: $text-color;
-        background-color: $brand-theme-main;
-        border-color: $brand-theme-main;
-    }
-}
-.page-item.active {
-    &.page-link--dark {
-        z-index: 2;
         color: $text-color;
         background-color: $brand-theme-main;
         border-color: $brand-theme-main;

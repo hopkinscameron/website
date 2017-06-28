@@ -36,8 +36,7 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
             "title": false,
             "shortDescription": false,
             "body": false
-        },
-        "id": undefined
+        }
     };
 
     // tinyMCE options
@@ -68,43 +67,6 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
         skin: 'lightgray',
         theme : 'modern'
     };
-
-    // the confirmation modal
-    $scope.confirmationModal = {
-        "type": "",
-        "title": "",
-        "body": "",
-        "closeAction": ""        
-    };
-
-    // the "save post" modal attributes
-    $scope.savedPostModalAttributes = {
-        "type": "Save",
-        "title": "Successfully Saved!",
-        "body": "You have successfully saved this post.",
-        "closeAction": ""
-    }
-
-    // the "post blog" modal attributes
-    $scope.postBlogModalAttributes = {
-        "type": "Post",
-        "title": "Successful Post!",
-        "body": "You have successfully posted this blog.",
-        "closeAction": "refresh"
-    }
-
-    // when confirmation modal is being closed
-    angular.element('#confirmationModal').on('hidden.bs.modal', function (e) {
-        // if there is an action
-        if($scope.confirmationModal.closeAction == "refresh") {
-            // refresh the page
-            $window.location.reload();
-        }
-        else if($scope.confirmationModal.type == $scope.postBlogModalAttributes.type && $scope.confirmationModal.closeAction == "goToBlog") {
-            // redirect to blog
-            $window.location.href = "#" + $scope.confirmationModal.newBlogLink;
-        }
-    });
     
     // determines if the page is fully loaded
     $scope.pageFullyLoaded = false;
@@ -182,7 +144,7 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
     // checks if post is currently active (populated)
     $scope.isPostActive = function (savedPost) {
         // check both ids defined and check equality on ids
-        return savedPost.blogId && $scope.adminBlogPostForm.blogId && savedPost.blogId == $scope.adminBlogPostForm.blogId
+        return savedPost.url && $scope.currentWorkingPost && savedPost.url == $scope.currentWorkingPost.url;
     };
 
     // populates form with previously saved data
@@ -195,11 +157,13 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
         $scope.adminBlogPostForm.errors.errorMessage = "";
 
         // populate form
-        $scope.adminBlogPostForm.blogId = savedPost.blogId;
         $scope.adminBlogPostForm.inputs.title = savedPost.title;
         $scope.adminBlogPostForm.inputs.image = savedPost.image;
         $scope.adminBlogPostForm.inputs.shortDescription = savedPost.shortDescription;
         $scope.adminBlogPostForm.inputs.body = savedPost.body;
+
+        // set the current working post
+        $scope.currentWorkingPost = savedPost;
     };
 
     // on call event when the focus enters
@@ -235,7 +199,7 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
 
             // the data to send
             var blogPostData = {
-                "id": $scope.adminBlogPostForm.blogId,
+                "id": $scope.currentWorkingPost ? $scope.currentWorkingPost.url : undefined,
                 "title": $scope.adminBlogPostForm.inputs.title,
                 "image": $scope.adminBlogPostForm.inputs.image,
                 "shortDescription": $scope.adminBlogPostForm.inputs.shortDescription,
@@ -256,17 +220,11 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
                             // enable button showing the form has been saved
                             $scope.adminBlogPostForm.formSubmitted = false;
 
-                            // set modal details
-                            $scope.confirmationModal.type = $scope.savedPostModalAttributes.type;
-                            $scope.confirmationModal.title = $scope.savedPostModalAttributes.title;
-                            $scope.confirmationModal.body = $scope.savedPostModalAttributes.body;
-                            $scope.confirmationModal.closeAction = $scope.savedPostModalAttributes.closeAction;
+                            // set the current working post
+                            $scope.currentWorkingPost = responseSB;
 
-                            // set id
-                            $scope.adminBlogPostForm.blogId = responseSB.blogId;
-
-                            // show confirmation modal
-                            angular.element('#confirmationModal').modal('toggle');
+                            // show success dialog
+                            showSaveSuccessDialog();
                         }
                         else {
                             // set error
@@ -319,7 +277,7 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
 
             // the data to send
             var blogPostData = {
-                "id": $scope.adminBlogPostForm.blogId,
+                "id": $scope.currentWorkingPost ? $scope.currentWorkingPost.url : undefined,
                 "title": $scope.adminBlogPostForm.inputs.title,
                 "image": $scope.adminBlogPostForm.inputs.image,
                 "shortDescription": $scope.adminBlogPostForm.inputs.shortDescription,
@@ -330,15 +288,8 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
             Service.postBlog(blogPostData).then(function (responsePB) {
                 // if no error
                 if(!responsePB.error) {
-                    // set modal details
-                    $scope.confirmationModal.type = $scope.postBlogModalAttributes.type;
-                    $scope.confirmationModal.title = $scope.postBlogModalAttributes.title;
-                    $scope.confirmationModal.body = $scope.postBlogModalAttributes.body;
-                    $scope.confirmationModal.closeAction = $scope.postBlogModalAttributes.closeAction;
-                    $scope.confirmationModal.newBlogLink = "/blog/post/" + responsePB.newBlogLink;
-
-                    // show confirmation modal
-                    angular.element('#confirmationModal').modal('toggle');
+                    // show success dialog
+                    showPostSuccessDialog();
                 }
                 else {
                     // show error
@@ -358,7 +309,25 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
 
     // discards the draft
     $scope.discardDraft = function () {
-
+        // show dialog
+		var discardDraftDialog = ngDialog.open({
+			template: '/partials/dialogs/dialogWarning.html',
+			controller: 'discardBlogDraftController',
+			className: 'ngdialog-theme-default custom-width',
+			showClose: false,
+			closeByEscape: false,
+			closeByDocument: false,
+            data: { 'draftToBeDiscarded': $scope.post }
+		});
+		
+		// on completion of close
+        discardDraftDialog.closePromise.then(function (data) {
+            // if there is data
+			if (data.value && data.value.accepted && data.value.draftToBeDiscarded) {
+				// discard blog draft
+				discardBlogDraft(data.value.draftToBeDiscarded);
+			}
+        });
     };
     
     // initialize page
@@ -485,5 +454,71 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
             $scope.adminBlogPostForm.errors.title = true;
             $scope.adminBlogPostForm.errors.isError = true;
         }
+    };
+
+    // discards the blog draft
+    function discardBlogDraft(draftToBeDiscarded) {
+        // TODO: discard
+        
+        // create the header and body for the success
+        var header = "It's done, no turning back";
+        var body = "You have successfully discarded.";
+
+        // show dialog
+        var successfulDiscardDialog = ngDialog.open({
+            template: '/partials/dialogs/dialogSuccess.html',
+            controller: 'dialogSuccessController',
+            className: 'ngdialog-theme-default custom-width',
+            data: { 'successHeader': header, 'successBody': body }
+        });
+
+        // on completion of close
+        successfulDiscardDialog.closePromise.then(function (data) {
+            // redirect to this blog's page
+            $window.location.href = "#" + $scope.post.url;
+        });
+    };
+
+    // shows successful dialog for saving blog
+    function showSaveSuccessDialog() {
+        // create the header and body for the success
+        var header = "Success!";
+        var body = "You have successfully saved this draft.";
+
+        // show dialog
+        ngDialog.open({
+            template: '/partials/dialogs/dialogSuccess.html',
+            controller: 'dialogSuccessController',
+            className: 'ngdialog-theme-default custom-width',
+            data: { 'successHeader': header, 'successBody': body }
+        });
+    };
+
+    // shows successful dialog for posting blog
+    function showPostSuccessDialog() {
+        // create the header and body for the success
+        var header = "Success!";
+        var body = "You have successfully saved this draft.";
+
+        // show dialog
+        var successfulPostDialog = ngDialog.open({
+            template: '/partials/dialogs/dialogSuccess.html',
+            controller: 'dialogSuccessfulPostController',
+            className: 'ngdialog-theme-default custom-width',
+            data: { 'successHeader': header, 'successBody': body }
+        });
+
+        // on completion of close
+        successfulPostDialog.closePromise.then(function (data) {
+            // check if user wanted to go to blog page or stay here
+            if(data.value && data.value.accepted) {
+                // redirect to this blog's page
+                $window.location.href = "#" + $scope.post.url;
+            }
+            else {
+                // reload page instead
+                $window.location.reload();
+            }
+        });
     };
 }]);

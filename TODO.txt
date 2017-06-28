@@ -29,6 +29,8 @@ Error
 Login
 
 Admin
-- On blog page, the paging highlight is not the correct color
 - Actually discard saved changes -> redirect to post page
 - Actually delete a post -> redirect to all blogs page
+- Make folders to put certain files in on client side
+- Customize ngDialog to dark theme
+- If error occurrs in form submission for blog, show error dialog

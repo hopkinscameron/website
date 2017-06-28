@@ -5,7 +5,7 @@
         <!-- Begin Page Fully Loaded With Errors -->
         <div id="pageShow" class="collapse" ng-if="pageFullyLoaded && error.error">
             <div ng-controller="errorController" ng-init="init(error.title, error.status, error.message)">
-                <div ng-include="'/partials/error.html'"></div>
+                <div ng-include="'/partials/error/error.html'"></div>
             </div>
         </div>
         <!-- End Page Fully Loaded With Errors -->
@@ -94,49 +94,5 @@
         <!-- End Page Fully Loaded With No Errors -->
     </div>
     <!-- End Container -->
-    <!-- Begin Confirmation Modal -->
-    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content modal-content--dark">
-                <!-- Begin Modal Header -->
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmationModalLabel">{{confirmationModal.title}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <!-- End Modal Header -->
-                <!-- Begin Modal Body -->
-                <div class="modal-body">
-                    <span ng-bind-html="confirmationModal.body | trustHTML"></span>
-                </div>
-                <!-- End Modal Body -->
-                <!-- Begin Modal Footer -->
-                <div class="modal-footer">
-                    <!-- Begin Action For Save Modal -->
-                    <button type="button" class="btn btn-theme-primary" data-dismiss="modal" ng-if="confirmationModal.type == savedPostModalAttributes.type">Okay</button>
-                    <!-- End Action For Save Modal -->
-                    <!-- Begin Action For Post Modal -->
-                    <div class="col" ng-if="confirmationModal.type == postBlogModalAttributes.type">
-                        <div class="row align-items-center">
-                            <!-- Begin Dismiss -->
-                            <div class="col text-left">
-                                <button type="button" class="btn btn-theme-primary" ng-click="confirmationModal.closeAction = 'refresh'" data-dismiss="modal">Dismiss</button>
-                            </div>
-                            <!-- End Dismiss -->
-                            <!-- Begin Take To Blog -->
-                            <div class="col text-right">
-                                <p role="button" class="mb-0" ng-click="confirmationModal.closeAction = 'goToBlog'" data-dismiss="modal">Take me to view post <i class="fa fa-arrow-right" aria-hidden="true"></i></p>
-                            </div>
-                            <!-- End Take To Blog -->
-                        </div>
-                    </div>
-                    <!-- End Action For Post Modal -->
-                </div>
-                <!-- End Modal Footer -->
-            </div>
-        </div>
-    </div>
-    <!-- End Confirmation Modal -->
 </section>
 <!-- End Admin Page -->

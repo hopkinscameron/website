@@ -63,8 +63,8 @@ SavedBlogPostSchema.options.toObject.transform = function (doc, ret, options) {
         });
     }
     
-    // replace short id with blog id
-    ret.blogId = shortId;
+    // replace short id with url
+    ret.url = shortId;
 
     // always hide the id and version
     delete ret['_id'];

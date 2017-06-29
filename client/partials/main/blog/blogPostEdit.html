@@ -11,13 +11,24 @@
         <!-- End Page Fully Loaded With Errors -->
         <!-- Begin Page Fully Loaded With No Errors -->
         <div id="pageShow" class="animated animation-delay--md fadeIn collapse" ng-if="pageFullyLoaded && !error.error">
+            <!-- Begin Page Title -->
+            <h2 class="font-weight-bold text-uppercase mb-3">Blog Post Edit</h2>
+            <!-- End Page Title -->
             <!-- Begin Blog Insert -->
             <div class="col-md-8 offset-md-2 animated animation-delay--xmd fadeInUp">
                 <div class="card card--dark card-block box-shadow--sm">
+                    <!-- Begin Form Error -->
                     <div style="padding-bottom: 24px;" ng-if="!blogPostEditForm.errors.isError"></div>
                     <div ng-if="blogPostEditForm.errors.isError">
                         <span style="color: red;">{{blogPostEditForm.errors.errorMessage}}</span>
                     </div>
+                    <!-- End Form Error -->
+                    <!-- Begin Last Saved -->
+                    <!-- Begin Page Title -->
+                    <h6 class="font-weight-bold text-center" ng-if="post.dateSaved">Date Last Saved: {{$root.parseDateTime(post.dateSaved)}}</h6>
+                    <!-- End Page Title -->
+                    <!-- ENd Last Saved -->
+                    <!-- Begin Form -->
                     <form>
                         <div class="form-group pl-3 pr-3">
                             <!-- Begin Title -->
@@ -56,12 +67,12 @@
                             <div class="row container-fluid">
                                 <!-- Begin Post -->
                                 <div class="col text-left">
-                                    <button class="btn btn-theme-primary" ng-click="post()" ng-disabled="blogPostEditForm.formSubmitted || blogPostEditForm.errors.isError">Post</button>
+                                    <button class="btn btn-theme-primary" ng-click="postBlog()" ng-disabled="blogPostEditForm.formSubmitted || blogPostEditForm.errors.isError">Post</button>
                                 </div>
                                 <!-- End Post -->
                                 <!-- Begin Delete -->
                                 <div class="col text-center">
-                                    <button class="btn btn-danger" ng-click="delete()">Delete Post</button>
+                                    <button class="btn btn-danger" ng-click="deleteBlog()">Delete Post</button>
                                 </div>
                                 <!-- End Delete -->
                                 <!-- Begin Discard Draft -->
@@ -71,13 +82,14 @@
                                 <!-- End Discard Draft -->
                                 <!-- Begin Save -->
                                 <div class="col text-right">
-                                    <button class="btn btn-theme-primary" ng-click="save()">Save</button>
+                                    <button class="btn btn-theme-primary" ng-click="saveBlog()">Save</button>
                                 </div>
                                 <!-- End Save -->
                             </div>
                             <!-- End Post/Save/Delete -->
                         </div>
                     </form>
+                    <!-- End Form -->
                 </div>
             </div>
             <!-- End Blog Insert -->

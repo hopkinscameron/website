@@ -50,7 +50,17 @@ var BlogPostSchema = new Schema({
         type: Date,
         required: true,
         default: new Date()
+    },
+    dateUpdated: {
+        type: Date
     }
+});
+
+// function that is called before updating to database
+BlogPostSchema.pre('findOneAndUpdate', function(next) {
+    this.update({},{ $set: { dateUpdated: new Date() } }).exec(function(err, savedBlog) {
+        return next();
+    });
 });
 
 // specify the transform schema option

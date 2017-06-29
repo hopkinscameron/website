@@ -30,10 +30,17 @@
                     <div class="post-img--medium rounded" style="background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.15) 100%), url({{post.image}}); background-size: cover; background-position: center center; background-repeat: no-repeat;" ng-if="post.image.length > 0"></div>
                     <!-- End Image -->
                     <!-- Begin Publish Date -->
-                    <div class="text-center mt-4 mb-4 divider">
+                    <div class="text-center mt-4 divider" ng-class="{'mb-4': !post.dateUpdated}">
                         <div></div>
-                        <span class="card-text font-italic text-muted">Publish on: {{$root.parseDateTime(post.datePublished)}}</span>
+                        <span class="card-text font-italic text-muted">Published on: {{$root.parseDateTime(post.datePublished)}}</span>
                         <div></div>
+                    </div>
+                    <!-- End Publish Date -->
+                    <!-- Begin Publish Date -->
+                    <div class="text-center mt-3 mb-4 divider" ng-if="post.dateUpdated">
+                        <div style="background: transparent;"></div>
+                        <span class="card-text font-italic text-muted">Updated on: {{$root.parseDateTime(post.dateUpdated)}}</span>
+                        <div style="background: transparent;"></div>
                     </div>
                     <!-- End Publish Date -->
                     <!-- Begin Title -->

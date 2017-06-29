@@ -9,11 +9,17 @@ var nodemailer = require('nodemailer');
 // the file system to read/write from/to files locallly
 var fs = require("fs");
 
+// short id generator
+var shortid = require('shortid');
+
 // the secrets
 var secrets = require('./secrets');
 
-// short id generator
-var shortid = require('shortid');
+// chalk for console logging
+var clcConfig = require('.././config/clcConfig');
+
+// error message center
+var errorMessageCenter = require('.././config/errorMessages');
 
 // load up the Blog Post model
 var BlogPost = require('./models/model-blog-post');
@@ -65,12 +71,14 @@ module.exports = function(app, passport) {
 				}
 				catch (err) {
 					// send internal error
-					res.status(500).send({ error: true, title: "Something went wrong.", message: "Something went wrong. " + err.message});
+					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message });
+					console.log(clcConfig.error(err.message));
 				}
 			}
 			else {
 				// send internal error
-				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message });
+				console.log(clcConfig.error(err.message));
 			}
 		});
 	});
@@ -108,7 +116,8 @@ module.exports = function(app, passport) {
 					}
 					catch (err) {
 						// send internal error
-						res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+						res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+						console.log(clcConfig.error(err.message));
 					}
 				}
 				else {
@@ -118,7 +127,8 @@ module.exports = function(app, passport) {
 			}
 			else {
 				// send internal error
-				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+				console.log(clcConfig.error(err.message));
 			}
 		});
 	});
@@ -134,7 +144,8 @@ module.exports = function(app, passport) {
 			}
 			else {
 				// send internal error
-				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+				console.log(clcConfig.error(err.message));
 			}
 		});
 	});
@@ -150,7 +161,8 @@ module.exports = function(app, passport) {
 			}
 			else {
 				// send internal error
-				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+				console.log(clcConfig.error(err.message));
 			}
 		});
 	});
@@ -166,7 +178,8 @@ module.exports = function(app, passport) {
 			}
 			else {
 				// send internal error
-				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+				console.log(clcConfig.error(err.message));
 			}
 		});
 	});
@@ -182,7 +195,8 @@ module.exports = function(app, passport) {
 			}
 			else {
 				// send internal error
-				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+				console.log(clcConfig.error(err.message));
 			}
 		});
 	});
@@ -197,9 +211,8 @@ module.exports = function(app, passport) {
 
 			// if file doesn't exist
 			if(!file) {
-				// send error
-				res.status(404).send({ title: "Page not found.", message: "Project not found." });
-
+				// send not found
+				res.status(404).send({ title: errorMessageCenter.error.status404.title, message: errorMessageCenter.error.status404.message + " Project not found." });
 				return;
 			}
 
@@ -212,7 +225,8 @@ module.exports = function(app, passport) {
 				}
 				else {
 					// send internal error
-					res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+					console.log(clcConfig.error(err.message));
 				}
 			});
 		}
@@ -225,7 +239,8 @@ module.exports = function(app, passport) {
 				}
 				else {
 					// send internal error
-					res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+					console.log(clcConfig.error(err.message));
 				}
 			});
 		}
@@ -237,7 +252,7 @@ module.exports = function(app, passport) {
 	// format /api/blog?id=postId
 	app.get('/api/blog', function (req, res) {
 		var postId = req.query.id;
-		
+
 		// if query on id
 		if (postId) {
 			// find blog post based on id
@@ -245,7 +260,8 @@ module.exports = function(app, passport) {
 				// if error occured
 				if (err) {
 					// send internal error
-					res.status(500).send({ message: "Something went wrong. Please try again later." });
+					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+					console.log(clcConfig.error(err.message));
 				}
 				// if blog was found
 				else if(foundBlog) {
@@ -261,7 +277,7 @@ module.exports = function(app, passport) {
 				}
 				else {
 					// send not found
-					res.status(404).send({ title: "Blog does not exist.", message: "Blog does not exist" });
+					res.status(404).send({ title: errorMessageCenter.error.status404.title, message: errorMessageCenter.error.status404.message + " Blog does not exist." });
 				}
 			});
 		}
@@ -304,12 +320,14 @@ module.exports = function(app, passport) {
 					}
 					catch (err) {
 						// send internal error
-						return { error: true, title: "Something went wrong.", message: "Something went wrong. " + err.message};
+						res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+						console.log(clcConfig.error(err.message));
 					}
 				}
 				else {
 					// send internal error
-					res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+					console.log(clcConfig.error(err.message));
 				}
 			});
 		}
@@ -325,7 +343,8 @@ module.exports = function(app, passport) {
 				// if error occured
 				if (err) {
 					// send internal error
-					res.status(500).send({ message: "Something went wrong. Please try again later." });
+					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+					console.log(clcConfig.error(err.message));
 				}
 				// if blog was found
 				else if(foundSavedBlog) {
@@ -345,7 +364,8 @@ module.exports = function(app, passport) {
 						// if error occured
 						if (err) {
 							// send internal error
-							res.status(500).send({ message: "Something went wrong. Please try again later." });
+							res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+							console.log(clcConfig.error(err.message));
 						}
 						// if blog was found
 						else if(foundBlog) {
@@ -361,7 +381,7 @@ module.exports = function(app, passport) {
 						}
 						else {
 							// send not found
-							res.status(404).send({ title: "Blog does not exist.", message: "Blog does not exist" });
+							res.status(404).send({ title: errorMessageCenter.error.status404.title, message: errorMessageCenter.error.status404.message + " Blog does not exist." });
 						}
 					});
 				}
@@ -369,7 +389,7 @@ module.exports = function(app, passport) {
 		}
 		else {
 			// send bad request
-			res.status(400).send({ title: "Bad Request.", message: "Bad request. Must have an id to query on"});
+			res.status(400).send({ title: errorMessageCenter.error.status400.title, message: errorMessageCenter.error.status400.message + " Must have an id to query on." });
 		}
 	});
 
@@ -384,7 +404,8 @@ module.exports = function(app, passport) {
 			}
 			else {
 				// send internal error
-				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. " + err.message });
+				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+				console.log(clcConfig.error(err.message));
 			}
 		});
 	});
@@ -397,7 +418,8 @@ module.exports = function(app, passport) {
 			// if error occured
 			if (err) {
 				// send internal error
-				res.status(500).send({ message: "Something went wrong. Please try again later." });
+				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+				console.log(clcConfig.error(err.message));
 			}
 			// if blogs were found
 			else if(blogs) {
@@ -414,7 +436,7 @@ module.exports = function(app, passport) {
 			}
 			else {
 				// send not found
-				res.status(404).send({ title: "Blog does not exist.", message: "Blog does not exist" });
+				res.status(404).send({ title: errorMessageCenter.error.status404.title, message: errorMessageCenter.error.status404.message + " Blog does not exist." });
 			}
 		});
 	});
@@ -520,11 +542,11 @@ module.exports = function(app, passport) {
 		// if user is not authenticated in the session, carry on 
 		if (!req.isAuthenticated()) {
 			// return success
-			res.status(200).send({ title: "Success!", message: "No logged in" });
+			res.status(200).send({ title: errorMessageCenter.error.status200.title, message: errorMessageCenter.error.status200.message + " No logged in" });
 		}
 		else {
 			// return logged in
-			res.status(200).send({ title: "Redirect", message: "User is logged in", isLoggedIn: true });
+			res.status(200).send({ title: errorMessageCenter.error.status200.title, message: errorMessageCenter.error.status200.message + " User is logged in", isLoggedIn: true });
 		}
 	});
 
@@ -536,7 +558,7 @@ module.exports = function(app, passport) {
 		req.session = null;
 
 		// return success
-		res.status(200).send({ title: "Success!", message: "You have successfully logged out!" });
+		res.status(200).send({ title: errorMessageCenter.error.status200.title, message: errorMessageCenter.error.status200.message + " You have successfully logged out!" });
 	});
 
 	// =========================================================================
@@ -563,8 +585,9 @@ module.exports = function(app, passport) {
 			for(var x = 0; x < errors.length; x++) {
 				errorText += errors[x].msg + " ";
 			}
+
 			// send bad request
-			res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
+			res.status(400).send({ title: errorMessageCenter.error.status400.title, message: errorMessageCenter.error.status400.message + errorText });
 		}
 		else {
 			var fromString = req.body.firstName + " " + req.body.lastName + "<" + req.body.email + ">";
@@ -583,11 +606,13 @@ module.exports = function(app, passport) {
 				// if an internal error occured
 				if (error) {
 					// send internal error
-					res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+					console.log(clcConfig.error(err.message));
 				}
-
-				// return success
-				res.status(200).send({ title: "Success!", message: "Your email has been sent!" });
+				else {
+					// return success
+					res.status(200).send({ title: errorMessageCenter.error.status200.title, message: errorMessageCenter.error.status200.message + " Your email has been sent!" });
+				}
 			});		
 		}
 	});
@@ -607,8 +632,9 @@ module.exports = function(app, passport) {
 			for(var x = 0; x < errors.length; x++) {
 				errorText += errors[x].msg + " ";
 			}
+
 			// send bad request
-			res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
+			res.status(400).send({ title: errorMessageCenter.error.status400.title, message: errorMessageCenter.error.status400.message + errorText });
 		}
 		else {
 			// set post id
@@ -618,7 +644,7 @@ module.exports = function(app, passport) {
 			if(postId) {
 				// check if valid
 				if(shortid.isValid(postId)) {
-					// set updated values
+					// set updated values 
 					var updatedValues = {
 						"title": req.body.title,
 						"image": req.body.image,
@@ -627,23 +653,24 @@ module.exports = function(app, passport) {
 					};
 					
 					// find the blog and update
-					SavedBlogPost.findOneAndUpdate({ customShort : postId }, updatedValues).exec(function(err, savedBlog) {
+					SavedBlogPost.findOneAndUpdate({ customShort : postId }, updatedValues).exec(function(err, updatedSavedBlog) {
 						// if there are any errors, return the error
 						if (err) {
 							// send internal error
-							res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+							res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+							console.log(clcConfig.error(err.message));
 						}	
 						// if saved blog found
-						else if(savedBlog) {
+						else if(updatedSavedBlog) {
 							// set url
-							var url = savedBlog.customShort;
+							var url = updatedSavedBlog.customShort;
 
 							// make an object
-							savedBlog = savedBlog.toObject({ hide: 'customShort', transform: true });
-							savedBlog.url = url;
+							updatedSavedBlog = updatedSavedBlog.toObject({ hide: 'customShort', transform: true });
+							updatedSavedBlog.url = url;
 
 							// send success with blog data
-							res.end( JSON.stringify(savedBlog) );
+							res.end( JSON.stringify(updatedSavedBlog) );
 						}
 						else {
 							// check Published Posts to see if editing a publish post and decided to save
@@ -651,7 +678,8 @@ module.exports = function(app, passport) {
 								// if there are any errors, return the error
 								if (err) {
 									// send internal error
-									res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+									res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+									console.log(clcConfig.error(err.message));
 								}	
 								// if saved blog found
 								else if(publishedBlog) {
@@ -668,7 +696,8 @@ module.exports = function(app, passport) {
 									newSavedBlog.save(function(err, newlySavedBlog) {
 										if (err) {
 											// send internal error
-											res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+											res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+											console.log(clcConfig.error(err.message));
 										}
 										else {
 											// set url
@@ -683,17 +712,17 @@ module.exports = function(app, passport) {
 										}
 									});
 								}
-								else {									
+								else {							
 									// send bad request
-									res.status(400).send({ title: "Bad Request.", message: "Bad request. Post does not exist."});
+									res.status(400).send({ title: errorMessageCenter.error.status400.title, message: errorMessageCenter.error.status400.message + " Post does not exist." });
 								}
 							});
 						}
 					});
 				}
 				else {
-					// send bad request 
-					res.status(400).send({ title: "Bad Request.", message: "Bad request. Post does not exist."});
+					// send bad request
+					res.status(400).send({ title: errorMessageCenter.error.status400.title, message: errorMessageCenter.error.status400.message + " Post does not exist." });
 				}
 			}
 			else {
@@ -713,7 +742,8 @@ module.exports = function(app, passport) {
 				savedBlog.save(function(err, newSavedBlog) {
 					if (err) {
 						// send internal error
-						res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+						res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+						console.log(clcConfig.error(err.message));
 					}
 					else {
 						// set url
@@ -748,8 +778,9 @@ module.exports = function(app, passport) {
 			for(var x = 0; x < errors.length; x++) {
 				errorText += errors[x].msg + " ";
 			}
+
 			// send bad request
-			res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
+			res.status(400).send({ title: errorMessageCenter.error.status400.title, message: errorMessageCenter.error.status400.message + errorText});
 		}
 		else {
 			// set post id
@@ -764,55 +795,90 @@ module.exports = function(app, passport) {
 						// if there are any errors, return the error
 						if (err) {
 							// send internal error
-							res.status(500).send({ title: "Something went wrong.", message: "Unable to find saved blog." });
+							res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+							console.log(clcConfig.error(err.message));
 						}
+						// if the user previously saved a draft
 						else if (savedBlog) {
-							// create the blog
-							var blogPost = new BlogPost({
-								customShort: savedBlog.customShort,
-								title: req.body.title,
-								image: req.body.image,
-								shortDescription: req.body.shortDescription,
-								body: req.body.body
-							});
+							// set updated values
+							var updatedValues = {
+								"customShort": savedBlog.customShort,
+								"title": req.body.title,
+								"image": req.body.image,
+								"shortDescription": req.body.shortDescription,
+								"body": req.body.body
+							};
 
 							// posts the blog
-							blogPost.save(function(err, newPostedBlog) {
+							BlogPost.findOneAndUpdate({ customShort : savedBlog.customShort }, updatedValues, { upsert: true }).exec(function(err, updatedPostedBlog) {
 								if (err) {
 									// send internal error
-									res.status(500).send({ title: "Something went wrong.", message: "Unable to post the blog." });
+									res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+									console.log(clcConfig.error(err.message));
 								}
 								else {
 									// find the blog and remove
 									SavedBlogPost.findOneAndRemove({ customShort : savedBlog.customShort }).exec(function(err, removedSavedBlog) {
 										if (err) {
 											// send internal error
-											res.status(500).send({ title: "Something went wrong.", message: "Blog posted but unable to remove the saved blog." });
+											res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+											console.log(clcConfig.error(err.message));
 										}
 										else {
 											// set url
-											var url = newPostedBlog.customShort;
+											var url = updatedPostedBlog.customShort;
 
 											// make an object
-											newPostedBlog = newPostedBlog.toObject({ hide: 'customShort', transform: true });
-											newPostedBlog.url = url;
+											updatedPostedBlog = updatedPostedBlog.toObject({ hide: 'customShort', transform: true });
+											updatedPostedBlog.url = url;
 
 											// send success with blog data
-											res.end( JSON.stringify(newPostedBlog) );
+											res.end( JSON.stringify(updatedPostedBlog) );
 										}
 									});
 								}
 							});
 						}
+						// user didn't save a draft and decided to edit and post
 						else {
-							// send bad request
-							res.status(400).send({ title: "Bad Request.", message: "Bad request. Post does not exist."});
+							// set updated values
+							var updatedValues = {
+								"customShort": postId,
+								"title": req.body.title,
+								"image": req.body.image,
+								"shortDescription": req.body.shortDescription,
+								"body": req.body.body
+							};
+
+							// posts the blog
+							BlogPost.findOneAndUpdate({ customShort : postId }, updatedValues).exec(function(err, updatedPostedBlog) {
+								if (err) {
+									// send internal error
+									res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+									console.log(clcConfig.error(err.message));
+								}
+								else if(updatedPostedBlog) {
+									// set url
+									var url = updatedPostedBlog.customShort;
+
+									// make an object
+									updatedPostedBlog = updatedPostedBlog.toObject({ hide: 'customShort', transform: true });
+									updatedPostedBlog.url = url;
+
+									// send success with blog data
+									res.end( JSON.stringify(updatedPostedBlog) );
+								}
+								else {
+									// send bad request
+									res.status(400).send({ title: errorMessageCenter.error.status400.title, message: errorMessageCenter.error.status400.message + " Post does not exist." });
+								}
+							});
 						}
 					});
 				}
 				else {
-					// send bad request 
-					res.status(400).send({ title: "Bad Request.", message: "Bad request. Post does not exist."});
+					// send bad request
+					res.status(400).send({ title: errorMessageCenter.error.status400.title, message: errorMessageCenter.error.status400.message + " Post does not exist." });
 				}
 			}
 			else {
@@ -833,7 +899,8 @@ module.exports = function(app, passport) {
 				blogPost.save(function(err, newPostedBlog) {
 					if (err) {
 						// send internal error
-						res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+						res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+						console.log(clcConfig.error(err.message));
 					}
 					else {
 						// set url
@@ -866,8 +933,9 @@ module.exports = function(app, passport) {
 			for(var x = 0; x < errors.length; x++) {
 				errorText += errors[x].msg + " ";
 			}
+
 			// send bad request
-			res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
+			res.status(400).send({ title: errorMessageCenter.error.status400.title, message: errorMessageCenter.error.status400.message + errorText });
 		}
 		else {
 			// create request
@@ -896,7 +964,8 @@ module.exports = function(app, passport) {
 				res.end( returnReq );
 			}).catch(function (responseSU) {
 				// send internal error
-				res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+				console.log(clcConfig.error(responseSU.message));
 			});
 		}
 	});
@@ -916,7 +985,8 @@ module.exports = function(app, passport) {
 			// if error
 			if(err) {
 				// send internal error
-				return res.status(500).send({ title: "Something went wrong.", message: "Something went wrong. Please try again later." });
+				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+				console.log(clcConfig.error(err.message));
 			}
 
 			// if user is not authenticated 
@@ -926,7 +996,7 @@ module.exports = function(app, passport) {
 			}
 
 			// return sucessful
-			return res.status(200).send({ title: "Success!", message: "Successful login." });
+			return res.status(200).send({ title: errorMessageCenter.error.status200.title, message: errorMessageCenter.error.status200.message + " Successful login." });
 		})(req, res, next);
 	});
 
@@ -946,12 +1016,17 @@ module.exports = function(app, passport) {
 		if (errors) {
 			var errorText = "";
 			for(var x = 0; x < errors.length; x++) {
-				errorText += errors[x].msg + " ";
+				errorText += errors[x].msg + "  ";
 			}
+
 			// send bad request
-			res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
+			res.status(400).send({ title: errorMessageCenter.error.status400.title, message: errorMessageCenter.error.status400.message + errorText});
 		}
 		else {
+			// return success
+			res.status(200).send({ title: errorMessageCenter.error.status200.title, message: errorMessageCenter.error.status200.message + " You have deleted the blog successfully!" });
+			return;
+			/*
 			// set post id
 			var postId = req.body.id;
 
@@ -959,17 +1034,19 @@ module.exports = function(app, passport) {
 			SavedBlogPost.findOneAndRemove({ customShort : postId }).exec(function(err, removedSavedBlog) {
 				if (err) {
 					// send internal error
-					res.status(500).send({ title: "Something went wrong.", message: "Blog posted but unable to remove the saved blog." });
+					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+					console.log(clcConfig.error(err.message));
 				}
 				else if(removedSavedBlog) {
 					// return success
-					res.status(200).send({ title: "Success!", message: "You have deleted the blog successfully!"});
+					res.status(200).send({ title: errorMessageCenter.error.status200.title, message: errorMessageCenter.error.status200.message + " You have discarded the saved post successfully!" });
 				}
 				else {
-					// send bad request 
-					res.status(400).send({ title: "Bad Request.", message: "Bad request. Post does not exist."});
+					// send bad request
+					res.status(400).send({ title: errorMessageCenter.error.status400.title, message: errorMessageCenter.error.status400.message + " Post does not exist." });
 				}
 			});
+			*/
 		}
 	});
 
@@ -986,12 +1063,17 @@ module.exports = function(app, passport) {
 		if (errors) {
 			var errorText = "";
 			for(var x = 0; x < errors.length; x++) {
-				errorText += errors[x].msg + " ";
+				errorText += errors[x].msg + "  ";
 			}
+
 			// send bad request
-			res.status(400).send({ title: "Bad Request.", message: "Bad request. " + errorText});
+			res.status(400).send({ title: errorMessageCenter.error.status400.title, message: errorMessageCenter.error.status400.message + errorText});
 		}
 		else {
+			// return success
+			res.status(200).send({ title: errorMessageCenter.error.status200.title, message: errorMessageCenter.error.status200.message + " You have deleted the blog successfully!" });
+			return;
+			/*
 			// set post id
 			var postId = req.body.id;
 
@@ -999,17 +1081,19 @@ module.exports = function(app, passport) {
 			BlogPost.findOneAndRemove({ customShort : postId }).exec(function(err, removedPostedBlog) {
 				if (err) {
 					// send internal error
-					res.status(500).send({ title: "Something went wrong.", message: "Blog posted but unable to remove the saved blog." });
+					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+					console.log(clcConfig.error(err.message));
 				}
 				else if(removedPostedBlog) {
 					// return success
-					res.status(200).send({ title: "Success!", message: "You have deleted the blog successfully!"});
+					res.status(200).send({ title: errorMessageCenter.error.status200.title, message: errorMessageCenter.error.status200.message + " You have deleted the blog successfully!" });
 				}
 				else {
-					// send bad request 
-					res.status(400).send({ title: "Bad Request.", message: "Bad request. Post does not exist."});
+					// send bad request
+					res.status(400).send({ title: errorMessageCenter.error.status400.title, message: errorMessageCenter.error.status400.message + " Post does not exist." });
 				}
 			});
+			*/
 		}
 	});
 }
@@ -1157,5 +1241,5 @@ function isLoggedIn(req, res, next) {
 		return next();
 
 	// send forbidden error
-	res.status(403).send({ title: "No Access.", message: "Sorry, you do not have access to this page." });
+	res.status(403).send({ title: errorMessageCenter.error.status403.title, message: errorMessageCenter.error.status403.message });
 };

@@ -34,3 +34,4 @@ Admin
 - Make folders to put certain files in on client side
 - Customize ngDialog to dark theme
 - If error occurrs in form submission for blog, show error dialog
+- Find a way to make the "date updated" fit on the next line on blog post, and have the dividers center of both

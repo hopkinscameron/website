@@ -11,15 +11,21 @@
         <!-- End Page Fully Loaded With Errors -->
         <!-- Begin Page Fully Loaded With No Errors -->
         <div id="pageShow" class="animated animation-delay--md fadeIn collapse" ng-if="pageFullyLoaded && !error.error">
+            <!-- Begin Page Title -->
+            <h2 class="font-weight-bold text-uppercase mb-3">Admin Blog Post Portal</h2>
+            <!-- End Page Title -->
             <!-- Begin Blog Insert and Saved Blog Posts -->
             <div class="row">
                 <!-- Begin Blog Insert -->
                 <div class="animated fadeInUp" ng-class="{'col-md-8': admin.savedPosts.length > 0, 'col-md-8 offset-md-2': admin.savedPosts.length == 0}" ng-style="adminAnimations[0]">
                     <div class="card card--dark card-block box-shadow--sm">
+                        <!-- Begin Form Error -->
                         <div style="padding-bottom: 24px;" ng-if="!adminBlogPostForm.errors.isError"></div>
                         <div ng-if="adminBlogPostForm.errors.isError">
                             <span style="color: red;">{{adminBlogPostForm.errors.errorMessage}}</span>
                         </div>
+                        <!-- End Form Error -->
+                        <!-- Begin Form -->
                         <form>
                             <div class="form-group pl-3 pr-3">
                                 <!-- Begin Title -->
@@ -58,18 +64,19 @@
                                 <div class="row container-fluid">
                                     <!-- Begin Post -->
                                     <div class="col text-left">
-                                        <button class="btn btn-theme-primary" ng-click="post()" ng-disabled="adminBlogPostForm.formSubmitted || adminBlogPostForm.errors.isError">Post</button>
+                                        <button class="btn btn-theme-primary" ng-click="postBlog()" ng-disabled="adminBlogPostForm.formSubmitted || adminBlogPostForm.errors.isError">Post</button>
                                     </div>
                                     <!-- End Post -->
                                     <!-- Begin Save -->
                                     <div class="col text-right">
-                                        <button class="btn btn-theme-primary" ng-click="save()">Save</button>
+                                        <button class="btn btn-theme-primary" ng-click="saveBlog()">Save</button>
                                     </div>
                                     <!-- End Save -->
                                 </div>
                                 <!-- End Post/Save -->
                             </div>
                         </form>
+                        <!-- End Form -->
                     </div>
                 </div>
                 <!-- End Blog Insert -->

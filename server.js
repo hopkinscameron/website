@@ -1,3 +1,5 @@
+'use strict';
+
 // the server
 var express = require('express');
 
@@ -39,6 +41,9 @@ var flash = require('connect-flash');
 
 // path 
 var path = require('path');
+
+// clc colors for console logging
+var clcConfig = require('./config/clcConfig');
 
 // the secrets
 var secrets = require('./server/secrets');
@@ -82,7 +87,16 @@ var options = {
 }
 
 // mongoose
-var mongooseDBConnect = mongoose.connect(secrets.db, null, function(err) {}); //, options);
+var mongooseDBConnect = mongoose.connect(secrets.db, null, function(err) {
+	// if error
+	if(err) {
+		console.log(clcConfig.error(err.message));
+		process.exit();
+	}
+	
+	// start server
+	startServer();
+}); //, options);
 
 // Express MongoDB session storage
 app.use(expressSession({
@@ -115,7 +129,7 @@ require('./server/routes')(app, passport);
 // logs client IP address with every request
 app.use(function (req, res, next) {
 	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-	//console.log('Client IP:', ip);
+	console.log(clcConfig.info('Client IP:', ip));
 	next();
 });
 
@@ -148,10 +162,12 @@ app.use(function(err, req, res, next) {
 });
 */
 
-// begin server
-var server = app.listen(secrets.port, function () {
-	var host = server.address().address;
-	var port = server.address().port;
-
-	console.log('App running at //%s:%s', host, port);
-});
+// starts the server
+function startServer() {
+	// begin server
+	var server = app.listen(secrets.port, function () {
+		var host = server.address().address;
+		var port = server.address().port;
+		console.log(clcConfig.success('App running at //%s:%s', host, port));
+	});
+};

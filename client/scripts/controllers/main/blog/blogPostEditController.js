@@ -153,7 +153,7 @@
     };
 
     // saves the blog post
-    $scope.save = function () {
+    $scope.saveBlog = function () {
         // check if title exist
         if($scope.blogPostEditForm.inputs.title && $scope.blogPostEditForm.inputs.title.length > 0) {
             // disable button but showing the form has been submitted
@@ -175,8 +175,11 @@
                     // enable button showing the form has been saved
                     $scope.blogPostEditForm.formSubmitted = false;
 
+                    // reset data
+                    $scope.post = responseSB;
+
                     // show success
-                    showPostSuccessDialog();
+                    showSaveSuccessDialog();
                 }
                 else {
                     // show error
@@ -200,7 +203,7 @@
     };
 
     // posts the blog post
-    $scope.post = function () {
+    $scope.postBlog = function () {
         // check for empty values
         checkEmptyValues();
 
@@ -224,6 +227,9 @@
                 if(!responsePB.error) {
                     // enable button showing the form has been saved
                     $scope.blogPostEditForm.formSubmitted = false;
+
+                    // reset data
+                    $scope.post = responsePB;
 
                     // show success
                     showPostSuccessDialog();
@@ -268,7 +274,7 @@
     };
 
     // deletes the post
-    $scope.delete = function () {
+    $scope.deleteBlog = function () {
         // show dialog
 		var deleteBlogDialog = ngDialog.open({
 			template: '/partials/dialogs/dialogWarning.html',
@@ -404,62 +410,76 @@
 
     // discards the blog draft
     function discardBlogDraft(draftToBeDiscarded) {
-        // TODO: discard
+        // discard the draft
+        Service.discardBlogPostDraft(draftToBeDiscarded.url).then(function (responseDB) {
+            // if returned a valid response
+            if (!responseDB.error) {
+                // create the header and body for the success
+                var header = "It's done, no turning back";
+                var body = "You have successfully discarded.";
 
-        // create the header and body for the success
-        var header = "It's done, no turning back";
-        var body = "You have successfully discarded.";
+                // show dialog
+                var successfulDiscardDialog = ngDialog.open({
+                    template: '/partials/dialogs/dialogSuccess.html',
+                    controller: 'dialogSuccessController',
+                    className: 'ngdialog-theme-default custom-width',
+                    data: { 'successHeader': header, 'successBody': body }
+                });
 
-        // show dialog
-        var successfulDiscardDialog = ngDialog.open({
-            template: '/partials/dialogs/dialogSuccess.html',
-            controller: 'dialogSuccessController',
-            className: 'ngdialog-theme-default custom-width',
-            data: { 'successHeader': header, 'successBody': body }
-        });
-
-        // on completion of close
-        successfulDiscardDialog.closePromise.then(function (data) {
-            // redirect to this blog's page
-            $window.location.href = "#" + $scope.post.url;
+                // on completion of close
+                successfulDiscardDialog.closePromise.then(function (data) {
+                    // redirect to this blog's page
+                    $window.location.href = "#" + $scope.post.url;
+                });
+            }
+            else {
+                // show error
+                showErrorDialog(responseDB.message);
+            }
+        })
+        .catch(function (responseDB) {
+            // show error
+            showErrorDialog(responseDB.message);
         });
     };
 
     // deletes the blog
     function deleteBlog(blogToBeDeleted) {
-        // TODO: delete
+        // delete the post
+        Service.discardBlogPostDraft(blogToBeDeleted.url).then(function (responseDB) {
+            // if returned a valid response
+            if (!responseDB.error) {
+                // create the header and body for the success
+                var header = "It's done, no turning back";
+                var body = "You have successfully deleted the blog.";
 
-        // create the header and body for the success
-        var header = "It's done, no turning back";
-        var body = "You have successfully deleted the blog.";
+                // show dialog
+                var successfulDeleteDialog = ngDialog.open({
+                    template: '/partials/dialogs/dialogSuccess.html',
+                    controller: 'dialogSuccessController',
+                    className: 'ngdialog-theme-default custom-width',
+                    data: { 'successHeader': header, 'successBody': body }
+                });
 
-        // show dialog
-        var successfulDeleteDialog = ngDialog.open({
-            template: '/partials/dialogs/dialogSuccess.html',
-            controller: 'dialogSuccessController',
-            className: 'ngdialog-theme-default custom-width',
-            data: { 'successHeader': header, 'successBody': body }
-        });
-
-        // on completion of close
-        successfulDeleteDialog.closePromise.then(function (data) {
-            // redirect to this blog's page
-            $window.location.href = "#blog";
+                // on completion of close
+                successfulDeleteDialog.closePromise.then(function (data) {
+                    // redirect to this blog's page
+                    $window.location.href = "#blog";
+                });
+            }
+            else {
+                // show error
+                showErrorDialog(responseDB.message);
+            }
+        })
+        .catch(function (responseDB) {
+            // show error
+            showErrorDialog(responseDB.message);
         });
     };
 
     // shows successful dialog for saving blog
     function showSaveSuccessDialog() {
-        // if there is an action
-        if($scope.confirmationModal.closeAction == "refresh") {
-            // refresh the page
-            $window.location.reload();
-        }
-        else if($scope.confirmationModal.type == $scope.postBlogModalAttributes.type && $scope.confirmationModal.closeAction == "goToBlog") {
-            // redirect to blog
-            $window.location.href = "#" + $scope.confirmationModal.newBlogLink;
-        }
-
         // create the header and body for the success
         var header = "Success!";
         var body = "You have successfully saved this draft.";
@@ -471,13 +491,16 @@
             className: 'ngdialog-theme-default custom-width',
             data: { 'successHeader': header, 'successBody': body }
         });
+
+        // refresh the page
+        //$window.location.reload();
     };
 
     // shows successful dialog for posting blog
     function showPostSuccessDialog() {
         // create the header and body for the success
         var header = "Success!";
-        var body = "You have successfully saved this draft.";
+        var body = "You have successfully posted this blog.";
 
         // show dialog
         var successfulPostDialog = ngDialog.open({
@@ -491,6 +514,21 @@
         successfulPostDialog.closePromise.then(function (data) {
             // redirect to this blog's page
             $window.location.href = "#" + $scope.post.url;
+        });
+    };
+
+    // show error dialog
+    function showErrorDialog(err) {
+        // create the header and body for the error
+        var header = "Error occurred";
+        var body = "An error occurred trying to process your request. " + err;
+
+        // show dialog
+        ngDialog.open({
+            template: '/partials/dialogs/dialogError.html',
+            controller: 'dialogErrorController',
+            className: 'ngdialog-theme-default custom-width',
+            data: { 'successHeader': header, 'successBody': body }
         });
     };
 }]);

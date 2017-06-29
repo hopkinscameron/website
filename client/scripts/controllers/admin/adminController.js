@@ -191,7 +191,7 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
     };
 
     // saves the blog post
-    $scope.save = function () {
+    $scope.saveBlog = function () {
         // check if title exist
         if($scope.adminBlogPostForm.inputs.title && $scope.adminBlogPostForm.inputs.title.length > 0) {
             // disable button but showing the form has been submitted
@@ -266,7 +266,7 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
     };
 
     // posts the blog post
-    $scope.post = function () {
+    $scope.postBlog = function () {
         // check for empty values
         checkEmptyValues();
 
@@ -458,24 +458,36 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
 
     // discards the blog draft
     function discardBlogDraft(draftToBeDiscarded) {
-        // TODO: discard
-        
-        // create the header and body for the success
-        var header = "It's done, no turning back";
-        var body = "You have successfully discarded.";
+        // discard the draft
+        Service.discardBlogPostDraft(draftToBeDiscarded.url).then(function (responseDB) {
+            // if returned a valid response
+            if (!responseDB.error) {
+                // create the header and body for the success
+                var header = "It's done, no turning back";
+                var body = "You have successfully discarded.";
 
-        // show dialog
-        var successfulDiscardDialog = ngDialog.open({
-            template: '/partials/dialogs/dialogSuccess.html',
-            controller: 'dialogSuccessController',
-            className: 'ngdialog-theme-default custom-width',
-            data: { 'successHeader': header, 'successBody': body }
-        });
+                // show dialog
+                var successfulDiscardDialog = ngDialog.open({
+                    template: '/partials/dialogs/dialogSuccess.html',
+                    controller: 'dialogSuccessController',
+                    className: 'ngdialog-theme-default custom-width',
+                    data: { 'successHeader': header, 'successBody': body }
+                });
 
-        // on completion of close
-        successfulDiscardDialog.closePromise.then(function (data) {
-            // redirect to this blog's page
-            $window.location.href = "#" + $scope.post.url;
+                // on completion of close
+                successfulDiscardDialog.closePromise.then(function (data) {
+                    // redirect to this blog's page
+                    $window.location.href = "#" + $scope.post.url;
+                });
+            }
+            else {
+                // show error
+                showErrorDialog(responseDB.message);
+            }
+        })
+        .catch(function (responseDB) {
+            // show error
+            showErrorDialog(responseDB.message);
         });
     };
 
@@ -519,6 +531,21 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
                 // reload page instead
                 $window.location.reload();
             }
+        });
+    };
+
+    // show error dialog
+    function showErrorDialog(err) {
+        // create the header and body for the error
+        var header = "Error occurred";
+        var body = "An error occurred trying to process your request. " + err;
+
+        // show dialog
+        ngDialog.open({
+            template: '/partials/dialogs/dialogError.html',
+            controller: 'dialogErrorController',
+            className: 'ngdialog-theme-default custom-width',
+            data: { 'successHeader': header, 'successBody': body }
         });
     };
 }]);

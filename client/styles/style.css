@@ -4848,6 +4848,14 @@ body {
   border: 1px solid #383d43; }
   .list-group-item--dark:hover {
     background-color: #151719; }
+  .list-group-item--dark.active {
+    background-color: #29a8d6;
+    border-color: #2597c1;
+    background-image: linear-gradient(to bottom, #29a8d6 0, #2597c1 100%); }
+    .list-group-item--dark.active:hover {
+      background-color: #29a8d6;
+      border-color: #2597c1;
+      background-image: linear-gradient(to bottom, #29a8d6 0, #2597c1 100%); }
 
 /* End Custom List Groups */
 /* Begin Custom Loading Bar */

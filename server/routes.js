@@ -1023,15 +1023,12 @@ module.exports = function(app, passport) {
 			res.status(400).send({ title: errorMessageCenter.error.status400.title, message: errorMessageCenter.error.status400.message + errorText});
 		}
 		else {
-			// return success
-			res.status(200).send({ title: errorMessageCenter.error.status200.title, message: errorMessageCenter.error.status200.message + " You have deleted the blog successfully!" });
-			return;
-			/*
 			// set post id
 			var postId = req.body.id;
 
 			// find the blog and remove
 			SavedBlogPost.findOneAndRemove({ customShort : postId }).exec(function(err, removedSavedBlog) {
+				// if an error occurred
 				if (err) {
 					// send internal error
 					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
@@ -1046,7 +1043,6 @@ module.exports = function(app, passport) {
 					res.status(400).send({ title: errorMessageCenter.error.status400.title, message: errorMessageCenter.error.status400.message + " Post does not exist." });
 				}
 			});
-			*/
 		}
 	});
 
@@ -1070,30 +1066,38 @@ module.exports = function(app, passport) {
 			res.status(400).send({ title: errorMessageCenter.error.status400.title, message: errorMessageCenter.error.status400.message + errorText});
 		}
 		else {
-			// return success
-			res.status(200).send({ title: errorMessageCenter.error.status200.title, message: errorMessageCenter.error.status200.message + " You have deleted the blog successfully!" });
-			return;
-			/*
 			// set post id
 			var postId = req.body.id;
 
 			// find the blog and remove
 			BlogPost.findOneAndRemove({ customShort : postId }).exec(function(err, removedPostedBlog) {
+				// if an error occurred
 				if (err) {
 					// send internal error
 					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
 					console.log(clcConfig.error(err.message));
 				}
 				else if(removedPostedBlog) {
-					// return success
-					res.status(200).send({ title: errorMessageCenter.error.status200.title, message: errorMessageCenter.error.status200.message + " You have deleted the blog successfully!" });
+					// see if there was saved draft of this same blog
+					// find the blog and remove
+					SavedBlogPost.findOneAndRemove({ customShort : postId }).exec(function(err, removedSavedBlog) {
+						// if an error occurred
+						if (err) {
+							// send internal error
+							res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+							console.log(clcConfig.error(err.message));
+						}
+						else {
+							// return success
+							res.status(200).send({ title: errorMessageCenter.error.status200.title, message: errorMessageCenter.error.status200.message + " You have deleted the blog successfully!" });
+						}
+					});
 				}
 				else {
 					// send bad request
 					res.status(400).send({ title: errorMessageCenter.error.status400.title, message: errorMessageCenter.error.status400.message + " Post does not exist." });
 				}
 			});
-			*/
 		}
 	});
 }

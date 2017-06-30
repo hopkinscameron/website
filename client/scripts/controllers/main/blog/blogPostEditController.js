@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('blogPostEditController', ['$scope', '$rootScope', '$compile', '$location', '$routeParams', '$timeout', 'ngDialog', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $location, $routeParams, $timeout, ngDialog, cfpLoadingBar, Service) {
+﻿angular.module('app').controller('blogPostEditController', ['$scope', '$rootScope', '$compile', '$window', '$location', '$routeParams', '$timeout', 'ngDialog', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $window, $location, $routeParams, $timeout, ngDialog, cfpLoadingBar, Service) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
     
@@ -429,7 +429,7 @@
                 // on completion of close
                 successfulDiscardDialog.closePromise.then(function (data) {
                     // redirect to this blog's page
-                    $window.location.href = "#" + $scope.post.url;
+                    $window.location.href = "#blog/post/" + $scope.post.url;
                 });
             }
             else {
@@ -446,7 +446,7 @@
     // deletes the blog
     function deleteBlog(blogToBeDeleted) {
         // delete the post
-        Service.discardBlogPostDraft(blogToBeDeleted.url).then(function (responseDB) {
+        Service.deleteBlogPost(blogToBeDeleted.url).then(function (responseDB) {
             // if returned a valid response
             if (!responseDB.error) {
                 // create the header and body for the success
@@ -513,7 +513,7 @@
         // on completion of close
         successfulPostDialog.closePromise.then(function (data) {
             // redirect to this blog's page
-            $window.location.href = "#" + $scope.post.url;
+            $window.location.href = "#blog/post/" + $scope.post.url;
         });
     };
 
@@ -528,7 +528,7 @@
             template: '/partials/dialogs/dialogError.html',
             controller: 'dialogErrorController',
             className: 'ngdialog-theme-default custom-width',
-            data: { 'successHeader': header, 'successBody': body }
+            data: { 'errorHeader': header, 'errorBody': body }
         });
     };
 }]);

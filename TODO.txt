@@ -29,9 +29,7 @@ Error
 Login
 
 Admin
-- Actually discard saved changes -> redirect to post page
-- Actually delete a post -> redirect to all blogs page
-- Make folders to put certain files in on client side
+- Create socket for real time updates for blog
 - Customize ngDialog to dark theme
-- If error occurrs in form submission for blog, show error dialog
 - Find a way to make the "date updated" fit on the next line on blog post, and have the dividers center of both
+- Dont refresh page on pagination

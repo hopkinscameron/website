@@ -17,7 +17,7 @@
             <!-- Begin Blog Insert and Saved Blog Posts -->
             <div class="row">
                 <!-- Begin Blog Insert -->
-                <div class="animated fadeInUp" ng-class="{'col-md-8': admin.savedPosts.length > 0, 'col-md-8 offset-md-2': admin.savedPosts.length == 0}" ng-style="adminAnimations[0]">
+                <div class="col-md-8 animated fadeInUp" ng-style="adminAnimations[0]">
                     <div class="card card--dark card-block box-shadow--sm">
                         <!-- Begin Form Error -->
                         <div style="padding-bottom: 24px;" ng-if="!adminBlogPostForm.errors.isError"></div>
@@ -25,6 +25,9 @@
                             <span style="color: red;">{{adminBlogPostForm.errors.errorMessage}}</span>
                         </div>
                         <!-- End Form Error -->
+                        <!-- Begin Last Saved -->
+                        <h6 class="font-weight-bold text-center animated fadeIn" ng-if="currentWorkingPost">Last Saved: {{parseDateTime(currentWorkingPost.dateSaved)}}</h6>
+                        <!-- End Last Saved -->
                         <!-- Begin Form -->
                         <form>
                             <div class="form-group pl-3 pr-3">
@@ -67,6 +70,11 @@
                                         <button class="btn btn-theme-primary" ng-click="postBlog()" ng-disabled="adminBlogPostForm.formSubmitted || adminBlogPostForm.errors.isError">Post</button>
                                     </div>
                                     <!-- End Post -->
+                                    <!-- Begin Discard Draft -->
+                                    <div class="col text-center" ng-if="currentWorkingPost">
+                                        <button class="btn btn-warning" ng-click="discardDraft()">Discard Draft</button>
+                                    </div>
+                                    <!-- End Discard Draft -->
                                     <!-- Begin Save -->
                                     <div class="col text-right">
                                         <button class="btn btn-theme-primary" ng-click="saveBlog()">Save</button>
@@ -81,10 +89,21 @@
                 </div>
                 <!-- End Blog Insert -->
                 <!-- Begin Saved Blog Posts -->
-                <div class="col animated fadeInUp" ng-if="admin.savedPosts.length > 0" ng-style="adminAnimations[1]">
+                <div class="col animated fadeInUp" ng-style="adminAnimations[1]">
                     <div class="card card--dark card-block box-shadow--sm">
+                        <!-- Begin Drafts Header -->
                         <h5 class="text-capitalize font-weight-bold">Drafts</h5>
-                        <div class="list-group">
+                        <!-- End Drafts Header -->
+                        <!-- Begin No Drafts -->
+                        <h5 class="text-capitalize font-weight-bold" ng-if="admin.savedPosts.length == 0">There are no saved drafts</h5>
+                        <!-- End No Drafts -->
+                        <!-- Begin New Draft -->
+                        <div class="text-center mb-2">
+                            <button class="btn btn-theme-primary" ng-click="newForm()">New Form</button>
+                        </div>
+                        <!-- End New Draft -->
+                        <!-- Begin Drafts -->
+                        <div class="list-group" ng-if="admin.savedPosts.length > 0">
                             <div role="button" class="list-group-item list-group-item--dark admin-saved-post" ng-class="{active: isPostActive(post)}" ng-click="populateForm(post)" ng-repeat="post in admin.savedPosts">
                                 <div class="d-block w-100">
                                     <h6 class="p-1 m-0"><span class="text-capitalize font-weight-bold">Title:</span> {{post.title}}</h6>
@@ -92,6 +111,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- End Drafts -->
                     </div>
                 </div>
                 <!-- End Saved Blog Posts -->

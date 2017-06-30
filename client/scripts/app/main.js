@@ -35,8 +35,8 @@ app.config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider', func
             templateUrl: './partials/main/sub-portfolio.html'
         })
         .when('/blog', {
-            templateUrl: './partials/main/blog/blog.html'/*,
-            reloadOnSearch: false*/
+            templateUrl: './partials/main/blog/blog.html',
+            reloadOnSearch: false
         })
         .when('/blog/post/:postId', {
             templateUrl: './partials/main/blog/blogPost.html'
@@ -48,7 +48,8 @@ app.config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider', func
             templateUrl: './partials/main/contact.html'
         })
         .when('/admin', {
-            templateUrl: './partials/admin/admin.html'
+            templateUrl: './partials/admin/admin.html',
+            reloadOnSearch: false
         })
         .when('/login', {
             templateUrl: './partials/admin/login.html'

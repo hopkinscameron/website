@@ -1,4 +1,4 @@
-angular.module('app').controller('adminController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$timeout', 'cfpLoadingBar','Service', function ($scope, $rootScope, $compile, $location, $window, $timeout, cfpLoadingBar, Service) {
+angular.module('app').controller('adminController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$timeout', 'ngDialog', 'cfpLoadingBar','Service', function ($scope, $rootScope, $compile, $location, $window, $timeout, ngDialog, cfpLoadingBar, Service) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
 
@@ -67,7 +67,10 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
         skin: 'lightgray',
         theme : 'modern'
     };
-    
+
+    // determines if on route change should update
+    $scope.dontUpdateRoute = false;
+
     // determines if the page is fully loaded
     $scope.pageFullyLoaded = false;
 
@@ -110,6 +113,36 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
         }
     });
 
+    // on route update
+    $scope.$on('$routeUpdate', function(){
+        // if should update route
+        if(!$scope.dontUpdateRoute) {
+            var blogId = $location.search().blogId;
+
+            // if query on id
+            if(blogId) {
+                var post = undefined;
+
+                // find matching post
+                $scope.admin.savedPosts.find(function(value, index) {
+                    if(value.url == blogId) {
+                        post = value;
+                    }
+                });
+
+                // populate form with post
+                $scope.populateForm(post);
+            }
+            else {
+                // populate form with empty
+                $scope.populateForm(undefined);
+            }
+        }
+
+        // reset
+        $scope.dontUpdateRoute = false;
+    });
+
     // on loading http intercepter start
     $scope.start = function() {
         // start loader
@@ -147,23 +180,53 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
         return savedPost.url && $scope.currentWorkingPost && savedPost.url == $scope.currentWorkingPost.url;
     };
 
+    $scope.newForm = function () {
+        // create new form
+        $scope.populateForm(undefined);
+    };
+
     // populates form with previously saved data
     $scope.populateForm = function (savedPost) {
-        // reset all errors
-        $scope.adminBlogPostForm.errors.title = false;
-        $scope.adminBlogPostForm.errors.shortDescription = false;
-        $scope.adminBlogPostForm.errors.body = false;
-        $scope.adminBlogPostForm.errors.isError = false;
-        $scope.adminBlogPostForm.errors.errorMessage = "";
+        // if user clicked to populate form, don't update the route again
+        $scope.dontUpdateRoute = true;
 
-        // populate form
-        $scope.adminBlogPostForm.inputs.title = savedPost.title;
-        $scope.adminBlogPostForm.inputs.image = savedPost.image;
-        $scope.adminBlogPostForm.inputs.shortDescription = savedPost.shortDescription;
-        $scope.adminBlogPostForm.inputs.body = savedPost.body;
+        // if saved post
+        if(savedPost) {
+            // reset all errors
+            $scope.adminBlogPostForm.errors.title = false;
+            $scope.adminBlogPostForm.errors.shortDescription = false;
+            $scope.adminBlogPostForm.errors.body = false;
+            $scope.adminBlogPostForm.errors.isError = false;
+            $scope.adminBlogPostForm.errors.errorMessage = "";
 
-        // set the current working post
-        $scope.currentWorkingPost = savedPost;
+            // populate form
+            $scope.adminBlogPostForm.inputs.title = savedPost.title;
+            $scope.adminBlogPostForm.inputs.image = savedPost.image;
+            $scope.adminBlogPostForm.inputs.shortDescription = savedPost.shortDescription;
+            $scope.adminBlogPostForm.inputs.body = savedPost.body;
+
+            // set the current working post
+            $scope.currentWorkingPost = savedPost;
+            $location.search("blogId", $scope.currentWorkingPost.url);
+        }
+        else {
+            // reset all errors
+            $scope.adminBlogPostForm.errors.title = false;
+            $scope.adminBlogPostForm.errors.shortDescription = false;
+            $scope.adminBlogPostForm.errors.body = false;
+            $scope.adminBlogPostForm.errors.isError = false;
+            $scope.adminBlogPostForm.errors.errorMessage = "";
+
+            // populate form
+            $scope.adminBlogPostForm.inputs.title = "";
+            $scope.adminBlogPostForm.inputs.image = "";
+            $scope.adminBlogPostForm.inputs.shortDescription = "";
+            $scope.adminBlogPostForm.inputs.body = "";
+
+            // set the current working post
+            $scope.currentWorkingPost = savedPost;
+            $location.search("blogId", savedPost);
+        }
     };
 
     // on call event when the focus enters
@@ -222,6 +285,7 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
 
                             // set the current working post
                             $scope.currentWorkingPost = responseSB;
+                            $scope.populateForm($scope.currentWorkingPost);
 
                             // show success dialog
                             showSaveSuccessDialog();
@@ -312,12 +376,12 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
         // show dialog
 		var discardDraftDialog = ngDialog.open({
 			template: '/partials/dialogs/dialogWarning.html',
-			controller: 'discardBlogDraftController',
+			controller: 'dialogDiscardBlogDraftController',
 			className: 'ngdialog-theme-default custom-width',
 			showClose: false,
 			closeByEscape: false,
 			closeByDocument: false,
-            data: { 'draftToBeDiscarded': $scope.post }
+            data: { 'draftToBeDiscarded': $scope.currentWorkingPost }
 		});
 		
 		// on completion of close
@@ -381,6 +445,17 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
                 // holds the page title
                 $scope.pageTitle = "Admin | " + Service.appName;
 
+                // check to see if currently on a query with blog id
+                var blogId = $location.search().blogId;
+                if(blogId) {
+                    for(var x = 0; x < responseA.savedPosts.length; x++) {
+                        if(blogId == responseA.savedPosts[x].url) {
+                            $scope.currentWorkingPost = responseA.savedPosts[x];
+                            break;
+                        }
+                    }
+                }
+
                 // setup page
                 setUpPage();
             }
@@ -430,6 +505,9 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
         if(!angular.element('#pageShow').hasClass('collapsing')) {
             // show the page
             angular.element('#pageShow').collapse('show');
+
+            // populate the form
+            $scope.populateForm($scope.currentWorkingPost);
         }
     };
 
@@ -462,6 +540,10 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
         Service.discardBlogPostDraft(draftToBeDiscarded.url).then(function (responseDB) {
             // if returned a valid response
             if (!responseDB.error) {
+                // set no current working post and reload data
+                $scope.currentWorkingPost = undefined;
+                getPageData();
+
                 // create the header and body for the success
                 var header = "It's done, no turning back";
                 var body = "You have successfully discarded.";
@@ -472,12 +554,6 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
                     controller: 'dialogSuccessController',
                     className: 'ngdialog-theme-default custom-width',
                     data: { 'successHeader': header, 'successBody': body }
-                });
-
-                // on completion of close
-                successfulDiscardDialog.closePromise.then(function (data) {
-                    // redirect to this blog's page
-                    $window.location.href = "#" + $scope.post.url;
                 });
             }
             else {
@@ -525,7 +601,7 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
             // check if user wanted to go to blog page or stay here
             if(data.value && data.value.accepted) {
                 // redirect to this blog's page
-                $window.location.href = "#" + $scope.post.url;
+                $window.location.href = "#blog/post/" + $scope.currentWorkingPost.url;
             }
             else {
                 // reload page instead
@@ -545,7 +621,7 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
             template: '/partials/dialogs/dialogError.html',
             controller: 'dialogErrorController',
             className: 'ngdialog-theme-default custom-width',
-            data: { 'successHeader': header, 'successBody': body }
+            data: { 'errorHeader': header, 'errorBody': body }
         });
     };
 }]);

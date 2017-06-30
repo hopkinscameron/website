@@ -57,7 +57,15 @@ var BlogPostSchema = new Schema({
 });
 
 // function that is called before updating to database
+BlogPostSchema.pre('save', function(next) {
+    // update the date published
+    this.datePublished = new Date();
+    return next();
+});
+
+// function that is called before updating to database
 BlogPostSchema.pre('findOneAndUpdate', function(next) {
+    // update the date updated
     this.update({},{ $set: { dateUpdated: new Date() } }).exec(function(err, savedBlog) {
         return next();
     });

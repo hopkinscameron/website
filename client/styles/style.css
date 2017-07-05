@@ -4918,10 +4918,23 @@ nav {
 
 /* End Custom Navigation Styles */
 /* Begin Custom ngDialog */
+.ngdialog.ngdialog-theme-dark .ngdialog-content {
+  background: #2C3035;
+  color: #F5F7F9; }
+
+.ngdialog.ngdialog-theme-dark .ngdialog-close:before {
+  color: #F5F7F9; }
+
+.ngdialog.ngdialog-theme-dark .ngdialog-close:hover:before, .ngdialog.ngdialog-theme-dark .ngdialog-close:active:before {
+  color: #a5b7c9; }
+
 .ngdialog.ngdialog-theme-default.custom-width .ngdialog-content {
   width: 600px; }
 
 .ngdialog.ngdialog-theme-plain.custom-width .ngdialog-content {
+  width: 600px; }
+
+.ngdialog.ngdialog-theme-dark.custom-width .ngdialog-content {
   width: 600px; }
 
 /* End Custom ngDialog */
@@ -5061,25 +5074,6 @@ hr.blog-post-bar {
     -webkit-hyphens: auto;
     hyphens: auto;
      */ }
-
-.text-outer-dash {
-  display: inline-block;
-  position: relative;
-  display: table;
-  white-space: nowrap; }
-  .text-outer-dash:before, .text-outer-dash:after {
-    content: "";
-    border-top: 1px solid #C9CAC8;
-    top: 0.5em;
-    display: table-cell;
-    position: relative;
-    width: 45%; }
-  .text-outer-dash:before {
-    right: 100%;
-    margin-right: 15px; }
-  .text-outer-dash:after {
-    left: 100%;
-    margin-left: 15px; }
 
 .divider {
   position: relative;

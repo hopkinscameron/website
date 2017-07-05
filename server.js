@@ -42,6 +42,9 @@ var flash = require('connect-flash');
 // path 
 var path = require('path');
 
+// socket io
+var io = undefined;
+
 // clc colors for console logging
 var clcConfig = require('./config/clcConfig');
 
@@ -87,7 +90,7 @@ var options = {
 }
 
 // mongoose
-var mongooseDBConnect = mongoose.connect(secrets.db, null, function(err) {
+var mongooseDBConnect = mongoose.connect(secrets.db, { }, function(err) {
 	// if error
 	if(err) {
 		console.log(clcConfig.error(err.message));
@@ -169,5 +172,29 @@ function startServer() {
 		var host = server.address().address;
 		var port = server.address().port;
 		console.log(clcConfig.success('App running at //%s:%s', host, port));
+
+		io = require('socket.io')(server);
+		setUpIOSocket();
+	});
+};
+
+// sets up the io socket
+function setUpIOSocket() {
+	const util = require('util');
+	const setTimeoutPromise = util.promisify(setTimeout);
+
+	io.on('connection', function (socket) {
+		// when the client emits 'update blog', this listens and executes
+		socket.on('update blog', function (data) {
+			// we tell the client to execute 'new message'
+			socket.broadcast.emit('update blog times', {
+				username: "test"
+			});
+		});
+	});
+
+	setTimeoutPromise(1000).then((value) => {
+		// This is executed after about 1 second.
+		io.emit('update blog');
 	});
 };

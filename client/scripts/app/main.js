@@ -35,8 +35,8 @@ app.config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider', func
             templateUrl: './partials/main/sub-portfolio.html'
         })
         .when('/blog', {
-            templateUrl: './partials/main/blog/blog.html',
-            reloadOnSearch: false
+            templateUrl: './partials/main/blog/blog.html'/*,
+            reloadOnSearch: false*/
         })
         .when('/blog/post/:postId', {
             templateUrl: './partials/main/blog/blogPost.html'

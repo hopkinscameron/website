@@ -17,29 +17,6 @@
     hyphens: auto;
      */
 }
-.text-outer-dash {
-    display: inline-block;
-    position: relative;  
-    display: table;
-    white-space: nowrap;
-    
-    &:before, &:after {
-        content: "";
-        border-top: 1px solid $light;
-        top: 0.5em;
-        display: table-cell;
-        position: relative;
-        width: 45%;
-    }
-    &:before {
-        right: 100%;
-        margin-right: 15px;
-    }
-    &:after {
-        left: 100%;
-        margin-left: 15px;
-    }
-}
 .divider {
     position: relative;
     cursor: default;

@@ -14,7 +14,7 @@ var // the communication to mongo database
     // the secrets
     secrets = require('.././secrets'),
     // bcrypt for cryptography
-    bcrypt = require('bcrypt'),
+    bcrypt = require('bcryptjs'),
     // validator
     validator = require('validator')
 

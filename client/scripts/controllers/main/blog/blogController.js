@@ -152,6 +152,16 @@
         }
     };
 
+    // gets the fully quantified route value
+    $scope.getRouteValue = function(index) {
+        var route = "#/blog?page=" + index;
+        if($location.search().s){
+            route += "&s=" + $location.search().s;
+        }
+
+        return route;
+    };
+
     // initialize page
     function initializePage() {
         // show the header if not shown     

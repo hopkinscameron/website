@@ -71,6 +71,9 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
     // determines if on route change should update
     $scope.dontUpdateRoute = false;
 
+    // socket io
+    var socket = io();
+
     // determines if the page is fully loaded
     $scope.pageFullyLoaded = false;
 
@@ -377,7 +380,7 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
 		var discardDraftDialog = ngDialog.open({
 			template: '/partials/dialogs/dialogWarning.html',
 			controller: 'dialogDiscardBlogDraftController',
-			className: 'ngdialog-theme-default custom-width',
+			className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
 			showClose: false,
 			closeByEscape: false,
 			closeByDocument: false,
@@ -552,7 +555,7 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
                 var successfulDiscardDialog = ngDialog.open({
                     template: '/partials/dialogs/dialogSuccess.html',
                     controller: 'dialogSuccessController',
-                    className: 'ngdialog-theme-default custom-width',
+                    className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
                     data: { 'successHeader': header, 'successBody': body }
                 });
             }
@@ -577,7 +580,7 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
         ngDialog.open({
             template: '/partials/dialogs/dialogSuccess.html',
             controller: 'dialogSuccessController',
-            className: 'ngdialog-theme-default custom-width',
+            className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'successHeader': header, 'successBody': body }
         });
     };
@@ -592,7 +595,7 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
         var successfulPostDialog = ngDialog.open({
             template: '/partials/dialogs/dialogSuccess.html',
             controller: 'dialogSuccessfulPostController',
-            className: 'ngdialog-theme-default custom-width',
+            className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'successHeader': header, 'successBody': body }
         });
 
@@ -620,8 +623,13 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
         ngDialog.open({
             template: '/partials/dialogs/dialogError.html',
             controller: 'dialogErrorController',
-            className: 'ngdialog-theme-default custom-width',
+            className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'errorHeader': header, 'errorBody': body }
         });
     };
+
+    // whenever the server emits 'update blog times'
+    socket.on('update blog times', function(data) {
+        console.log(data);
+    });
 }]);

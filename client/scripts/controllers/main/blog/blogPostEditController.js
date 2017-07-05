@@ -256,7 +256,7 @@
 		var discardDraftDialog = ngDialog.open({
 			template: '/partials/dialogs/dialogWarning.html',
 			controller: 'dialogDiscardBlogDraftController',
-			className: 'ngdialog-theme-default custom-width',
+			className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
 			showClose: false,
 			closeByEscape: false,
 			closeByDocument: false,
@@ -279,7 +279,7 @@
 		var deleteBlogDialog = ngDialog.open({
 			template: '/partials/dialogs/dialogWarning.html',
 			controller: 'dialogDeleteBlogController',
-			className: 'ngdialog-theme-default custom-width',
+			className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
 			showClose: false,
 			closeByEscape: false,
 			closeByDocument: false,
@@ -422,7 +422,7 @@
                 var successfulDiscardDialog = ngDialog.open({
                     template: '/partials/dialogs/dialogSuccess.html',
                     controller: 'dialogSuccessController',
-                    className: 'ngdialog-theme-default custom-width',
+                    className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
                     data: { 'successHeader': header, 'successBody': body }
                 });
 
@@ -457,7 +457,7 @@
                 var successfulDeleteDialog = ngDialog.open({
                     template: '/partials/dialogs/dialogSuccess.html',
                     controller: 'dialogSuccessController',
-                    className: 'ngdialog-theme-default custom-width',
+                    className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
                     data: { 'successHeader': header, 'successBody': body }
                 });
 
@@ -488,7 +488,7 @@
         ngDialog.open({
             template: '/partials/dialogs/dialogSuccess.html',
             controller: 'dialogSuccessController',
-            className: 'ngdialog-theme-default custom-width',
+            className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'successHeader': header, 'successBody': body }
         });
 
@@ -506,7 +506,7 @@
         var successfulPostDialog = ngDialog.open({
             template: '/partials/dialogs/dialogSuccess.html',
             controller: 'dialogSuccessController',
-            className: 'ngdialog-theme-default custom-width',
+            className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'successHeader': header, 'successBody': body }
         });
 
@@ -527,7 +527,7 @@
         ngDialog.open({
             template: '/partials/dialogs/dialogError.html',
             controller: 'dialogErrorController',
-            className: 'ngdialog-theme-default custom-width',
+            className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'errorHeader': header, 'errorBody': body }
         });
     };

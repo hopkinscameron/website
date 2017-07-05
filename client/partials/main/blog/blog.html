@@ -63,14 +63,14 @@
                     <nav aria-label="..." class="mt-4" ng-if="blog.posts.length > 0">
                         <ul class="pagination">
                             <li class="page-item" ng-class="{'disabled': blog.currentPage == 1 || blog.totalPages.length == 1}">
-                                <a class="decoration--never page-link page-link--dark" ng-href="#/blog?page={{blog.currentPage - 1}}" tabindex="-1">
+                                <a class="decoration--never page-link page-link--dark" ng-href="{{getRouteValue(blog.currentPage - 1)}}" tabindex="-1">
                                     <i class="fa fa-arrow-left" aria-hidden="true"></i>
                                     <span class="sr-only">Previous</span>
                                 </a>
                             </li>
-                            <li class="page-item" ng-class="{'active': $index == blog.currentPage -1}" ng-if="shouldShowPageIndex($index)" ng-repeat="pages in blog.totalPages track by $index"><a class="decoration--never page-link page-link--dark" ng-href="#/blog?page={{$index + 1}}">{{$index + 1}}</a></li>
+                            <li class="page-item" ng-class="{'active': $index == blog.currentPage -1}" ng-if="shouldShowPageIndex($index)" ng-repeat="pages in blog.totalPages track by $index"><a class="decoration--never page-link page-link--dark" ng-href="{{getRouteValue($index + 1)}}">{{$index + 1}}</a></li>
                             <li class="page-item" ng-class="{'disabled': blog.currentPage == blog.totalPages.length}">
-                                <a class="decoration--never page-link page-link--dark" ng-href="#/blog?page={{blog.currentPage + 1}}">
+                                <a class="decoration--never page-link page-link--dark" ng-href="{{getRouteValue(blog.currentPage + 1)}}">
                                     <i class="fa fa-arrow-right" aria-hidden="true"></i>
                                     <span class="sr-only">Next</span>
                                 </a>

@@ -31,6 +31,3 @@ Login
 
 Admin
 - Create socket for real time updates for blog
-- Customize ngDialog to dark theme
-- Find a way to make the "date updated" fit on the next line on blog post, and have the dividers center of both
-- Dont refresh page on pagination

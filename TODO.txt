@@ -4,6 +4,7 @@
 All
 - make sure everything works in firefox and image
 - When logging in, have a query in url that has a redirect back to the page currently was on before attempting to logon
+- When socket connection closes, null the socket so the error doesn't keep retrying?
 
 Header
 

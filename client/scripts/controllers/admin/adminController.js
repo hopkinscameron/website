@@ -72,7 +72,15 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
     $scope.dontUpdateRoute = false;
 
     // socket io
-    var socket = io('http://localhost:3000');
+    var socket = io.connect('http://localhost:3000',
+        {
+            "rememberTransport": false, 
+            "reconnect": true,
+            "reconnection delay": 1000,
+            "max reconnection attempts": 10,
+            "secure": false
+        }
+    );
 
     // determines if the page is fully loaded
     $scope.pageFullyLoaded = false;

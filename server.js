@@ -167,14 +167,15 @@ app.use(function(err, req, res, next) {
 
 // starts the server
 function startServer() {
+	var server = require('http').Server(app);
+	socketIO = require('socket.io')(server);
+	setUpIOSocket();
+
 	// begin server
-	var server = app.listen(secrets.port, function () {
+	server.listen(secrets.port, function () {
 		var host = server.address().address;
 		var port = server.address().port;
 		console.log(clcConfig.success('App running at //%s:%s', host, port));
-
-		socketIO = require('socket.io')(server);
-		setUpIOSocket();
 	});
 };
 

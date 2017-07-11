@@ -43,7 +43,7 @@ var flash = require('connect-flash');
 var path = require('path');
 
 // socket io
-var io = undefined;
+var socketIO = undefined;
 
 // clc colors for console logging
 var clcConfig = require('./config/clcConfig');
@@ -173,28 +173,30 @@ function startServer() {
 		var port = server.address().port;
 		console.log(clcConfig.success('App running at //%s:%s', host, port));
 
-		io = require('socket.io')(server);
+		socketIO = require('socket.io')(server);
 		setUpIOSocket();
 	});
 };
 
+const util = require('util');
+const setTimeoutPromise = util.promisify(setTimeout);
+
 // sets up the io socket
 function setUpIOSocket() {
-	const util = require('util');
-	const setTimeoutPromise = util.promisify(setTimeout);
+	socketIO.on('connection', function (socket) {
+		sendSignalToUpdateBlogs(socket);
 
-	io.on('connection', function (socket) {
 		// when the client emits 'update blog', this listens and executes
-		socket.on('update blog', function (data) {
-			// we tell the client to execute 'new message'
-			socket.broadcast.emit('update blog times', {
-				username: "test"
-			});
+		socket.on('reset', function (data) {
+			sendSignalToUpdateBlogs(socket);
 		});
 	});
+};
 
-	setTimeoutPromise(1000).then((value) => {
-		// This is executed after about 1 second.
-		io.emit('update blog');
+// emits update blog
+function sendSignalToUpdateBlogs(socket) {
+	setTimeoutPromise(60000).then(() => {
+		// This is executed after about 60 second.
+		socket.emit('update saved blogs');
 	});
 };

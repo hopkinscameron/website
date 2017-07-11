@@ -72,7 +72,7 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
     $scope.dontUpdateRoute = false;
 
     // socket io
-    var socket = io();
+    var socket = io('http://localhost:3000');
 
     // determines if the page is fully loaded
     $scope.pageFullyLoaded = false;
@@ -628,8 +628,40 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
         });
     };
 
-    // whenever the server emits 'update blog times'
-    socket.on('update blog times', function(data) {
-        console.log(data);
+    // whenever the server emits 'update saved blogs'
+    socket.on('update saved blogs', function(data) {
+        // get admin page data
+        Service.getAdminPageData().then(function (responseA) {
+            // if returned a valid response
+            if (!responseA.error) {
+                // set the data
+                $scope.admin.savedPosts = responseA.savedPosts;
+
+                // reset
+                socket.emit('reset');
+            }
+            else {
+                // set error
+                $scope.pageTitle = responseA.title;
+                $scope.error.error = true;
+                $scope.error.title = responseA.title;
+                $scope.error.status = responseA.status;
+                $scope.error.message = responseA.message;
+
+                // reset
+                socket.emit('reset');
+            }
+        })
+        .catch(function (responseA) {
+            // set error
+            $scope.pageTitle = responseA.title;
+            $scope.error.error = true;
+            $scope.error.title = responseA.title;
+            $scope.error.status = responseA.status;
+            $scope.error.message = responseA.message;
+
+            // reset
+            socket.emit('reset');
+        });
     });
 }]);

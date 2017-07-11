@@ -3,7 +3,7 @@
 
 All
 - make sure everything works in firefox and image
-- When going to admin page, have a query in url that has a redirect back to the page 
+- When logging in, have a query in url that has a redirect back to the page currently was on before attempting to logon
 
 Header
 
@@ -30,4 +30,3 @@ Error
 Login
 
 Admin
-- Create socket for real time updates for blog

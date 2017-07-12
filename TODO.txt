@@ -3,8 +3,7 @@
 
 All
 - make sure everything works in firefox and image
-- When logging in, have a query in url that has a redirect back to the page currently was on before attempting to logon
-- When socket connection closes, null the socket so the error doesn't keep retrying?
+- MOBILE VIEW BRUH
 
 Header
 
@@ -21,8 +20,10 @@ Portfolio
 Sub Portfolio
 
 Blog
+- bold search keywords
 
 Blog Post
+- make the URL look like /yyyy/mm/dd/title -> www.cameronhopkins.us/#/blog/2017/07/07/test-title
 
 Contact
 

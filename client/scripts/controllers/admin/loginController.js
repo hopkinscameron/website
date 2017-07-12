@@ -217,6 +217,11 @@ angular.module('app').controller('loginController', ['$scope', '$rootScope', '$c
                      // setup page
                     setUpPage();
                 }
+                // if a redirect callback
+                else if($location.search().redirect){
+                    // redirect to admin page
+                    $window.location.href = "#" + $location.search().redirect;
+                }
                 else {
                     // redirect to admin page
                     $window.location.href = "#/admin";

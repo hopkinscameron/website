@@ -222,8 +222,12 @@ angular.module('app').controller('headerController', ['$scope', '$rootScope', '$
     document.addEventListener("keydown", function(event) {
         // if esc key
         if(event.which == 27) {
-            // redirect to login page
-            $window.location.href = "#/login";
+            // if not already on login page
+            if($location.path() != 'login') {
+                var loc = "#/login?redirect=" + $location.path();
+                // redirect to login page
+                $window.location.href = "#/login?redirect=" + $location.path();
+            }
         }
     });
 }]);

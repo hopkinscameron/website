@@ -124,6 +124,12 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
         }
     });
 
+    // on the destruction of the controller
+    $scope.$on("$destroy", function handler() {
+        // disconnect the socket
+        socket.disconnect();
+    });
+
     // on route update
     $scope.$on('$routeUpdate', function(){
         // if should update route
@@ -635,20 +641,39 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
             data: { 'errorHeader': header, 'errorBody': body }
         });
     };
+    
+    // sets up the socket calls
+    function setupSocket() {
+        // whenever the server is disconnected
+        socket.on('disconnect', function() {
+            console.log('client socket.io disconnect!');
+        });
 
-    // whenever the server emits 'update saved blogs'
-    socket.on('update saved blogs', function(data) {
-        // get admin page data
-        Service.getAdminPageData().then(function (responseA) {
-            // if returned a valid response
-            if (!responseA.error) {
-                // set the data
-                $scope.admin.savedPosts = responseA.savedPosts;
+        // whenever the server emits 'update saved blogs'
+        socket.on('update saved blogs', function(data) {
+            // get admin page data
+            Service.getAdminPageData().then(function (responseA) {
+                // if returned a valid response
+                if (!responseA.error) {
+                    // set the data
+                    $scope.admin.savedPosts = responseA.savedPosts;
 
-                // reset
-                socket.emit('reset');
-            }
-            else {
+                    // reset
+                    socket.emit('reset');
+                }
+                else {
+                    // set error
+                    $scope.pageTitle = responseA.title;
+                    $scope.error.error = true;
+                    $scope.error.title = responseA.title;
+                    $scope.error.status = responseA.status;
+                    $scope.error.message = responseA.message;
+
+                    // reset
+                    socket.emit('reset');
+                }
+            })
+            .catch(function (responseA) {
                 // set error
                 $scope.pageTitle = responseA.title;
                 $scope.error.error = true;
@@ -658,18 +683,7 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
 
                 // reset
                 socket.emit('reset');
-            }
-        })
-        .catch(function (responseA) {
-            // set error
-            $scope.pageTitle = responseA.title;
-            $scope.error.error = true;
-            $scope.error.title = responseA.title;
-            $scope.error.status = responseA.status;
-            $scope.error.message = responseA.message;
-
-            // reset
-            socket.emit('reset');
+            });
         });
-    });
+    };
 }]);

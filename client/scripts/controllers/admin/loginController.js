@@ -20,8 +20,8 @@ angular.module('app').controller('loginController', ['$scope', '$rootScope', '$c
     $scope.loginForm = {
         "formSubmitted": false,
         "inputs": {
-            "username": "",
-            "password": ""
+            "username": "cam",
+            "password": "0000"
         },
         "views": {
             "username": "username",
@@ -47,8 +47,8 @@ angular.module('app').controller('loginController', ['$scope', '$rootScope', '$c
         $rootScope.$emit("refreshFooter", {});
     }
     else {
-        // initialize the page
-        initializePage();
+        // always refresh header to ensure login
+        $rootScope.$emit("refreshHeader", {});
     }
 
     // on header refresh
@@ -163,8 +163,15 @@ angular.module('app').controller('loginController', ['$scope', '$rootScope', '$c
                     // refresh header
                     $rootScope.$emit("refreshHeader", {});
 
-                    // redirect to admin page
-                    $window.location.href = "#/admin";
+                    // if a redirect callback
+                    if($location.search().redirect){
+                        // redirect to admin page
+                        $window.location.href = "#" + $location.search().redirect;
+                    }
+                    else {
+                        // redirect to admin page
+                        $window.location.href = "#/admin";
+                    }
                 }
                 else {
                     // show error

@@ -22,7 +22,7 @@
     };
 
     // set query
-    $scope.searchText.query = $location.search().s === undefined ? "" : $location.search().s;
+    $scope.searchText.query = $location.search().q === undefined ? "" : $location.search().q;
 
     // page threshold
     const threshold = 10;
@@ -42,8 +42,8 @@
         $rootScope.$emit("refreshFooter", {});
     }
     else {
-        // initialize the page
-        initializePage();
+        // always refresh header to ensure login
+        $rootScope.$emit("refreshHeader", {});
     }
 
     // on header refresh
@@ -95,14 +95,22 @@
         return false;
     };
 
+    // on key press
+    $scope.onKeyPress = function (event) {
+        // if enter key
+        if(event.which == 13 || event.keyCode == 13 || event.key == "Enter" || event.key == "NumpadEnter") {
+            $scope.search();
+        }
+    };
+
     // searches blogs based on text
     $scope.search = function () {
         // if no search text
         if($scope.searchText.query.length == 0) {
-            $location.search("s", null);
+            $location.search("q", null);
         }
         else {
-            $location.search("s", $scope.searchText.query);
+            $location.search("q", $scope.searchText.query);
         }
 
         // apply search/page filter
@@ -155,8 +163,8 @@
     // gets the fully quantified route value
     $scope.getRouteValue = function(index) {
         var route = "#/blog?page=" + index;
-        if($location.search().s){
-            route += "&s=" + $location.search().s;
+        if($location.search().q){
+            route += "&q=" + $location.search().q;
         }
 
         return route;
@@ -191,6 +199,7 @@
             if (!responseB.error) {
                 // set the data
                 $scope.blog = responseB;
+                $scope.blog.totalPages = new Array($scope.blog.totalPages);
                 $scope.blogAnimations = new Array($scope.blog.posts.length);
 
                 // the initial delayed start time of any animation
@@ -261,6 +270,34 @@
         if(!angular.element('#pageShow').hasClass('collapsing')) {
             // show the page
             angular.element('#pageShow').collapse('show');
+
+            // when shown
+            angular.element('#pageShow').on('shown.bs.collapse', function () {
+                // the class and instance to which the mark will apply
+                var context = document.querySelectorAll(".highlight-context");
+                var markInstance = new Mark(context);
+                
+                // the keyword
+                var keyword = $scope.searchText.query.split(" ");
+
+                // the options
+                var options = {
+                    "element": "span",
+                    "className": "highlight-text-foreground",
+                    "separateWordSearch": true
+                }
+
+                // if there is a filter
+                if($scope.searchText.query) {                    
+                    // Remove previous marked elements and mark
+                    // the new keyword inside the context
+                    markInstance.unmark({
+                        done: function(){
+                            markInstance.mark(keyword, options);
+                        }
+                    });
+                }
+            });
         }
     };
 }]);

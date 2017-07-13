@@ -2,6 +2,11 @@
 - Create an admin page to add a new project (sub Portfolio)
 
 All
+- analytics on pages being accessed -> who, when, how many times accessed { url: url, totalTimes: 10, by: [{ distinctIP: 1.0.0.1, when: [time, time, time] }]}
+    - the url being accessed
+    - the number of times this url has been accessed
+    - who accessed it, when, and how many times has this user accessed it from the when array
+
 - make sure everything works in firefox and image
 - MOBILE VIEW BRUH
 
@@ -20,10 +25,10 @@ Portfolio
 Sub Portfolio
 
 Blog
-- bold search keywords
+- analytics on stuff that's being searchs
 
 Blog Post
-- make the URL look like /yyyy/mm/dd/title -> www.cameronhopkins.us/#/blog/2017/07/07/test-title
+- make the URL look like /yyyy/mm/dd/title -> www.cameronhopkins.us/#/blog/post/2017/07/07/test-title
 
 Contact
 

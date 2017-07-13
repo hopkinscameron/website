@@ -5112,6 +5112,14 @@ hr.blog-post-bar {
   max-height: 190px;
   overflow: hidden; }
 
+.highlight-text-background {
+  background-color: #29a8d6;
+  font-weight: 900; }
+
+.highlight-text-foreground {
+  color: #29a8d6;
+  font-weight: 900; }
+
 /* End Custom Text Utilities */
 /* End Custom Utilities */
 /* End Import All Custom Styles */

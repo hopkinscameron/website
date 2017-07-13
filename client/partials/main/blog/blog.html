@@ -30,7 +30,7 @@
                             <hr class="blog-post-bar mt-5 mb-5" ng-if="post.image.length > 0" />
                             <!-- End Content Break -->
                             <!-- Begin Title -->
-                            <h4 class="card-title mb-0">{{post.title}}</h4>
+                            <h4 class="card-title mb-0"><span class="highlight-context" ng-bind-html="post.title | trustHTML"></span></h4>
                             <!-- End Title -->
                             <!-- Begin Publish Date -->
                             <div class="text-center mt-5 mb-5 divider">
@@ -40,7 +40,7 @@
                             </div>
                             <!-- End Publish Date -->
                             <!-- Begin Short Body -->
-                            <p class="card-text post-limit-desc">{{post.shortDescription}}</p>
+                            <p class="card-text post-limit-desc"><span class="highlight-context" ng-bind-html="post.shortDescription | trustHTML"></span></p>
                             <!-- End Short Body -->
                             <!-- Begin View Full Post/Edit Post -->
                             <div class="row">
@@ -90,7 +90,7 @@
                     <div class="card card--dark card-block box-shadow--sm">
                         <!-- Begin Search Filter -->
                         <div class="input-group" ng-class="{'mb-3': blog.filters.length > 0}">
-                            <input type="text" class="form-control" placeholder="Search for..." ng-model="searchText.query">
+                            <input type="text" class="form-control" placeholder="Search for..." ng-model="searchText.query" ng-keypress="onKeyPress($event)">
                             <span class="input-group-btn">
                                 <button class="btn btn-secondary" type="button" ng-click="search()"><i class="fa fa-search" aria-hidden="true"></i></button>
                             </span>

@@ -115,7 +115,8 @@ app.use(expressSession({
 	unset: 'destroy',
 	store: new MongoStore({
 		mongooseConnection: mongooseDBConnect.connection,
-		collection: config.sessionCollection
+		collection: config.sessionCollection,
+		clear_interval: config.clearInterval
 	})
 }));
 

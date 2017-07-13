@@ -41,7 +41,13 @@ app.config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider', func
         .when('/blog/post/:postId', {
             templateUrl: './partials/main/blog/blogPost.html'
         })
+        .when('/blog/post/:year/:month/:day/:postId', {
+            templateUrl: './partials/main/blog/blogPost.html'
+        })
         .when('/blog/post/:postId/edit', {
+            templateUrl: './partials/main/blog/blogPostEdit.html'
+        })
+        .when('/blog/post/:year/:month/:day/:postId/edit', {
             templateUrl: './partials/main/blog/blogPostEdit.html'
         })
         .when('/contact', {

@@ -65,8 +65,8 @@
         $rootScope.$emit("refreshFooter", {});
     }
     else {
-        // initialize the page
-        initializePage();
+        // always refresh header to ensure login
+        $rootScope.$emit("refreshHeader", {});
     }
 
     // on header refresh

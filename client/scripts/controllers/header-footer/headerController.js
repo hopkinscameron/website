@@ -221,7 +221,7 @@ angular.module('app').controller('headerController', ['$scope', '$rootScope', '$
     // add document event listener on key down
     document.addEventListener("keydown", function(event) {
         // if esc key
-        if(event.which == 27) {
+        if(event.which == 27 || event.keyCode == 27 || event.key == "Escape") {
             // if not already on login page
             if($location.path() != 'login') {
                 var loc = "#/login?redirect=" + $location.path();

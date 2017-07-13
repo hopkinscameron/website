@@ -20,7 +20,7 @@ module.exports = {
   domain: secrets.domain,
   // Session Cookie settings
   sessionCookie: {
-    // session expiration is set by default to 24 hours
+    // session expiration is set by default to 24 hours (in milliseconds)
     maxAge: 24 * (60 * 60 * 1000),
     // httpOnly flag makes sure the cookie is only accessed
     // through the HTTP protocol and not JS/browser
@@ -35,6 +35,8 @@ module.exports = {
   // sessionKey is the cookie session name
   sessionKey: 'sessionId',
   sessionCollection: 'sessions',
+  // clear interval after session expires (in seconds)
+  clearInterval: 60,
   // Lusca config
   csrf: {
     csrf: false,

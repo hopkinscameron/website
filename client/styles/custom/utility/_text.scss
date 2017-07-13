@@ -58,4 +58,12 @@
     max-height: 190px;
     overflow: hidden;
 }
+.highlight-text-background {
+    background-color: $brand-theme-main;
+    font-weight: 900;
+}
+.highlight-text-foreground {
+    color: $brand-theme-main;
+    font-weight: 900;
+}
 /* End Custom Text Utilities */

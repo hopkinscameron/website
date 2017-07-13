@@ -56,6 +56,9 @@ var BlogPostSchema = new Schema({
     }
 });
 
+// add an index for searching text
+BlogPostSchema.index({ title: 'text', shortDescription: 'text', body: 'text', author: 'text' });
+
 // function that is called before updating to database
 BlogPostSchema.pre('save', function(next) {
     // update the date published

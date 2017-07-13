@@ -293,29 +293,50 @@ module.exports = function(app, passport) {
 						jsonParse = JSON.parse(data);
 
 						// set page number
-						var pageNumber = req.query.page !== undefined ? req.query.page : 1;
+						var pageNumber = req.query.page ? req.query.page : 1;
 
-						// find blog post based on id
-						BlogPost.find({}).exec(function(err, foundBlogs) {
+						// the options/search query
+						var findOptions = req.query.q ? { $text: {$search: req.query.q} } : {};
+
+						// find all blog posts
+						BlogPost.find(findOptions).exec(function(err, foundBlogs) {
+							var pageSize = 1;
+
 							// parse the page number
 							pageNumber = parseInt(pageNumber);
 							
-							// map blogs to transform to an array of JSON
-							jsonParse.posts = foundBlogs.map(function(blog) {
-								// get the url
-								var url = blog.customShort;
+							// set total pages
+							jsonParse.totalPages = foundBlogs ? Math.ceil(foundBlogs.length/pageSize) : 0;
 
-								// make an object
-								blog = blog.toObject({ hide: 'customShort', transform: true });
-								blog.url = url;
-								return blog;
-							});
+							// set current page
+							jsonParse.currentPage = pageNumber;
 
-							// get the data
-							jsonParse = getBlogData(jsonParse, req.query.q, pageNumber);
+							// if pages
+							if(jsonParse.totalPages > 0) {
+								// find all blog posts
+								BlogPost.find(findOptions).sort({ datePublished: 'desc' }).skip(pageSize*(pageNumber-1)).limit(pageSize).exec(function(err, sortedPagedBlogs) {
+									// map blogs to transform to an array of JSON
+									jsonParse.posts = sortedPagedBlogs.map(function(blog) {
+										// get the url
+										var url = blog.customShort;
 
-							// send data
-							res.end( JSON.stringify(jsonParse) );
+										// make an object
+										blog = blog.toObject({ hide: 'customShort', transform: true });
+										blog.url = url;
+										return blog;
+									});
+
+									// send data
+									res.end( JSON.stringify(jsonParse) );
+								});
+							}
+							else {
+								// set to empty
+								jsonParse.posts = [];
+
+								// send data
+								res.end( JSON.stringify(jsonParse) );
+							}
 						});
 					}
 					catch (err) {
@@ -414,7 +435,7 @@ module.exports = function(app, passport) {
 	// format /api/admin
 	app.get('/api/admin', isLoggedIn, function (req, res) {
 		// find all saved blog posts
-		SavedBlogPost.find({}).exec(function(err, blogs) {
+		SavedBlogPost.find({}).sort({ dateSaved: 'desc' }).exec(function(err, blogs) {
 			// if error occured
 			if (err) {
 				// send internal error
@@ -428,11 +449,8 @@ module.exports = function(app, passport) {
 					return blog.toObject({ hide: 'customShort', transform: true });
 				});
 
-				// sort
-				blogs = sortSavedBlogs(blogs);
-
 				// send blogs back
-				res.end(JSON.stringify({"savedPosts": blogs }));
+				res.end(JSON.stringify({ "savedPosts": blogs }));
 			}
 			else {
 				// send not found
@@ -1117,125 +1135,6 @@ function getSubPortfolioFile(subPortfolioId) {
 	}
 	
 	return undefined;
-};
-
-// gets the blog data based on page
-function getBlogData (blog, filter, pageNumber) {
-	var itemsPerPage = 1;
-
-	// set default values
-	blog.totalPages = 0;
-	blog.currentPage = 0;
-
-	// if posts
-	if(blog.posts.length > 0) {
-		// if filter
-		if(filter) {
-			blog.posts = applyFilter(blog.posts, filter);
-		}
-
-		// sort by date published
-		blog.posts = sortPublishedBlogs(blog.posts);
-
-		// total pages
-		var totalPages = Math.ceil(blog.posts.length/itemsPerPage);
-
-		// get start/end index
-		var start = (pageNumber - 1) * itemsPerPage,
-			end = start + itemsPerPage;
-		
-		// get the sliced version
-		var sliced = blog.posts.slice(start, end);
-
-		// set new posts with applied start/end
-		blog.posts = blog.posts.slice(start, end);
-
-		// set total pages
-		blog.totalPages = new Array(totalPages);
-
-		// set current page
-		blog.currentPage = pageNumber;
-
-		// return a portion of array
-		return blog;
-	}
-	
-	return blog;
-};
-
-// applies filter on array
-function applyFilter(arr, filter) {
-	var newArr = [];
-	var filterSplit = filter.split(" ");
-
-	// loop through array
-	for(var x = 0; x < arr.length; x++) {
-		var post = arr[x];
-
-		// based on filter, check if contains
-		if (filterSplit.some(function(text) { 
-			return post.title.indexOf(text) >= 0 || post.body.indexOf(text) || post.shortDescription.indexOf(text) || post.author.indexOf(text);
-		})) {
-			// there's at least one
-			newArr.push(post);
-		}
-	}
-
-	return newArr;
-};
-
-// sorts the published blogs by date (decending order)
-function sortPublishedBlogs(blogs) {
-	// sort
-	blogs.sort(function(a, b) {
-		try {
-			var dateA = new Date(a.datePublished);
-			var dateB = new Date(b.datePublished);
-
-			// compare date equality
-			if (dateA > dateB) {
-				return -1;
-			}
-			if (dateA < dateB) {
-				return 1;
-			}
-		}
-		catch (err) {
-			return -1;
-		}
-
-		// order must be equal
-		return 0;
-	});
-	
-	return blogs;
-};
-
-// sorts the saved blogs by date (decending order)
-function sortSavedBlogs(blogs) {
-	// sort
-	blogs.sort(function(a, b) {
-		try {
-			var dateA = new Date(a.dateSaved);
-			var dateB = new Date(b.dateSaved);
-
-			// compare date equality
-			if (dateA > dateB) {
-				return -1;
-			}
-			if (dateA < dateB) {
-				return 1;
-			}
-		}
-		catch (err) {
-			return -1;
-		}
-
-		// order must be equal
-		return 0;
-	});
-	
-	return blogs;
 };
 
 // route middleware to make sure a user is logged in

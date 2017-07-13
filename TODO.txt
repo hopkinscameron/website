@@ -6,9 +6,9 @@ All
     - the url being accessed
     - the number of times this url has been accessed
     - who accessed it, when, and how many times has this user accessed it from the when array
-
 - make sure everything works in firefox and image
 - MOBILE VIEW BRUH
+- when hovering over a clickable image, stretch the image out a little bit, (keep the same size, just bring forward) -> transform: scale(1.05); this goes when hovering
 
 Header
 
@@ -28,7 +28,6 @@ Blog
 - analytics on stuff that's being searchs
 
 Blog Post
-- make the URL look like /yyyy/mm/dd/title -> www.cameronhopkins.us/#/blog/post/2017/07/07/test-title
 
 Contact
 

@@ -24,6 +24,8 @@
 /* End Border Sizes Variables */
 /* Begin Box Shadow Sizes */
 /* End Box Shadow Sizes */
+/* Begin Blog Post */
+/* End Blog Post */
 /* Begin Colors */
 /* End Colors */
 /* Begin Colors (Theme) */
@@ -31,7 +33,9 @@
 /* Begin Icon Font Path */
 /* End Icon Font Path */
 /* Begin ngDialog */
-/* Begin ngDialog */
+/* End ngDialog */
+/* Begin Scales */
+/* End Scales */
 /* 
     Typography + Links 
 */
@@ -4686,10 +4690,21 @@
 .post-body--dark {
   padding: 0.5rem 1rem;
   border-left: 0.25rem solid #636c72; }
+  .post-body--dark :last-child {
+    margin-bottom: 0; }
 
 .post-limit-desc {
   max-height: 190px;
   overflow: hidden; }
+
+.post-img--sm {
+  height: 100px; }
+
+.post-img--md {
+  height: 200px; }
+
+.post-img--lg {
+  height: 400px; }
 
 /* End Custom Blog Post Styles */
 /* Begin Custom Body Styles */
@@ -4730,28 +4745,21 @@ body {
 /* Begin Custom Box Shadows */
 .box-shadow--xs {
   box-shadow: 0 0 6.25px #2C3035, 0 0 6.25px #899F99; }
-  .box-shadow--xs.box-shadow--primary {
-    box-shadow: 0 0 6.25px #29a8d6, 0 0 6.25px #54b9de; }
 
 .box-shadow--sm {
   box-shadow: 0 0 12.5px #2C3035, 0 0 12.5px #899F99; }
-  .box-shadow--sm.box-shadow--primary {
-    box-shadow: 0 0 12.5px #29a8d6, 0 0 12.5px #54b9de; }
 
 .box-shadow--md {
   box-shadow: 0 0 25px #2C3035, 0 0 25px #899F99; }
-  .box-shadow--md.box-shadow--primary {
-    box-shadow: 0 0 25px #29a8d6, 0 0 25px #54b9de; }
 
 .box-shadow--lg {
   box-shadow: 0 0 50px #2C3035, 0 0 50px #899F99; }
-  .box-shadow--lg.box-shadow--primary {
-    box-shadow: 0 0 50px #29a8d6, 0 0 50px #54b9de; }
 
 .box-shadow--xl {
   box-shadow: 0 0 75px #2C3035, 0 0 75px #899F99; }
-  .box-shadow--xl.box-shadow--primary {
-    box-shadow: 0 0 75px #29a8d6, 0 0 75px #54b9de; }
+
+.box-shadow--primary {
+  box-shadow: 0 0 6.25px #29a8d6, 0 0 6.25px #54b9de; }
 
 /* End Custom Box Shadows */
 /* Begin Custom Buttons */
@@ -4791,20 +4799,20 @@ body {
 /* Begin Custom Fonts */
 @font-face {
   font-family: no-more-lies;
-  src: url(./fonts/no-more-lies.ttf); }
+  src: url(./fonts//no-more-lies.ttf); }
 
 @font-face {
   font-family: true-lies;
-  src: url(./fonts/true-lies.ttf); }
+  src: url(./fonts//true-lies.ttf); }
 
 @font-face {
   font-family: wiked-grit;
-  src: url(./fonts/wicked-grit.ttf); }
+  src: url(./fonts//wicked-grit.ttf); }
 
-.font-fancy-1 {
+.font-fancy--1 {
   font-family: no-more-lies; }
 
-.font-fancy-2 {
+.font-fancy--2 {
   font-family: true-lies; }
 
 /* End Custom Fonts */
@@ -4928,13 +4936,7 @@ nav {
 .ngdialog.ngdialog-theme-dark .ngdialog-close:hover:before, .ngdialog.ngdialog-theme-dark .ngdialog-close:active:before {
   color: #a5b7c9; }
 
-.ngdialog.ngdialog-theme-default.custom-width .ngdialog-content {
-  width: 600px; }
-
-.ngdialog.ngdialog-theme-plain.custom-width .ngdialog-content {
-  width: 600px; }
-
-.ngdialog.ngdialog-theme-dark.custom-width .ngdialog-content {
+.ngdialog.ngdialog-theme-default.custom-width .ngdialog-content, .ngdialog.ngdialog-theme-plain.custom-width .ngdialog-content, .ngdialog.ngdialog-theme-dark.custom-width .ngdialog-content {
   width: 600px; }
 
 /* End Custom ngDialog */
@@ -5019,6 +5021,16 @@ nav {
 
 .img--xxl {
   height: 1000px; }
+
+.img-zoom {
+  transform: scale(1);
+  transition: 0.25s; }
+  .img-zoom--sm:hover {
+    transform: scale(1.05); }
+  .img-zoom--md:hover {
+    transform: scale(1.15); }
+  .img-zoom--lg:hover {
+    transform: scale(1.25); }
 
 /* End Custom Images */
 /* Begin Custom Link Styles */

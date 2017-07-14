@@ -15,19 +15,7 @@
             <div class="container-fluid footer-content" ng-if="footer.socialMediaLinks">
                 <span ng-repeat="socialMedia in footer.socialMediaLinks">
                     <a class="decoration--never d-inline-block" ng-class="{'mr-2': $index != footer.socialMediaLinks.length - 1}" ng-href="{{socialMedia.link}}" target="_blank">
-                        <div class="footer-svg" style="background: url({{socialMedia.img}}); background-size: contain; background-position: center center; background-repeat: no-repeat;"></div>
-                        <!-- ONLY WORKS IN CHROME :(
-                        <div class="footer-svg" 
-                            style="-webkit-mask-image: url({{socialMedia.img}});
-                                mask-image: url({{socialMedia.img}});
-                                -webkit-mask-size: contain;
-                                mask-size: contain;
-                                -webkit-mask-position: center center;
-                                mask-position: center center;
-                                -webkit-mask-repeat: no-repeat;
-                                mask-repeat: no-repeat;">
-                        </div>
-                        -->
+                        <div class="footer-svg img-zoom--sm" style="background: url({{socialMedia.img}}); background-size: contain; background-position: center center; background-repeat: no-repeat;"></div>
                     </a>
                 </span>
             </div>

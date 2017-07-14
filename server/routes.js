@@ -12,6 +12,13 @@ var fs = require("fs");
 // short id generator
 var shortid = require('shortid');
 
+// the geo ip location
+var geoip = require('geoip-lite');
+
+// the user agent parser
+var useragent = require('useragent');
+useragent(true);
+
 // the secrets
 var secrets = require('./secrets');
 
@@ -26,6 +33,9 @@ var BlogPost = require('./models/model-blog-post');
 
 // load up the Saved Blog model
 var SavedBlogPost = require('./models/model-saved-blog-post');
+
+// load up the Analytics Page model
+var AnalyticsPage = require('./models/model-analytics-page');
 
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
@@ -153,6 +163,10 @@ module.exports = function(app, passport) {
 	// GET home page information
 	// format /api/home
 	app.get('/api/home', function (req, res) {
+		// get user's IP address and log the page request
+		getIPAndLog(req);
+
+		// read file to gain information
 		fs.readFile("./server/data/home.json", 'utf8', function (err, data) {
 			// if no error 
 			if(!err) {
@@ -170,6 +184,10 @@ module.exports = function(app, passport) {
 	// GET abou e page information
 	// format /api/about
 	app.get('/api/about', function (req, res) {
+		// get user's IP address and log the page request
+		getIPAndLog(req);
+
+		// read file to gain information
 		fs.readFile("./server/data/about-me.json", 'utf8', function (err, data) {
 			// if no error 
 			if(!err) {
@@ -187,6 +205,10 @@ module.exports = function(app, passport) {
 	// GET resume page information
 	// format /api/resume
 	app.get('/api/resume', function (req, res) {
+		// get user's IP address and log the page request
+		getIPAndLog(req);
+
+		// read file to gain information
 		fs.readFile("./server/data/resume.json", 'utf8', function (err, data) {
 			// if no error 
 			if(!err) {
@@ -205,8 +227,12 @@ module.exports = function(app, passport) {
 	// format /api/portfolio
 	// format /api/portfolio?id=subPortfolioId
 	app.get('/api/portfolio', function (req, res) {
+		// get user's IP address and log the page request
+		getIPAndLog(req);
+
 		// if query
 		if (req.query.id) {
+			// get correct file
 			var file = getSubPortfolioFile(req.query.id);
 
 			// if file doesn't exist
@@ -216,7 +242,7 @@ module.exports = function(app, passport) {
 				return;
 			}
 
-			// get contents
+			// read file to gain information
 			fs.readFile("./server/data/" + file, 'utf8', function (err, data) {
 				// if no error 
 				if(!err) {
@@ -231,6 +257,7 @@ module.exports = function(app, passport) {
 			});
 		}
 		else {
+			// read file to gain information
 			fs.readFile("./server/data/portfolio.json", 'utf8', function (err, data) {
 				// if no error 
 				if(!err) {
@@ -251,6 +278,10 @@ module.exports = function(app, passport) {
 	// format /api/blog?q=someQuery
 	// format /api/blog?id=postId
 	app.get('/api/blog', function (req, res) {
+		// get user's IP address and log the page request
+		getIPAndLog(req);
+
+		// get the post id if it exists
 		var postId = req.query.id;
 
 		// if query on id
@@ -272,8 +303,19 @@ module.exports = function(app, passport) {
 					foundBlog = foundBlog.toObject({ hide: 'customShort', transform: true });
 					foundBlog.url = url;
 
-					// send data
-					res.end( JSON.stringify(foundBlog) );
+					// update the view count
+					BlogPost.update({ customShort : postId },{ $inc: { views: 1 } }).exec(function(err, updatedBlog) {
+						// if error occured
+						if (err) {
+							// send internal error
+							res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+							console.log(clcConfig.error(err.message));
+						}
+						else {
+							// send data
+							res.end( JSON.stringify(foundBlog) );
+						}
+					});
 				}
 				else {
 					// send not found
@@ -282,7 +324,7 @@ module.exports = function(app, passport) {
 			});
 		}
 		else {
-			// read file
+			// read file to gain information
 			fs.readFile("./server/data/blog.json", 'utf8', function (err, data) {
 				// if no error 
 				if(!err) {
@@ -357,6 +399,9 @@ module.exports = function(app, passport) {
 	// GET blog edit page information
 	// format /api/blog/post/:postId/edit
 	app.get('/api/blog/post/:postId/edit', isLoggedIn, function (req, res) {
+		// get user's IP address and log the page request
+		getIPAndLog(req);
+
 		// if query on id
 		if (req.params.postId) {
 			// find blog post based on id
@@ -417,6 +462,10 @@ module.exports = function(app, passport) {
 	// GET contact page information
 	// format /api/contact
 	app.get('/api/contact', function (req, res) {
+		// get user's IP address and log the page request
+		getIPAndLog(req);
+
+		// read file to gain information
 		fs.readFile("./server/data/contact.json", 'utf8', function (err, data) {
 			// if no error 
 			if(!err) {
@@ -434,6 +483,9 @@ module.exports = function(app, passport) {
 	// GET admin page information
 	// format /api/admin
 	app.get('/api/admin', isLoggedIn, function (req, res) {
+		// get user's IP address and log the page request
+		getIPAndLog(req);
+
 		// find all saved blog posts
 		SavedBlogPost.find({}).sort({ dateSaved: 'desc' }).exec(function(err, blogs) {
 			// if error occured
@@ -557,6 +609,9 @@ module.exports = function(app, passport) {
 	// GET login page requested
 	// format /login
 	app.get('/login', function(req, res) {
+		// get user's IP address and log the page request
+		getIPAndLog(req);
+
 		// if user is not authenticated in the session, carry on 
 		if (!req.isAuthenticated()) {
 			// return success
@@ -571,6 +626,9 @@ module.exports = function(app, passport) {
 	// GET logout the user
 	// format /logout
 	app.get('/logout', function(req, res) {
+		// get user's IP address and log the page request
+		getIPAndLog(req);
+
 		// logout and remove from database
 		req.logout();
 		req.session = null;
@@ -585,6 +643,9 @@ module.exports = function(app, passport) {
 	// POST send email
 	// format /api/sendEmail
 	app.post('/api/sendEmail', function (req, res) {
+		// get user's IP address and log the page request
+		getIPAndLog(req);
+
 		//https://script.google.com/macros/s/secrets.google_send_email_script_key/exec
 
 		// validate existence
@@ -638,6 +699,9 @@ module.exports = function(app, passport) {
 	// POST save blog
 	// format /api/saveBlog
 	app.post('/api/saveBlog', isLoggedIn, function (req, res) {
+		// get user's IP address and log the page request
+		getIPAndLog(req);
+
 		// validate existence
 		req.checkBody('title', 'Title is required').notEmpty();
 		
@@ -782,6 +846,9 @@ module.exports = function(app, passport) {
 	// POST post blog
 	// format /api/postBlog
 	app.post('/api/postBlog', isLoggedIn, function (req, res) {
+		// get user's IP address and log the page request
+		getIPAndLog(req);
+
 		// validate existence
 		req.checkBody('title', 'Title is required').notEmpty();
 		req.checkBody('shortDescription', 'Short Description is required').notEmpty();
@@ -939,6 +1006,9 @@ module.exports = function(app, passport) {
 	// POST shorten url
 	// format /api/shortenUrl
 	app.post('/api/shortenUrl', isLoggedIn, function (req, res) {
+		// get user's IP address and log the page request
+		getIPAndLog(req);
+
 		// validate existence
 		req.checkBody('longUrl', 'Long url is required').notEmpty();
 
@@ -999,6 +1069,10 @@ module.exports = function(app, passport) {
 	// POST login
 	// format /login
 	app.post('/login', function (req, res, next) {
+		// get user's IP address and log the page request
+		getIPAndLog(req);
+
+		// authenticate user login
 		passport.authenticate('local-login', function (err, user, info) {
 			// if error
 			if(err) {
@@ -1024,6 +1098,9 @@ module.exports = function(app, passport) {
 	// DELETE discards saved blog draft
 	// format /api/deleteSavedBlog
 	app.delete('/api/discardSavedBlogDraft', isLoggedIn, function (req, res) {
+		// get user's IP address and log the page request
+		getIPAndLog(req);
+
 		// validate existence
 		req.checkBody('id', 'Id is required').notEmpty();
 		
@@ -1067,6 +1144,9 @@ module.exports = function(app, passport) {
 	// DELETE deleted published blog
 	// format /api/deletePublishedBlog
 	app.delete('/api/deletePublishedBlog', isLoggedIn, function (req, res) {
+		// get user's IP address and log the page request
+		getIPAndLog(req);
+
 		// validate existence
 		req.checkBody('id', 'Id is required').notEmpty();
 		
@@ -1145,4 +1225,83 @@ function isLoggedIn(req, res, next) {
 
 	// send forbidden error
 	res.status(403).send({ title: errorMessageCenter.error.status403.title, message: errorMessageCenter.error.status403.message });
+};
+
+// get user's IP address and log's page request
+function getIPAndLog(req) {
+	// get client IP
+	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+	var ua = useragent.parse(req.headers['user-agent']);
+
+	// create the accessed by
+	var accessedBy = {
+		userPublicIP: undefined,
+		localIP: ip,
+		requestType: req.method,
+		accessedTime: new Date()
+	};
+
+	// get user's public ip address and log it
+	getUserPublicIP().then(function (response) {
+		// set public IP
+		accessedBy.userPublicIP = response
+
+		var loc = geoip.lookup(response);
+		
+		// log the page request
+		logPageRequest(accessedBy, req.originalUrl);
+	}).catch(function (response) {
+		console.log(clcConfig.error(response.message));
+	});
+};
+
+// gets users public IP Address
+function getUserPublicIP() {
+	// create request
+	var options = {
+		method: 'GET',
+		uri: "http://bot.whatismyipaddress.com",
+		headers: {
+			'Content-Type': 'application/json; odata=verbose',
+			'Accept': 'application/json; odata=verbose'
+		},
+		json: true
+	};
+
+	// submit request
+	return requestPromise(options);
+};
+
+// logs the page requested
+function logPageRequest(accessedBy, pageRequested) {
+	// find page post based on id
+	AnalyticsPage.findOne({ url : pageRequested }).exec(function(err, foundPage) {
+		// if error occured
+		if (err) {
+			console.log(clcConfig.error(err.message));
+		}
+		else if(foundPage) {
+			// push the ip who accessed this page
+			AnalyticsPage.update({ url : pageRequested }, { $push: { accessedBy: accessedBy } }).exec(function(err, updatedBlog) {
+				// if error occured
+				if (err) {
+					console.log(clcConfig.error(err.message));
+				}
+			});
+		}
+		else {
+			// create the analytics for this page
+			var analyticsPage = new AnalyticsPage({
+				url: pageRequested,
+				accessedBy: [accessedBy]
+			});
+
+			// save
+			analyticsPage.save(function(err, newAnalyticsPage) {
+				if (err) {
+					console.log(clcConfig.error(err.message));
+				}
+			});
+		}
+	});
 };

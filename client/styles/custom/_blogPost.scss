@@ -2,9 +2,24 @@
 .post-body--dark {
     padding: 0.5rem 1rem;
     border-left: 0.25rem solid $muted;
+
+    & :last-child {
+        margin-bottom: 0;
+    }
 }
 .post-limit-desc {
     max-height: 190px;
     overflow: hidden;
+}
+.post-img {
+    &--sm {
+        height: $post-img--sm; 
+    }
+    &--md {
+        height: $post-img--md; 
+    }
+    &--lg {
+        height: $post-img--lg; 
+    }
 }
 /* End Custom Blog Post Styles */

@@ -1,37 +1,22 @@
 /* Begin Custom Box Shadows */
-.box-shadow--xs {
-    box-shadow: 0 0 $box-shadow-xs $dark, 0 0 $box-shadow-xs $dark-accent;
-
-    &.box-shadow--primary {
+.box-shadow {
+    &--xs {
+        box-shadow: 0 0 $box-shadow-xs $dark, 0 0 $box-shadow-xs $dark-accent;
+    }
+    &--sm {
+        box-shadow: 0 0 $box-shadow-sm $dark, 0 0 $box-shadow-sm $dark-accent;
+    }
+    &--md {
+        box-shadow: 0 0 $box-shadow-md $dark, 0 0 $box-shadow-md $dark-accent;
+    }
+    &--lg {
+        box-shadow: 0 0 $box-shadow-lg $dark, 0 0 $box-shadow-lg $dark-accent;
+    }
+    &--xl {
+        box-shadow: 0 0 $box-shadow-xl $dark, 0 0 $box-shadow-xl $dark-accent;
+    }
+    &--primary {
         box-shadow: 0 0 $box-shadow-xs $brand-theme-main, 0 0 $box-shadow-xs lighten($brand-theme-main, 10%);
-    }
-}
-.box-shadow--sm {
-    box-shadow: 0 0 $box-shadow-sm $dark, 0 0 $box-shadow-sm $dark-accent;
-
-    &.box-shadow--primary {
-        box-shadow: 0 0 $box-shadow-sm $brand-theme-main, 0 0 $box-shadow-sm lighten($brand-theme-main, 10%);
-    }
-}
-.box-shadow--md {
-    box-shadow: 0 0 $box-shadow-md $dark, 0 0 $box-shadow-md $dark-accent;
-
-    &.box-shadow--primary {
-        box-shadow: 0 0 $box-shadow-md $brand-theme-main, 0 0 $box-shadow-md lighten($brand-theme-main, 10%);
-    }
-}
-.box-shadow--lg {
-    box-shadow: 0 0 $box-shadow-lg $dark, 0 0 $box-shadow-lg $dark-accent;
-
-    &.box-shadow--primary {
-        box-shadow: 0 0 $box-shadow-lg $brand-theme-main, 0 0 $box-shadow-lg lighten($brand-theme-main, 10%);
-    }
-}
-.box-shadow--xl {
-    box-shadow: 0 0 $box-shadow-xl $dark, 0 0 $box-shadow-xl $dark-accent;
-
-    &.box-shadow--primary {
-        box-shadow: 0 0 $box-shadow-xl $brand-theme-main, 0 0 $box-shadow-xl lighten($brand-theme-main, 10%);
     }
 }
 /* End Custom Box Shadows */

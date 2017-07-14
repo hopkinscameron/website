@@ -11,10 +11,12 @@
     font-family: wiked-grit;
     src: url(#{$font-path}/wicked-grit.ttf);
 }
-.font-fancy-1 {
-    font-family: no-more-lies;
-}
-.font-fancy-2 {
-    font-family: true-lies;
+.font-fancy {
+    &--1 {
+        font-family: no-more-lies;
+    }
+    &--2 {
+        font-family: true-lies;
+    }
 }
 /* End Custom Fonts */

@@ -83,6 +83,12 @@ $box-shadow-lg: 50px;
 $box-shadow-xl: 75px;
 /* End Box Shadow Sizes */
 
+/* Begin Blog Post */
+$post-img--sm: 100px;
+$post-img--md: 200px; 
+$post-img--lg: 400px; 
+/* End Blog Post */
+
 /* Begin Colors */
 $brand-theme-main: #29a8d6;
 $brand-theme-secondary: #FFFFFF;
@@ -192,7 +198,13 @@ $icon-font-path: "./fonts/";
 
 /* Begin ngDialog */
 $ng-dialog-width: 600px;
-/* Begin ngDialog */
+/* End ngDialog */
+
+/* Begin Scales */
+$scale--sm: 1.05;
+$scale--md: 1.15;
+$scale--lg: 1.25;
+/* End Scales */
 
 /* 
     Typography + Links 
@@ -206,10 +218,10 @@ $font-size-large:         29px;
 $font-size_xlarge:        47px;
 
 $line-height-base:        1.44; // Line height will change based on breakpoint.
-$font-path:               "./fonts";
+$font-path:               "./fonts/";
 $font-family-sans-serif:  "Proxima-Nova","Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
 $font-family-serif:       "Chronicle",Georgia,"Times New Roman","Roboto Slab",serif;
-$font-family-mono:      "Operator", "OCR A Std", "Fira Code", "Hack", Consolas, "Monaco", "Lucida Console", "Courier New", Courier, monospace;
+$font-family-mono:        "Operator", "OCR A Std", "Fira Code", "Hack", Consolas, "Monaco", "Lucida Console", "Courier New", Courier, monospace;
 $font-weight-light:       200;
 
 $headings-font-weight:    400; // Weight for headers

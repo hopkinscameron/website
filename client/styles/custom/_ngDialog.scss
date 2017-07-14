@@ -13,17 +13,7 @@
         }
     }
 }
-.ngdialog.ngdialog-theme-default.custom-width {
-    & .ngdialog-content {
-        width: $ng-dialog-width;
-    }
-}
-.ngdialog.ngdialog-theme-plain.custom-width {
-    & .ngdialog-content {
-        width: $ng-dialog-width;
-    }
-}
-.ngdialog.ngdialog-theme-dark.custom-width {
+.ngdialog.ngdialog-theme-default.custom-width, .ngdialog.ngdialog-theme-plain.custom-width, .ngdialog.ngdialog-theme-dark.custom-width {
     & .ngdialog-content {
         width: $ng-dialog-width;
     }

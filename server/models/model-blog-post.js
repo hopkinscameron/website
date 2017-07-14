@@ -53,6 +53,11 @@ var BlogPostSchema = new Schema({
     },
     dateUpdated: {
         type: Date
+    },
+    views: {
+        type: Number,
+        required: true,
+        default: 0
     }
 });
 

@@ -1,23 +1,39 @@
 /* Begin Custom Images */
-.img--xxs {
+.img {
+    &--xxs {
     height: 25px; 
+    }
+    &--xs {
+        height: 50px; 
+    }
+    &--sm {
+        height: 100px; 
+    }
+    &--md {
+        height: 200px; 
+    }
+    &--lg {
+        height: 400px; 
+    }
+    &--xl {
+        height: 800px; 
+    }
+    &--xxl {
+        height: 1000px; 
+    }
 }
-.img--xs {
-    height: 50px; 
-}
-.img--sm {
-    height: 100px; 
-}
-.img--md {
-    height: 200px; 
-}
-.img--lg {
-    height: 400px; 
-}
-.img--xl {
-    height: 800px; 
-}
-.img--xxl {
-    height: 1000px; 
+.img-zoom {
+    transform: scale(1.0);
+    transition: $animation-delay--xs;
+
+    &--sm:hover {
+        transform: scale($scale--sm);
+    }
+    &--md:hover {
+        transform: scale($scale--md);
+    }
+    &--lg:hover {
+        transform: scale($scale--lg);
+    }
 }
 /* End Custom Images */

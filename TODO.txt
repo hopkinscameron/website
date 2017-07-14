@@ -2,13 +2,10 @@
 - Create an admin page to add a new project (sub Portfolio)
 
 All
-- analytics on pages being accessed -> who, when, how many times accessed { url: url, totalTimes: 10, by: [{ distinctIP: 1.0.0.1, when: [time, time, time] }]}
-    - the url being accessed
-    - the number of times this url has been accessed
-    - who accessed it, when, and how many times has this user accessed it from the when array
+- analytics on pages being accessed -> where in the world
 - make sure everything works in firefox and image
 - MOBILE VIEW BRUH
-- when hovering over a clickable image, stretch the image out a little bit, (keep the same size, just bring forward) -> transform: scale(1.05); this goes when hovering
+- store geo location -> find out how to have a mixed schema and or object within an object
 
 Header
 

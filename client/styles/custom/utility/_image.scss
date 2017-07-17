@@ -1,26 +1,32 @@
 /* Begin Custom Images */
 .img {
     &--xxs {
-    height: 25px; 
+        height: $img--xxs; 
     }
     &--xs {
-        height: 50px; 
+        height: $img--xs; 
     }
     &--sm {
-        height: 100px; 
+        height: $img--sm; 
     }
     &--md {
-        height: 200px; 
+        height: $img--md; 
     }
     &--lg {
-        height: 400px; 
+        height: $img--lg; 
     }
     &--xl {
-        height: 800px; 
+        height: $img--xl; 
     }
     &--xxl {
-        height: 1000px; 
+        height: $img--xxl; 
     }
+}
+.img-thumb {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.15) 100%);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
 }
 .img-zoom {
     transform: scale(1.0);

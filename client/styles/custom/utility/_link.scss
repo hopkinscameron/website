@@ -4,10 +4,15 @@ a {
 	text-decoration: underline;
 
 	&.decoration--never {
-		text-decoration: none;	
+		text-decoration: none!important;	
 	}
 	&:hover, &:active, &:focus {
 		color: $brand-theme-main;
+	}
+	&.highlight--never {
+		&:hover, &:active, &:focus {
+			color: $text-color!important;
+		}
 	}
 }
 /* End Custom Link Styles */

@@ -55,7 +55,7 @@ SavedBlogPostSchema.pre('save', function(next) {
 // function that is called before updating to database
 SavedBlogPostSchema.pre('findOneAndUpdate', function(next) {
     // update the date saved
-    this.update({},{ $set: { dateSaved: new Date() } }).exec(function(err, savedBlog) {
+    this.update({},{ $set: { dateSaved: new Date() } }).exec(function(err, updatedSavedBlog) {
         return next();
     });
 });
@@ -87,7 +87,7 @@ SavedBlogPostSchema.options.toObject.transform = function (doc, ret, options) {
 
     // return object
     return ret;
-}
+};
 
 // export for other uses
 module.exports = mongoose.model("SavedBlogPost", SavedBlogPostSchema);

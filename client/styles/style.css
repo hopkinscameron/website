@@ -24,14 +24,14 @@
 /* End Border Sizes Variables */
 /* Begin Box Shadow Sizes */
 /* End Box Shadow Sizes */
-/* Begin Blog Post */
-/* End Blog Post */
 /* Begin Colors */
 /* End Colors */
 /* Begin Colors (Theme) */
 /* End Colors (Theme) */
 /* Begin Icon Font Path */
 /* End Icon Font Path */
+/* Begin Images */
+/* End Images */
 /* Begin ngDialog */
 /* End ngDialog */
 /* Begin Scales */
@@ -4697,15 +4697,6 @@
   max-height: 190px;
   overflow: hidden; }
 
-.post-img--sm {
-  height: 100px; }
-
-.post-img--md {
-  height: 200px; }
-
-.post-img--lg {
-  height: 400px; }
-
 /* End Custom Blog Post Styles */
 /* Begin Custom Body Styles */
 body {
@@ -5022,6 +5013,12 @@ nav {
 .img--xxl {
   height: 1000px; }
 
+.img-thumb {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.15) 100%);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover; }
+
 .img-zoom {
   transform: scale(1);
   transition: 0.25s; }
@@ -5038,9 +5035,11 @@ a {
   color: #F5F7F9;
   text-decoration: underline; }
   a.decoration--never {
-    text-decoration: none; }
+    text-decoration: none !important; }
   a:hover, a:active, a:focus {
     color: #29a8d6; }
+  a.highlight--never:hover, a.highlight--never:active, a.highlight--never:focus {
+    color: #F5F7F9 !important; }
 
 /* End Custom Link Styles */
 /* Begin Custom Page Breaks */

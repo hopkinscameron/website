@@ -15,27 +15,6 @@ angular.module('app').controller('headerController', ['$scope', '$rootScope', '$
         getHeaderInformation();
     });
 
-    // checks if the page is active
-    $scope.isActive = function (page) {
-        var windowSplit = $window.location.href.split('/');
-        var pageSplit = page.split('/');
-        var last = windowSplit[windowSplit.length - 1];
-        var queryIndex = last.indexOf("?");
-
-        // if query
-        if(queryIndex != -1) {
-            last = last.substring(0, queryIndex);
-        }
-
-        // check if on page
-        if (last == pageSplit[pageSplit.length - 1]) {
-            // set the class as active
-            return true;
-        }
-
-        return false;
-    };
-
     // get time since comment
     $rootScope.$root.getTimeSince = function(dateToCheck) {
         var now = new Date();
@@ -128,6 +107,46 @@ angular.module('app').controller('headerController', ['$scope', '$rootScope', '$
         }
 
         return timeSince;
+    };
+
+    // get animation delays
+    $rootScope.$root.getAnimationDelays = function(startTime, incrementTime, length) {
+        // initialize the array
+        var delays = new Array(length);
+
+        // loop through all animation timing and set the times
+        for(var x = 0; x < delays.length; x++) {
+            delays[x] = {
+                'animation-delay': startTime + (x * incrementTime) + 's',
+                '-webkit-animation-delay': startTime + (x * incrementTime) + 's',
+                '-moz-animation-delay': startTime + (x * incrementTime) + 's',
+                '-ms-animation-delay': startTime + (x * incrementTime) + 's',
+                '-o-animation-delay': startTime + (x * incrementTime) + 's'
+            };
+        }
+
+        return delays;
+    };
+
+    // checks if the page is active
+    $scope.isActive = function (page) {
+        var windowSplit = $window.location.href.split('/');
+        var pageSplit = page.split('/');
+        var last = windowSplit[windowSplit.length - 1];
+        var queryIndex = last.indexOf("?");
+
+        // if query
+        if(queryIndex != -1) {
+            last = last.substring(0, queryIndex);
+        }
+
+        // check if on page
+        if (last == pageSplit[pageSplit.length - 1]) {
+            // set the class as active
+            return true;
+        }
+
+        return false;
     };
 
     // initialize variables

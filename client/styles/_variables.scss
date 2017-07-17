@@ -83,12 +83,6 @@ $box-shadow-lg: 50px;
 $box-shadow-xl: 75px;
 /* End Box Shadow Sizes */
 
-/* Begin Blog Post */
-$post-img--sm: 100px;
-$post-img--md: 200px; 
-$post-img--lg: 400px; 
-/* End Blog Post */
-
 /* Begin Colors */
 $brand-theme-main: #29a8d6;
 $brand-theme-secondary: #FFFFFF;
@@ -195,6 +189,16 @@ $transparent: transparent;
 /* Begin Icon Font Path */ 
 $icon-font-path: "./fonts/";
 /* End Icon Font Path */ 
+
+/* Begin Images */
+$img--xxs: 25px;
+$img--xs: 50px;
+$img--sm: 100px;
+$img--md: 200px; 
+$img--lg: 400px; 
+$img--xl: 800px; 
+$img--xxl: 1000px; 
+/* End Images */
 
 /* Begin ngDialog */
 $ng-dialog-width: 600px;

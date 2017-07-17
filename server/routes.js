@@ -37,6 +37,9 @@ var SavedBlogPost = require('./models/model-saved-blog-post');
 // load up the Analytics Page model
 var AnalyticsPage = require('./models/model-analytics-page');
 
+// load up the Blog Search model
+var BlogSearch = require('./models/model-analytics-blog-search');
+
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
     host: secrets.smtp_host,
@@ -277,6 +280,8 @@ module.exports = function(app, passport) {
 	// format /api/blog
 	// format /api/blog?q=someQuery
 	// format /api/blog?id=postId
+	// format /api/blog?page=pageNumber
+	// format /api/blog?q=someQuery&page=pageNumber
 	app.get('/api/blog', function (req, res) {
 		// get user's IP address and log the page request
 		getIPAndLog(req);
@@ -339,6 +344,11 @@ module.exports = function(app, passport) {
 
 						// the options/search query
 						var findOptions = req.query.q ? { $text: {$search: req.query.q} } : {};
+
+						// if query
+						if(req.query.q) {
+							logBlogSearchQuery(req.query.q);
+						}
 
 						// find all blog posts
 						BlogPost.find(findOptions).exec(function(err, foundBlogs) {
@@ -1236,7 +1246,7 @@ function getIPAndLog(req) {
 	// create the accessed by
 	var accessedBy = {
 		userPublicIP: undefined,
-		localIP: ip,
+		userLocalIP: ip,
 		requestType: req.method,
 		accessedTime: new Date()
 	};
@@ -1246,10 +1256,54 @@ function getIPAndLog(req) {
 		// set public IP
 		accessedBy.userPublicIP = response
 
+		// get user's location
 		var loc = geoip.lookup(response);
 		
+		// if location was found
+		if(loc) {
+			accessedBy.location = {
+				city: loc.city, 
+				country: loc.country,
+				ll: {
+					latitude: loc.ll[0],
+					longitude: loc.ll[1]
+				},
+				metro: loc.metro,
+				range: {
+					lowBoundIPBlock: loc.range[0],
+					highBoundIPBlock: loc.range[1]
+				},
+				region: loc.region,
+				zip: loc.zip
+			}
+		}
+
+		// if user is logged in
+		if(req.user) {
+			accessedBy.user = {
+				_id: req.user._id,
+				username: req.user.username
+			}
+		}
+
+		// build the correct url
+		var correctUrl = req.path;
+		var searchQ = req.query.q,
+			page = req.query.page;
+		// if query
+        if(searchQ) {
+            correctUrl += "?q=" + searchQ;
+        }
+
+        // if page number
+        if(page) {
+            // if search query has been applied
+            var delimeter = searchQ ? "&" : "?";
+            correctUrl += delimeter + "page=" + page;
+        }
+
 		// log the page request
-		logPageRequest(accessedBy, req.originalUrl);
+		logPageRequest(accessedBy, correctUrl.toLowerCase());
 	}).catch(function (response) {
 		console.log(clcConfig.error(response.message));
 	});
@@ -1282,7 +1336,7 @@ function logPageRequest(accessedBy, pageRequested) {
 		}
 		else if(foundPage) {
 			// push the ip who accessed this page
-			AnalyticsPage.update({ url : pageRequested }, { $push: { accessedBy: accessedBy } }).exec(function(err, updatedBlog) {
+			AnalyticsPage.update({ url : pageRequested }, { $push: { accessedBy: accessedBy }, $inc: { count: 1 } }).exec(function(err, updatedBlog) {
 				// if error occured
 				if (err) {
 					console.log(clcConfig.error(err.message));
@@ -1298,6 +1352,39 @@ function logPageRequest(accessedBy, pageRequested) {
 
 			// save
 			analyticsPage.save(function(err, newAnalyticsPage) {
+				if (err) {
+					console.log(clcConfig.error(err.message));
+				}
+			});
+		}
+	});
+};
+
+// logs the search query on the blog
+function logBlogSearchQuery(queryText) {
+	// find search text by query text
+	BlogSearch.findOne({ keyword : queryText.toLowerCase() }).exec(function(err, foundSearchText) {
+		// if error occured
+		if (err) {
+			console.log(clcConfig.error(err.message));
+		}
+		else if(foundSearchText) {
+			// push the ip who accessed this page
+			BlogSearch.update({ keyword : queryText.toLowerCase() }, { $inc: { hits: 1 } }).exec(function(err, updatedSearchText) {
+				// if error occured
+				if (err) {
+					console.log(clcConfig.error(err.message));
+				}
+			});
+		}
+		else {
+			// create the analytics for searc
+			var blogSearch = new BlogSearch({
+				keyword: queryText.toLowerCase()
+			});
+
+			// save
+			blogSearch.save(function(err, newSearch) {
 				if (err) {
 					console.log(clcConfig.error(err.message));
 				}

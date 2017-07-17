@@ -17,14 +17,27 @@
             <!-- Begin Portfolio Items -->
             <div class="card card--transparent card-block">
                 <div class="row">
-                    <div class="col-md-6 mb-5 animated" ng-class="{'zoomInLeft': $index % 2 == 0, 'zoomInRight': $index % 2 == 1}" ng- ng-style="portfolioAnimations[$index]" ng-repeat="portfolioItem in portfolio.portfolioItems">
+                    <div class="col-md-6 mb-5 animated" ng-class="{'zoomInLeft': $index % 2 == 0, 'zoomInRight': $index % 2 == 1}" ng-style="portfolioAnimations[$index]" ng-repeat="portfolioItem in portfolio.portfolioItems">
                         <div class="card card--dark card-block box-shadow--sm">
+                            <!-- Begin Portfolio Item Title -->
                             <h3 class="text-center text-capitalize font-weight-bold">{{portfolioItem.title}}</h3>
-                            <a class="decoration--never card-link" ng-href="#{{currentPath}}/{{portfolioItem.subPageLink}}">
-                                <img class="img-fluid w-100" ng-src="{{portfolioItem.pictureLink}}" alt="{{getPictureTitle(portfolioItem.pictureLink)}}" title="{{getPictureTitle(portfolioItem.pictureLink)}}" spinner-load />
+                            <!-- End Portfolio Item Title -->
+                            <!-- Begin Portfolio Item Image -->
+                            <a class="decoration--never highlight--never card-link" ng-href="#{{currentPath}}/{{portfolioItem.subPageLink}}">
+                                <div style="overflow: hidden;">
+                                    <div class="img-thumb img--md img-zoom--sm" ng-style="{'background-image': 'url(' + portfolioItem.pictureLink + ')'}" ng-if="portfolioItem.pictureLink.length > 0"></div>
+                                    <div class="img-thumb img--md img-zoom--sm d-table w-100" ng-if="portfolioItem.pictureLink.length == 0">
+                                        <div class="h3 text-center w-100 d-table-cell align-middle" style="cursor: default;">{{post.title}}</div>
+                                    </div>
+                                </div>
                             </a>
+                            <!-- End Portfolio Item Image -->
+                            <!-- Begin View More Details -->
                             <p class="text-center pl-3 pr-3 mb-2 mt-2"><a class="decoration--never card-link" ng-href="#{{currentPath}}/{{portfolioItem.subPageLink}}">View more details <i class="fa fa-arrow-right" aria-hidden="true"></i></a></p>
+                            <!-- End View More Details -->
+                            <!-- Begin Portfolio Item Short Description -->
                             <span class="pl-3 pr-3" ng-bind-html="portfolioItem.shortDescription | trustHTML"></span></p>
+                            <!-- End Portfolio Item Short Description -->
                         </div>
                     </div>
                 </div>

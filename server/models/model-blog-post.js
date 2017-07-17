@@ -74,7 +74,7 @@ BlogPostSchema.pre('save', function(next) {
 // function that is called before updating to database
 BlogPostSchema.pre('findOneAndUpdate', function(next) {
     // update the date updated
-    this.update({},{ $set: { dateUpdated: new Date() } }).exec(function(err, savedBlog) {
+    this.update({},{ $set: { dateUpdated: new Date() } }).exec(function(err, updatedBlog) {
         return next();
     });
 });
@@ -100,7 +100,7 @@ BlogPostSchema.options.toObject.transform = function (doc, ret, options) {
 
     // return object
     return ret;
-}
+};
 
 // export for other uses
 module.exports = mongoose.model("BlogPost", BlogPostSchema);

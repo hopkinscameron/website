@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('blogController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $location, $timeout, cfpLoadingBar, Service) {
+﻿angular.module('app').controller('blogController', ['$scope', '$rootScope', '$compile', '$window', '$location', '$timeout', 'cfpLoadingBar', 'Service', function ($scope, $rootScope, $compile, $window, $location, $timeout, cfpLoadingBar, Service) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
 
@@ -113,8 +113,18 @@
             $location.search("q", $scope.searchText.query);
         }
 
-        // apply search/page filter
-        getPageData($scope.searchText.query, $location.search().page);
+        // setup the route
+        var route = "#/blog";
+        var searchQ = $location.search().q,
+            page = $location.search().page;
+
+        // if searching
+        if(searchQ){
+            route = "#/blog?q=" + searchQ;
+        }
+
+        // update location
+        $window.location.href = route;
     };
 
     // add/remove filter to blog posts
@@ -162,9 +172,10 @@
 
     // gets the fully quantified route value
     $scope.getRouteValue = function(index) {
+        // setup the route
         var route = "#/blog?page=" + index;
         if($location.search().q){
-            route += "&q=" + $location.search().q;
+            route = "#/blog?q=" + $location.search().q + "&page=" + index;
         }
 
         return route;
@@ -200,7 +211,6 @@
                 // set the data
                 $scope.blog = responseB;
                 $scope.blog.totalPages = new Array($scope.blog.totalPages);
-                $scope.blogAnimations = new Array($scope.blog.posts.length);
 
                 // the initial delayed start time of any animation
                 var startTime = 1.5;
@@ -208,15 +218,8 @@
                 // the incremental start time of every animation (every animation in the array has a value greater than the last by this much)
                 var incrementTime = 1;
 
-                // loop through all animation timing and set the times
-                for(var x = 0; x < $scope.blogAnimations.length; x++) {
-                    
-                    $scope.blogAnimations[x] = {
-                        'animation-delay': startTime + (x * incrementTime) + 's',
-                        '-webkit-animation-delay': startTime + (x * incrementTime) + 's',
-                        '-moz-animation-delay': startTime + (x * incrementTime) + 's'
-                    };
-                }
+                // holds the animation times 
+                $scope.blogAnimations = $rootScope.$root.getAnimationDelays(startTime, incrementTime, $scope.blog.posts.length);
 
                 // holds the page title
                 $scope.pageTitle = "Blog | " + Service.appName;

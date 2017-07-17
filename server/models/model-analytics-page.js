@@ -21,13 +21,18 @@ var AnalyticsPageSchema = new Schema({
         required: true,
         unique: true
     },
+    count: {
+        type: Number,
+        default: 0,
+        required: true
+    },
     accessedBy: [
         {
             userPublicIP: {
                 type: String,
                 required: true
             },
-            localIP: {
+            userLocalIP: {
                 type: String,
                 required: true
             },
@@ -39,25 +44,48 @@ var AnalyticsPageSchema = new Schema({
                 type: String,
                 required: true
             },
-            country: {
-                type: String,
-                required: true
+            location: {
+                city: {
+                    type: String
+                },
+                country: {
+                    type: String
+                },
+                ll: {
+                    latitude: {
+                        type: Number
+                    },
+                    longitude: {
+                        type: Number
+                    }
+                },
+                metro: {
+                    type: Number
+                },
+                range: {
+                    lowBoundIPBlock: {
+                        type: Number
+                    },
+                    highBoundIPBlock: {
+                        type: Number
+                    }
+                },
+                region: {
+                    type: String
+                },
+                zip: {
+                    type: Number
+                }
             },
-            region: {
-                type: String,
-                required: true
-            },
-            city: {
-                type: String,
-                required: true
-            },
-            ll: {
-                type: String,
-                required: true
-            },
-            zip: {
-                type: String,
-                required: true
+            user: {
+                _id: {
+                    type: Schema.Types.ObjectId
+                },
+                username: {
+                    type: String,
+                    lowercase: true,
+                    trim: true
+                }
             }
         }
     ]
@@ -68,14 +96,6 @@ AnalyticsPageSchema.pre('save', function(next) {
     // update the count
     this.count++;
     return next();
-});
-
-// function that is called before updating to database
-AnalyticsPageSchema.pre('findOneAndUpdate', function(next) {
-    // update the count
-    this.update({},{ $inc: { count: 1 } }).exec(function(err, savedBlog) {
-        return next();
-    });
 });
 
 // specify the transform schema option
@@ -99,7 +119,7 @@ AnalyticsPageSchema.options.toObject.transform = function (doc, ret, options) {
 
     // return object
     return ret;
-}
+};
 
 // export for other uses
 module.exports = mongoose.model("AnalyticsPage", AnalyticsPageSchema);

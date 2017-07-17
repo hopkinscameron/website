@@ -34,10 +34,10 @@
                     </div>
                     <!-- End Views -->
                     <!-- Begin Image -->
-                    <div class="post-img--md rounded img-zoom--sm" style="background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.15) 100%), url({{post.image}}); background-size: cover; background-position: center center; background-repeat: no-repeat;" ng-if="post.image.length > 0"></div>
                     <div style="overflow: hidden;">
-                        <div class="post-img--md rounded img-zoom--sm d-table w-100" style="background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.15) 100%); background-size: cover; background-position: center center; background-repeat: no-repeat;" ng-if="post.image.length == 0">
-                            <div class="h3 text-center w-100 d-table-cell align-middle">{{post.title}}</div>
+                        <div class="img-thumb img--md img-zoom--sm" ng-style="{'background-image': 'url(' + post.image + ')'}" ng-if="post.image.length > 0"></div>
+                        <div class="img-thumb img--md img-zoom--sm d-table w-100" ng-if="post.image.length == 0">
+                            <div class="h3 text-center w-100 d-table-cell align-middle" style="cursor: default;">{{post.title}}</div>
                         </div>
                     </div>
                     <!-- End Image -->

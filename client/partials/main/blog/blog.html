@@ -22,8 +22,13 @@
                     <div class="animated fadeInUp" ng-class="{'mb-5': $index < blog.posts.length - 1}" ng-style="blogAnimations[$index]" ng-repeat="post in blog.posts">
                         <div class="card card--dark card-block box-shadow--sm">
                             <!-- Begin Image -->
-                            <a class="decoration--never" ng-href="#/blog/post/{{post.url}}" ng-if="post.image.length > 0">
-                                <div class="img--md" style="background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.15) 100%), url({{post.image}}); background-size: cover; background-position: center center; background-repeat: no-repeat;"></div>
+                            <a class="decoration--never highlight--never mb-3" ng-href="#/blog/post/{{post.url}}">
+                                <div style="overflow: hidden;">
+                                    <div class="img-thumb img--md img-zoom--sm" ng-style="{'background-image': 'url(' + post.image + ')'}" ng-if="post.image.length > 0"></div>
+                                    <div class="img-thumb img--md img-zoom--sm d-table w-100" ng-if="post.image.length == 0">
+                                        <div class="h3 text-center w-100 d-table-cell align-middle" style="cursor: default;">{{post.title}}</div>
+                                    </div>
+                                </div>
                             </a>
                             <!-- End Image -->
                             <!-- Begin Content Break -->

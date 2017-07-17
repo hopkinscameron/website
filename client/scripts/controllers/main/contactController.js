@@ -304,24 +304,14 @@
                 // set the data
                 $scope.contact = responseC;
                 
-                // holds the animation times
-                $scope.contactAnimations = new Array(3);
-
                 // the initial delayed start time of any animation
                 var startTime = 1.5;
 
                 // the incremental start time of every animation (every animation in the array has a value greater than the last by this much)
                 var incrementTime = 1;
 
-                // loop through all animation timing and set the times
-                for(var x = 0; x < $scope.contactAnimations.length; x++) {
-                    
-                    $scope.contactAnimations[x] = {
-                        'animation-delay': startTime + (x * incrementTime) + 's',
-                        '-webkit-animation-delay': startTime + (x * incrementTime) + 's',
-                        '-moz-animation-delay': startTime + (x * incrementTime) + 's'
-                    };
-                }
+                // holds the animation times
+                $scope.contactAnimations = $rootScope.$root.getAnimationDelays(startTime, incrementTime, 3);
 
                 // holds the page title
                 $scope.pageTitle = "Contact | " + Service.appName;

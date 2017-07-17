@@ -29,23 +29,25 @@
                 <hr class="body-bar" />
                 <!-- End Content Break -->
                 <div class="card card--transparent card-block">
-                    <div class="col-md-6 offset-md-3 row">
-                        <!-- Begin Resume Download -->
-                        <div class="col text-center animated bounceInLeft" ng-style="resumeAnimations[1]">
-                            <h5 class="">R&eacute;sum&eacute;</h5>
-                            <a ng-href="{{resume.resumeLink}}" target="_blank">
-                                <img class="" width="50" height="50" src="/images/icons/pdf-icon.png" alt="resume.pdf" title="resume.pdf" />
-                            </a>
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3 row">
+                            <!-- Begin Resume Download -->
+                            <div class="col text-center animated bounceInLeft" ng-style="resumeAnimations[1]">
+                                <h5 class="">R&eacute;sum&eacute;</h5>
+                                <a ng-href="{{resume.resumeLink}}" target="_blank">
+                                    <img class="" width="50" height="50" src="/images/icons/pdf-icon.png" alt="resume.pdf" title="resume.pdf" />
+                                </a>
+                            </div>
+                            <!-- End Resume Download -->
+                            <!-- Begin Curriculum Vitae Download -->
+                            <div class="col text-center animated bounceInRight" ng-style="resumeAnimations[1]">
+                                <h5 class="">Curriculum Vitae</h5>
+                                <a ng-href="{{resume.cvLink}}" target="_blank">
+                                    <img class="" width="50" height="50" src="/images/icons/pdf-icon.png" alt="cv.pdf" title="cv.pdf" />
+                                </a>
+                            </div>
+                            <!-- End Curriculum Vitae Download -->
                         </div>
-                        <!-- End Resume Download -->
-                        <!-- Begin Curriculum Vitae Download -->
-                        <div class="col text-center animated bounceInRight" ng-style="resumeAnimations[1]">
-                            <h5 class="">Curriculum Vitae</h5>
-                            <a ng-href="{{resume.cvLink}}" target="_blank">
-                                <img class="" width="50" height="50" src="/images/icons/pdf-icon.png" alt="cv.pdf" title="cv.pdf" />
-                            </a>
-                        </div>
-                        <!-- End Curriculum Vitae Download -->
                     </div>
                 </div>
             </div>

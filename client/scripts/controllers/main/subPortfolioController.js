@@ -204,7 +204,6 @@
 
                 // loop through all animation timing and set the times
                 for(var x = 0; x < $scope.subPortfolioAnimations.length; x++) {
-                    
                     // if download links
                     if(hasDownloads && x == 3) {
                         $scope.subPortfolioAnimations[x] = {

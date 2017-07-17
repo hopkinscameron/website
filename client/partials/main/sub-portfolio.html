@@ -23,14 +23,16 @@
                         <div class="col-md-4 animated bounceInLeft" ng-style="subPortfolioAnimations[0]">
                             <div class="row sub-portfolio-img-container-max-height scrollbar--1">
                                 <div class="col-md-6 mb-3" ng-repeat="image in subPortfolio.images">
-                                    <img role="button" class="d-block img-fluid mx-auto sub-portfolio-img" ng-class="{'active': isActive('highlights', $index)}" ng-src="{{image.url}}" ng-click="changeProjectHighlightImage($index)" spinner-load>
+                                    <!-- <img role="button" class="d-block img-fluid mx-auto sub-portfolio-img" ng-class="{'active': isActive('highlights', $index)}" ng-src="{{image.url}}" ng-click="changeProjectHighlightImage($index)" spinner-load> -->
+                                    <div role="button" class="img-thumb sub-portfolio-img" ng-class="{'active': isActive('highlights', $index)}" ng-style="{'background-image': 'url(' + image.url + ')'}" ng-click="changeProjectHighlightImage($index)"></div>
                                 </div>
                             </div>
                         </div>
                         <!-- End Image Selection -->
                         <!-- Begin Full Image Selected -->
                         <div class="col animated bounceInRight" ng-style="subPortfolioAnimations[0]">
-                            <img class="d-block img-fluid mx-auto sub-portfolio-img-max-height" ng-src="{{currentProjectImage}}" spinner-load>
+                            <!-- <img class="d-block img-fluid mx-auto sub-portfolio-img-max-height" ng-src="{{currentProjectImage}}" spinner-load> -->
+                            <div class="img-thumb sub-portfolio-img-max-height w-75 mx-auto" ng-style="{'background-image': 'url(' + currentProjectImage + ')'}"></div>
                         </div>
                         <!-- Begin Full Image Selected -->
                     </div>
@@ -123,7 +125,8 @@
                             <div class="col-md-4 float-left animated bounceInLeft" ng-style="subPortfolioAnimations[5]">
                                 <div class="row sub-portfolio-img-container-max-height scrollbar--1">
                                     <div class="col-md-6 float-left mb-3" ng-repeat="videos in subPortfolio.videoUpdates">
-                                        <img role="button" class="d-block img-fluid sub-portfolio-img" ng-class="{'active': isActive('updates', $index)}" ng-src="{{videos.thumbnail}}" ng-click="changeUpdateVideo($index)" spinner-load>
+                                        <!-- <img role="button" class="d-block img-fluid sub-portfolio-img" ng-class="{'active': isActive('updates', $index)}" ng-src="{{videos.thumbnail}}" ng-click="changeUpdateVideo($index)" spinner-load> -->
+                                        <div role="button" class="img-thumb sub-portfolio-img" ng-class="{'active': isActive('updates', $index)}" ng-style="{'background-image': 'url(' + videos.thumbnail + ')'}" ng-click="changeUpdateVideo($index)"></div>
                                     </div>
                                 </div>
                             </div>

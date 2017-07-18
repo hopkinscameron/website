@@ -7,13 +7,41 @@ All
 - convert to factories instead of having service calls
 
 - IE stuff not working
-    - fancy font's not showing
-    - animation delays not delaying -> is animation delay on for IE
+    - fancy font's not showing (could be proxy)
+    - animation delays not delaying -> is animation delay on for IE (could be proxy)
     - font awesome icons not showing (could be proxy)
     - on search button, showing as an edit vs. a pointer (could be proxy issue)
-    - in admin controller, .includes doesn't work I don't think line 182
     - tiny mce iconds don't appear (could be proxy)
-    - on log out, doesn't update the header
+
+MOBILE VIEW FIXES
+All 
+    - if going from small to large, or large to small, the if blocks (screen widths checker) don't get executed again so need to fix that (about, subportfolio, resume, portflio)
+Header
+    - On nav open, change to X
+Sub Portfolio
+    - width of project highlights for images too large, cut in half, two per row -> keep same actually
+    - reduce the highlight total height. make it flush like how the top of it is -> need to check if last row basically (maybe split up by rows like how the about page is)
+    - make the big image for the selected image 100% width
+    - Dev details, should have a margin bottom except last one
+    - there are some empty "col-md-2" for innerIndex in gameDataColumnsPerRowArray track by $index
+    - on Forsaken "take a look at GDD" the text is overflowing -> remove the div, just add if condition on span
+    - make the animations come in from both directions or pick a different animation, it looks weird for project highlights
+Blog
+    - Move the search bar to the top
+    - Center pagination
+    - published and updated text is too long (reduce font size or have two rows)
+Blog Post
+    - published and updated text is too long (reduce font size or have two rows)
+Blog Post Edit
+    - all buttons need to be full width with space in between
+Contact
+    - the form is trash with sizes, make button width
+Admin
+    - need spacing between drafts and creating posts
+    - pl and pr should be removed off form group
+Login
+    - stack the text and form fied
+
 
 Header
 
@@ -34,11 +62,9 @@ Blog
 Blog Post
 
 Contact
-- After email is sent, the delay is too long
 
 Error
 
 Login
 
 Admin
-- When on old form, clicking new form, the time last saved hangs around

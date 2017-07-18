@@ -160,9 +160,6 @@ angular.module('app').controller('loginController', ['$scope', '$rootScope', '$c
             Service.login(loginData).then(function (responseL) {
                 // if no error
                 if(!responseL.error) {
-                    // refresh header
-                    $rootScope.$emit("refreshHeader", {});
-
                     // if a redirect callback
                     if($location.search().redirect){
                         // redirect to admin page
@@ -172,6 +169,9 @@ angular.module('app').controller('loginController', ['$scope', '$rootScope', '$c
                         // redirect to admin page
                         $window.location.href = "#/admin";
                     }
+
+                    // refresh header
+                    $rootScope.$emit("refreshHeader", {});
                 }
                 else {
                     // show error

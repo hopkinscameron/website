@@ -4718,7 +4718,7 @@ body {
   margin: 0;
   padding: 0;
   border: 0;
-  padding-top: 133px;
+  padding-top: 98px;
   min-height: 400px; }
   body > #main {
     min-height: 400px; }
@@ -4790,15 +4790,18 @@ body {
 /* Begin Custom Fonts */
 @font-face {
   font-family: no-more-lies;
-  src: url(./fonts//no-more-lies.ttf); }
+  src: url(./fonts//no-more-lies-webfont.eot);
+  src: url(./fonts//no-more-lies-webfont.eot?#iefix) format("embedded-opentype"), url(./fonts//no-more-lies-webfont.ttf) format("truetype"), url(./fonts//no-more-lies-webfont.woff) format("woff"), url(./fonts//no-more-lies-webfont.woff2) format("woff"); }
 
 @font-face {
   font-family: true-lies;
-  src: url(./fonts//true-lies.ttf); }
+  src: url(./fonts//true-lies-webfont.eot);
+  src: url(./fonts//true-lies-webfont.eot?#iefix) format("embedded-opentype"), url(./fonts//true-lies-webfont.ttf) format("truetype"), url(./fonts//true-lies-webfont.woff) format("woff"), url(./fonts//true-lies-webfont.woff2) format("woff"); }
 
 @font-face {
   font-family: wiked-grit;
-  src: url(./fonts//wicked-grit.ttf); }
+  src: url(./fonts//wiked-grit-webfont.eot);
+  src: url(./fonts//wiked-grit-webfont.eot?#iefix) format("embedded-opentype"), url(./fonts//wiked-grit-webfont.ttf) format("truetype"), url(./fonts//wiked-grit-webfont.woff) format("woff"), url(./fonts//wiked-grit-webfont.woff2) format("woff"); }
 
 .font-fancy--1 {
   font-family: no-more-lies; }
@@ -4893,18 +4896,35 @@ nav {
   top: 7px; }
 
 .navbar-inverse {
-  background-image: linear-gradient(#1e1e1e 0px, #0e0e0e 100%);
-  background-repeat: repeat-x; }
+  background-image: -webkit-linear-gradient(top, #2C3035 0, #000 100%);
+  background-image: -o-linear-gradient(top, #2C3035 0, #000 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#2C3035), to(#000));
+  background-image: linear-gradient(to bottom, #2C3035 0, #000 100%);
+  background-repeat: repeat-x;
+  background-color: #181a1b !important; }
   .navbar-inverse .navbar-nav .nav-link {
     color: #F5F7F9; }
   .navbar-inverse .navbar-brand, .navbar-inverse .navbar-toggler {
     color: #F5F7F9; }
+  .navbar-inverse .navbar-toggler {
+    border: 0;
+    font-size: medium; }
+  .navbar-inverse .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(245,247,249, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E"); }
+
+.navbar-toggler-right {
+  right: 0; }
 
 .nav-link.active {
   color: #29a8d6 !important; }
 
 .dropdown-menu {
-  background-color: #000; }
+  background-image: -webkit-linear-gradient(top, #2C3035 0, #000 100%);
+  background-image: -o-linear-gradient(top, #2C3035 0, #000 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#2C3035), to(#000));
+  background-image: linear-gradient(to bottom, #2C3035 0, #000 100%);
+  background-repeat: repeat-x;
+  background-color: #181a1b !important; }
 
 .dropdown-item {
   color: #F5F7F9; }
@@ -4915,6 +4935,28 @@ nav {
     color: #F5F7F9 !important;
     background-color: #29a8d6; }
 
+/* Begin Media Queries */
+/* If [device width] is less than or equal to 991px*/
+@media (max-width: 991px) {
+  .navbar-inverse .navbar-collapse {
+    background-image: -webkit-linear-gradient(top, #2C3035 0, #000 100%);
+    background-image: -o-linear-gradient(top, #2C3035 0, #000 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#2C3035), to(#000));
+    background-image: linear-gradient(to bottom, #2C3035 0, #000 100%);
+    background-repeat: repeat-x;
+    background-color: #181a1b !important;
+    margin-right: -15px;
+    margin-left: -15px; }
+  .navbar-collapse .navbar-nav {
+    margin-left: 1rem;
+    margin-right: 1rem; } }
+
+/* If [device width] is greater than or equal to 992px*/
+@media (min-width: 992px) {
+  .navbar-collapse .navbar-nav {
+    margin-left: auto; } }
+
+/* End Media Queries */
 /* End Custom Navigation Styles */
 /* Begin Custom ngDialog */
 .ngdialog.ngdialog-theme-dark .ngdialog-content {

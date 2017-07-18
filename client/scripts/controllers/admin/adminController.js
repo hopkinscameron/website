@@ -174,21 +174,16 @@ angular.module('app').controller('adminController', ['$scope', '$rootScope', '$c
 
     // parses date/time
     $scope.parseDateTime = function (dateTime) {
-        try {
-            // get the time since this date
-            var timeSince = $rootScope.$root.getTimeSince(dateTime);
+        // get the time since this date
+        var timeSince = $rootScope.$root.getTimeSince(dateTime);
 
-            // if this post is more than a day old or somehow it's in the future!?!
-            if(timeSince == "" || timeSince.toLowerCase().includes("day") || timeSince.toLowerCase().includes("month") || timeSince.toLowerCase().includes("year")) {
-                // get the locale string format
-                return $rootScope.$root.parseDateTime(dateTime);
-            }
-            
-            return timeSince;
+        // if this post is more than a day old or somehow it's in the future!?!
+        if(timeSince == "" || timeSince.toLowerCase().indexOf("day") || timeSince.toLowerCase().indexOf("month") || timeSince.toLowerCase().indexOf("year")) {
+            // get the locale string format
+            return $rootScope.$root.parseDateTime(dateTime);
         }
-        catch (e) {
-            return "";
-        }
+        
+        return timeSince;
     };
 
     // checks if post is currently active (populated)

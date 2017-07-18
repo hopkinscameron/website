@@ -54,7 +54,7 @@
     angular.element($window).resize(function() {
         $scope.$apply(function () {
                 $scope.windowHeight = {
-                "height": $( window ).height() - 90
+                "height": angular.element(window).height() - 90
             }
         });
     });

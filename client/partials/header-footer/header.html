@@ -27,7 +27,7 @@
             <!-- End Navigation Bar Header -->
             <!-- Begin Navigation Bar -->
             <div id="navbarSupportedContent" class="collapse navbar-collapse">
-                <div class="navbar-nav ml-auto">
+                <div class="navbar-nav">
                     <div class="nav-item" ng-class="{'dropdown': navigation.dropdown !== undefined}" ng-repeat="navigation in header.navigation">
                         <!-- Begin Not Dropdown -->
                         <a class="nav-link decoration--never h5 mb-0" ng-class="{'active': isActive(navigation.pageLink)}" ng-href="#{{navigation.pageLink}}" ng-if="navigation.dropdown === undefined"><span ng-bind-html="navigation.title | trustHTML"></span></a>

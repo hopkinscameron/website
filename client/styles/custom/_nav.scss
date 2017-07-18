@@ -10,8 +10,12 @@ nav {
     top: $navbar-position;
 }
 .navbar-inverse {
-    background-image: linear-gradient(rgb(30, 30, 30) 0px, rgb(14, 14, 14) 100%);
+    background-image: -webkit-linear-gradient(top, $dark 0, $dark-dark 100%);
+    background-image: -o-linear-gradient(top, $dark 0, $dark-dark 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from($dark), to($dark-dark));
+    background-image: linear-gradient(to bottom, $dark 0, $dark-dark 100%);
     background-repeat: repeat-x;
+    background-color: $gray-dark-dark !important;
     
     & .navbar-nav .nav-link {
         color: $text-color;
@@ -19,6 +23,16 @@ nav {
     & .navbar-brand, & .navbar-toggler {
         color: $text-color;
     }
+    & .navbar-toggler {
+        border: 0;
+        font-size: medium;
+    }
+    & .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(" + red($text-color) + "," + green($text-color) + "," + blue($text-color)  + ", 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+    }
+}
+.navbar-toggler-right {
+    right: 0;
 }
 .nav-link {
     &.active {
@@ -26,7 +40,12 @@ nav {
     }
 }
 .dropdown-menu {
-    background-color: $dark-dark;
+    background-image: -webkit-linear-gradient(top, $dark 0, $dark-dark 100%);
+    background-image: -o-linear-gradient(top, $dark 0, $dark-dark 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from($dark), to($dark-dark));
+    background-image: linear-gradient(to bottom, $dark 0, $dark-dark 100%);
+    background-repeat: repeat-x;
+    background-color: $gray-dark-dark !important;
 }
 .dropdown-item {
     color: $text-color;
@@ -40,4 +59,36 @@ nav {
         background-color: $brand-theme-main;
     }
 }
+
+/* Begin Media Queries */
+/* If [device width] is less than or equal to 991px*/
+@media (max-width: 991px) {
+    .navbar-inverse {
+        & .navbar-collapse {
+            background-image: -webkit-linear-gradient(top, $dark 0, $dark-dark 100%);
+            background-image: -o-linear-gradient(top, $dark 0, $dark-dark 100%);
+            background-image: -webkit-gradient(linear, left top, left bottom, from($dark), to($dark-dark));
+            background-image: linear-gradient(to bottom, $dark 0, $dark-dark 100%);
+            background-repeat: repeat-x;
+            background-color: $gray-dark-dark !important;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+    }
+    .navbar-collapse {
+        & .navbar-nav {
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+    }
+}
+/* If [device width] is greater than or equal to 992px*/
+@media (min-width: 992px) {
+    .navbar-collapse {
+        & .navbar-nav {
+            margin-left: auto;
+        }
+    }
+}
+/* End Media Queries */
 /* End Custom Navigation Styles */

@@ -17,96 +17,101 @@ angular.module('app').controller('headerController', ['$scope', '$rootScope', '$
 
     // get time since comment
     $rootScope.$root.getTimeSince = function(dateToCheck) {
-        var now = new Date();
-        var dateToCheck = new Date(dateToCheck);
+        try {
+            var now = new Date();
+            var dateToCheck = new Date(dateToCheck);
 
-        // get the time difference
-        var diff = Math.floor(now.getTime() - dateToCheck.getTime());
+            // get the time difference
+            var diff = Math.floor(now.getTime() - dateToCheck.getTime());
 
-        // if invalid
-        if(diff < 0) {
-            return "";
-        }
+            // if invalid
+            if(diff < 0) {
+                return "";
+            }
 
-        var secs = Math.floor(diff/1000);
-        var mins = Math.floor(secs/60); // seconds in a minute
-        var hours = Math.floor(secs/3600); // seconds in an hour
-        var days = Math.floor(secs/86400); // seconds in a day
-        var months = Math.floor(secs/2592000); // seconds in a month
-        var years = Math.floor(secs/31536000); // seconds in a year
+            var secs = Math.floor(diff/1000);
+            var mins = Math.floor(secs/60); // seconds in a minute
+            var hours = Math.floor(secs/3600); // seconds in an hour
+            var days = Math.floor(secs/86400); // seconds in a day
+            var months = Math.floor(secs/2592000); // seconds in a month
+            var years = Math.floor(secs/31536000); // seconds in a year
 
-        // holds the time message
-        var timeSince = ""; 
+            // holds the time message
+            var timeSince = ""; 
 
-        // if less than a day ago
-        if(days <= 0){
-            // if less than an hour ago
-            if(hours <= 0) {
-                // if less than a minute ago
-                if(mins <= 0) {
-                    // if a second
-                    if(secs == 1) {
-                        timeSince = secs + " second ago";
+            // if less than a day ago
+            if(days <= 0){
+                // if less than an hour ago
+                if(hours <= 0) {
+                    // if less than a minute ago
+                    if(mins <= 0) {
+                        // if a second
+                        if(secs == 1) {
+                            timeSince = secs + " second ago";
+                        }
+                        else {
+                            timeSince = secs + " seconds ago";
+                        }
                     }
                     else {
-                        timeSince = secs + " seconds ago";
+                        // if a minute
+                        if(mins == 1) {
+                            timeSince = mins + " minute ago";
+                        }
+                        else {
+                            timeSince = mins + " minutes ago";
+                        }
                     }
                 }
                 else {
-                    // if a minute
-                    if(mins == 1) {
-                        timeSince = mins + " minute ago";
+                    // if an hour
+                    if(hours == 1) {
+                        timeSince = hours + " hour ago";
                     }
                     else {
-                        timeSince = mins + " minutes ago";
+                        timeSince = hours + " hours ago";
                     }
                 }
             }
             else {
-                // if an hour
-                if(hours == 1) {
-                    timeSince = hours + " hour ago";
-                }
-                else {
-                    timeSince = hours + " hours ago";
-                }
-            }
-        }
-        else {
-            // if less than a year ago
-            if(years <= 0){
-                // if less than a month ago
-                if(months <= 0) {
-                    // if a day
-                    if(days == 1) {
-                        timeSince = days + " day ago";
+                // if less than a year ago
+                if(years <= 0){
+                    // if less than a month ago
+                    if(months <= 0) {
+                        // if a day
+                        if(days == 1) {
+                            timeSince = days + " day ago";
+                        }
+                        else {
+                            timeSince = days + " days ago";
+                        }
                     }
                     else {
-                        timeSince = days + " days ago";
+                        // if a month
+                        if(months == 1) {
+                            timeSince = months + " month ago";
+                        }
+                        else {
+                            timeSince = months + " months ago";
+                        }
                     }
                 }
                 else {
-                    // if a month
-                    if(months == 1) {
-                        timeSince = months + " month ago";
+                    // if a year
+                    if(years == 1) {
+                        timeSince = years + " year ago";
                     }
                     else {
-                        timeSince = months + " months ago";
+                        timeSince = years + " years ago";
                     }
                 }
             }
-            else {
-                // if a year
-                if(years == 1) {
-                    timeSince = years + " year ago";
-                }
-                else {
-                    timeSince = years + " years ago";
-                }
-            }
-        }
 
-        return timeSince;
+            return timeSince;
+        }
+        catch (e) {
+            return e;
+        }
     };
 
     // get animation delays
@@ -117,15 +122,25 @@ angular.module('app').controller('headerController', ['$scope', '$rootScope', '$
         // loop through all animation timing and set the times
         for(var x = 0; x < delays.length; x++) {
             delays[x] = {
-                'animation-delay': startTime + (x * incrementTime) + 's',
                 '-webkit-animation-delay': startTime + (x * incrementTime) + 's',
                 '-moz-animation-delay': startTime + (x * incrementTime) + 's',
                 '-ms-animation-delay': startTime + (x * incrementTime) + 's',
-                '-o-animation-delay': startTime + (x * incrementTime) + 's'
+                '-o-animation-delay': startTime + (x * incrementTime) + 's',
+                'animation-delay': startTime + (x * incrementTime) + 's'
             };
         }
 
         return delays;
+    };
+
+    // determines if screen is larger than (not equal)
+    $rootScope.$root.isDeviceWidthLargerThan = function(minWidth) {
+        return angular.element($window).width() > minWidth;
+    };
+
+    // determines if screen is smaller than (not equal)
+    $rootScope.$root.isDeviceWidthSmallerThan = function(maxWidth) {
+        return angular.element($window).width() < maxWidth;
     };
 
     // checks if the page is active

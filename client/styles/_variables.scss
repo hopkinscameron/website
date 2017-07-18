@@ -53,7 +53,7 @@ $loading-bar-height: 5px;
 /* End Navigation Variables */
 
 /* Begin Body Variables */
-$body-padding-top: $navbar-bottom + 50px;
+$body-padding-top: $navbar-bottom + 15px;
 $body-min-height: 400px;
 $body-main-min-height: 400px;
 /* End Body Variables */
@@ -86,6 +86,7 @@ $box-shadow-xl: 75px;
 /* Begin Colors */
 $brand-theme-main: #29a8d6;
 $brand-theme-secondary: #FFFFFF;
+$brand-theme-main-rgb: 41, 168, 214;
 
 $color-blue:       #346094;
 $color-blue-muted: #6aa2b7;
@@ -141,6 +142,14 @@ $dark-dark: #000;
 $dark: #2C3035;
 $dark-light: #747678;
 $dark-accent: #899F99;
+
+// Grayscale
+$gray-dark-dark:            #181a1b;
+$gray-dark:                 #292b2c;
+$gray:                      #464a4c;
+$gray-light:                #636c72;
+$gray-lighter:              #eceeef;
+$gray-lightest:             #f7f7f9;
 
 // Primary
 $primary-dark: #002B45;

@@ -12,7 +12,7 @@
         <!-- Begin Page Fully Loaded With No Errors -->
         <div id="pageShow" class="animated animation-delay--md fadeIn collapse" ng-if="pageFullyLoaded && !error.error">
             <!-- Begin Page Title -->
-            <h2 class="font-weight-bold text-uppercase mb-3"><span ng-bind-html="subPortfolio.title | trustHTML"></span></h2>
+            <h2 class="font-weight-bold text-uppercase mb-0"><span ng-bind-html="subPortfolio.title | trustHTML"></span></h2>
             <!-- End Page Title -->
             <!-- Begin Project Highlights -->
             <div class="animated fadeIn" ng-style="subPortfolioAnimations[0]">
@@ -20,9 +20,9 @@
                     <h4 class="text-capitalize">Project Highlights</h4>
                     <div class="row">
                         <!-- Begin Image Selection -->
-                        <div class="col-md-4 animated bounceInLeft" ng-style="subPortfolioAnimations[0]">
+                        <div class="col-md-4 animated fadeInLeft" ng-style="subPortfolioAnimations[0]">
                             <div class="row sub-portfolio-img-container-max-height scrollbar--1">
-                                <div class="col-md-6 mb-3" ng-repeat="image in subPortfolio.images">
+                                <div class="col-md-6" ng-class="{'mb-3': $index < subPortfolio.images.length - 1}" ng-repeat="image in subPortfolio.images">
                                     <!-- <img role="button" class="d-block img-fluid mx-auto sub-portfolio-img" ng-class="{'active': isActive('highlights', $index)}" ng-src="{{image.url}}" ng-click="changeProjectHighlightImage($index)" spinner-load> -->
                                     <div role="button" class="img-thumb sub-portfolio-img" ng-class="{'active': isActive('highlights', $index)}" ng-style="{'background-image': 'url(' + image.url + ')'}" ng-click="changeProjectHighlightImage($index)"></div>
                                 </div>
@@ -30,7 +30,7 @@
                         </div>
                         <!-- End Image Selection -->
                         <!-- Begin Full Image Selected -->
-                        <div class="col animated bounceInRight" ng-style="subPortfolioAnimations[0]">
+                        <div class="col animated fadeInRight" ng-style="subPortfolioAnimations[0]">
                             <!-- <img class="d-block img-fluid mx-auto sub-portfolio-img-max-height" ng-src="{{currentProjectImage}}" spinner-load> -->
                             <div class="img-thumb sub-portfolio-img-max-height w-75 mx-auto" ng-style="{'background-image': 'url(' + currentProjectImage + ')'}"></div>
                         </div>
@@ -122,7 +122,7 @@
                     <div class="pl-3 pr-3">
                         <div class="row">
                             <!-- Begin Video Selection -->
-                            <div class="col-md-4 float-left animated bounceInLeft" ng-style="subPortfolioAnimations[5]">
+                            <div class="col-md-4 float-left animated fadeInLeft" ng-style="subPortfolioAnimations[5]">
                                 <div class="row sub-portfolio-img-container-max-height scrollbar--1">
                                     <div class="col-md-6 float-left mb-3" ng-repeat="videos in subPortfolio.videoUpdates">
                                         <!-- <img role="button" class="d-block img-fluid sub-portfolio-img" ng-class="{'active': isActive('updates', $index)}" ng-src="{{videos.thumbnail}}" ng-click="changeUpdateVideo($index)" spinner-load> -->
@@ -132,7 +132,7 @@
                             </div>
                             <!-- End Video Selection -->
                             <!-- Begin Video -->
-                            <div class="col float-left animated bounceInRight" ng-style="subPortfolioAnimations[5]">
+                            <div class="col float-left animated fadeInRight" ng-style="subPortfolioAnimations[5]">
                                 <div class="embed-responsive embed-responsive-16by9">
                                     <iframe id="subPortfolio-updates-iframe" class="embed-responsive-item" ng-src="{{currentUpdateVideo.source}}" ng-if="currentUpdateVideo.source"></iframe>
                                 </div>

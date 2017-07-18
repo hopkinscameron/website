@@ -1,12 +1,24 @@
 ﻿@font-face {
     font-family: no-more-lies;
-    src: url('./fonts/no-more-lies.ttf');
+    src: url('fonts/no-more-lies-webfont.eot');
+    src: url('fonts/no-more-lies-webfont.eot?#iefix') format('embedded-opentype'),
+         url('./fonts/no-more-lies-webfont.ttf') format('truetype'),
+         url('./fonts/no-more-lies-webfont.woff') format('woff'),
+         url('./fonts/no-more-lies-webfont.woff2') format('woff');
 }
 @font-face {
     font-family: true-lies;
-    src: url('./fonts/true-lies.ttf');
+    src: url('fonts/true-lies-webfont.eot');
+    src: url('fonts/true-lies-webfont.eot?#iefix') format('embedded-opentype'),
+         url('./fonts/true-lies-webfont.ttf') format('truetype'),
+         url('./fonts/true-lies-webfont.woff') format('woff'),
+         url('./fonts/true-lies-webfont.woff2') format('woff');
 }
 @font-face {
     font-family: wiked-grit;
-    src: url('./fonts/wicked-grit.ttf');
+    src: url('fonts/wiked-grit-webfont.eot');
+    src: url('fonts/wiked-grit-webfont.eot?#iefix') format('embedded-opentype'),
+         url('./fonts/wiked-grit-webfont.ttf') format('truetype'),
+         url('./fonts/wiked-grit-webfont.woff') format('woff'),
+         url('./fonts/wiked-grit-webfont.woff2') format('woff');
 }

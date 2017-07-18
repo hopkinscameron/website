@@ -12,7 +12,7 @@
         <!-- Begin Page Fully Loaded With No Errors -->
         <div id="pageShow" class="animated animation-delay--md fadeIn collapse" ng-if="pageFullyLoaded && !error.error">
             <!-- Begin Page Title -->
-            <h2 class="font-weight-bold text-uppercase mb-3"><span ng-bind-html="resume.title | trustHTML"></span></h2>
+            <h2 class="font-weight-bold text-uppercase mb-0"><span ng-bind-html="resume.title | trustHTML"></span></h2>
             <!-- End Page Title -->
             <!-- Begin Resume Image -->
             <div class="animated fadeInUp" ng-style="resumeAnimations[0]">
@@ -32,7 +32,7 @@
                     <div class="row">
                         <div class="col-md-6 offset-md-3 row">
                             <!-- Begin Resume Download -->
-                            <div class="col text-center animated bounceInLeft" ng-style="resumeAnimations[1]">
+                            <div class="col text-center animated fadeInLeft" ng-style="resumeAnimations[1]">
                                 <h5 class="">R&eacute;sum&eacute;</h5>
                                 <a ng-href="{{resume.resumeLink}}" target="_blank">
                                     <img class="" width="50" height="50" src="/images/icons/pdf-icon.png" alt="resume.pdf" title="resume.pdf" />
@@ -40,7 +40,7 @@
                             </div>
                             <!-- End Resume Download -->
                             <!-- Begin Curriculum Vitae Download -->
-                            <div class="col text-center animated bounceInRight" ng-style="resumeAnimations[1]">
+                            <div class="col text-center animated fadeInRight" ng-style="resumeAnimations[1]">
                                 <h5 class="">Curriculum Vitae</h5>
                                 <a ng-href="{{resume.cvLink}}" target="_blank">
                                     <img class="" width="50" height="50" src="/images/icons/pdf-icon.png" alt="cv.pdf" title="cv.pdf" />

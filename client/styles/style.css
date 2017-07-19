@@ -5020,6 +5020,7 @@ nav {
   overflow-y: auto; }
 
 .sub-portfolio-img-max-height {
+  width: 75%;
   height: 232px; }
 
 .sub-portfolio-img {
@@ -5031,6 +5032,15 @@ nav {
     border: 2px solid #29a8d6;
     opacity: 1; }
 
+/* Begin Media Queries */
+/* If [device width] is less than or equal to 767px*/
+@media (max-width: 767px) {
+  .sub-portfolio-img-max-height {
+    width: 100%;
+    height: 100px; } }
+
+/* If [device width] is greater than or equal to 768px*/
+/* End Media Queries */
 /* End Custom Sub Portfolio Items */
 /* Begin Custom Utilities */
 /* Begin Custom Images */

@@ -4,6 +4,7 @@
     overflow-y: auto;
 }
 .sub-portfolio-img-max-height {
+    width: 75%;
     height: 232px;
 }
 .sub-portfolio-img {
@@ -17,4 +18,17 @@
         opacity: 1;
     }
 }
+/* Begin Media Queries */
+/* If [device width] is less than or equal to 767px*/
+@media (max-width: 767px) {
+    .sub-portfolio-img-max-height {
+        width: 100%;
+        height: 100px;
+    }
+}
+/* If [device width] is greater than or equal to 768px*/
+@media (min-width: 768px) {
+    
+}
+/* End Media Queries */
 /* End Custom Sub Portfolio Items */

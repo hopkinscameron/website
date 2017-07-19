@@ -101,6 +101,44 @@
         return false;
     };
 
+    // checks to see if index is the last "row" for images
+    $scope.isLastRowOfImages = function (index) {
+        // images array length
+        var len = $scope.subPortfolio.images.length;
+
+        // if the index matches
+        if(index >= 0 && index < len) {
+            // if even amount of images
+            if(len % 2 == 0 && index >= len - 2) {
+                return true;
+            }
+            else if(len % 2 == 1 && index >= len - 1) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
+    // checks to see if index is the last image
+    $scope.isLastRowOfImages = function (index) {
+        // images array length
+        var len = $scope.subPortfolio.images.length;
+
+        // if the index matches
+        if(index >= 0 && index < len) {
+            // if even amount of images
+            if(len % 2 == 0 && index >= len - 2) {
+                return true;
+            }
+            else if(len % 2 == 1 && index >= len - 1) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
     // changes the current image displayed
     $scope.changeProjectHighlightImage = function (index) {
         // if the index matches

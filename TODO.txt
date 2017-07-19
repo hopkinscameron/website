@@ -19,13 +19,7 @@ All
 Header
     - On nav open, change to X
 Sub Portfolio
-    - width of project highlights for images too large, cut in half, two per row -> keep same actually
-    - reduce the highlight total height. make it flush like how the top of it is -> need to check if last row basically (maybe split up by rows like how the about page is)
-    - make the big image for the selected image 100% width
-    - Dev details, should have a margin bottom except last one
-    - there are some empty "col-md-2" for innerIndex in gameDataColumnsPerRowArray track by $index
-    - on Forsaken "take a look at GDD" the text is overflowing -> remove the div, just add if condition on span
-    - make the animations come in from both directions or pick a different animation, it looks weird for project highlights
+    - there are some empty "col-md-2" for innerIndex in gameDataColumnsPerRowArray track by $index -> come back to this.. this exist on about page as well
 Blog
     - Move the search bar to the top
     - Center pagination

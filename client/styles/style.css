@@ -4936,7 +4936,7 @@ nav {
     background-color: #29a8d6; }
 
 /* Begin Media Queries */
-/* If [device width] is less than or equal to 991px*/
+/* If [device width] is less than or equal to 991px */
 @media (max-width: 991px) {
   .navbar-inverse .navbar-collapse {
     background-image: -webkit-linear-gradient(top, #2C3035 0, #000 100%);
@@ -4951,7 +4951,7 @@ nav {
     margin-left: 1rem;
     margin-right: 1rem; } }
 
-/* If [device width] is greater than or equal to 992px*/
+/* If [device width] is greater than or equal to 992px */
 @media (min-width: 992px) {
   .navbar-collapse .navbar-nav {
     margin-left: auto; } }
@@ -5033,13 +5033,13 @@ nav {
     opacity: 1; }
 
 /* Begin Media Queries */
-/* If [device width] is less than or equal to 767px*/
+/* If [device width] is less than or equal to 767px */
 @media (max-width: 767px) {
   .sub-portfolio-img-max-height {
     width: 100%;
     height: 100px; } }
 
-/* If [device width] is greater than or equal to 768px*/
+/* If [device width] is greater than or equal to 768px */
 /* End Media Queries */
 /* End Custom Sub Portfolio Items */
 /* Begin Custom Utilities */
@@ -5167,7 +5167,6 @@ hr.blog-post-bar {
     line-height: 19px;
     font-weight: 500;
     padding: 0 10px;
-    font-size: 14px;
     z-index: 2;
     border-radius: 8px; }
 
@@ -5175,14 +5174,25 @@ hr.blog-post-bar {
   max-height: 190px;
   overflow: hidden; }
 
-.highlight-text-background {
-  background-color: #29a8d6;
+.highlight-text {
   font-weight: 900; }
+  .highlight-text-background {
+    background-color: #29a8d6; }
+  .highlight-text-foreground {
+    color: #29a8d6; }
 
-.highlight-text-foreground {
-  color: #29a8d6;
-  font-weight: 900; }
+/* Begin Media Queries */
+/* If [device width] is less than or equal to 425px */
+@media (max-width: 425px) {
+  .responsive-text--sm {
+    font-size: 3vw; } }
 
+/* If [device width] is less than or equal to 426px */
+@media (min-width: 426px) {
+  .responsive-text--sm {
+    font-size: small; } }
+
+/* End Media Queries */
 /* End Custom Text Utilities */
 /* End Custom Utilities */
 /* End Import All Custom Styles */

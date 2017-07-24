@@ -46,10 +46,10 @@
                         <div></div>
                         <span class="card-text font-italic text-muted">
                             <!-- Begin Publish Date -->
-                            <span class="d-block">Published on: {{$root.parseDateTime(post.datePublished)}}</span>
+                            <span class="d-block responsive-text--sm">Published on: {{$root.parseDateTime(post.datePublished)}}</span>
                             <!-- End Publish Date -->
                             <!-- Begin Updated Date -->
-                            <span class="d-block" ng-if="post.dateUpdated">Updated on: {{$root.parseDateTime(post.dateUpdated)}}</span>
+                            <span class="d-block responsive-text--sm" ng-if="post.dateUpdated">Updated on: {{$root.parseDateTime(post.dateUpdated)}}</span>
                             <!-- End Updated Date -->
                         </span>
                         <div></div>
@@ -61,7 +61,7 @@
                     <!-- Begin Author -->
                     <div class="text-center mt-4 mb-4 divider">
                         <div></div>
-                        <span class="card-text font-italic text-muted">By: {{post.author}}</span>
+                        <span class="card-text font-italic text-muted responsive-text--sm">By: {{post.author}}</span>
                         <div></div>
                     </div>
                     <!-- End Author -->

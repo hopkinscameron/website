@@ -49,7 +49,6 @@
         line-height: 19px;
         font-weight: 500;
         padding: 0 10px;
-        font-size: 14px;
         z-index: 2;
         border-radius: $border-radius-xl;
     }
@@ -58,12 +57,33 @@
     max-height: 190px;
     overflow: hidden;
 }
-.highlight-text-background {
-    background-color: $brand-theme-main;
+.highlight-text {
     font-weight: 900;
+    
+    &-background {
+        background-color: $brand-theme-main;
+    }
+    &-foreground {
+        color: $brand-theme-main;
+    }
 }
-.highlight-text-foreground {
-    color: $brand-theme-main;
-    font-weight: 900;
+
+/* Begin Media Queries */
+/* If [device width] is less than or equal to 425px */
+@media (max-width: 425px) {
+    .responsive-text {
+        &--sm {
+            font-size: 3vw;
+        }
+    }
 }
+/* If [device width] is less than or equal to 426px */
+@media (min-width: 426px) {
+    .responsive-text {
+        &--sm {
+            font-size: small;
+        }
+    }
+}
+/* End Media Queries */
 /* End Custom Text Utilities */

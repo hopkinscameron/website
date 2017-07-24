@@ -20,14 +20,6 @@ Header
     - On nav open, change to X
 Sub Portfolio
     - there are some empty "col-md-2" for innerIndex in gameDataColumnsPerRowArray track by $index -> come back to this.. this exist on about page as well
-Blog
-    - Move the search bar to the top
-    - Center pagination
-    - published and updated text is too long (reduce font size or have two rows)
-Blog Post
-    - published and updated text is too long (reduce font size or have two rows)
-Blog Post Edit
-    - all buttons need to be full width with space in between
 Contact
     - the form is trash with sizes, make button width
 Admin

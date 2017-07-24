@@ -132,8 +132,8 @@ require('./server/routes')(app, passport);
 
 // logs client IP address with every request
 app.use(function (req, res, next) {
-	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-	console.log(clcConfig.info('Client IP:', ip));
+	// var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+	// console.log(clcConfig.info('Client IP:', ip));
 	next();
 });
 

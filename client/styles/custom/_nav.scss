@@ -61,7 +61,7 @@ nav {
 }
 
 /* Begin Media Queries */
-/* If [device width] is less than or equal to 991px*/
+/* If [device width] is less than or equal to 991px */
 @media (max-width: 991px) {
     .navbar-inverse {
         & .navbar-collapse {
@@ -82,7 +82,7 @@ nav {
         }
     }
 }
-/* If [device width] is greater than or equal to 992px*/
+/* If [device width] is greater than or equal to 992px */
 @media (min-width: 992px) {
     .navbar-collapse {
         & .navbar-nav {

@@ -14,15 +14,39 @@
             <!-- Begin Page Title -->
             <h2 class="font-weight-bold text-uppercase mb-3"><span ng-bind-html="blog.title | trustHTML"></span></h2>
             <!-- End Page Title -->
-            <!-- Begin Posts and Filters -->
+            <!-- Begin Filters -->
+            <div class="row justify-content-end mb-3">
+                <div class="col-md-4">
+                    <div class="card card--dark card-block box-shadow--sm">
+                        <!-- Begin Search Filter -->
+                        <div class="input-group" ng-class="{'mb-3': blog.filters.length > 0}">
+                            <input type="text" class="form-control" placeholder="Search for..." ng-model="searchText.query" ng-keypress="onKeyPress($event)">
+                            <span class="input-group-btn">
+                                <button class="btn btn-secondary" type="button" ng-click="search()"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </span>
+                        </div>
+                        <!-- End Search Filter -->
+                        <!-- Begin Custom Filters -->
+                        <div class="list-group" ng-if="blog.filters.length > 0">
+                            <div role="button" class="list-group-item list-group-item--dark blog-filter" ng-class="{active: isFilterActive(filter)}" ng-click="addRemoveFilter(filter)" ng-repeat="filter in blog.filters">
+                                <div class="d-block w-100">
+                                    <h5 class="text-capitalize text-center p-1 m-0">{{filter}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Custom Filters -->
+                    </div>
+                </div>
+            </div>
+            <!-- End Filters -->
+            <!-- Begin Posts -->
             <div class="row">
-                <!-- Begin Posts -->
-                <div class="col-md-9">
+                <div class="col-md-8">
                     <!-- Begin Posts -->
                     <div class="animated fadeInUp" ng-class="{'mb-5': $index < blog.posts.length - 1}" ng-style="blogAnimations[$index]" ng-repeat="post in blog.posts">
                         <div class="card card--dark card-block box-shadow--sm">
                             <!-- Begin Image -->
-                            <a class="decoration--never highlight--never mb-3" ng-href="#/blog/post/{{post.url}}">
+                            <a class="decoration--never highlight--never" ng-href="#/blog/post/{{post.url}}">
                                 <div style="overflow: hidden;">
                                     <div class="img-thumb img--md img-zoom--sm" ng-style="{'background-image': 'url(' + post.image + ')'}" ng-if="post.image.length > 0"></div>
                                     <div class="img-thumb img--md img-zoom--sm d-table w-100" ng-if="post.image.length == 0">
@@ -32,15 +56,15 @@
                             </a>
                             <!-- End Image -->
                             <!-- Begin Content Break -->
-                            <hr class="blog-post-bar mt-5 mb-5" ng-if="post.image.length > 0" />
+                            <hr class="blog-post-bar mt-4 mb-4" />
                             <!-- End Content Break -->
                             <!-- Begin Title -->
                             <h4 class="card-title mb-0"><span class="highlight-context" ng-bind-html="post.title | trustHTML"></span></h4>
                             <!-- End Title -->
                             <!-- Begin Publish Date -->
-                            <div class="text-center mt-5 mb-5 divider">
+                            <div class="text-center mt-4 mb-4 divider">
                                 <div></div>
-                                <span class="card-text font-italic text-muted">Published on: {{$root.parseDateTime(post.datePublished)}}</span>
+                                <span class="card-text font-italic text-muted responsive-text--sm">Published on: {{$root.parseDateTime(post.datePublished)}}</span>
                                 <div></div>
                             </div>
                             <!-- End Publish Date -->
@@ -65,7 +89,7 @@
                     </div>
                     <!-- End Posts -->
                     <!-- Begin Paging -->
-                    <nav aria-label="..." class="mt-4" ng-if="blog.posts.length > 0">
+                    <nav aria-label="..." class="row pl-3 pr-3 mt-4" ng-class="{'justify-content-center': $root.isDeviceWidthSmallerThan(768)}" ng-if="blog.posts.length > 0">
                         <ul class="pagination">
                             <li class="page-item" ng-class="{'disabled': blog.currentPage == 1 || blog.totalPages.length == 1}">
                                 <a class="decoration--never page-link page-link--dark" ng-href="{{getRouteValue(blog.currentPage - 1)}}" tabindex="-1">
@@ -89,32 +113,8 @@
                     </div>
                     <!-- End No Posts -->
                 </div>
-                <!-- End Posts -->
-                <!-- Begin Filters -->
-                <div class="col">
-                    <div class="card card--dark card-block box-shadow--sm">
-                        <!-- Begin Search Filter -->
-                        <div class="input-group" ng-class="{'mb-3': blog.filters.length > 0}">
-                            <input type="text" class="form-control" placeholder="Search for..." ng-model="searchText.query" ng-keypress="onKeyPress($event)">
-                            <span class="input-group-btn">
-                                <button class="btn btn-secondary" type="button" ng-click="search()"><i class="fa fa-search" aria-hidden="true"></i></button>
-                            </span>
-                        </div>
-                        <!-- End Search Filter -->
-                        <!-- Begin Custom Filters -->
-                        <div class="list-group" ng-if="blog.filters.length > 0">
-                            <div role="button" class="list-group-item list-group-item--dark blog-filter" ng-class="{active: isFilterActive(filter)}" ng-click="addRemoveFilter(filter)" ng-repeat="filter in blog.filters">
-                                <div class="d-block w-100">
-                                    <h5 class="text-capitalize text-center p-1 m-0">{{filter}}</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Custom Filters -->
-                    </div>
-                </div>
-                <!-- End Filters -->
             </div>
-            <!-- End Posts and Filters -->
+            <!-- End Posts -->
         </div>
         <!-- End Page Fully Loaded With No Errors -->
     </div>

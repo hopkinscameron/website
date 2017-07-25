@@ -17,7 +17,7 @@
             <!-- Begin Blog Insert and Saved Blog Posts -->
             <div class="row">
                 <!-- Begin Blog Insert -->
-                <div class="col-md-8 animated fadeInUp" ng-style="adminAnimations[0]">
+                <div class="col-md-8 animated fadeInUp" ng-class="{'mb-3': $root.isDeviceWidthSmallerThan(768)}" ng-style="adminAnimations[0]">
                     <div class="card card--dark card-block box-shadow--sm">
                         <!-- Begin Form Error -->
                         <div style="padding-bottom: 24px;" ng-if="!adminBlogPostForm.errors.isError"></div>
@@ -29,60 +29,58 @@
                         <h6 class="font-weight-bold text-center animated fadeIn" ng-if="currentWorkingPost">Last Saved: {{parseDateTime(currentWorkingPost.dateSaved)}}</h6>
                         <!-- End Last Saved -->
                         <!-- Begin Form -->
-                        <form>
-                            <div class="form-group pl-3 pr-3">
-                                <!-- Begin Title -->
-                                <div class="form-group">
-                                    <label class="col col-form-label" for="title">Title <span style="color: red;">*</span></label>
-                                    <div class="col input-group" ng-class="{'has-danger': adminBlogPostForm.errors.title}">
-                                        <input class="form-control form-control-danger" type="text" name="title" placeholder="Title" id="title" ng-model="adminBlogPostForm.inputs.title" ng-focus="viewFocusEnter(adminBlogPostForm.views.title)" ng-change="checkTextLength(adminBlogPostForm.views.title)" ng-disabled="adminBlogPostForm.formSubmitted">
-                                    </div>
+                        <form class="form-group">
+                            <!-- Begin Title -->
+                            <div class="form-group">
+                                <label class="col-form-label" for="title">Title <span style="color: red;">*</span></label>
+                                <div class="input-group" ng-class="{'has-danger': adminBlogPostForm.errors.title}">
+                                    <input class="form-control form-control-danger" type="text" name="title" placeholder="Title" id="title" ng-model="adminBlogPostForm.inputs.title" ng-focus="viewFocusEnter(adminBlogPostForm.views.title)" ng-change="checkTextLength(adminBlogPostForm.views.title)" ng-disabled="adminBlogPostForm.formSubmitted">
                                 </div>
-                                <!-- End Title -->
-                                <!-- Begin Image -->
-                                <div class="form-group">
-                                    <label class="col col-form-label" for="image">Image Link</label>
-                                    <div class="col input-group" ng-class="{'has-danger': adminBlogPostForm.errors.image}">
-                                        <input class="form-control form-control-danger" type="text" name="image" placeholder="https://www.google.com/image.png" id="image" ng-model="adminBlogPostForm.inputs.image" ng-focus="viewFocusEnter(adminBlogPostForm.views.image)" ng-disabled="adminBlogPostForm.formSubmitted">
-                                    </div>
-                                </div>
-                                <!-- End Image -->
-                                <!-- Begin Short Description -->
-                                <div class="form-group">
-                                    <label class="col col-form-label" for="shortDescription">Short Description <span style="color: red;">*</span></label>
-                                    <div class="col input-group" ng-class="{'has-danger': adminBlogPostForm.errors.shortDescription}">
-                                        <textarea class="form-control form-control-danger" rows="5" name="shortDescription" placeholder="Insert a short description" id="shortDescription" ng-model="adminBlogPostForm.inputs.shortDescription" ng-focus="viewFocusEnter(adminBlogPostForm.views.shortDescription)" ng-disabled="adminBlogPostForm.formSubmitted"></textarea>
-                                    </div>
-                                </div>
-                                <!-- End Short Description -->
-                                <!-- Begin Body -->
-                                <div class="form-group">
-                                    <label class="col col-form-label" for="body">Body <span style="color: red;">*</span></label>
-                                    <div class="col input-group" ng-class="{'has-danger': adminBlogPostForm.errors.body}">
-                                        <textarea ui-tinymce="tinymceOptions" class="form-control form-control-danger" class="w-100" style="min-height: 400px;" ng-model="adminBlogPostForm.inputs.body" ng-focus="viewFocusEnter(adminBlogPostForm.views.body)" ng-disabled="adminBlogPostForm.formSubmitted"></textarea>
-                                    </div>
-                                </div>
-                                <!-- End Body -->
-                                <!-- Begin Post/Save -->
-                                <div class="row container-fluid">
-                                    <!-- Begin Post -->
-                                    <div class="col text-left">
-                                        <button class="btn btn-theme-primary" ng-click="postBlog()" ng-disabled="adminBlogPostForm.formSubmitted || adminBlogPostForm.errors.isError">Post</button>
-                                    </div>
-                                    <!-- End Post -->
-                                    <!-- Begin Discard Draft -->
-                                    <div class="col text-center" ng-if="currentWorkingPost">
-                                        <button class="btn btn-warning" ng-click="discardDraft()">Discard Draft</button>
-                                    </div>
-                                    <!-- End Discard Draft -->
-                                    <!-- Begin Save -->
-                                    <div class="col text-right">
-                                        <button class="btn btn-theme-primary" ng-click="saveBlog()">Save</button>
-                                    </div>
-                                    <!-- End Save -->
-                                </div>
-                                <!-- End Post/Save -->
                             </div>
+                            <!-- End Title -->
+                            <!-- Begin Image -->
+                            <div class="form-group">
+                                <label class="col-form-label" for="image">Image Link</label>
+                                <div class="input-group" ng-class="{'has-danger': adminBlogPostForm.errors.image}">
+                                    <input class="form-control form-control-danger" type="text" name="image" placeholder="https://www.google.com/image.png" id="image" ng-model="adminBlogPostForm.inputs.image" ng-focus="viewFocusEnter(adminBlogPostForm.views.image)" ng-disabled="adminBlogPostForm.formSubmitted">
+                                </div>
+                            </div>
+                            <!-- End Image -->
+                            <!-- Begin Short Description -->
+                            <div class="form-group">
+                                <label class="col-form-label" for="shortDescription">Short Description <span style="color: red;">*</span></label>
+                                <div class="input-group" ng-class="{'has-danger': adminBlogPostForm.errors.shortDescription}">
+                                    <textarea class="form-control form-control-danger" rows="5" name="shortDescription" placeholder="Insert a short description" id="shortDescription" ng-model="adminBlogPostForm.inputs.shortDescription" ng-focus="viewFocusEnter(adminBlogPostForm.views.shortDescription)" ng-disabled="adminBlogPostForm.formSubmitted"></textarea>
+                                </div>
+                            </div>
+                            <!-- End Short Description -->
+                            <!-- Begin Body -->
+                            <div class="form-group">
+                                <label class="col-form-label" for="body">Body <span style="color: red;">*</span></label>
+                                <div class="input-group" ng-class="{'has-danger': adminBlogPostForm.errors.body}">
+                                    <textarea ui-tinymce="tinymceOptions" class="form-control form-control-danger" class="w-100" style="min-height: 400px;" ng-model="adminBlogPostForm.inputs.body" ng-focus="viewFocusEnter(adminBlogPostForm.views.body)" ng-disabled="adminBlogPostForm.formSubmitted"></textarea>
+                                </div>
+                            </div>
+                            <!-- End Body -->
+                            <!-- Begin Post/Save -->
+                            <div class="row">
+                                <!-- Begin Discard Draft -->
+                                <div class="col text-left" ng-class="{'col-12 mb-3': $root.isDeviceWidthSmallerThan(425)}" ng-if="currentWorkingPost">
+                                    <button class="btn btn-warning" ng-class="{'w-100': $root.isDeviceWidthSmallerThan(425)}" ng-click="discardDraft()">Discard Draft</button>
+                                </div>
+                                <!-- End Discard Draft -->
+                                <!-- Begin Save -->
+                                <div class="col" ng-class="{'col-12 mb-3': $root.isDeviceWidthSmallerThan(425), 'text-center': currentWorkingPost, 'text-left': !currentWorkingPost}">
+                                    <button class="btn btn-theme-primary" ng-class="{'w-100': $root.isDeviceWidthSmallerThan(425)}" ng-click="saveBlog()">Save</button>
+                                </div>
+                                <!-- End Save -->
+                                <!-- Begin Post -->
+                                <div class="col text-right" ng-class="{'col-12 mb-3': $root.isDeviceWidthSmallerThan(425)}">
+                                    <button class="btn btn-success" ng-class="{'w-100': $root.isDeviceWidthSmallerThan(425)}" ng-click="postBlog()" ng-disabled="adminBlogPostForm.formSubmitted || adminBlogPostForm.errors.isError">Post</button>
+                                </div>
+                                <!-- End Post -->
+                            </div>
+                            <!-- End Post/Save -->
                         </form>
                         <!-- End Form -->
                     </div>

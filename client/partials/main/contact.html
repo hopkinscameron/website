@@ -44,68 +44,68 @@
                     <div class="card card--transparent card-block">
                         <h4 class="text-capitalize">Contact Me Directly</h4>
                         <div style="padding-bottom: 24px;" ng-if="!contactForm.errors.isError"></div>
-                        <div ng-if="contactForm.errors.isError">
+                        <div class="pl-3 pr-3" ng-if="contactForm.errors.isError">
                             <span style="color: red;">{{contactForm.errors.errorMessage}}</span>
                         </div>
-                        <form ng-submit="sendEmail()">
-                            <div class="form-group pl-3 pr-3">
-                                <!-- Begin Name -->
-                                <div class="form-group row">
-                                    <label class="col-2 col-form-label" for="name">Name <span style="color: red;">*</span></label>
-                                    <div class="col input-group" ng-class="{'has-danger': contactForm.errors.firstName}">
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-user" aria-hidden="true"></i>
-                                        </span>
-                                        <input class="form-control form-control-danger" type="text" name="firstname" placeholder="First Name" id="first-name" ng-model="contactForm.inputs.firstName" ng-focus="viewFocusEnter(contactForm.views.firstName)" ng-blur="viewFocusLeave(contactForm.views.firstName)" ng-change="checkTextLength(contactForm.views.firstName)" ng-disabled="emailInTransit">
-                                    </div>
-                                    <div class="col input-group" ng-class="{'has-danger': contactForm.errors.lastName}">
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-user" aria-hidden="true"></i>
-                                        </span>
-                                        <input class="form-control form-control-danger" type="text" name="lastname" placeholder="Last Name" id="last-name" ng-model="contactForm.inputs.lastName" ng-focus="viewFocusEnter(contactForm.views.lastName)" ng-blur="viewFocusLeave(contactForm.views.lastName)" ng-change="checkTextLength(contactForm.views.lastName)" ng-disabled="emailInTransit">
-                                    </div>
+                        <!-- Begin Contact Form -->
+                        <form class="form-group pl-3 pr-3" ng-submit="sendEmail()">
+                            <!-- Begin Name -->
+                            <div class="form-group">
+                                <label class="col-form-label" for="name">Name <span style="color: red;">*</span></label>
+                                <div class="input-group mb-3" ng-class="{'has-danger': contactForm.errors.firstName}">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </span>
+                                    <input class="form-control form-control-danger" type="text" name="firstname" placeholder="First Name" id="first-name" ng-model="contactForm.inputs.firstName" ng-focus="viewFocusEnter(contactForm.views.firstName)" ng-blur="viewFocusLeave(contactForm.views.firstName)" ng-change="checkTextLength(contactForm.views.firstName)" ng-disabled="emailInTransit">
                                 </div>
-                                <!-- End Name -->
-                                <!-- Begin Email -->
-                                <div class="form-group row">
-                                    <label class="col-2 col-form-label" for="email">Email <span style="color: red;">*</span></label>
-                                    <div class="col input-group" ng-class="{'has-danger': contactForm.errors.email}">
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-envelope" aria-hidden="true"></i>
-                                        </span>
-                                        <input class="form-control form-control-danger" type="email" name="email" placeholder="example@example.com" id="email" ng-model="contactForm.inputs.email" ng-focus="viewFocusEnter(contactForm.views.email)" ng-blur="viewFocusLeave(contactForm.views.email)" ng-disabled="emailInTransit">
-                                    </div>
+                                <div class="input-group" ng-class="{'has-danger': contactForm.errors.lastName}">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </span>
+                                    <input class="form-control form-control-danger" type="text" name="lastname" placeholder="Last Name" id="last-name" ng-model="contactForm.inputs.lastName" ng-focus="viewFocusEnter(contactForm.views.lastName)" ng-blur="viewFocusLeave(contactForm.views.lastName)" ng-change="checkTextLength(contactForm.views.lastName)" ng-disabled="emailInTransit">
                                 </div>
-                                <!-- End Email -->
-                                <!-- Begin Subject -->
-                                <div class="form-group row">
-                                    <label class="col-2 col-form-label" for="subject">Subject <span style="color: red;">*</span></label>
-                                    <div class="col input-group" ng-class="{'has-danger': contactForm.errors.subject}">
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-book" aria-hidden="true"></i>
-                                        </span>
-                                        <input class="form-control form-control-danger" type="text" name="subject" placeholder="I love your site!" id="subject" ng-model="contactForm.inputs.subject" ng-focus="viewFocusEnter(contactForm.views.subject)" ng-blur="viewFocusLeave(contactForm.views.subject)" ng-change="checkTextLength(contactForm.views.subject)" ng-disabled="emailInTransit">
-                                    </div>
-                                </div>
-                                <!-- End Subject -->
-                                <!-- Begin Message -->
-                                <div class="form-group row">
-                                    <h5 class="form-character-count pl-3 pr-3">{{contactForm.inputs.message.length}}/{{contactForm.maxLength.message}}</h5>
-                                    <label class="col-2 col-form-label" for="email">Message <span style="color: red;">*</span></label>
-                                    <div class="col input-group" ng-class="{'has-danger': contactForm.errors.message}">
-                                        <textarea class="form-control" id="message" rows="5" placeholder="Tell me, what do you think about the site?" ng-model="contactForm.inputs.message" ng-focus="viewFocusEnter(contactForm.views.message)" ng-blur="viewFocusLeave(contactForm.views.message)" ng-change="checkTextLength(contactForm.views.message)" ng-disabled="emailInTransit"></textarea>
-                                    </div>
-                                </div>
-                                <!-- End Message -->
-                                <!-- Begin Submit -->
-                                <div class="row">
-                                    <div class="col text-right">
-                                        <button type="submit" class="btn btn-theme-primary" ng-disabled="emailInTransit || contactForm.errors.isError">Submit</button>
-                                    </div>
-                                </div>
-                                <!-- End Submit -->
                             </div>
+                            <!-- End Name -->
+                            <!-- Begin Email -->
+                            <div class="form-group">
+                                <label class="col-form-label" for="email">Email <span style="color: red;">*</span></label>
+                                <div class="input-group" ng-class="{'has-danger': contactForm.errors.email}">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                                    </span>
+                                    <input class="form-control form-control-danger" type="email" name="email" placeholder="example@example.com" id="email" ng-model="contactForm.inputs.email" ng-focus="viewFocusEnter(contactForm.views.email)" ng-blur="viewFocusLeave(contactForm.views.email)" ng-disabled="emailInTransit">
+                                </div>
+                            </div>
+                            <!-- End Email -->
+                            <!-- Begin Subject -->
+                            <div class="form-group">
+                                <label class="col-form-label" for="subject">Subject <span style="color: red;">*</span></label>
+                                <div class="input-group" ng-class="{'has-danger': contactForm.errors.subject}">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-book" aria-hidden="true"></i>
+                                    </span>
+                                    <input class="form-control form-control-danger" type="text" name="subject" placeholder="I love your site!" id="subject" ng-model="contactForm.inputs.subject" ng-focus="viewFocusEnter(contactForm.views.subject)" ng-blur="viewFocusLeave(contactForm.views.subject)" ng-change="checkTextLength(contactForm.views.subject)" ng-disabled="emailInTransit">
+                                </div>
+                            </div>
+                            <!-- End Subject -->
+                            <!-- Begin Message -->
+                            <div class="form-group row pl-3 pr-3">
+                                <label class="col col-form-label pl-0" for="email">Message <span style="color: red;">*</span></label>
+                                <label class="col col-form-label pr-0 pb-0 pt-3 form-character-count">{{contactForm.inputs.message.length}}/{{contactForm.maxLength.message}}</label>
+                                <div class="input-group" ng-class="{'has-danger': contactForm.errors.message}">
+                                    <textarea class="form-control" id="message" rows="5" placeholder="Tell me, what do you think about the site?" ng-model="contactForm.inputs.message" ng-focus="viewFocusEnter(contactForm.views.message)" ng-blur="viewFocusLeave(contactForm.views.message)" ng-change="checkTextLength(contactForm.views.message)" ng-disabled="emailInTransit"></textarea>
+                                </div>
+                            </div>
+                            <!-- End Message -->
+                            <!-- Begin Submit -->
+                            <div class="row">
+                                <div class="col text-right">
+                                    <button type="submit" class="btn btn-theme-primary" ng-class="{'w-100': $root.isDeviceWidthSmallerThan(426)}" ng-disabled="emailInTransit || contactForm.errors.isError">Submit</button>
+                                </div>
+                            </div>
+                            <!-- End Submit -->
                         </form>
+                        <!-- End Contact Form -->
                     </div>
                 </div>
             </div>

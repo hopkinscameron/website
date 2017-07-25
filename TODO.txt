@@ -2,8 +2,6 @@
 - Create an admin page to add a new project (sub Portfolio)
 
 All
-- make sure everything works in firefox and IE
-- MOBILE VIEW BRUH
 - convert to factories instead of having service calls
 
 - IE stuff not working
@@ -16,18 +14,8 @@ All
 MOBILE VIEW FIXES
 All 
     - if going from small to large, or large to small, the if blocks (screen widths checker) don't get executed again so need to fix that (about, subportfolio, resume, portflio)
-Header
-    - On nav open, change to X
 Sub Portfolio
     - there are some empty "col-md-2" for innerIndex in gameDataColumnsPerRowArray track by $index -> come back to this.. this exist on about page as well
-Contact
-    - the form is trash with sizes, make button width
-Admin
-    - need spacing between drafts and creating posts
-    - pl and pr should be removed off form group
-Login
-    - stack the text and form fied
-
 
 Header
 

@@ -137,26 +137,6 @@
         return $http(req);
     };
 
-    // gets about me page information 
-    service.getAboutMePageInformation = function () {
-        // set the endpoint
-        var endpoint = "/api/about";
-
-        // create request
-        var req = {
-            method: 'GET',
-            url: endpoint,
-            headers: {
-                'Content-Type': 'application/json; odata=verbose',
-                'Accept': 'application/json; odata=verbose'
-            },
-            data: 'undefined'
-        };
-
-        // send request
-        return $http(req);
-    };
-
     // gets resume page information 
     service.getResumePageInformation = function () {
         // set the endpoint

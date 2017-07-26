@@ -73,17 +73,6 @@
         });
     };
 
-    // get about me page data
-    service.getAboutMePageData = function () {
-        // access the about me information
-        return DataAccessService.getAboutMePageInformation().then(function (responseAM) {
-            return responseAM.data;
-        })
-        .catch(function (responseAM) {
-            return { "error": true, "title": responseAM.data.title, "status": responseAM.status, "message": responseAM.data.message };
-        });
-    };
-
     // get resume page data
     service.getResumePageData = function () {
         // access the resume information

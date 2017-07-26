@@ -264,4 +264,9 @@ angular.module('app').controller('headerController', ['$scope', '$rootScope', '$
             }
         }
     });
+
+    // on window resize
+    angular.element($window).resize(function() {
+        $scope.$apply();
+    });
 }]);

@@ -191,6 +191,11 @@
                 $scope.gameDataMaxRowCountArray = new Array(Math.ceil($scope.subPortfolio.overviewContent.gameData.length / $scope.gameDataColumnsPerRow));
                 $scope.gameDataColumnsPerRowArray = new Array($scope.gameDataColumnsPerRow);
 
+                // if there more columns than necessary
+                if($scope.gameDataColumnsPerRowArray.length > $scope.gameDataColumnsPerRow) {
+                    $scope.gameDataColumnsPerRowArray = new Array($scope.gameDataColumnsPerRow);
+                }
+
                 // determines if this page has these items
                 var hasDownloads = false,
                     hasUpdates = false,

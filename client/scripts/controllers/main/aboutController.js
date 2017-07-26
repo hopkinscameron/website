@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('aboutController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$timeout', 'cfpLoadingBar','Service', function ($scope, $rootScope, $compile, $location, $window, $timeout, cfpLoadingBar, Service) {
+﻿angular.module('app').controller('aboutController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$timeout', 'cfpLoadingBar', 'Service', 'AboutFactory', function ($scope, $rootScope, $compile, $location, $window, $timeout, cfpLoadingBar, Service, AboutFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
 
@@ -107,7 +107,7 @@
     // gets the page data
     function getPageData() {
         // get about me page data
-        Service.getAboutMePageData().then(function (responseAM) {
+        AboutFactory.getAboutMePageInformation().then(function (responseAM) {
             // if returned a valid response
             if (!responseAM.error) {
                 // set the data
@@ -123,6 +123,16 @@
                 $scope.favoriteGamesMaxRowCountArray = new Array(Math.ceil($scope.about.favoriteGames.length / $scope.favoriteGamesColumnsPerRow));
                 $scope.favoriteGamesColumnsPerRowArray = new Array($scope.favoriteGamesColumnsPerRow);
                 
+                // if there more columns than necessary
+                if($scope.hobbiesColumnsPerRowArray.length > $scope.hobbiesMaxColumnCountArray.length) {
+                    $scope.hobbiesColumnsPerRowArray = new Array($scope.hobbiesMaxColumnCountArray.length);
+                }
+
+                // if there more columns than necessary
+                if($scope.favoriteGamesColumnsPerRowArray.length > $scope.favoriteGamesColumnsPerRow) {
+                    $scope.favoriteGamesColumnsPerRowArray = new Array($scope.favoriteGamesColumnsPerRow);
+                }
+
                 // the initial delayed start time of any animation
                 var startTime = 1.5;
 

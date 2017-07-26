@@ -3,6 +3,7 @@
 
 All
 - convert to factories instead of having service calls
+- follow MEAN 
 
 - IE stuff not working
     - fancy font's not showing (could be proxy)
@@ -11,34 +12,6 @@ All
     - on search button, showing as an edit vs. a pointer (could be proxy issue)
     - tiny mce iconds don't appear (could be proxy)
 
-MOBILE VIEW FIXES
-All 
-    - if going from small to large, or large to small, the if blocks (screen widths checker) don't get executed again so need to fix that (about, subportfolio, resume, portflio)
+MOBILE VIEW FIXES 
 Sub Portfolio
     - there are some empty "col-md-2" for innerIndex in gameDataColumnsPerRowArray track by $index -> come back to this.. this exist on about page as well
-
-Header
-
-Footer
-
-Home
-
-About
-
-Resume
-
-Portfolio
-
-Sub Portfolio
-
-Blog
-
-Blog Post
-
-Contact
-
-Error
-
-Login
-
-Admin

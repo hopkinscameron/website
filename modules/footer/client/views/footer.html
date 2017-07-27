@@ -1,0 +1,28 @@
+﻿<!-- Begin Footer -->
+<section ng-controller="FooterController">
+    <!-- Begin Footer Container animated animation-delay--xs fadeIn -->
+    <footer class="" ng-if="$root.showFooter">
+        <!-- Begin Container -->
+        <div class="container text-center pt-4 pb-4">
+            <!-- Begin Note -->
+            <div class="container-fluid footer-content">
+                <p class="mb-1">
+                    <span ng-bind-html="footer.footerNote | trustHTML"></span>
+                </p>
+            </div>
+            <!-- End Note -->
+            <!-- Begin Social Media -->
+            <div class="container-fluid footer-content" ng-if="footer.socialMediaLinks">
+                <span ng-repeat="socialMedia in footer.socialMediaLinks">
+                    <a class="decoration--never d-inline-block" ng-class="{'mr-2': $index != footer.socialMediaLinks.length - 1}" ng-href="{{socialMedia.link}}" target="_blank">
+                        <div class="footer-svg img-zoom--sm" style="background: url({{socialMedia.img}}); background-size: contain; background-position: center center; background-repeat: no-repeat;"></div>
+                    </a>
+                </span>
+            </div>
+            <!-- End Social Media -->
+        </div>
+        <!-- End Container -->
+    </footer>
+    <!-- End Footer Container -->
+</section>
+<!-- End Footer -->

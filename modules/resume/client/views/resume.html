@@ -1,0 +1,60 @@
+﻿<!-- Begin Resume Page -->
+<section ng-controller="ResumeController">
+    <!-- Begin Container -->
+    <div class="container">
+        <!-- Begin Page Fully Loaded With Errors -->
+        <div id="pageShow" class="collapse" ng-if="pageFullyLoaded && error.error">
+            <div ng-controller="ErrorController" ng-init="init(error.title, error.status, error.message)">
+                <div ng-include="'./modules/core/client/views/error.html'"></div>
+            </div>
+        </div>
+        <!-- End Page Fully Loaded With Errors -->
+        <!-- Begin Page Fully Loaded With No Errors -->
+        <div id="pageShow" class="animated animation-delay--md fadeIn collapse" ng-if="pageFullyLoaded && !error.error">
+            <!-- Begin Page Title -->
+            <h2 class="font-weight-bold text-uppercase mb-0"><span ng-bind-html="resume.title | trustHTML"></span></h2>
+            <!-- End Page Title -->
+            <!-- Begin Resume Image -->
+            <div class="animated fadeInUp" ng-style="resumeAnimations[0]">
+                <div class="card card--transparent card-block">
+                    <div class="w-100 text-center">
+                        <img class="img-fluid" width="600" height="450" ng-src="{{resume.resumePictureLink}}" title="R&eacute;sum&eacute;" alt="R&eacute;sum&eacute;" spinner-load />
+                    </div>
+                </div>
+            </div>
+            <!-- End Resume Image -->
+            <!-- Begin Resume/Curriculum Vitae Downloads -->
+            <div class="animated fadeInUp" ng-style="resumeAnimations[1]">
+                <!-- Begin Content Break -->
+                <hr class="body-bar" />
+                <!-- End Content Break -->
+                <div class="card card--transparent card-block">
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3 row">
+                            <!-- Begin Resume Download -->
+                            <div class="col text-center animated fadeInLeft" ng-style="resumeAnimations[1]">
+                                <h5 class="">R&eacute;sum&eacute;</h5>
+                                <a ng-href="{{resume.resumeLink}}" target="_blank">
+                                    <img class="" width="50" height="50" src="/images/icons/pdf-icon.png" alt="resume.pdf" title="resume.pdf" />
+                                </a>
+                            </div>
+                            <!-- End Resume Download -->
+                            <!-- Begin Curriculum Vitae Download -->
+                            <div class="col text-center animated fadeInRight" ng-style="resumeAnimations[1]">
+                                <h5 class="">Curriculum Vitae</h5>
+                                <a ng-href="{{resume.cvLink}}" target="_blank">
+                                    <img class="" width="50" height="50" src="/images/icons/pdf-icon.png" alt="cv.pdf" title="cv.pdf" />
+                                </a>
+                            </div>
+                            <!-- End Curriculum Vitae Download -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Resume/Curriculum Vitae Downloads -->
+            </div>
+        <!-- End Page Fully Loaded With No Errors -->       
+    </div>
+    <!-- End Container -->
+</section>
+<!-- End Resume Page -->

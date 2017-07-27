@@ -59,7 +59,7 @@ var app = express();
 
 // set up all configurations
 // set public views
-app.set('views', path.join(__dirname, 'client'));
+app.set('views', path.join(__dirname, 'modules'));
 
 // set view engine
 app.set('view engine', 'html');
@@ -76,7 +76,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 // load public files
-app.use(express.static(path.join(__dirname, 'client')));    
+app.use(express.static(path.join(__dirname, 'modules')));    
 
 // use header/body validation
 app.use(expressValidator());

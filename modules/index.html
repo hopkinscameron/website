@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+
+<!-- Begin HTML -->
+<html ng-app="app">
+    <!-- Begin Head -->
+    <head>
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title id="pageTitle"></title>
+        
+        <!-- <base href="/"> -->
+
+        <!-- Begin Icons -->
+        <!-- for FF, Chrome, Opera -->
+        <link rel="icon" type="image/png" href="/images/fav-icon/favicon.jpg" sizes="16x16" />
+        <!-- for IE -->
+        <link rel="icon" type="image/x-icon" href="/images/fav-icon/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/images/fav-icon/favicon.ico" />
+        <!-- End Icons -->
+
+        <!-- Begin Styles -->
+        <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet" type="text/css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+        <link href="./modules/core/client/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+        <link href="./modules/core/client/css/bootstrap/bootstrap-grid.min.css" rel="stylesheet">
+        <link href="./modules/core/client/css/bootstrap/bootstrap-reboot.min.css" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" rel="stylesheet">
+        <link href="./modules/core/client/css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="./modules/core/client/css/angular-loading-bar/loading-bar.min.css" rel='stylesheet' type='text/css' media='all' />
+        <link href="./modules/core/client/css/ng-dialog/ngDialog.min.css" rel="stylesheet" type="text/css">
+        <link href="./modules/core/client/css/ng-dialog/ngDialog-theme-default.min.css" rel="stylesheet" type="text/css">
+        <link href="./modules/core/client/css/ng-dialog/ngDialog-theme-plain.min.css" rel="stylesheet" type="text/css">
+        <link href="./modules/core/client/css/style.css" media="screen" title="CSS" rel="stylesheet" type="text/css" />
+        <!-- End Styles -->
+
+        <!-- Begin Scripts -->
+        <!--
+        To collect end-user usage analytics about your application,
+        insert the following script into each page you want to track.
+        Place this code immediately before the closing </head> tag,
+        and before any other scripts. Your first data will appear
+        automatically in just a few seconds.
+        -->
+        <script type="text/javascript">
+            var appInsights=window.appInsights||function(config){
+                function r(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s=u.createElement(o),i,f;s.src=config.url||"https://az416426.vo.msecnd.net/scripts/a/ai.0.js";u.getElementsByTagName(o)[0].parentNode.appendChild(s);try{t.cookie=u.cookie}catch(h){}for(t.queue=[],i=["Event","Exception","Metric","PageView","Trace","Dependency"];i.length;)r("track"+i.pop());return r("setAuthenticatedUserContext"),r("clearAuthenticatedUserContext"),config.disableExceptionTracking||(i="onerror",r("_"+i),f=e[i],e[i]=function(config,r,u,e,o){var s=f&&f(config,r,u,e,o);return s!==!0&&t["_"+i](config,r,u,e,o),s}),t
+            }({
+                instrumentationKey:"61c041f4-27da-4972-b9f3-7ca25e71fb33"
+            });
+
+            window.appInsights=appInsights;
+            appInsights.trackPageView();
+        </script>
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js.map"></script>-->
+        <script src="./modules/core/client/third-party-scripts/angular/angular.min.js"></script>
+        <script src="./modules/core/client/third-party-scripts/angular/angular-animate.min.js"></script>
+        <script src="./modules/core/client/third-party-scripts/angular/angular-cookies.min.js"></script>
+        <script src="./modules/core/client/third-party-scripts/angular/angular-route.min.js"></script>
+        <script src="./modules/core/client/third-party-scripts/angular/angular-sanitize.min.js"></script>
+        <script src="./modules/core/client/third-party-scripts/angular/angular-touch.min.js"></script>
+        <script src='./modules/core/client/third-party-scripts/angular-loading-bar/loading-bar.min.js'></script>
+        <script src="./modules/core/client/third-party-scripts/tinymce/tinymce.js"></script>
+        <script src="./modules/core/client/third-party-scripts/angular-ui-tinymce/src/tinymce.js"></script>
+        <script src="./modules/core/client/third-party-scripts/ng-dialog/ngDialog.min.js"></script>
+        <script src="./modules/core/client/third-party-scripts/mark/mark.min.js" charset="UTF-8"></script>
+
+        <script src="./modules/core/client/controllers/main.js"></script>
+        <script src="./modules/core/client/services/data-access.client.service.js"></script>
+        <script src="./modules/core/client/services/client.service.js"></script>
+        <script src="./modules/core/client/controllers/error.client.controller.js"></script>
+
+        <script src="./modules/header/client/services/header.client.service.js"></script>
+        <script src="./modules/header/client/controllers/header.client.controller.js"></script>
+
+        <script src="./modules/footer/client/services/footer.client.service.js"></script>
+        <script src="./modules/footer/client/controllers/footer.client.controller.js"></script>
+
+        <script src="./modules/home/client/services/home.client.service.js"></script>
+        <script src="./modules/home/client/controllers/home.client.controller.js"></script>
+
+        <script src="./modules/about/client/services/about.client.service.js"></script>
+        <script src="./modules/about/client/controllers/about.client.controller.js"></script>
+
+        <script src="./modules/resume/client/services/resume.client.service.js"></script>
+        <script src="./modules/resume/client/controllers/resume.client.controller.js"></script>
+
+        <script src="./modules/portfolio/client/services/portfolio.client.service.js"></script>
+        <script src="./modules/portfolio/client/controllers/portfolio-list.client.controller.js"></script>
+        <script src="./modules/portfolio/client/controllers/portfolio-item.client.controller.js"></script>
+
+        <script src="./modules/blog/client/services/blog.client.service.js"></script>
+        <script src="./modules/blog/client/controllers/blog-list.client.controller.js"></script>
+        <script src="./modules/blog/client/controllers/blog-post.client.controller.js"></script>
+        <script src="./modules/blog/client/controllers/admin/blog-post-edit.client.controller.js"></script>
+        <script src="./modules/blog/client/controllers/admin/blog-post-new.client.controller.js"></script>
+
+        <script src="./modules/contact/client/services/contact.client.service.js"></script>
+        <script src="./modules/contact/client/controllers/contact.client.controller.js"></script>
+
+        <script src="./modules/login/client/services/login.client.service.js"></script>
+        <script src="./modules/login/client/controllers/login.client.controller.js"></script>
+
+        <script src="./modules/logout/client/services/logout.client.service.js"></script>
+        <script src="./modules/logout/client/controllers/logout.client.controller.js"></script>
+
+        <script src="./modules/dialog/client/controllers/dialog-error.client.controller.js"></script>
+        <script src="./modules/dialog/client/controllers/dialog-success.client.controller.js"></script>
+        <script src="./modules/dialog/client/controllers/dialog-warning.client.controller.js"></script>
+        <!-- End Scripts -->
+    </head>
+    <!-- End Head -->
+    <!-- Begin Body -->
+    <body class="">
+        <!-- Begin Header -->
+        <div ng-include="'./modules/header/client/views/header.html'"></div>
+        <!-- End Header -->
+
+        <!-- Begin NG View -->
+        <div id="main" ng-view scroll></div>
+        <!-- End NG View -->
+
+        <!-- Begin Footer -->
+        <div id="footer" ng-include="'./modules/footer/client/views/footer.html'"></div>
+        <!-- End Footer -->
+    </body>
+    <!-- End Body -->
+</html>
+<!-- End HTML -->

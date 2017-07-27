@@ -1,0 +1,64 @@
+<!-- Begin Login Page -->
+<section ng-controller="LoginController">
+    <!-- Begin Container -->
+    <div class="container">
+        <!-- Begin Page Fully Loaded With Errors -->
+        <div id="pageShow" class="collapse" ng-if="pageFullyLoaded && error.error">
+            <div ng-controller="ErrorController" ng-init="init(error.title, error.status, error.message)">
+                <div ng-include="'./modules/core/client/views/error.html'"></div>
+            </div>
+        </div>
+        <!-- End Page Fully Loaded With Errors -->
+        <!-- Begin Page Fully Loaded With No Errors -->
+        <div id="pageShow" class="animated animation-delay--xmd fadeIn collapse" ng-if="pageFullyLoaded && !error.error">
+            <!-- Begin Login Form -->
+            <div class="form-login row align-items-center">
+                <div class="col-md-8 offset-md-2">
+                    <div class="card card--dark card-block box-shadow--sm box-shadow--primary">
+                        <div style="padding-bottom: 24px;" ng-if="!loginForm.errors.isError"></div>
+                        <div ng-if="loginForm.errors.isError">
+                            <span style="color: red;">{{loginForm.errors.errorMessage}}</span>
+                        </div>
+                        <!-- Begin Login Form -->
+                        <form class="form-group" ng-submit="login()">
+                            <!-- Begin Name -->
+                            <div class="form-group">
+                                <label class="col-form-label" for="username">Username <span style="color: red;">*</span></label>
+                                <div class="input-group" ng-class="{'has-danger': loginForm.errors.username}">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </span>
+                                    <input class="form-control form-control-danger" type="text" name="username" placeholder="Username" id="username" ng-model="loginForm.inputs.username" ng-focus="viewFocusEnter(loginForm.views.username)" ng-blur="viewFocusLeave(loginForm.views.username)" ng-disabled="loginForm.formSubmitted">
+                                </div>
+                            </div>
+                            <!-- End Name -->
+                            <!-- Begin Password -->
+                            <div class="form-group">
+                                <label class="col-form-label" for="password">Password <span style="color: red;">*</span></label>
+                                <div class="input-group" ng-class="{'has-danger': loginForm.errors.password}">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-key" aria-hidden="true"></i>
+                                    </span>
+                                    <input class="form-control form-control-danger" type="password" name="password" placeholder="Password" id="password" ng-model="loginForm.inputs.password" ng-focus="viewFocusEnter(loginForm.views.password)" ng-blur="viewFocusLeave(loginForm.views.password)" ng-disabled="loginForm.formSubmitted">
+                                </div>
+                            </div>
+                            <!-- End Password -->
+                            <!-- Begin Login Button -->
+                            <div class="row">
+                                <div class="col text-right">
+                                    <button type="submit" class="btn btn-theme-primary" ng-class="{'w-100': $root.isDeviceWidthSmallerThan(426)}" ng-disabled="formSubmitted || loginForm.errors.isError">Login</button>
+                                </div>
+                            </div>
+                            <!-- End Login Button -->
+                        </form>
+                        <!-- End Login Form -->
+                    </div>
+                </div>
+            </div>
+            <!-- End Login Form -->
+        </div>
+        <!-- End Page Fully Loaded With No Errors -->
+    </div>
+    <!-- End Container -->
+</section>
+<!-- End Login Page -->

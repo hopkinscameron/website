@@ -228,7 +228,7 @@ module.exports = function(app, passport) {
 
 	// GET portfolio page information or subportfolio information
 	// format /api/portfolio
-	// format /api/portfolio?id=subPortfolioId
+	// format /api/portfolio?id=portfolioItemId
 	app.get('/api/portfolio', function (req, res) {
 		// get user's IP address and log the page request
 		getIPAndLog(req);
@@ -406,6 +406,37 @@ module.exports = function(app, passport) {
 		}
 	});
 
+	// GET new blog post page information
+	// format /api/blog/new
+	app.get('/api/blog/new', isLoggedIn, function (req, res) {
+		// get user's IP address and log the page request
+		getIPAndLog(req);
+
+		// find all saved blog posts
+		SavedBlogPost.find({}).sort({ dateSaved: 'desc' }).exec(function(err, blogs) {
+			// if error occured
+			if (err) {
+				// send internal error
+				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
+				console.log(clcConfig.error(err.message));
+			}
+			// if blogs were found
+			else if(blogs) {
+				// map blogs to transform to an array of JSON
+				blogs = blogs.map(function(blog) {
+					return blog.toObject({ hide: 'customShort', transform: true });
+				});
+
+				// send blogs back
+				res.end(JSON.stringify({ "savedPosts": blogs }));
+			}
+			else {
+				// send not found
+				res.status(404).send({ title: errorMessageCenter.error.status404.title, message: errorMessageCenter.error.status404.message + " Blog does not exist." });
+			}
+		});
+	});
+
 	// GET blog edit page information
 	// format /api/blog/post/:postId/edit
 	app.get('/api/blog/post/:postId/edit', isLoggedIn, function (req, res) {
@@ -486,37 +517,6 @@ module.exports = function(app, passport) {
 				// send internal error
 				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
 				console.log(clcConfig.error(err.message));
-			}
-		});
-	});
-
-	// GET admin page information
-	// format /api/admin
-	app.get('/api/admin', isLoggedIn, function (req, res) {
-		// get user's IP address and log the page request
-		getIPAndLog(req);
-
-		// find all saved blog posts
-		SavedBlogPost.find({}).sort({ dateSaved: 'desc' }).exec(function(err, blogs) {
-			// if error occured
-			if (err) {
-				// send internal error
-				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-				console.log(clcConfig.error(err.message));
-			}
-			// if blogs were found
-			else if(blogs) {
-				// map blogs to transform to an array of JSON
-				blogs = blogs.map(function(blog) {
-					return blog.toObject({ hide: 'customShort', transform: true });
-				});
-
-				// send blogs back
-				res.end(JSON.stringify({ "savedPosts": blogs }));
-			}
-			else {
-				// send not found
-				res.status(404).send({ title: errorMessageCenter.error.status404.title, message: errorMessageCenter.error.status404.message + " Blog does not exist." });
 			}
 		});
 	});
@@ -1071,8 +1071,8 @@ module.exports = function(app, passport) {
 	// POST sign up
 	// format /signup
 	app.post('/signup', passport.authenticate('local-signup', {
-		successRedirect : '/admin', // redirect to the secure profile section
-		failureRedirect : '/', // redirect back to the home page if there is an error
+		successRedirect : '/about', // redirect to the secure profile section
+		failureRedirect : '/login', // redirect back to the home page if there is an error
 		failureFlash : true // allow flash messages
 	}));
 
@@ -1214,14 +1214,14 @@ module.exports = function(app, passport) {
 // Private Functions =======================================================
 // =========================================================================
 // gets the file location of the matching subportfolio id
-function getSubPortfolioFile(subPortfolioId) {
+function getSubPortfolioFile(portfolioItemId) {
 	// if matching the correct id
-	if(subPortfolioId == 'drive-on-metz' || subPortfolioId == 'forsaken'
-		|| subPortfolioId == 'memoryless' || subPortfolioId == 'over-drive'
-		|| subPortfolioId == 'road-rager' || subPortfolioId == 'rollaball-mod'
-		|| subPortfolioId == 'squirvival'
+	if(portfolioItemId == 'drive-on-metz' || portfolioItemId == 'forsaken'
+		|| portfolioItemId == 'memoryless' || portfolioItemId == 'over-drive'
+		|| portfolioItemId == 'road-rager' || portfolioItemId == 'rollaball-mod'
+		|| portfolioItemId == 'squirvival'
 	) {
-		return subPortfolioId + ".json";
+		return portfolioItemId + ".json";
 	}
 	
 	return undefined;

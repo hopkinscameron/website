@@ -1,0 +1,14 @@
+/* Begin Custom Blog Post Styles */
+.post-body--dark {
+    padding: 0.5rem 1rem;
+    border-left: 0.25rem solid $muted;
+
+    & :last-child {
+        margin-bottom: 0;
+    }
+}
+.post-limit-desc {
+    max-height: 190px;
+    overflow: hidden;
+}
+/* End Custom Blog Post Styles */

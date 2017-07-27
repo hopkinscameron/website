@@ -1,0 +1,247 @@
+/*
+    Begin Variables
+    Copy/paste any Bootstrap variables you want to overwrite and give a new value. Remove the !default in your copy
+    Only bring over Bootstrap variables when you need to overwrite them.
+    Make sure you comment any new, non-Bootstrap variables.
+*/ 
+
+/*
+    Breakpoints
+
+    Media queries are mobile-first, so read each as "when screen is greater than [size]"
+    These only apply to the grid by default. You can use them in components but they may
+    require their own breakpoints as well.
+*/
+$screen-max:    1200px; // Max width
+
+$screen-xs-int: 480;
+$screen-xs-num: $screen-xs-int+px;
+
+$screen-sm-int: 768; // Small, first column point
+$screen-sm-num: $screen-sm-int+px; 
+
+$screen-md-int: 992; // Medium
+$screen-md-num: $screen-md-int+px; 
+
+$screen-lg-int: 1200; // Large
+$screen-lg-num: $screen-lg-int+px; 
+
+
+/* Begin Animation Delay Variables */
+$animation-delay--xxs: .125s;
+$animation-delay--xs: .25s;
+$animation-delay--sm: .5s;
+$animation-delay--md: 1;
+$animation-delay--xmd: 1.5s;
+$animation-delay--lg: 2s;
+$animation-delay--xl: 4s;
+$animation-delay--xxl: 8s;
+$animation-delay--xxxl: 12s;
+/* End Animation Delay Variables */
+
+/* Begin Page Break Variables */
+$page-break-header-height: 7px;
+$page-break-body-height: 3px;
+$page-break-blog-height: 1.5px;
+/* End Page Break Variables */
+
+/* Begin Navigation Variables */
+$navbar-position: $page-break-header-height;
+$navbar-height: 76px;
+$navbar-bottom: $navbar-position + $navbar-height;
+$loading-bar-height: 5px;
+/* End Navigation Variables */
+
+/* Begin Body Variables */
+$body-padding-top: $navbar-bottom + 15px;
+$body-min-height: 400px;
+$body-main-min-height: 400px;
+/* End Body Variables */
+
+/* Begin Border Sizes Variables */
+$border-size-base: 1px;
+$border-size-quarter: $border-size-base * 0.25;
+$border-size-half: $border-size-base * 0.5;
+$border-size-normal: $border-size-base;
+$border-size-double: $border-size-base * 2;
+$border-size-triple: $border-size-base * 3;
+$border-size-quadruple: $border-size-base * 4;
+
+$border-radius-base: 1px;
+$border-radius-xs: $border-radius-base * 0.5;
+$border-radius-sm: $border-radius-base;
+$border-radius-md: $border-radius-base * 2;
+$border-radius-lg: $border-radius-base * 4;
+$border-radius-xl: $border-radius-base * 8;
+/* End Border Sizes Variables */
+
+/* Begin Box Shadow Sizes */
+$box-shadow-xs: 6.25px;
+$box-shadow-sm: 12.5px;
+$box-shadow-md: 25px;
+$box-shadow-lg: 50px;
+$box-shadow-xl: 75px;
+/* End Box Shadow Sizes */
+
+/* Begin Colors */
+$brand-theme-main: #29a8d6;
+$brand-theme-secondary: #FFFFFF;
+$brand-theme-main-rgb: 41, 168, 214;
+
+$color-blue:       #346094;
+$color-blue-muted: #6aa2b7;
+$color-teal:       #007a89;
+$color-teal-muted: #1e988a;
+$color-green:      #368f3f;
+$color-yellow:     #ce9f52;
+$color-orange:     #a95521;
+$color-red:        #9e2a2b;
+$color-fuchsia:    #a83d72;
+$color-purple:     #615091;
+
+$color-blue-dark:       #0b3a5d;
+$color-blue-muted-dark: #263645;
+$color-teal-dark:       #00464f;
+$color-teal-muted-dark: #3f5c58;
+$color-green-dark:      #37563c;
+$color-yellow-dark:     #5c4520;
+$color-orange-dark:     #7d4930;
+$color-red-dark:        #5d2a2c;
+$color-fuchsia-dark:    #672146;
+$color-purple-dark:     #403a60;
+
+$color-blue-accent:       #0070cd;
+$color-blue-muted-accent: #57c0e9;
+$color-teal-accent:       #3fc1cb;
+$color-teal-muted-accent: #59c3b5;
+$color-green-accent:      #6dc14a;
+$color-yellow-accent:     #ffc556;
+$color-orange-accent:     #ff661b;
+$color-red-accent:        #f32837;
+$color-fuchsia-accent:    #d630ae;
+$color-purple-accent:     #9160b5;
+
+$color-neutral-cool: #d7d8da;
+$color-neutral-warm: #d8d1c9;
+$color-black:        #000;
+
+$color-neutral-cool1: #e0e1dd;
+$color-neutral-cool2: #bcbdbc;
+$color-neutral-cool3: #87898b;
+$color-neutral-cool4: #4d4f53;
+
+$color-neutral-warm1: #e0ded8;
+$color-neutral-warm2: #b7b1a9;
+$color-neutral-warm3: #8b8178;
+$color-neutral-warm4: #544b44;
+/* End Colors */
+
+/* Begin Colors (Theme) */
+// Dark
+$dark-dark: #000;
+$dark: #2C3035;
+$dark-light: #747678;
+$dark-accent: #899F99;
+
+// Grayscale
+$gray-dark-dark:            #181a1b;
+$gray-dark:                 #292b2c;
+$gray:                      #464a4c;
+$gray-light:                #636c72;
+$gray-lighter:              #eceeef;
+$gray-lightest:             #f7f7f9;
+
+// Primary
+$primary-dark: #002B45;
+$primary: #1C57A5;
+$primary-light: #5BC6E8;
+$primary-accent: #00B2A9;
+
+// Secondary
+$secondary-dark: #B71234;
+$secondary: #DD4814;
+$secondary-light: #FFC3AD;
+$secondary-accent: #FDA01A;
+
+// Tertiary
+$tertiary-dark: #6A1A41;
+$tertiary: #5A447A;
+
+// Light
+$light-dark: #ADAFAF;
+$light: #C9CAC8;
+$light-light: #F5F7F9;
+$light-accent: #E0E1DD;
+
+// Accent
+$accent-dark: #416812;
+$accent: #7AB800;
+$accent-light: #D5FF82;
+$accent-accent: #D1C99D;
+
+// States
+$error: $secondary-dark;
+$valid: $accent;
+$warning: $secondary;
+$information: $primary-dark;
+$visited: $tertiary;
+
+//  Misc
+$white: #FFF;
+$bg-color: $white;
+$error-color: #B71234;
+$devil: #666;
+$muted: #636c72;
+$transparent: transparent;
+/* End Colors (Theme) */
+
+/* Begin Icon Font Path */ 
+$icon-font-path: "./fonts/";
+/* End Icon Font Path */ 
+
+/* Begin Images */
+$img--xxs: 25px;
+$img--xs: 50px;
+$img--sm: 100px;
+$img--md: 200px; 
+$img--lg: 400px; 
+$img--xl: 800px; 
+$img--xxl: 1000px; 
+/* End Images */
+
+/* Begin ngDialog */
+$ng-dialog-width: 600px;
+/* End ngDialog */
+
+/* Begin Scales */
+$scale--sm: 1.05;
+$scale--md: 1.15;
+$scale--lg: 1.25;
+/* End Scales */
+
+/* 
+    Typography + Links 
+*/
+$text-color:              $light-light;
+
+$font-size-base:          18px;
+$font-size-small:         14px;
+$font-size-medium:        23px;
+$font-size-large:         29px;
+$font-size_xlarge:        47px;
+
+$line-height-base:        1.44; // Line height will change based on breakpoint.
+$font-path:               "./fonts/";
+$font-family-sans-serif:  "Proxima-Nova","Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+$font-family-serif:       "Chronicle",Georgia,"Times New Roman","Roboto Slab",serif;
+$font-family-mono:        "Operator", "OCR A Std", "Fira Code", "Hack", Consolas, "Monaco", "Lucida Console", "Courier New", Courier, monospace;
+$font-weight-light:       200;
+
+$headings-font-weight:    400; // Weight for headers
+
+$link-color:            $color-blue-accent;
+$link-hover-color:      darken($link-color, 8%);
+$link-hover-decoration: underline;
+/* End Typography + Links  */ 
+
+/* End Variables */

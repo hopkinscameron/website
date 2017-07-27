@@ -1,0 +1,128 @@
+<!-- Begin Contact Page -->
+<section ng-controller="ContactController">
+    <!-- Begin Container -->
+    <div class="container">
+        <!-- Begin Page Fully Loaded With Errors -->
+        <div id="pageShow" class="collapse" ng-if="pageFullyLoaded && error.error">
+            <div ng-controller="ErrorController" ng-init="init(error.title, error.status, error.message)">
+                <div ng-include="'./modules/core/client/views/error.html'"></div>
+            </div>
+        </div>
+        <!-- End Page Fully Loaded With Errors -->
+        <!-- Begin Page Fully Loaded With No Errors -->
+        <div id="pageShow" class="animated animation-delay--md fadeIn collapse" ng-if="pageFullyLoaded && !error.error">
+            <!-- Begin Page Title -->
+            <h2 class="font-weight-bold text-uppercase mb-0"><span ng-bind-html="contact.title | trustHTML"></span></h2>
+            <!-- End Page Title -->
+            <!-- Begin Email -->
+            <div class="animated fadeInUp" ng-style="contactAnimations[0]">
+                <div class="card card--transparent card-block">
+                    <h4 class="text-capitalize">Email</h4>
+                    <div class="pl-3 pr-3">
+                        <img class="img-fluid" width="200" height="30" ng-src="{{contact.emailPictureLink}}" title="Cameron Hopkins Email" alt="Cameron Hopkins Email" spinner-load />
+                    </div>
+                </div>
+            </div>
+            <!-- End Email -->
+            <!-- Begin Positive Note -->
+            <div class="animated fadeInUp" ng-style="contactAnimations[1]">
+                <!-- Begin Content Break -->
+                <hr class="body-bar" />
+                <!-- End Content Break -->
+                <div class="card card--transparent card-block">
+                    <h4 class="text-capitalize">Postive Note</h4>
+                    <span class="pl-3 pr-3">{{contact.positiveNote}} <i class="em em-satisfied"></i></span>
+                </div>
+            </div>
+            <!-- End Positive Note -->
+            <!-- Begin Contact Form -->
+            <div id="contact-form" class="collapse show">
+                <div class="animated fadeInUp" ng-style="contactAnimations[2]">
+                    <!-- Begin Content Break -->
+                    <hr class="body-bar" />
+                    <!-- End Content Break -->
+                    <div class="card card--transparent card-block">
+                        <h4 class="text-capitalize">Contact Me Directly</h4>
+                        <div style="padding-bottom: 24px;" ng-if="!contactForm.errors.isError"></div>
+                        <div class="pl-3 pr-3" ng-if="contactForm.errors.isError">
+                            <span style="color: red;">{{contactForm.errors.errorMessage}}</span>
+                        </div>
+                        <!-- Begin Contact Form -->
+                        <form class="form-group pl-3 pr-3" ng-submit="sendEmail()">
+                            <!-- Begin Name -->
+                            <div class="form-group">
+                                <label class="col-form-label" for="name">Name <span style="color: red;">*</span></label>
+                                <div class="input-group mb-3" ng-class="{'has-danger': contactForm.errors.firstName}">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </span>
+                                    <input class="form-control form-control-danger" type="text" name="firstname" placeholder="First Name" id="first-name" ng-model="contactForm.inputs.firstName" ng-focus="viewFocusEnter(contactForm.views.firstName)" ng-blur="viewFocusLeave(contactForm.views.firstName)" ng-change="checkTextLength(contactForm.views.firstName)" ng-disabled="emailInTransit">
+                                </div>
+                                <div class="input-group" ng-class="{'has-danger': contactForm.errors.lastName}">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </span>
+                                    <input class="form-control form-control-danger" type="text" name="lastname" placeholder="Last Name" id="last-name" ng-model="contactForm.inputs.lastName" ng-focus="viewFocusEnter(contactForm.views.lastName)" ng-blur="viewFocusLeave(contactForm.views.lastName)" ng-change="checkTextLength(contactForm.views.lastName)" ng-disabled="emailInTransit">
+                                </div>
+                            </div>
+                            <!-- End Name -->
+                            <!-- Begin Email -->
+                            <div class="form-group">
+                                <label class="col-form-label" for="email">Email <span style="color: red;">*</span></label>
+                                <div class="input-group" ng-class="{'has-danger': contactForm.errors.email}">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                                    </span>
+                                    <input class="form-control form-control-danger" type="email" name="email" placeholder="example@example.com" id="email" ng-model="contactForm.inputs.email" ng-focus="viewFocusEnter(contactForm.views.email)" ng-blur="viewFocusLeave(contactForm.views.email)" ng-disabled="emailInTransit">
+                                </div>
+                            </div>
+                            <!-- End Email -->
+                            <!-- Begin Subject -->
+                            <div class="form-group">
+                                <label class="col-form-label" for="subject">Subject <span style="color: red;">*</span></label>
+                                <div class="input-group" ng-class="{'has-danger': contactForm.errors.subject}">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-book" aria-hidden="true"></i>
+                                    </span>
+                                    <input class="form-control form-control-danger" type="text" name="subject" placeholder="I love your site!" id="subject" ng-model="contactForm.inputs.subject" ng-focus="viewFocusEnter(contactForm.views.subject)" ng-blur="viewFocusLeave(contactForm.views.subject)" ng-change="checkTextLength(contactForm.views.subject)" ng-disabled="emailInTransit">
+                                </div>
+                            </div>
+                            <!-- End Subject -->
+                            <!-- Begin Message -->
+                            <div class="form-group row pl-3 pr-3">
+                                <label class="col col-form-label pl-0" for="email">Message <span style="color: red;">*</span></label>
+                                <label class="col col-form-label pr-0 pb-0 pt-3 form-character-count">{{contactForm.inputs.message.length}}/{{contactForm.maxLength.message}}</label>
+                                <div class="input-group" ng-class="{'has-danger': contactForm.errors.message}">
+                                    <textarea class="form-control" id="message" rows="5" placeholder="Tell me, what do you think about the site?" ng-model="contactForm.inputs.message" ng-focus="viewFocusEnter(contactForm.views.message)" ng-blur="viewFocusLeave(contactForm.views.message)" ng-change="checkTextLength(contactForm.views.message)" ng-disabled="emailInTransit"></textarea>
+                                </div>
+                            </div>
+                            <!-- End Message -->
+                            <!-- Begin Submit -->
+                            <div class="row">
+                                <div class="col text-right">
+                                    <button type="submit" class="btn btn-theme-primary" ng-class="{'w-100': $root.isDeviceWidthSmallerThan(426)}" ng-disabled="emailInTransit || contactForm.errors.isError">Submit</button>
+                                </div>
+                            </div>
+                            <!-- End Submit -->
+                        </form>
+                        <!-- End Contact Form -->
+                    </div>
+                </div>
+            </div>
+            <!-- End Contact Form -->
+            <!-- Begin Thank You Note -->
+            <div id="thank-you-message" class="collapse animated animation-delay--sm fadeIn">
+                <div class="card card--transparent card-block ">
+                    <div class="col-md-6 offset-md-3">
+                        <h4 class="text-capitalize font-weight-bold">Thank you, <span class="font-italic">{{contactForm.inputs.firstName}}</span></h4>
+                        <p class="">I really appreciate your comment! I'll get back to you as soon as I can!</p>
+                    </div>
+                </div>
+            </div>
+            <!-- End Thank You Note -->
+        </div>
+        <!-- End Page Fully Loaded With No Errors -->
+    </div>
+    <!-- End Container -->
+</section>
+<!-- End Contact Page -->

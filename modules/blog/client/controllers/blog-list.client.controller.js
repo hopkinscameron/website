@@ -205,7 +205,7 @@
     // gets the page data
     function getPageData(filter, pageNumber) {
         // get blog page data
-        BlogFactory.getBlogListPageInformation(filter, pageNumber).then(function (responseBL) {
+        BlogFactory.queryBlogList(filter, pageNumber).then(function (responseBL) {
             // if returned a valid response
             if (!responseBL.error) {
                 // set the data

@@ -7,7 +7,7 @@ var requestPromise = require('request-promise');
 var nodemailer = require('nodemailer');
 
 // the file system to read/write from/to files locallly
-var fs = require("fs");
+var fs = require('fs');
 
 // short id generator
 var shortid = require('shortid');
@@ -406,9 +406,9 @@ module.exports = function(app, passport) {
 		}
 	});
 
-	// GET new blog post page information
-	// format /api/blog/new
-	app.get('/api/blog/new', isLoggedIn, function (req, res) {
+	// GET saved blog drafts
+	// format /api/blog/drafts
+	app.get('/api/blog/drafts', isLoggedIn, function (req, res) {
 		// get user's IP address and log the page request
 		getIPAndLog(req);
 

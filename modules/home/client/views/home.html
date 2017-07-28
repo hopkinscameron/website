@@ -5,7 +5,7 @@
         <!-- Begin Page Fully Loaded With Errors -->
         <div ng-if="pageFullyLoaded && error.error">
             <div ng-controller="ErrorController" ng-init="init(error.title, error.status, error.message)">
-                <div ng-include="'./modules/core/client/views/error.html'"></div>
+                <div ng-include="'./core/client/views/error.html'"></div>
             </div>
         </div>
         <!-- End Page Fully Loaded With Errors -->

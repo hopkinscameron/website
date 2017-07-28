@@ -3,8 +3,8 @@ angular.module('app').factory('BlogFactory', ['$http', '$location', function ($h
     var factory = {};
     var appPath = $location.$$absUrl.split('#')[0] + 'api';
 
-    // gets blog list information 
-    factory.getBlogListPageInformation = function (filter, pageNumber) {
+    // queries blog list 
+    factory.queryBlogList = function (filter, pageNumber) {
         // set the endpoint
         var endpoint = appPath + "/blog";
 
@@ -40,8 +40,8 @@ angular.module('app').factory('BlogFactory', ['$http', '$location', function ($h
         });
     };
 
-    // gets blog post page information 
-    factory.getBlogPostPageInformation = function (blogPostId) {
+    // gets blog post
+    factory.getBlogPost = function (blogPostId) {
         // set the endpoint
         var endpoint = appPath + "/blog?id=" + blogPostId;
 
@@ -66,9 +66,9 @@ angular.module('app').factory('BlogFactory', ['$http', '$location', function ($h
     };
 
     // get new blog post page information
-    factory.getBlogPostNewPageData = function () {
+    factory.getSavedBlogDrafts = function () {
         // set the endpoint
-        var endpoint = appPath + "/blog/new";
+        var endpoint = appPath + "/blog/drafts";
 
         // create request
         var req = {

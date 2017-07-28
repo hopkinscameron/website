@@ -387,7 +387,7 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
     $scope.discardDraft = function () {
         // show dialog
 		var discardDraftDialog = ngDialog.open({
-			template: './modules/dialog/client/views/dialog-warning.html',
+			template: './dialog/client/views/dialog-warning.html',
 			controller: 'DialogDiscardBlogDraftController',
 			className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
 			showClose: false,
@@ -429,8 +429,8 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
 
     // gets the page data
     function getPageData() {
-        // get new blog post page data
-        BlogFactory.getBlogPostNewPageData().then(function (responseA) {
+        // get saved blog drafts
+        BlogFactory.getSavedBlogDrafts().then(function (responseA) {
             // if returned a valid response
             if (!responseA.error) {
                 // set the data
@@ -455,7 +455,7 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
                 }
 
                 // holds the page title
-                $scope.pageTitle = "Admin | " + Service.appName;
+                $scope.pageTitle = "New Blog Post | " + Service.appName;
 
                 // check to see if currently on a query with blog id
                 var blogId = $location.search().blogId;
@@ -562,7 +562,7 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
 
                 // show dialog
                 var successfulDiscardDialog = ngDialog.open({
-                    template: './modules/dialog/client/views/dialog-success.html',
+                    template: './dialog/client/views/dialog-success.html',
                     controller: 'DialogSuccessController',
                     className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
                     data: { 'successHeader': header, 'successBody': body }
@@ -587,7 +587,7 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
 
         // show dialog
         ngDialog.open({
-            template: './modules/dialog/client/views/dialog-success.html',
+            template: './dialog/client/views/dialog-success.html',
             controller: 'DialogSuccessController',
             className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'successHeader': header, 'successBody': body }
@@ -602,7 +602,7 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
 
         // show dialog
         var successfulPostDialog = ngDialog.open({
-            template: './modules/dialog/client/views/dialog-success.html',
+            template: './dialog/client/views/dialog-success.html',
             controller: 'DialogSuccessfulPostController',
             className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'successHeader': header, 'successBody': body }
@@ -630,7 +630,7 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
 
         // show dialog
         ngDialog.open({
-            template: './modules/dialog/client/views/dialog-error.html',
+            template: './dialog/client/views/dialog-error.html',
             controller: 'DialogErrorController',
             className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'errorHeader': header, 'errorBody': body }

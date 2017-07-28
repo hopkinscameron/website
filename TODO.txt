@@ -4,10 +4,8 @@
 All
 - follow MEAN 
 - Seperate out neccessary api calls (title, blog list, etc.) -> do in header as well so that certain things have it;s own api call on the page
-- if page doesn't need the header to be refreshed, don't refresh ? maybe this doesn't matter
 - seperate out the saving/posting a blog in api calls -> basically so that if its a new post, make call to "postNewBlog", "saveNewBlog", "updateDraft", "updateBlog"
 - seperate out admin views/regular views
-- add a "new blog post" button to the blog list page
 
 - IE stuff not working
     - fancy font's not showing (could be proxy)

@@ -254,7 +254,7 @@
     $scope.discardDraft = function () {
         // show dialog
 		var discardDraftDialog = ngDialog.open({
-			template: './modules/dialog/client/views/dialog-warning.html',
+			template: './dialog/client/views/dialog-warning.html',
 			controller: 'DialogDiscardBlogDraftController',
 			className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
 			showClose: false,
@@ -277,7 +277,7 @@
     $scope.deleteBlog = function () {
         // show dialog
 		var deleteBlogDialog = ngDialog.open({
-			template: './modules/dialog/client/views/dialog-warning.html',
+			template: './dialog/client/views/dialog-warning.html',
 			controller: 'DialogDeleteBlogController',
 			className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
 			showClose: false,
@@ -420,7 +420,7 @@
 
                 // show dialog
                 var successfulDiscardDialog = ngDialog.open({
-                    template: './modules/dialog/client/views/dialog-success.html',
+                    template: './dialog/client/views/dialog-success.html',
                     controller: 'DialogSuccessController',
                     className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
                     data: { 'successHeader': header, 'successBody': body }
@@ -455,7 +455,7 @@
 
                 // show dialog
                 var successfulDeleteDialog = ngDialog.open({
-                    template: './modules/dialog/client/views/dialog-success.html',
+                    template: './dialog/client/views/dialog-success.html',
                     controller: 'DialogSuccessController',
                     className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
                     data: { 'successHeader': header, 'successBody': body }
@@ -486,7 +486,7 @@
 
         // show dialog
         ngDialog.open({
-            template: './modules/dialog/client/views/dialog-success.html',
+            template: './dialog/client/views/dialog-success.html',
             controller: 'DialogSuccessController',
             className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'successHeader': header, 'successBody': body }
@@ -504,7 +504,7 @@
 
         // show dialog
         var successfulPostDialog = ngDialog.open({
-            template: './modules/dialog/client/views/dialog-success.html',
+            template: './dialog/client/views/dialog-success.html',
             controller: 'DialogSuccessfulPostController',
             className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'successHeader': header, 'successBody': body }
@@ -525,7 +525,7 @@
 
         // show dialog
         ngDialog.open({
-            template: './modules/dialog/client/views/dialog-error.html',
+            template: './dialog/client/views/dialog-error.html',
             controller: 'DialogErrorController',
             className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'errorHeader': header, 'errorBody': body }

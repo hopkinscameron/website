@@ -5,7 +5,7 @@
         <!-- Begin Page Fully Loaded With Errors -->
         <div id="pageShow" class="collapse" ng-if="pageFullyLoaded && error.error">
             <div ng-controller="ErrorController" ng-init="init(error.title, error.status, error.message)">
-                <div ng-include="'./modules/core/client/views/error.html'"></div>
+                <div ng-include="'./core/client/views/error.html'"></div>
             </div>
         </div>
         <!-- End Page Fully Loaded With Errors -->
@@ -14,10 +14,17 @@
             <!-- Begin Page Title -->
             <h2 class="font-weight-bold text-uppercase mb-3"><span ng-bind-html="blog.title | trustHTML"></span></h2>
             <!-- End Page Title -->
+            <!-- Begin New Blog -->
+            <div class="row justify-content-end mb-3" ng-if="$root.isLoggedIn">
+                <div class="col-md-4 text-right">
+                    <a href="#/blog/new" class="btn btn-theme-primary decoration--never">New Blog</a>
+                </div>
+            </div>
+            <!-- End New Blog -->
             <!-- Begin Filters -->
-            <div class="row justify-content-end mb-3">
-                <div class="col-md-4">
-                    <div class="card card--dark card-block box-shadow--sm">
+            <div class="card card--dark card-block mb-3">
+                <div class="row justify-content-end">
+                    <div class="col-md-4">
                         <!-- Begin Search Filter -->
                         <div class="input-group" ng-class="{'mb-3': blog.filters.length > 0}">
                             <input type="text" class="form-control" placeholder="Search for..." ng-model="searchText.query" ng-keypress="onKeyPress($event)">

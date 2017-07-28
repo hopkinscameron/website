@@ -139,7 +139,7 @@ app.use(function (req, res, next) {
 
 // on get
 app.get('*', (req, res) => {
-    res.sendFile(__dirname + '/client/index.html')
+    res.sendFile(__dirname + '/modules/index.html')
 })
 
 /*

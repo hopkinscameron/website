@@ -20,45 +20,45 @@ app.config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider', func
 
     $routeProvider
         .when('/', {
-            templateUrl: './modules/home/client/views/home.html'
+            templateUrl: './home/client/views/home.html'
         })
         .when('/about', {
-            templateUrl: './modules/about/client/views/about.html'
+            templateUrl: './about/client/views/about.html'
         })
         .when('/resume', {
-            templateUrl: './modules/resume/client/views/resume.html'
+            templateUrl: './resume/client/views/resume.html'
         })
         .when('/portfolio', {
-            templateUrl: './modules/portfolio/client/views/portfolio-list.html'
+            templateUrl: './portfolio/client/views/portfolio-list.html'
         })
         .when('/portfolio/:portfolioItemId', {
-            templateUrl: './modules/portfolio/client/views/portfolio-item.html'
+            templateUrl: './portfolio/client/views/portfolio-item.html'
         })
         .when('/blog', {
-            templateUrl: './modules/blog/client/views/blog-list.html'/*,
+            templateUrl: './blog/client/views/blog-list.html'/*,
             reloadOnSearch: false*/
         })
         .when('/blog/new', {
-            templateUrl: './modules/blog/client/views/admin/blog-post-new.html',
+            templateUrl: './blog/client/views/admin/blog-post-new.html',
             reloadOnSearch: false
         })
         .when('/blog/post/:blogPostId', {
-            templateUrl: './modules/blog/client/views/blog-post.html'
+            templateUrl: './blog/client/views/blog-post.html'
         })
         .when('/blog/post/:blogPostId/edit', {
-            templateUrl: './modules/blog/client/views/admin/blog-post-edit.html'
+            templateUrl: './blog/client/views/admin/blog-post-edit.html'
         })
         .when('/contact', {
-            templateUrl: './modules/contact/client/views/contact.html'
+            templateUrl: './contact/client/views/contact.html'
         })
         .when('/login', {
-            templateUrl: './modules/login/client/views/login.html'
+            templateUrl: './login/client/views/login.html'
         })
         .when('/logout', {
-            templateUrl: './modules/logout/client/views/logout.html'
+            templateUrl: './logout/client/views/logout.html'
         })
         .otherwise({
-            templateUrl: './modules/core/client/views/error.html'
+            templateUrl: './core/client/views/error.html'
         })
 
     // check browser support

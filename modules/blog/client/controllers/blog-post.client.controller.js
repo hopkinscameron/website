@@ -99,8 +99,8 @@
     
     // gets the page data
     function getPageData() {        
-        // get blog item page data
-        BlogFactory.getBlogPostPageInformation(blogPostId).then(function (responseBI) {
+        // get blog post
+        BlogFactory.getBlogPost(blogPostId).then(function (responseBI) {
             // if returned a valid response
             if (!responseBI.error) {
                 // set the data

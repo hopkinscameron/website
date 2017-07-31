@@ -8,7 +8,8 @@ var clcConfig = {
     warn: clc.yellowBright,
     success: clc.greenBright,
     info: clc.magentaBright,
-    log: clc.blueBright
+    log: clc.blueBright,
+    default: clc.whiteBright
 };
 
 module.exports = clcConfig;

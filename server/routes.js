@@ -23,7 +23,7 @@ useragent(true);
 var secrets = require('./secrets');
 
 // chalk for console logging
-var clcConfig = require('.././config/clcConfig');
+var clc = require('.././config/lib/clc');
 
 // error message center
 var errorMessageCenter = require('.././config/errorMessages');
@@ -85,13 +85,13 @@ module.exports = function(app, passport) {
 				catch (err) {
 					// send internal error
 					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message });
-					console.log(clcConfig.error(err.message));
+					console.log(clc.error(err.message));
 				}
 			}
 			else {
 				// send internal error
 				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message });
-				console.log(clcConfig.error(err.message));
+				console.log(clc.error(err.message));
 			}
 		});
 	});
@@ -130,7 +130,7 @@ module.exports = function(app, passport) {
 					catch (err) {
 						// send internal error
 						res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-						console.log(clcConfig.error(err.message));
+						console.log(clc.error(err.message));
 					}
 				}
 				else {
@@ -141,7 +141,7 @@ module.exports = function(app, passport) {
 			else {
 				// send internal error
 				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-				console.log(clcConfig.error(err.message));
+				console.log(clc.error(err.message));
 			}
 		});
 	});
@@ -158,7 +158,7 @@ module.exports = function(app, passport) {
 			else {
 				// send internal error
 				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-				console.log(clcConfig.error(err.message));
+				console.log(clc.error(err.message));
 			}
 		});
 	});
@@ -179,7 +179,7 @@ module.exports = function(app, passport) {
 			else {
 				// send internal error
 				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-				console.log(clcConfig.error(err.message));
+				console.log(clc.error(err.message));
 			}
 		});
 	});
@@ -200,7 +200,7 @@ module.exports = function(app, passport) {
 			else {
 				// send internal error
 				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-				console.log(clcConfig.error(err.message));
+				console.log(clc.error(err.message));
 			}
 		});
 	});
@@ -221,7 +221,7 @@ module.exports = function(app, passport) {
 			else {
 				// send internal error
 				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-				console.log(clcConfig.error(err.message));
+				console.log(clc.error(err.message));
 			}
 		});
 	});
@@ -255,7 +255,7 @@ module.exports = function(app, passport) {
 				else {
 					// send internal error
 					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-					console.log(clcConfig.error(err.message));
+					console.log(clc.error(err.message));
 				}
 			});
 		}
@@ -270,7 +270,7 @@ module.exports = function(app, passport) {
 				else {
 					// send internal error
 					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-					console.log(clcConfig.error(err.message));
+					console.log(clc.error(err.message));
 				}
 			});
 		}
@@ -297,7 +297,7 @@ module.exports = function(app, passport) {
 				if (err) {
 					// send internal error
 					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-					console.log(clcConfig.error(err.message));
+					console.log(clc.error(err.message));
 				}
 				// if blog was found
 				else if(foundBlog) {
@@ -314,7 +314,7 @@ module.exports = function(app, passport) {
 						if (err) {
 							// send internal error
 							res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-							console.log(clcConfig.error(err.message));
+							console.log(clc.error(err.message));
 						}
 						else {
 							// send data
@@ -394,13 +394,13 @@ module.exports = function(app, passport) {
 					catch (err) {
 						// send internal error
 						res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-						console.log(clcConfig.error(err.message));
+						console.log(clc.error(err.message));
 					}
 				}
 				else {
 					// send internal error
 					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-					console.log(clcConfig.error(err.message));
+					console.log(clc.error(err.message));
 				}
 			});
 		}
@@ -418,7 +418,7 @@ module.exports = function(app, passport) {
 			if (err) {
 				// send internal error
 				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-				console.log(clcConfig.error(err.message));
+				console.log(clc.error(err.message));
 			}
 			// if blogs were found
 			else if(blogs) {
@@ -451,7 +451,7 @@ module.exports = function(app, passport) {
 				if (err) {
 					// send internal error
 					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-					console.log(clcConfig.error(err.message));
+					console.log(clc.error(err.message));
 				}
 				// if blog was found
 				else if(foundSavedBlog) {
@@ -472,7 +472,7 @@ module.exports = function(app, passport) {
 						if (err) {
 							// send internal error
 							res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-							console.log(clcConfig.error(err.message));
+							console.log(clc.error(err.message));
 						}
 						// if blog was found
 						else if(foundBlog) {
@@ -516,7 +516,7 @@ module.exports = function(app, passport) {
 			else {
 				// send internal error
 				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-				console.log(clcConfig.error(err.message));
+				console.log(clc.error(err.message));
 			}
 		});
 	});
@@ -696,7 +696,7 @@ module.exports = function(app, passport) {
 				if (error) {
 					// send internal error
 					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-					console.log(clcConfig.error(err.message));
+					console.log(clc.error(err.message));
 				}
 				else {
 					// return success
@@ -750,7 +750,7 @@ module.exports = function(app, passport) {
 						if (err) {
 							// send internal error
 							res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-							console.log(clcConfig.error(err.message));
+							console.log(clc.error(err.message));
 						}	
 						// if saved blog found
 						else if(updatedSavedBlog) {
@@ -771,7 +771,7 @@ module.exports = function(app, passport) {
 								if (err) {
 									// send internal error
 									res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-									console.log(clcConfig.error(err.message));
+									console.log(clc.error(err.message));
 								}	
 								// if saved blog found
 								else if(publishedBlog) {
@@ -789,7 +789,7 @@ module.exports = function(app, passport) {
 										if (err) {
 											// send internal error
 											res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-											console.log(clcConfig.error(err.message));
+											console.log(clc.error(err.message));
 										}
 										else {
 											// set url
@@ -835,7 +835,7 @@ module.exports = function(app, passport) {
 					if (err) {
 						// send internal error
 						res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-						console.log(clcConfig.error(err.message));
+						console.log(clc.error(err.message));
 					}
 					else {
 						// set url
@@ -891,7 +891,7 @@ module.exports = function(app, passport) {
 						if (err) {
 							// send internal error
 							res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-							console.log(clcConfig.error(err.message));
+							console.log(clc.error(err.message));
 						}
 						// if the user previously saved a draft
 						else if (savedBlog) {
@@ -909,7 +909,7 @@ module.exports = function(app, passport) {
 								if (err) {
 									// send internal error
 									res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-									console.log(clcConfig.error(err.message));
+									console.log(clc.error(err.message));
 								}
 								else {
 									// find the blog and remove
@@ -917,7 +917,7 @@ module.exports = function(app, passport) {
 										if (err) {
 											// send internal error
 											res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-											console.log(clcConfig.error(err.message));
+											console.log(clc.error(err.message));
 										}
 										else {
 											// set url
@@ -950,7 +950,7 @@ module.exports = function(app, passport) {
 								if (err) {
 									// send internal error
 									res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-									console.log(clcConfig.error(err.message));
+									console.log(clc.error(err.message));
 								}
 								else if(updatedPostedBlog) {
 									// set url
@@ -995,7 +995,7 @@ module.exports = function(app, passport) {
 					if (err) {
 						// send internal error
 						res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-						console.log(clcConfig.error(err.message));
+						console.log(clc.error(err.message));
 					}
 					else {
 						// set url
@@ -1063,7 +1063,7 @@ module.exports = function(app, passport) {
 			}).catch(function (responseSU) {
 				// send internal error
 				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-				console.log(clcConfig.error(responseSU.message));
+				console.log(clc.error(responseSU.message));
 			});
 		}
 	});
@@ -1088,7 +1088,7 @@ module.exports = function(app, passport) {
 			if(err) {
 				// send internal error
 				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-				console.log(clcConfig.error(err.message));
+				console.log(clc.error(err.message));
 			}
 
 			// if user is not authenticated 
@@ -1137,7 +1137,7 @@ module.exports = function(app, passport) {
 				if (err) {
 					// send internal error
 					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-					console.log(clcConfig.error(err.message));
+					console.log(clc.error(err.message));
 				}
 				else if(removedSavedBlog) {
 					// return success
@@ -1183,7 +1183,7 @@ module.exports = function(app, passport) {
 				if (err) {
 					// send internal error
 					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-					console.log(clcConfig.error(err.message));
+					console.log(clc.error(err.message));
 				}
 				else if(removedPostedBlog) {
 					// see if there was saved draft of this same blog
@@ -1193,7 +1193,7 @@ module.exports = function(app, passport) {
 						if (err) {
 							// send internal error
 							res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
-							console.log(clcConfig.error(err.message));
+							console.log(clc.error(err.message));
 						}
 						else {
 							// return success
@@ -1305,7 +1305,7 @@ function getIPAndLog(req) {
 		// log the page request
 		logPageRequest(accessedBy, correctUrl.toLowerCase());
 	}).catch(function (response) {
-		console.log(clcConfig.error(response.message));
+		console.log(clc.error(response.message));
 	});
 };
 
@@ -1332,14 +1332,14 @@ function logPageRequest(accessedBy, pageRequested) {
 	AnalyticsPage.findOne({ url : pageRequested }).exec(function(err, foundPage) {
 		// if error occured
 		if (err) {
-			console.log(clcConfig.error(err.message));
+			console.log(clc.error(err.message));
 		}
 		else if(foundPage) {
 			// push the ip who accessed this page
 			AnalyticsPage.update({ url : pageRequested }, { $push: { accessedBy: accessedBy }, $inc: { count: 1 } }).exec(function(err, updatedBlog) {
 				// if error occured
 				if (err) {
-					console.log(clcConfig.error(err.message));
+					console.log(clc.error(err.message));
 				}
 			});
 		}
@@ -1353,7 +1353,7 @@ function logPageRequest(accessedBy, pageRequested) {
 			// save
 			analyticsPage.save(function(err, newAnalyticsPage) {
 				if (err) {
-					console.log(clcConfig.error(err.message));
+					console.log(clc.error(err.message));
 				}
 			});
 		}
@@ -1366,14 +1366,14 @@ function logBlogSearchQuery(queryText) {
 	BlogSearch.findOne({ keyword : queryText.toLowerCase() }).exec(function(err, foundSearchText) {
 		// if error occured
 		if (err) {
-			console.log(clcConfig.error(err.message));
+			console.log(clc.error(err.message));
 		}
 		else if(foundSearchText) {
 			// push the ip who accessed this page
 			BlogSearch.update({ keyword : queryText.toLowerCase() }, { $inc: { hits: 1 } }).exec(function(err, updatedSearchText) {
 				// if error occured
 				if (err) {
-					console.log(clcConfig.error(err.message));
+					console.log(clc.error(err.message));
 				}
 			});
 		}
@@ -1386,7 +1386,7 @@ function logBlogSearchQuery(queryText) {
 			// save
 			blogSearch.save(function(err, newSearch) {
 				if (err) {
-					console.log(clcConfig.error(err.message));
+					console.log(clc.error(err.message));
 				}
 			});
 		}

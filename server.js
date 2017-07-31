@@ -46,7 +46,7 @@ var path = require('path');
 var socketIO = undefined;
 
 // clc colors for console logging
-var clcConfig = require('./config/clcConfig');
+var clc = require('./config/lib/clc');
 
 // the secrets
 var secrets = require('./server/secrets');
@@ -93,7 +93,7 @@ var options = {
 var mongooseDBConnect = mongoose.connect(secrets.db, { }, function(err) {
 	// if error
 	if(err) {
-		console.log(clcConfig.error(err.message));
+		console.log(clc.error(err.message));
 		process.exit();
 	}
 	
@@ -133,7 +133,7 @@ require('./server/routes')(app, passport);
 // logs client IP address with every request
 app.use(function (req, res, next) {
 	// var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-	// console.log(clcConfig.info('Client IP:', ip));
+	// console.log(clc.info('Client IP:', ip));
 	next();
 });
 
@@ -176,7 +176,7 @@ function startServer() {
 	server.listen(secrets.port, function () {
 		var host = server.address().address;
 		var port = server.address().port;
-		console.log(clcConfig.success('App running at //%s:%s', host, port));
+		console.log(clc.success('App running at //%s:%s', host, port));
 	});
 };
 

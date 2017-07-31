@@ -1,4 +1,4 @@
-//load environment variables
+// load environment variables
 require('dotenv').config();
 
 // export for other uses
@@ -20,13 +20,13 @@ module.exports = {
     // session secret
     session_secret: process.env.SESSION_SECRET,
     // personal email
-    personal_email: process.env.PERSONAL_EMAIL,
+    personal_email: process.env.MAILER_FROM,
     // the smtp host
-    smtp_host: process.env.SMTP_HOST,
+    smtp_host: process.env.MAILER_SERVICE_PROVIDER,
     // the smtp username
-    smtp_email: process.env.SMTP_EMAIL,
+    smtp_email: process.env.MAILER_EMAIL_ID,
     // the smtp password
-    smtp_pass: process.env.SMTP_PASS,
+    smtp_pass: process.env.MAILER_PASSWORD,
     // the google shorten url key
     google_shorten_url_key: process.env.GOOGLE_SHORTEN_URL_API_KEY,
     // the google send email script key
@@ -34,5 +34,11 @@ module.exports = {
     // TODO: temporary, used for testing.. remove before production
     credentials_username: process.env.CREDENTIALS_USERNAME,
     // TODO: temporary, used for testing.. remove before production
-    credentials_password: process.env.CREDENTIALS_PASSWORD
+    credentials_password: process.env.CREDENTIALS_PASSWORD,
+    // the logging format
+    log_format: process.env.LOG_FORMAT,
+    // the log directory path
+    log_dir_path: undefined, //process.env.LOG_DIR_PATH,
+    // the log file/name
+    log_file: process.env.LOG_FILE
 };

@@ -1,4 +1,5 @@
 'use strict';
+process.env.NODE_ENV = 'development';
 
 // the server
 var express = require('express');
@@ -16,19 +17,10 @@ var MongoStore = require('connect-mongo')(expressSession);
 var bodyParser = require('body-parser');
 
 // mongoose for mongodb
-var mongoose = require('mongoose'),
-	// the User Schema
-	User = require('./server/models/model-user'),
-	// the Blog Post Schema
-	BlogPost = require('./server/models/model-blog-post'),
-	// the Saved Blog Post Schema
-	SavedBlogPost = require('./server/models/model-saved-blog-post');
+var mongoose = require('mongoose');
 
 // passport for local authentication
 var passport = require('passport');
-
-// local strategy for local authentication
-var LocalStrategy = require('passport-local').Strategy;
 
 // cookie parsing
 var cookieParser = require('cookie-parser');
@@ -42,6 +34,9 @@ var flash = require('connect-flash');
 // path 
 var path = require('path');
 
+// lodash
+var _ = require('lodash');
+
 // socket io
 var socketIO = undefined;
 
@@ -51,9 +46,19 @@ var clc = require('./config/lib/clc');
 // the secrets
 var secrets = require('./server/secrets');
 
-// config file
-var config = require('./config/env/default');
+// Get the default config
+var defaultConfig = require(path.join(process.cwd(), 'config/env/default'));
 
+// Get the current config
+var environmentConfig = require(path.join(process.cwd(), 'config/env/', process.env.NODE_ENV)) || {};
+
+// Merge config files
+var config = _.merge(defaultConfig, environmentConfig);
+
+// read package.json for project information
+var pkg = require(path.resolve('./package.json'));
+config.personalWebsite = pkg;
+	
 // create a new Express application.
 var app = express();
 
@@ -140,7 +145,7 @@ app.use(function (req, res, next) {
 // on get
 app.get('*', (req, res) => {
     res.sendFile(__dirname + '/modules/index.html')
-})
+});
 
 /*
 // development error handler
@@ -171,12 +176,25 @@ function startServer() {
 	var server = require('http').Server(app);
 	socketIO = require('socket.io')(server);
 	setUpIOSocket();
-
+	
 	// begin server
 	server.listen(secrets.port, function () {
 		var host = server.address().address;
 		var port = server.address().port;
-		console.log(clc.success('App running at //%s:%s', host, port));
+		//console.log(clc.success('App running at //%s:%s', host, port));
+		
+		// Create server URL
+		var url = (process.env.NODE_ENV === 'secure' ? 'https://' : 'http://') + config.host + ':' + config.port;
+
+		// Logging initialization
+		console.log('--');
+		console.log(clc.success(config.app.title));
+		console.log();
+		console.log(clc.success('Environment:     ' + process.env.NODE_ENV));
+		console.log(clc.success('Server:          ' + url));
+		console.log(clc.success('Database:        ' + config.db.uri));
+		console.log(clc.success('App version:     ' + '2.0.0'));
+		console.log('--');
 	});
 };
 

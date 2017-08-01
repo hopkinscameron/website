@@ -1,8 +1,8 @@
 {
   "name": "cameronhopkins.us",
   "description": "Personal Website. Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js.",
-  "version": "1.0.0",
-  "personalWebsite": "1.0.0",
+  "version": "2.0.0",
+  "personalWebsite": "2.0.0",
   "private": false,
   "author": "https://github.com/hopkinscameron/website/graphs/contributors",
   "main": "server/server.js",
@@ -19,7 +19,7 @@
     "update": "npm update && npm prune",
     "clean": "rm -rf node_modules/ public/lib/",
     "reinstall": "npm cache clean && npm run clean && npm install",
-    "start": "node server.js"
+    "start": "gulp"
   },
   "dependencies": {
     "acl": "^0.4.10",
@@ -57,15 +57,29 @@
     "socket.io": "^2.0.3",
     "useragent": "^2.2.1",
     "validator": "^7.2.0",
-    "winston": "^2.3.1"
+    "winston": "^2.3.1",
+    "wiredep": "^4.0.0"
   },
   "devDependencies": {
+    "del": "^3.0.0",
+    "eslint": "^4.3.0",
+    "eslint-config-airbnb": "^15.1.0",
     "gulp": "^3.9.1",
+    "gulp-angular-templatecache": "^2.0.0",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-csslint": "^1.0.0",
+    "gulp-csso": "^3.0.0",
+    "gulp-eslint": "^4.0.0",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-refresh": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
-    "gulp-shell": "^0.6.3",
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
-    "gulp-watch": "^4.3.11"
+    "gulp-watch": "^4.3.11",
+    "run-sequence": "^2.1.0",
+    "semver": "^5.4.1"
   }
 }

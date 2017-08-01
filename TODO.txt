@@ -2,10 +2,10 @@
 - Create an admin page to add a new project (sub Portfolio)
 
 All
-- Finish MEAN -> left off at config/lib/mongoose
 - Seperate out neccessary api calls (title, blog list, etc.) -> do in header as well so that certain things have it;s own api call on the page
 - seperate out the saving/posting a blog in api calls -> basically so that if its a new post, make call to "postNewBlog", "saveNewBlog", "updateDraft", "updateBlog"
 - seperate out admin views/regular views
+- move passport to config, seperate out express, app, etc.
 
 - IE stuff not working
     - fancy font's not showing (could be proxy)

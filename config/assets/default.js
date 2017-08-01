@@ -40,11 +40,9 @@ module.exports = {
     css: [
       'modules/*/client/{css,less,scss}/*.css'
     ],
-    less: [
-      'modules/*/client/less/*.less'
-    ],
     sass: [
-      'modules/*/client/scss/*.scss'
+      'modules/*/client/scss/*.scss',
+      'modules/core/client/css/**/*.scss'
     ],
     js: [
       'modules/core/client/app/config.js',

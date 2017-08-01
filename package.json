@@ -5,7 +5,7 @@
   "personalWebsite": "2.0.0",
   "private": false,
   "author": "https://github.com/hopkinscameron/website/graphs/contributors",
-  "main": "server/server.js",
+  "main": "server.js",
   "license": "MIT",
   "repository": {
     "type": "git",

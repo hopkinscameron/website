@@ -1,64 +1,65 @@
 'use strict';
 process.env.NODE_ENV = 'development';
 
+/**
+ * Module dependencies.
+ */
 // the server
-var express = require('express');
-
-// express session used for storing logged in sessions
-var expressSession = require('express-session');
-
-// the http request validator
-var expressValidator = require('express-validator');
-
-// mongo session
-var MongoStore = require('connect-mongo')(expressSession);
-
-// the http body parser
-var bodyParser = require('body-parser');
-
-// mongoose for mongodb
-var mongoose = require('mongoose');
-
-// passport for local authentication
-var passport = require('passport');
-
-// cookie parsing
-var cookieParser = require('cookie-parser');
-
-// middleware logger
-var morgan = require('morgan');
-
-// flash messages
-var flash = require('connect-flash');
-
-// path 
-var path = require('path');
-
-// lodash
-var _ = require('lodash');
+var express = require('express'),
+	// express session used for storing logged in sessions
+	expressSession = require('express-session'),
+	// the http request validator
+	expressValidator = require('express-validator'),
+	// mongo session
+	MongoStore = require('connect-mongo')(expressSession),
+	// the http body parser
+	bodyParser = require('body-parser'),
+	// mongoose for mongodb
+	mongoose = require('mongoose'),
+	// passport for local authentication
+	passport = require('passport'),
+	// cookie parsing
+	cookieParser = require('cookie-parser'),
+	// middleware logger
+	morgan = require('morgan'),
+	// flash messages
+	flash = require('connect-flash'),
+	// path 
+	path = require('path'),
+	// lodash
+	_ = require('lodash'),
+	// glob for path matching
+	glob = require('glob'),
+	// clc colors for console logging
+	clc = require('./config/lib/clc'),
+	// the secrets
+	secrets = require('./server/secrets'),
+	// get the default assets
+  	defaultAssets = require(path.join(process.cwd(), 'config/assets/default')),
+  	// get the environment assets
+  	environmentAssets = require(path.join(process.cwd(), 'config/assets/', process.env.NODE_ENV)) || {},
+	// get the default config
+	defaultConfig = require(path.join(process.cwd(), 'config/env/default')),
+	// get the current config
+	environmentConfig = require(path.join(process.cwd(), 'config/env/', process.env.NODE_ENV)) || {},
+	// read package.json for project information
+	pkg = require(path.resolve('./package.json'));
 
 // socket io
 var socketIO = undefined;
 
-// clc colors for console logging
-var clc = require('./config/lib/clc');
+// merge assets
+var assets = _.merge(defaultAssets, environmentAssets);
 
-// the secrets
-var secrets = require('./server/secrets');
-
-// Get the default config
-var defaultConfig = require(path.join(process.cwd(), 'config/env/default'));
-
-// Get the current config
-var environmentConfig = require(path.join(process.cwd(), 'config/env/', process.env.NODE_ENV)) || {};
-
-// Merge config files
+// merge config files
 var config = _.merge(defaultConfig, environmentConfig);
 
-// read package.json for project information
-var pkg = require(path.resolve('./package.json'));
+// set the personal website package
 config.personalWebsite = pkg;
-	
+
+// initialize global globbed files
+initGlobalConfigFiles(config, assets);
+
 // create a new Express application.
 var app = express();
 
@@ -125,15 +126,14 @@ app.use(expressSession({
 	})
 }));
 
-// passport config
+// passport config -> 
 require('./server/passport')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-// define the routes     
-//app.use(require('./server/routes'));
-require('./server/routes')(app, passport);
+// set up the routes
+setUpRoutes();
 
 // logs client IP address with every request
 app.use(function (req, res, next) {
@@ -219,4 +219,98 @@ function sendSignalToUpdateBlogs(socket) {
 		// This is executed after about 60 second.
 		socket.emit('update saved blogs');
 	});
+};
+
+/**
+ * Initialize global configuration files
+ */
+function initGlobalConfigFiles(config, assets) {
+	// appending files
+	config.files = {
+		server: {},
+		client: {}
+	};
+
+	// setting globbed model files
+	config.files.server.models = getGlobbedPaths(assets.server.models);
+
+	// setting globbed route files
+	config.files.server.routes = getGlobbedPaths(assets.server.routes);
+
+	// setting globbed config files
+	config.files.server.configs = getGlobbedPaths(assets.server.config);
+
+	// setting globbed socket files
+	config.files.server.sockets = getGlobbedPaths(assets.server.sockets);
+
+	// setting globbed policies files
+	config.files.server.policies = getGlobbedPaths(assets.server.policies);
+
+	// setting globbed js files
+	config.files.client.js = getGlobbedPaths(assets.client.lib.js, 'public/').concat(getGlobbedPaths(assets.client.js, ['public/']));
+
+	// setting globbed css files
+	config.files.client.css = getGlobbedPaths(assets.client.lib.css, 'public/').concat(getGlobbedPaths(assets.client.css, ['public/']));
+
+	// setting globbed test files
+	config.files.client.tests = getGlobbedPaths(assets.client.tests);
+};
+
+/**
+ * Get files by glob patterns
+ */
+function getGlobbedPaths(globPatterns, excludes) {
+	// URL paths regex
+	var urlRegex = new RegExp('^(?:[a-z]+:)?\/\/', 'i');
+
+	// The output array
+	var output = [];
+
+	// If glob pattern is array then we use each pattern in a recursive way, otherwise we use glob
+	if (_.isArray(globPatterns)) {
+		globPatterns.forEach(function (globPattern) {
+			output = _.union(output, getGlobbedPaths(globPattern, excludes));
+		});
+	} 
+	else if (_.isString(globPatterns)) {
+		if (urlRegex.test(globPatterns)) {
+			output.push(globPatterns);
+		} 
+		else {
+			var files = glob.sync(globPatterns);
+			if (excludes) {
+				files = files.map(function (file) {
+					if (_.isArray(excludes)) {
+						for (var i in excludes) {
+							if (excludes.hasOwnProperty(i)) {
+								file = file.replace(excludes[i], '');
+							}
+						}
+					} 
+					else {
+						file = file.replace(excludes, '');
+					}
+					return file;
+				});
+			}
+			output = _.union(output, files);
+		}
+	}
+
+	return output;
+};
+
+/**
+ * Set up routes
+ */
+function setUpRoutes() {
+	// define the routes     
+	require('./server/routes')(app, passport);
+
+	/* Seperate out
+	// globbing routing files
+	config.files.server.routes.forEach(function (routePath) {
+		require(path.resolve(routePath))(app, passport);
+	});
+	*/
 };

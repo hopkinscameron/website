@@ -4,8 +4,8 @@ process.env.NODE_ENV = 'development';
 /**
  * Module dependencies.
  */
-// the server
-var express = require('express'),
+var // the server
+	express = require('express'),
 	// express session used for storing logged in sessions
 	expressSession = require('express-session'),
 	// the http request validator
@@ -307,10 +307,9 @@ function setUpRoutes() {
 	// define the routes     
 	require('./server/routes')(app, passport);
 
-	/* Seperate out
+	//Seperate out
 	// globbing routing files
 	config.files.server.routes.forEach(function (routePath) {
 		require(path.resolve(routePath))(app, passport);
 	});
-	*/
 };

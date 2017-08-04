@@ -20,8 +20,9 @@ module.exports = function (app) {
     app.route('/*').get(core.renderIndex);
     */
 
+    /*
     // on get
     app.get('*', (req, res) => {
         res.sendFile(path.resolve('./modules/index.html'));
-    });
+    });*/
 };

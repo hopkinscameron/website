@@ -183,8 +183,8 @@ module.exports = function(app, passport) {
 			}
 		});
 	});
-
-	// GET abou e page information
+	/*
+	// GET about page information
 	// format /api/about
 	app.get('/api/about', function (req, res) {
 		// get user's IP address and log the page request
@@ -204,7 +204,7 @@ module.exports = function(app, passport) {
 			}
 		});
 	});
-
+	*/
 	// GET resume page information
 	// format /api/resume
 	app.get('/api/resume', function (req, res) {
@@ -1239,6 +1239,7 @@ function isLoggedIn(req, res, next) {
 
 // get user's IP address and log's page request
 function getIPAndLog(req) {
+	/*
 	// get client IP
 	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 	var ua = useragent.parse(req.headers['user-agent']);
@@ -1307,6 +1308,7 @@ function getIPAndLog(req) {
 	}).catch(function (response) {
 		console.log(clc.error(response.message));
 	});
+	*/
 };
 
 // gets users public IP Address

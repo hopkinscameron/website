@@ -12,9 +12,11 @@ var // the path
     // the geo ip location
     geoip = require('geoip-lite'),
     // the user agent parser
-    useragent = require('useragent'),
+	useragent = require('useragent'),
+	// the mongoose
+    mongoose = require('mongoose'),
     // load up the Analytics Page model
-    AnalyticsPage = require(path.resolve('./server/models/model-analytics-page'));//'./modules/core/server/models/model-analytics-page'));
+    AnalyticsPage = mongoose.model('AnalyticsPage');
 
 // set user agent true to stay up to date
 useragent(true);

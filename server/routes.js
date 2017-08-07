@@ -37,8 +37,8 @@ var SavedBlogPost = require('./models/model-saved-blog-post');
 // load up the Analytics Page model
 var AnalyticsPage = require('./models/model-analytics-page');
 
-// load up the Blog Search model
-var BlogSearch = require('./models/model-analytics-blog-search');
+// load up the Analytics Blog Search model
+var AnalyticsBlogSearch = require('./models/model-analytics-blog-search');
 
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
@@ -56,7 +56,8 @@ let transporter = nodemailer.createTransport({
 module.exports = function(app, passport) {
 	// =========================================================================
     // GET =====================================================================
-    // =========================================================================
+	// =========================================================================
+	/*
 	// GET app name
 	// format /api/appName
 	app.get('/api/appName', function (req, res) {
@@ -95,7 +96,9 @@ module.exports = function(app, passport) {
 			}
 		});
 	});
+	*/
 
+	/*
 	// GET header
 	// format /api/header
 	app.get('/api/header', function (req, res) {
@@ -145,7 +148,9 @@ module.exports = function(app, passport) {
 			}
 		});
 	});
+	*/
 
+	/*
 	// GET footer
 	// format /api/footer
 	app.get('/api/footer', function (req, res) {
@@ -162,7 +167,9 @@ module.exports = function(app, passport) {
 			}
 		});
 	});
+	*/
 
+	/*
 	// GET home page information
 	// format /api/home
 	app.get('/api/home', function (req, res) {
@@ -183,6 +190,8 @@ module.exports = function(app, passport) {
 			}
 		});
 	});
+	*/
+
 	/*
 	// GET about page information
 	// format /api/about
@@ -205,6 +214,8 @@ module.exports = function(app, passport) {
 		});
 	});
 	*/
+	
+	/*
 	// GET resume page information
 	// format /api/resume
 	app.get('/api/resume', function (req, res) {
@@ -225,7 +236,9 @@ module.exports = function(app, passport) {
 			}
 		});
 	});
+	*/
 
+	/*
 	// GET portfolio page information or subportfolio information
 	// format /api/portfolio
 	// format /api/portfolio?id=portfolioItemId
@@ -275,7 +288,9 @@ module.exports = function(app, passport) {
 			});
 		}
 	});
+	*/
 
+	/*
 	// GET blog page information
 	// format /api/blog
 	// format /api/blog?q=someQuery
@@ -405,7 +420,9 @@ module.exports = function(app, passport) {
 			});
 		}
 	});
+	*/
 
+	/*
 	// GET saved blog drafts
 	// format /api/blog/drafts
 	app.get('/api/blog/drafts', isLoggedIn, function (req, res) {
@@ -436,6 +453,7 @@ module.exports = function(app, passport) {
 			}
 		});
 	});
+	*/
 
 	// GET blog edit page information
 	// format /api/blog/post/:postId/edit
@@ -500,6 +518,7 @@ module.exports = function(app, passport) {
 		}
 	});
 
+	/*
 	// GET contact page information
 	// format /api/contact
 	app.get('/api/contact', function (req, res) {
@@ -520,6 +539,7 @@ module.exports = function(app, passport) {
 			}
 		});
 	});
+	*/
 
 	// GET image file in root directory
 	// format /images/:imageId
@@ -616,6 +636,7 @@ module.exports = function(app, passport) {
 		res.sendFile(req.params.fileId, options);
 	});
 
+	/*
 	// GET login page requested
 	// format /login
 	app.get('/login', function(req, res) {
@@ -632,7 +653,9 @@ module.exports = function(app, passport) {
 			res.status(200).send({ title: errorMessageCenter.error.status200.title, message: errorMessageCenter.error.status200.message + " User is logged in", isLoggedIn: true });
 		}
 	});
+	*/
 
+	/*
 	// GET logout the user
 	// format /logout
 	app.get('/logout', function(req, res) {
@@ -646,10 +669,12 @@ module.exports = function(app, passport) {
 		// return success
 		res.status(200).send({ title: errorMessageCenter.error.status200.title, message: errorMessageCenter.error.status200.message + " You have successfully logged out!" });
 	});
-
+	*/
+	
 	// =========================================================================
     // POST ====================================================================
-    // =========================================================================
+	// =========================================================================
+	/*
 	// POST send email
 	// format /api/sendEmail
 	app.post('/api/sendEmail', function (req, res) {
@@ -705,7 +730,9 @@ module.exports = function(app, passport) {
 			});		
 		}
 	});
+	*/
 
+	/*
 	// POST save blog
 	// format /api/saveBlog
 	app.post('/api/saveBlog', isLoggedIn, function (req, res) {
@@ -852,6 +879,7 @@ module.exports = function(app, passport) {
 			}
 		}
 	});
+	*/
 
 	// POST post blog
 	// format /api/postBlog
@@ -1013,6 +1041,7 @@ module.exports = function(app, passport) {
 		}
 	});
 
+	/*
 	// POST shorten url
 	// format /api/shortenUrl
 	app.post('/api/shortenUrl', isLoggedIn, function (req, res) {
@@ -1067,7 +1096,9 @@ module.exports = function(app, passport) {
 			});
 		}
 	});
+	*/
 
+	/*
 	// POST sign up
 	// format /signup
 	app.post('/signup', passport.authenticate('local-signup', {
@@ -1075,7 +1106,9 @@ module.exports = function(app, passport) {
 		failureRedirect : '/login', // redirect back to the home page if there is an error
 		failureFlash : true // allow flash messages
 	}));
+	*/
 
+	/*
 	// POST login
 	// format /login
 	app.post('/login', function (req, res, next) {
@@ -1097,14 +1130,16 @@ module.exports = function(app, passport) {
 				return res.status(200).send({ error: true, title: "Incorrect username/password.", message: "Incorrect username/password." });
 			}
 
-			// return sucessful
+			// return successful
 			return res.status(200).send({ title: errorMessageCenter.error.status200.title, message: errorMessageCenter.error.status200.message + " Successful login." });
 		})(req, res, next);
 	});
+	*/
 
 	// =========================================================================
     // DELETE ==================================================================
-    // =========================================================================
+	// =========================================================================
+	/*
 	// DELETE discards saved blog draft
 	// format /api/deleteSavedBlog
 	app.delete('/api/discardSavedBlogDraft', isLoggedIn, function (req, res) {
@@ -1150,7 +1185,9 @@ module.exports = function(app, passport) {
 			});
 		}
 	});
+	*/
 
+	/*
 	// DELETE deleted published blog
 	// format /api/deletePublishedBlog
 	app.delete('/api/deletePublishedBlog', isLoggedIn, function (req, res) {
@@ -1208,6 +1245,7 @@ module.exports = function(app, passport) {
 			});
 		}
 	});
+	*/
 }
 
 // =========================================================================
@@ -1365,14 +1403,14 @@ function logPageRequest(accessedBy, pageRequested) {
 // logs the search query on the blog
 function logBlogSearchQuery(queryText) {
 	// find search text by query text
-	BlogSearch.findOne({ keyword : queryText.toLowerCase() }).exec(function(err, foundSearchText) {
+	AnalyticsBlogSearch.findOne({ keyword : queryText.toLowerCase() }).exec(function(err, foundSearchText) {
 		// if error occured
 		if (err) {
 			console.log(clc.error(err.message));
 		}
 		else if(foundSearchText) {
 			// push the ip who accessed this page
-			BlogSearch.update({ keyword : queryText.toLowerCase() }, { $inc: { hits: 1 } }).exec(function(err, updatedSearchText) {
+			AnalyticsBlogSearch.update({ keyword : queryText.toLowerCase() }, { $inc: { hits: 1 } }).exec(function(err, updatedSearchText) {
 				// if error occured
 				if (err) {
 					console.log(clc.error(err.message));
@@ -1381,7 +1419,7 @@ function logBlogSearchQuery(queryText) {
 		}
 		else {
 			// create the analytics for searc
-			var blogSearch = new BlogSearch({
+			var blogSearch = new AnalyticsBlogSearch({
 				keyword: queryText.toLowerCase()
 			});
 

@@ -1,6 +1,6 @@
 'use strict';
 /**
- *  Name: The Blog Search Schema
+ *  Name: The Analytics Blog Search Schema
     Description: Determines how a blog search is defined
  */
 
@@ -13,9 +13,9 @@ var // the communication to mongo database
     Schema = mongoose.Schema
 
 /**
- * Blog Search Schema
+ * Analytics Blog Search Schema
  */ 
-var BlogSearchSchema = new Schema({
+var AnalyticsBlogSearchSchema = new Schema({
     keyword: {
         type: String,
         lowercase: true,
@@ -31,12 +31,12 @@ var BlogSearchSchema = new Schema({
 });
 
 // specify the transform schema option
-if (!BlogSearchSchema.options.toObject) {
-    BlogSearchSchema.options.toObject = {};
+if (!AnalyticsBlogSearchSchema.options.toObject) {
+    AnalyticsBlogSearchSchema.options.toObject = {};
 }
 
 // set options for returning an object
-BlogSearchSchema.options.toObject.transform = function (doc, ret, options) {
+AnalyticsBlogSearchSchema.options.toObject.transform = function (doc, ret, options) {
     // if hide options
     if (options.hide) {
         // go through each option and remove
@@ -54,4 +54,4 @@ BlogSearchSchema.options.toObject.transform = function (doc, ret, options) {
 };
 
 // export for other uses
-module.exports = mongoose.model("BlogSearch", BlogSearchSchema);
+module.exports = mongoose.model("AnalyticsBlogSearch", AnalyticsBlogSearchSchema);

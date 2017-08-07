@@ -31,7 +31,7 @@ angular.module('app').factory('PortfolioFactory', ['$http', '$location', functio
     // gets portfolio item page information 
     factory.getPortfolioItemPageInformation = function (portfolioItemId) {
         // set the endpoint
-        var endpoint = appPath + "/portfolio?id=" + portfolioItemId;
+        var endpoint = appPath + "/portfolio/" + portfolioItemId;
 
         // create request
         var req = {

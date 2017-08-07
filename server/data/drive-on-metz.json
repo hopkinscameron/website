@@ -1,67 +1,67 @@
-﻿{
-  "title": "Drive on Metz",
-  "images": [
-    { "url": "/images/portfolio/driveonmetz/driveonmetz-logo.jpg" },
-    { "url": "/images/portfolio/driveonmetz/battle.png" },
-    { "url": "/images/portfolio/driveonmetz/map.png" }
-  ],
-  "overviewContent": {
-    "overview": "<i>Drive on Metz</i> is a two player war and strategy based game rebuilt for the Android mobile device. <i>Drive on Metz</i> was created and designed by James F. Dunnigan. It was originallypublished in the <i>Wargames Handbook</i>. It is now published as a stand-alone board game. The game was developed to recreate General George S. Patton's attempt to seize the key city of Metz and get across the Moselle River. The map was designed based on Moselle River in Lorraine, France.<br /> <br />There are two teams, the American team and the Germany team. Each player moves their units and executes attack on the opponent units. Each combat between two opposing units is decided on the unit's strength points and the outcome from a die roll.<br /> <br />The objective is to battle (or simply sneak around) your opponent units in order to infiltrate their territory. When an opposing unit crosses the border line, that player receives points. After seven rounds of turn, the player with the most points wins. <br /> <br />Test your strategy and play to win!",
-    "gameDesignDocument": {
-      "url": "",
-      "title": ""
+{
+    "title": "Drive on Metz",
+    "images": [
+        { "url": "/images/portfolio/driveonmetz/driveonmetz-logo.jpg" },
+        { "url": "/images/portfolio/driveonmetz/battle.png" },
+        { "url": "/images/portfolio/driveonmetz/map.png" }
+    ],
+    "overviewContent": {
+        "overview": "<i>Drive on Metz</i> is a two player war and strategy based game rebuilt for the Android mobile device. <i>Drive on Metz</i> was created and designed by James F. Dunnigan. It was originallypublished in the <i>Wargames Handbook</i>. It is now published as a stand-alone board game. The game was developed to recreate General George S. Patton's attempt to seize the key city of Metz and get across the Moselle River. The map was designed based on Moselle River in Lorraine, France.<br /> <br />There are two teams, the American team and the Germany team. Each player moves their units and executes attack on the opponent units. Each combat between two opposing units is decided on the unit's strength points and the outcome from a die roll.<br /> <br />The objective is to battle (or simply sneak around) your opponent units in order to infiltrate their territory. When an opposing unit crosses the border line, that player receives points. After seven rounds of turn, the player with the most points wins. <br /> <br />Test your strategy and play to win!",
+        "gameDesignDocument": {
+            "url": "",
+            "title": ""
+        },
+        "downloadLinks": [],
+        "gameData": [
+            {
+                "title": "Platform:",
+                "data": [
+                    { "text": "Android" }
+                ]
+            },
+            {
+                "title": "Tools Used:",
+                "data": [
+                    { "text": "Eclipse" },
+                    { "text": "Android SDK" },
+                    { "text": "Adobe Photoshop" }
+                ]
+            },
+            {
+                "title": "Languages:",
+                "data": [
+                    { "text": "Java" }
+                ]
+            },
+            {
+                "title": "Duration:",
+                "data": [
+                    { "text": "10 Weeks" }
+                ]
+            },
+            {
+                "title": "Completion:",
+                "data": [
+                    { "text": "2011" }
+                ]
+                },
+                {
+                "title": "Team Size:",
+                "data": [
+                    { "text": "5" }
+                ]
+                },
+                {
+                "title": "Role:",
+                "data": [
+                    { "text": "Programming" },
+                    { "text": "HUD" },
+                    { "text": "UI Design" },
+                    { "text": "User Controls" }
+                ]
+            }
+        ]
     },
-    "downloadLinks": [],
-    "gameData": [
-      {
-        "title": "Platform:",
-        "data": [
-          { "text": "Android" }
-        ]
-      },
-      {
-        "title": "Tools Used:",
-        "data": [
-          { "text": "Eclipse" },
-          { "text": "Android SDK" },
-          { "text": "Adobe Photoshop" }
-        ]
-      },
-      {
-        "title": "Languages:",
-        "data": [
-          { "text": "Java" }
-        ]
-      },
-      {
-        "title": "Duration:",
-        "data": [
-          { "text": "10 Weeks" }
-        ]
-      },
-      {
-        "title": "Completion:",
-        "data": [
-          { "text": "2011" }
-        ]
-      },
-      {
-        "title": "Team Size:",
-        "data": [
-          { "text": "5" }
-        ]
-      },
-      {
-        "title": "Role:",
-        "data": [
-          { "text": "Programming" },
-          { "text": "HUD" },
-          { "text": "UI Design" },
-          { "text": "User Controls" }
-        ]
-      }
-    ]
-  },
-  "videoUpdates": [],
-  "trailerLink": ""
+    "videoUpdates": [],
+    "trailerLink": ""
 }

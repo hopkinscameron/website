@@ -5,7 +5,8 @@
 		"Game Designer"
 	],
 	"headlinerLink": "/",
-	"navigation": [{
+	"navigation": [
+        {
 			"title": "About",
 			"pageLink": "about"
 		},
@@ -16,7 +17,8 @@
 		{
 			"title": "Portfolio",
 			"pageLink": "portfolio",
-			"dropdown": [{
+			"dropdown": [
+                {
 					"title": "Home",
 					"pageLink": ""
 				},

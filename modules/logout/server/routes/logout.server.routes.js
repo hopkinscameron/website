@@ -3,11 +3,15 @@
 /**
  * Module dependencies
  */
-var // the logout controller to handle routes
+var // the path
+    path = require('path'),
+    // the ip logger
+    ipLogger = require(path.resolve('./config/lib/ip.logger')),
+    // the logout controller to handle routes
     logoutController = require('../controllers/logout.server.controller');
 
 module.exports = function (app) {
-    // GET logout page
+    // GET logs user out
 	// format /logout
-    //app.route('/logout').get(loginController.read);
+    app.route('/logout').get(ipLogger.log, logoutController.logout);
 };

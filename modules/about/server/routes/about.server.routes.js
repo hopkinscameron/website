@@ -11,7 +11,7 @@ var // the path
     aboutController = require('../controllers/about.server.controller');
 
 module.exports = function (app) {
-    // GET about page information
+    // GET gets about page information
 	// format /api/about
     app.route('/api/about').get(ipLogger.log, aboutController.read);
 };

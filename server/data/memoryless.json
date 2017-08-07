@@ -1,81 +1,81 @@
-﻿{
-  "title": "Memoryless",
-  "images": [
-    { "url": "/images/portfolio/memoryless/memoryless-logo.jpg" },
-    { "url": "/images/portfolio/memoryless/bathroom.png" },
-    { "url": "/images/portfolio/memoryless/bear.png" },
-    { "url": "/images/portfolio/memoryless/cabinet.png" },
-    { "url": "/images/portfolio/memoryless/cartoon-house.png" },
-    { "url": "/images/portfolio/memoryless/controls.png" },
-    { "url": "/images/portfolio/memoryless/hallway.png" }
-  ],
-  "overviewContent": {
-    "overview": "<i>Memoryless</i> is a single player adventure game built using Unity3D. Memoryless is about childhood memory loss, the disturbance of unwanted memory and the idea of reaching deep into your memories to regain what you once destroyed.<br /> <br />'Anna' has forcefully puts her deepest darkest memory into the back of her brain without the idea of bring it back to life. As Anna grew up, she began having issues with her past, having nightmares of this incident that happened when she was younger. The problem is, Anna can’t unlock that memory, she gets so deep into her dream that the moment she gets to the secret room, she blacks out, and nothing appears. Now that Anna is much older, she has a hard time remembering what is happening. She continues to visit doctors to help with this but she can’t seem to get the help she needs; until she met her new doctor, Dr. Montgomery. Dr. Montgomery specializing in psychotherapy and can help Anna reach into her deepest dreams to receive that memory she’s been longing for.<br /> <br />You’ve been treated to the hospital in which Dr. Montgomery is now trying to help you reach into your deepest dream. You have received some information about your history and your passion for drawing. You must now use your skills to roam throughout your dream to find out what happened. In this dream, you are inside you childhood home with memory pieces that are secretly hidden throughout your home, and you must find those memory pieces, put together your thoughts and remember which each memory piece means to you.",
-    "gameDesignDocument": {
-      "url": "/files/game-design-documents/memoryless-game-design-document.pdf",
-      "title": "Forsaken Game Design Document"
-    },
-    "downloadLinks": [
-      {
-        "text": "Download the alpha version",
-        "url": "https://drive.google.com/uc?export=download&confirm=Ffz7&id=0B7OWpwFiOdB8T2JIcXJPWjdzeVk"
-      }
+{
+    "title": "Memoryless",
+    "images": [
+        { "url": "/images/portfolio/memoryless/memoryless-logo.jpg" },
+        { "url": "/images/portfolio/memoryless/bathroom.png" },
+        { "url": "/images/portfolio/memoryless/bear.png" },
+        { "url": "/images/portfolio/memoryless/cabinet.png" },
+        { "url": "/images/portfolio/memoryless/cartoon-house.png" },
+        { "url": "/images/portfolio/memoryless/controls.png" },
+        { "url": "/images/portfolio/memoryless/hallway.png" }
     ],
-    "gameData": [
-      {
-        "title": "Platform:",
-        "data": [
-          { "text": "Windows PC" },
-          { "text": "Mac OSX" },
-          { "text": "Web" }
+    "overviewContent": {
+        "overview": "<i>Memoryless</i> is a single player adventure game built using Unity3D. Memoryless is about childhood memory loss, the disturbance of unwanted memory and the idea of reaching deep into your memories to regain what you once destroyed.<br /> <br />'Anna' has forcefully puts her deepest darkest memory into the back of her brain without the idea of bring it back to life. As Anna grew up, she began having issues with her past, having nightmares of this incident that happened when she was younger. The problem is, Anna can’t unlock that memory, she gets so deep into her dream that the moment she gets to the secret room, she blacks out, and nothing appears. Now that Anna is much older, she has a hard time remembering what is happening. She continues to visit doctors to help with this but she can’t seem to get the help she needs; until she met her new doctor, Dr. Montgomery. Dr. Montgomery specializing in psychotherapy and can help Anna reach into her deepest dreams to receive that memory she’s been longing for.<br /> <br />You’ve been treated to the hospital in which Dr. Montgomery is now trying to help you reach into your deepest dream. You have received some information about your history and your passion for drawing. You must now use your skills to roam throughout your dream to find out what happened. In this dream, you are inside you childhood home with memory pieces that are secretly hidden throughout your home, and you must find those memory pieces, put together your thoughts and remember which each memory piece means to you.",
+        "gameDesignDocument": {
+            "url": "/files/game-design-documents/memoryless-game-design-document.pdf",
+            "title": "Forsaken Game Design Document"
+        },
+        "downloadLinks": [
+            {
+                "text": "Download the alpha version",
+                "url": "https://drive.google.com/uc?export=download&confirm=Ffz7&id=0B7OWpwFiOdB8T2JIcXJPWjdzeVk"
+            }
+        ],
+        "gameData": [
+            {
+                "title": "Platform:",
+                "data": [
+                    { "text": "Windows PC" },
+                    { "text": "Mac OSX" },
+                    { "text": "Web" }
+                ]
+            },
+            {
+                "title": "Tools Used:",
+                "data": [
+                    { "text": "Unity3D" },
+                    { "text": "Autodesk Maya" },
+                    { "text": "Adobe Photoshop" },
+                    { "text": "Adobe Illustrator" }
+                ]
+            },
+            {
+                "title": "Languages:",
+                "data": [
+                    { "text": "C#" },
+                    { "text": "JavaScript" }
+                ]
+            },
+            {
+                "title": "Duration:",
+                "data": [
+                    { "text": "4 Months" }
+                ]
+            },
+            {
+                "title": "Completion:",
+                "data": [
+                    { "text": "2014" }
+                ]
+            },
+            {
+                "title": "Team Size:",
+                "data": [
+                    { "text": "2" }
+                ]
+            },
+            {
+                "title": "Role:",
+                "data": [
+                    { "text": "Programming" },
+                    { "text": "AI" },
+                    { "text": "UI Design" },
+                    { "text": "User Controls" },
+                    { "text": "Interactions" }
+                ]
+            }
         ]
-      },
-      {
-        "title": "Tools Used:",
-        "data": [
-          { "text": "Unity3D" },
-          { "text": "Autodesk Maya" },
-          { "text": "Adobe Photoshop" },
-          { "text": "Adobe Illustrator" }
-        ]
-      },
-      {
-        "title": "Languages:",
-        "data": [
-          { "text": "C#" },
-          { "text": "JavaScript" }
-        ]
-      },
-      {
-        "title": "Duration:",
-        "data": [
-          { "text": "4 Months" }
-        ]
-      },
-      {
-        "title": "Completion:",
-        "data": [
-          { "text": "2014" }
-        ]
-      },
-      {
-        "title": "Team Size:",
-        "data": [
-          { "text": "2" }
-        ]
-      },
-      {
-        "title": "Role:",
-        "data": [
-          { "text": "Programming" },
-          { "text": "AI" },
-          { "text": "UI Design" },
-          { "text": "User Controls" },
-          { "text": "Interactions" }
-        ]
-      }
-    ]
-  },
-  "videoUpdates": [],
-  "trailerLink": "https://www.youtube.com/embed/M8nGKwEYV0g?controls=1"
+    },
+    "videoUpdates": [],
+    "trailerLink": "https://www.youtube.com/embed/M8nGKwEYV0g?controls=1"
 }

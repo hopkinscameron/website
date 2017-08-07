@@ -34,6 +34,7 @@ module.exports = {
     mailer: {
         from: process.env.MAILER_FROM || 'MAILER_FROM',
         options: {
+            host: process.env.MAILER_HOST || 'MAILER_HOST',
             service: process.env.MAILER_SERVICE_PROVIDER || 'MAILER_SERVICE_PROVIDER',
             auth: {
                 user: process.env.MAILER_EMAIL_ID || 'MAILER_EMAIL_ID',

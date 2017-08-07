@@ -274,65 +274,123 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
 
             // the data to send
             var blogPostData = {
-                "id": $scope.currentWorkingPost ? $scope.currentWorkingPost.url : undefined,
                 "title": $scope.blogPostForm.inputs.title,
                 "image": $scope.blogPostForm.inputs.image,
                 "shortDescription": $scope.blogPostForm.inputs.shortDescription,
                 "body": $scope.blogPostForm.inputs.body
             };
 
-            // save blog
-            Service.saveBlog(blogPostData).then(function (responseSB) {
-                // if no error
-                if(!responseSB.error) {
-                    // update saved post list
-                    Service.getAdminPageData().then(function (responseA) {
-                        // if returned a valid response
-                        if (!responseA.error) {
-                            // set the data
-                            $scope.newBlogPost = responseA;
+            // if working with a previously saved blog post
+            if($scope.currentWorkingPost) {
+                blogPostData.id = $scope.currentWorkingPost.url;
 
-                            // enable button showing the form has been saved
-                            $scope.blogPostForm.formSubmitted = false;
+                // update blog draft
+                Service.updateBlogDraft(blogPostData).then(function (responseSB) {
+                    // if no error
+                    if(!responseSB.error) {
+                        // update saved post list
+                        Service.getAdminPageData().then(function (responseA) {
+                            // if returned a valid response
+                            if (!responseA.error) {
+                                // set the data
+                                $scope.newBlogPost = responseA;
 
-                            // set the current working post
-                            $scope.currentWorkingPost = responseSB;
-                            $scope.populateForm($scope.currentWorkingPost);
+                                // enable button showing the form has been saved
+                                $scope.blogPostForm.formSubmitted = false;
 
-                            // show success dialog
-                            showSaveSuccessDialog();
-                        }
-                        else {
+                                // set the current working post
+                                $scope.currentWorkingPost = responseSB;
+                                $scope.populateForm($scope.currentWorkingPost);
+
+                                // show success dialog
+                                showSaveSuccessDialog();
+                            }
+                            else {
+                                // set error
+                                $scope.pageTitle = responseA.title;
+                                $scope.error.error = true;
+                                $scope.error.title = responseA.title;
+                                $scope.error.status = responseA.status;
+                                $scope.error.message = responseA.message;
+                            }
+                        })
+                        .catch(function (responseA) {
                             // set error
                             $scope.pageTitle = responseA.title;
                             $scope.error.error = true;
                             $scope.error.title = responseA.title;
                             $scope.error.status = responseA.status;
                             $scope.error.message = responseA.message;
-                        }
-                    })
-                    .catch(function (responseA) {
-                        // set error
-                        $scope.pageTitle = responseA.title;
-                        $scope.error.error = true;
-                        $scope.error.title = responseA.title;
-                        $scope.error.status = responseA.status;
-                        $scope.error.message = responseA.message;
-                    });
-                }
-                else {
+                        });
+                    }
+                    else {
+                        // show error
+                        $scope.blogPostForm.errors.errorMessage = responseSB.message;
+                        $scope.blogPostForm.errors.isError = true;
+                        $scope.blogPostForm.formSubmitted = false;
+                    }
+                })
+                .catch(function (responseSB) {
                     // show error
                     $scope.blogPostForm.errors.errorMessage = responseSB.message;
                     $scope.blogPostForm.errors.isError = true;
                     $scope.blogPostForm.formSubmitted = false;
-                }
-            })
-            .catch(function (responseSB) {
-                // show error
-                $scope.blogPostForm.errors.errorMessage = responseSB.message;
-                $scope.blogPostForm.errors.isError = true;
-                $scope.blogPostForm.formSubmitted = false;
-            });
+                });
+            }
+            else {
+                // save blog draft
+                Service.saveBlogDraft(blogPostData).then(function (responseSB) {
+                    // if no error
+                    if(!responseSB.error) {
+                        // update saved post list
+                        Service.getAdminPageData().then(function (responseA) {
+                            // if returned a valid response
+                            if (!responseA.error) {
+                                // set the data
+                                $scope.newBlogPost = responseA;
+
+                                // enable button showing the form has been saved
+                                $scope.blogPostForm.formSubmitted = false;
+
+                                // set the current working post
+                                $scope.currentWorkingPost = responseSB;
+                                $scope.populateForm($scope.currentWorkingPost);
+
+                                // show success dialog
+                                showSaveSuccessDialog();
+                            }
+                            else {
+                                // set error
+                                $scope.pageTitle = responseA.title;
+                                $scope.error.error = true;
+                                $scope.error.title = responseA.title;
+                                $scope.error.status = responseA.status;
+                                $scope.error.message = responseA.message;
+                            }
+                        })
+                        .catch(function (responseA) {
+                            // set error
+                            $scope.pageTitle = responseA.title;
+                            $scope.error.error = true;
+                            $scope.error.title = responseA.title;
+                            $scope.error.status = responseA.status;
+                            $scope.error.message = responseA.message;
+                        });
+                    }
+                    else {
+                        // show error
+                        $scope.blogPostForm.errors.errorMessage = responseSB.message;
+                        $scope.blogPostForm.errors.isError = true;
+                        $scope.blogPostForm.formSubmitted = false;
+                    }
+                })
+                .catch(function (responseSB) {
+                    // show error
+                    $scope.blogPostForm.errors.errorMessage = responseSB.message;
+                    $scope.blogPostForm.errors.isError = true;
+                    $scope.blogPostForm.formSubmitted = false;
+                });
+            }
         }
         else {
             $scope.blogPostForm.errors.title = true;
@@ -361,7 +419,7 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
             };
 
             // post blog
-            Service.postBlog(blogPostData).then(function (responsePB) {
+            Service.postBlogDraft(blogPostData).then(function (responsePB) {
                 // if no error
                 if(!responsePB.error) {
                     // show success dialog

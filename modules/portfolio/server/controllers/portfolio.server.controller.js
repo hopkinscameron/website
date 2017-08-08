@@ -21,8 +21,8 @@ exports.list = function (req, res) {
         // if error
         if(err) {
             // send internal error
-            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) });
-            console.log(clc.error(errorHandler.getErrorMessage(err)));
+            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+            console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
         }
         else {
             // send data
@@ -54,7 +54,7 @@ exports.portfolioItemByID = function (req, res, next, id) {
         };
 
         // send not found
-        res.status(404).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) + " Project not found." });
+        res.status(404).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) + " Project not found." });
     }
     else {
         // read file to gain information

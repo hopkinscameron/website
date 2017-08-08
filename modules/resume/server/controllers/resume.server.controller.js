@@ -21,8 +21,8 @@ exports.read = function (req, res) {
         // if error
         if(err) {
             // send internal error
-            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) });
-            console.log(clc.error(errorHandler.getErrorMessage(err)));
+            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+            console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
         }
         else {
             // send data

@@ -134,15 +134,15 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
     $scope.$on('$routeUpdate', function(){
         // if should update route
         if(!$scope.dontUpdateRoute) {
-            var blogId = $location.search().blogId;
+            var draftId = $location.search().draftId;
 
             // if query on id
-            if(blogId) {
+            if(draftId) {
                 var post = undefined;
 
                 // find matching post
                 $scope.newBlogPost.savedPosts.find(function(value, index) {
-                    if(value.url == blogId) {
+                    if(value.url == draftId) {
                         post = value;
                     }
                 });
@@ -219,7 +219,7 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
 
             // set the current working post
             $scope.currentWorkingPost = savedPost;
-            $location.search("blogId", $scope.currentWorkingPost.url);
+            $location.search("draftId", $scope.currentWorkingPost.url);
         }
         else {
             // reset all errors
@@ -237,7 +237,7 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
 
             // set the current working post
             $scope.currentWorkingPost = savedPost;
-            $location.search("blogId", savedPost);
+            $location.search("draftId", savedPost);
         }
     };
 
@@ -282,24 +282,25 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
 
             // if working with a previously saved blog post
             if($scope.currentWorkingPost) {
+                // set the id
                 blogPostData.id = $scope.currentWorkingPost.url;
 
                 // update blog draft
-                Service.updateBlogDraft(blogPostData).then(function (responseSB) {
+                BlogFactory.updateBlogDraft(blogPostData).then(function (responseUBD) {
                     // if no error
-                    if(!responseSB.error) {
+                    if(!responseUBD.error) {
                         // update saved post list
-                        Service.getAdminPageData().then(function (responseA) {
+                        BlogFactory.getSavedBlogDrafts().then(function (responseSBD) {
                             // if returned a valid response
-                            if (!responseA.error) {
+                            if (!responseSBD.error) {
                                 // set the data
-                                $scope.newBlogPost = responseA;
+                                $scope.newBlogPost = responseSBD;
 
                                 // enable button showing the form has been saved
                                 $scope.blogPostForm.formSubmitted = false;
 
                                 // set the current working post
-                                $scope.currentWorkingPost = responseSB;
+                                $scope.currentWorkingPost = responseUBD;
                                 $scope.populateForm($scope.currentWorkingPost);
 
                                 // show success dialog
@@ -307,47 +308,47 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
                             }
                             else {
                                 // set error
-                                $scope.pageTitle = responseA.title;
+                                $scope.pageTitle = responseSBD.title;
                                 $scope.error.error = true;
-                                $scope.error.title = responseA.title;
-                                $scope.error.status = responseA.status;
-                                $scope.error.message = responseA.message;
+                                $scope.error.title = responseSBD.title;
+                                $scope.error.status = responseSBD.status;
+                                $scope.error.message = responseSBD.message;
                             }
                         })
-                        .catch(function (responseA) {
+                        .catch(function (responseSBD) {
                             // set error
-                            $scope.pageTitle = responseA.title;
+                            $scope.pageTitle = responseSBD.title;
                             $scope.error.error = true;
-                            $scope.error.title = responseA.title;
-                            $scope.error.status = responseA.status;
-                            $scope.error.message = responseA.message;
+                            $scope.error.title = responseSBD.title;
+                            $scope.error.status = responseSBD.status;
+                            $scope.error.message = responseSBD.message;
                         });
                     }
                     else {
                         // show error
-                        $scope.blogPostForm.errors.errorMessage = responseSB.message;
+                        $scope.blogPostForm.errors.errorMessage = responseSBD.message;
                         $scope.blogPostForm.errors.isError = true;
                         $scope.blogPostForm.formSubmitted = false;
                     }
                 })
-                .catch(function (responseSB) {
+                .catch(function (responseUBD) {
                     // show error
-                    $scope.blogPostForm.errors.errorMessage = responseSB.message;
+                    $scope.blogPostForm.errors.errorMessage = responseUBD.message;
                     $scope.blogPostForm.errors.isError = true;
                     $scope.blogPostForm.formSubmitted = false;
                 });
             }
             else {
                 // save blog draft
-                Service.saveBlogDraft(blogPostData).then(function (responseSB) {
+                BlogFactory.saveBlogDraft(blogPostData).then(function (responseSB) {
                     // if no error
                     if(!responseSB.error) {
                         // update saved post list
-                        Service.getAdminPageData().then(function (responseA) {
+                        BlogFactory.getSavedBlogDrafts().then(function (responseSBD) {
                             // if returned a valid response
-                            if (!responseA.error) {
+                            if (!responseSBD.error) {
                                 // set the data
-                                $scope.newBlogPost = responseA;
+                                $scope.newBlogPost = responseSBD;
 
                                 // enable button showing the form has been saved
                                 $scope.blogPostForm.formSubmitted = false;
@@ -361,20 +362,20 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
                             }
                             else {
                                 // set error
-                                $scope.pageTitle = responseA.title;
+                                $scope.pageTitle = responseSBD.title;
                                 $scope.error.error = true;
-                                $scope.error.title = responseA.title;
-                                $scope.error.status = responseA.status;
-                                $scope.error.message = responseA.message;
+                                $scope.error.title = responseSBD.title;
+                                $scope.error.status = responseSBD.status;
+                                $scope.error.message = responseSBD.message;
                             }
                         })
-                        .catch(function (responseA) {
+                        .catch(function (responseSBD) {
                             // set error
-                            $scope.pageTitle = responseA.title;
+                            $scope.pageTitle = responseSBD.title;
                             $scope.error.error = true;
-                            $scope.error.title = responseA.title;
-                            $scope.error.status = responseA.status;
-                            $scope.error.message = responseA.message;
+                            $scope.error.title = responseSBD.title;
+                            $scope.error.status = responseSBD.status;
+                            $scope.error.message = responseSBD.message;
                         });
                     }
                     else {
@@ -399,8 +400,8 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
         }
     };
 
-    // posts the blog post
-    $scope.postBlog = function () {
+    // publishes the blog post
+    $scope.publishBlog = function () {
         // check for empty values
         checkEmptyValues();
 
@@ -411,33 +412,66 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
 
             // the data to send
             var blogPostData = {
-                "id": $scope.currentWorkingPost ? $scope.currentWorkingPost.url : undefined,
                 "title": $scope.blogPostForm.inputs.title,
                 "image": $scope.blogPostForm.inputs.image,
                 "shortDescription": $scope.blogPostForm.inputs.shortDescription,
                 "body": $scope.blogPostForm.inputs.body
             };
 
-            // post blog
-            Service.postBlogDraft(blogPostData).then(function (responsePB) {
-                // if no error
-                if(!responsePB.error) {
-                    // show success dialog
-                    showPostSuccessDialog();
-                }
-                else {
+            // if working with a previously saved blog post
+            if($scope.currentWorkingPost) {
+                // set the id
+                blogPostData.id = $scope.currentWorkingPost.url;
+
+                // post blog
+                BlogFactory.postBlogDraft(blogPostData).then(function (responsePB) {
+                    // if no error
+                    if(!responsePB.error) {
+                        // set the current working post
+                        $scope.currentWorkingPost = responsePB;
+
+                        // show success dialog
+                        showPostSuccessDialog();
+                    }
+                    else {
+                        // show error
+                        $scope.blogPostForm.errors.errorMessage = responsePB.message;
+                        $scope.blogPostForm.errors.isError = true;
+                        $scope.blogPostForm.formSubmitted = false;
+                    }
+                })
+                .catch(function (responsePB) {
                     // show error
                     $scope.blogPostForm.errors.errorMessage = responsePB.message;
                     $scope.blogPostForm.errors.isError = true;
                     $scope.blogPostForm.formSubmitted = false;
-                }
-            })
-            .catch(function (responsePB) {
-                // show error
-                $scope.blogPostForm.errors.errorMessage = responsePB.message;
-                $scope.blogPostForm.errors.isError = true;
-                $scope.blogPostForm.formSubmitted = false;
-            });
+                });
+            }
+            else {
+                // post blog
+                BlogFactory.createBlogPost(blogPostData).then(function (responsePB) {
+                    // if no error
+                    if(!responsePB.error) {
+                        // set the current working post
+                        $scope.currentWorkingPost = responsePB;
+                        
+                        // show success dialog
+                        showPostSuccessDialog();
+                    }
+                    else {
+                        // show error
+                        $scope.blogPostForm.errors.errorMessage = responsePB.message;
+                        $scope.blogPostForm.errors.isError = true;
+                        $scope.blogPostForm.formSubmitted = false;
+                    }
+                })
+                .catch(function (responsePB) {
+                    // show error
+                    $scope.blogPostForm.errors.errorMessage = responsePB.message;
+                    $scope.blogPostForm.errors.isError = true;
+                    $scope.blogPostForm.formSubmitted = false;
+                });
+            }
         }
     };
 
@@ -488,14 +522,14 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
     // gets the page data
     function getPageData() {
         // get saved blog drafts
-        BlogFactory.getSavedBlogDrafts().then(function (responseA) {
+        BlogFactory.getSavedBlogDrafts().then(function (responseSBD) {
             // if returned a valid response
-            if (!responseA.error) {
+            if (!responseSBD.error) {
                 // set the data
-                $scope.newBlogPost = responseA;
+                $scope.newBlogPost = responseSBD;
                 
                 // holds the animation times
-                $scope.newBlogPostAnimations = responseA.savedPosts.length > 0 ? new Array(2) : new Array(1);
+                $scope.newBlogPostAnimations = responseSBD.savedPosts.length > 0 ? new Array(2) : new Array(1);
 
                 // the initial delayed start time of any animation
                 var startTime = 1.5;
@@ -516,11 +550,11 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
                 $scope.pageTitle = "New Blog Post | " + Service.appName;
 
                 // check to see if currently on a query with blog id
-                var blogId = $location.search().blogId;
-                if(blogId) {
-                    for(var x = 0; x < responseA.savedPosts.length; x++) {
-                        if(blogId == responseA.savedPosts[x].url) {
-                            $scope.currentWorkingPost = responseA.savedPosts[x];
+                var draftId = $location.search().draftId;
+                if(draftId) {
+                    for(var x = 0; x < responseSBD.savedPosts.length; x++) {
+                        if(draftId == responseSBD.savedPosts[x].url) {
+                            $scope.currentWorkingPost = responseSBD.savedPosts[x];
                             break;
                         }
                     }
@@ -531,23 +565,23 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
             }
             else {
                 // set error
-                $scope.pageTitle = responseA.title;
+                $scope.pageTitle = responseSBD.title;
                 $scope.error.error = true;
-                $scope.error.title = responseA.title;
-                $scope.error.status = responseA.status;
-                $scope.error.message = responseA.message;
+                $scope.error.title = responseSBD.title;
+                $scope.error.status = responseSBD.status;
+                $scope.error.message = responseSBD.message;
 
                 // setup page
                 setUpPage();
             }
         })
-        .catch(function (responseA) {
+        .catch(function (responseSBD) {
             // set error
-            $scope.pageTitle = responseA.title;
+            $scope.pageTitle = responseSBD.title;
             $scope.error.error = true;
-            $scope.error.title = responseA.title;
-            $scope.error.status = responseA.status;
-            $scope.error.message = responseA.message;
+            $scope.error.title = responseSBD.title;
+            $scope.error.status = responseSBD.status;
+            $scope.error.message = responseSBD.message;
 
             // setup page
             setUpPage();
@@ -607,7 +641,7 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
     // discards the blog draft
     function discardBlogDraft(draftToBeDiscarded) {
         // discard the draft
-        Service.discardBlogPostDraft(draftToBeDiscarded.url).then(function (responseDB) {
+        BlogFactory.discardBlogPostDraft(draftToBeDiscarded.url).then(function (responseDB) {
             // if returned a valid response
             if (!responseDB.error) {
                 // set no current working post and reload data
@@ -704,35 +738,35 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
 
         // whenever the server emits 'update saved blogs'
         socket.on('update saved blogs', function(data) {
-            // get new blog post page data
-            BlogFactory.getBlogPostNewPageData().then(function (responseA) {
+            // get saved drafts
+            BlogFactory.getSavedBlogDrafts().then(function (responseSBD) {
                 // if returned a valid response
-                if (!responseA.error) {
+                if (!responseSBD.error) {
                     // set the data
-                    $scope.newBlogPost.savedPosts = responseA.savedPosts;
+                    $scope.newBlogPost.savedPosts = responseSBD.savedPosts;
 
                     // reset
                     socket.emit('reset');
                 }
                 else {
                     // set error
-                    $scope.pageTitle = responseA.title;
+                    $scope.pageTitle = responseSBD.title;
                     $scope.error.error = true;
-                    $scope.error.title = responseA.title;
-                    $scope.error.status = responseA.status;
-                    $scope.error.message = responseA.message;
+                    $scope.error.title = responseSBD.title;
+                    $scope.error.status = responseSBD.status;
+                    $scope.error.message = responseSBD.message;
 
                     // reset
                     socket.emit('reset');
                 }
             })
-            .catch(function (responseA) {
+            .catch(function (responseSBD) {
                 // set error
-                $scope.pageTitle = responseA.title;
+                $scope.pageTitle = responseSBD.title;
                 $scope.error.error = true;
-                $scope.error.title = responseA.title;
-                $scope.error.status = responseA.status;
-                $scope.error.message = responseA.message;
+                $scope.error.title = responseSBD.title;
+                $scope.error.status = responseSBD.status;
+                $scope.error.message = responseSBD.message;
 
                 // reset
                 socket.emit('reset');

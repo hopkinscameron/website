@@ -455,6 +455,7 @@ module.exports = function(app, passport) {
 	});
 	*/
 
+	/*
 	// GET blog edit page information
 	// format /api/blog/post/:postId/edit
 	app.get('/api/blog/post/:postId/edit', isLoggedIn, function (req, res) {
@@ -517,7 +518,8 @@ module.exports = function(app, passport) {
 			res.status(400).send({ title: errorMessageCenter.error.status400.title, message: errorMessageCenter.error.status400.message + " Must have an id to query on." });
 		}
 	});
-
+	*/
+	
 	/*
 	// GET contact page information
 	// format /api/contact
@@ -881,6 +883,7 @@ module.exports = function(app, passport) {
 	});
 	*/
 
+	/*
 	// POST post blog
 	// format /api/postBlog
 	app.post('/api/postBlog', isLoggedIn, function (req, res) {
@@ -1040,6 +1043,7 @@ module.exports = function(app, passport) {
 			}
 		}
 	});
+	*/
 
 	/*
 	// POST shorten url

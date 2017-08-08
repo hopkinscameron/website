@@ -19,13 +19,13 @@ module.exports = function (app) {
 	
 	// TODO: in controller seperate out each query functionality
 	// GET gets blog list
-	// POST creates new blog
+	// POST creates new blog from scratch
 	// format /api/blog
 	// format /api/blog?q=someQuery
 	// format /api/blog?page=pageNumber
 	// format /api/blog?q=someQuery&page=pageNumber
 	app.route('/api/blog').get(ipLogger.log, blogController.blogList)
-		.post([ipLogger.log, blogPolicy.isAllowed], blogController.createBlog);
+		.post([ipLogger.log, blogPolicy.isAllowed], blogController.publishBlogFromScratch);
 	
 	// single blog routes
 	// GET gets specific blog
@@ -43,18 +43,20 @@ module.exports = function (app) {
     // Draft Routes =============================================================
 	// =========================================================================
 
-	// GET gets blog drafs list
+	// GET gets blog drafts list
 	// POST creates new blog draft
-	// format /api/blog
-	app.route('/api/blog/drafts').get([ipLogger.log, blogPolicy.isAllowed], blogController.draftList)
+	// format /api/blogDrafts
+	app.route('/api/blogDrafts').get([ipLogger.log, blogPolicy.isAllowed], blogController.draftList)
 		.post([ipLogger.log, blogPolicy.isAllowed], blogController.createDraft);
 
 	// single blog draft routes
 	// GET gets specific draft
+	// POST creates new blog from the draft
 	// PUT updates specific draft
 	// DELETE deletes specific draft
-	// format /api/blog/drafts/:draftBlogId
-	app.route('/api/blog/drafts/:draftBlogId').get([ipLogger.log, blogPolicy.isAllowed], blogController.readDraft)
+	// format /api/blogDrafts/:draftBlogId
+	app.route('/api/blogDrafts/:draftBlogId').get([ipLogger.log, blogPolicy.isAllowed], blogController.readDraft)
+		.post([ipLogger.log, blogPolicy.isAllowed], blogController.publishBlogFromDraft)
 		.put([ipLogger.log, blogPolicy.isAllowed], blogController.updateDraft)
 		.delete([ipLogger.log, blogPolicy.isAllowed], blogController.deleteDraft);
 	  

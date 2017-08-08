@@ -16,10 +16,18 @@ var // the communication to mongo database
  * Analytics Page Schema
  */ 
 var AnalyticsPageSchema = new Schema({
-    url: {
+    request: {
         type: String,
         required: true,
         unique: true
+    },
+    url: {
+        type: String,
+        required: true
+    },
+    method: {
+        type: String,
+        required: true
     },
     count: {
         type: Number,
@@ -38,10 +46,6 @@ var AnalyticsPageSchema = new Schema({
             },
             accessedTime: {
                 type: Date,
-                required: true
-            },
-            requestType: {
-                type: String,
                 required: true
             },
             location: {

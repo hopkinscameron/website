@@ -16,7 +16,7 @@ angular.module('app').factory('LogoutFactory', ['$http', '$location', function (
                 'Content-Type': 'application/json; odata=verbose',
                 'Accept': 'application/json; odata=verbose'
             },
-            data: 'undefined'
+            data: undefined
         };
 
         // send request

@@ -75,8 +75,8 @@ exports.readAppName = function (req, res) {
         // if error 
         if(err) {
             // send internal error
-            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) });
-            console.log(clc.error(errorHandler.getErrorMessage(err)));
+            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+            console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
         }
         else {
             var appName = "";
@@ -99,8 +99,8 @@ exports.readAppName = function (req, res) {
             }
             catch (err) {
                 // send internal error
-                res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) });
-                console.log(clc.error(errorHandler.getErrorMessage(err)));
+                res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+                console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
             }
         }
     });
@@ -136,7 +136,7 @@ exports.sendEmail = function (req, res) {
         }
 
         // send bad request
-        res.status(400).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) + errorText });
+        res.status(400).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) + errorText });
     }
     else {
         var fromString = req.body.firstName + " " + req.body.lastName + "<" + req.body.email + ">";
@@ -155,8 +155,8 @@ exports.sendEmail = function (req, res) {
             // if an internal error occured
             if (err) {
                 // send internal error
-                res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) });
-                console.log(clc.error(errorHandler.getErrorMessage(err)));
+                res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+                console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
             }
             else {
                 // setup success
@@ -165,7 +165,7 @@ exports.sendEmail = function (req, res) {
                 };
 
                 // return success
-                res.status(200).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) + " Your email has been sent!" });
+                res.status(200).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) + " Your email has been sent!" });
             }
         });		
     }
@@ -197,7 +197,7 @@ exports.shortenUrl = function (req, res) {
         }
 
         // send bad request
-        res.status(400).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) + errorText });
+        res.status(400).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) + errorText });
     }
     else {
         // create request
@@ -226,8 +226,8 @@ exports.shortenUrl = function (req, res) {
             res.end(returnReq);
         }).catch(function (responseSU) {
             // send internal error
-            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err)  });
-            console.log(clc.error(errorHandler.getErrorMessage(err)));
+            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err)  });
+            console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
         });
     }
 };

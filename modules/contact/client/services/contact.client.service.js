@@ -16,7 +16,7 @@ angular.module('app').factory('ContactFactory', ['$http', '$location', function 
                 'Content-Type': 'application/json; odata=verbose',
                 'Accept': 'application/json; odata=verbose'
             },
-            data: 'undefined'
+            data: undefined
         };
 
         // send request

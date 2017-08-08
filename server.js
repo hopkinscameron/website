@@ -310,6 +310,6 @@ function setUpRoutes() {
 	//Seperate out
 	// globbing routing files
 	config.files.server.routes.forEach(function (routePath) {
-		require(path.resolve(routePath))(app, passport);
+		require(path.resolve(routePath))(app);
 	});
 };

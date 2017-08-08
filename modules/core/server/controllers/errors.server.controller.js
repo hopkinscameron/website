@@ -54,11 +54,13 @@ exports.getErrorTitle = function (err) {
 };
 
 /**
- * Get the error message from error object
+ * Get the generic error message from error object
  */
-exports.getErrorMessage = function (err) {
+exports.getGenericErrorMessage = function (err) {
+    // holds the error message
     var message = '';
 
+    // if there is an error code
     if (err.code) {
         switch (err.code) {
             case 200:
@@ -79,14 +81,50 @@ exports.getErrorMessage = function (err) {
             case 500:
                 message = errorMessageCenter.error.status500.message;
                 break;
+            case 11000:
+                message = err.message;
+                break;
             default:
                 message = errorMessageCenter.error.status500.message;
                 break;
         }
     } 
+    // if there is just one error messsage
     else if (err.message && !err.errors) {
         message = err.message;
     } 
+    // if there are mutliple errors
+    else {
+        for (var errName in err.errors) {
+            if (err.errors[errName].message) {
+                message = err.errors[errName].message;
+            }
+        }
+    }
+
+    return message;
+};
+
+/**
+ * Get the detailed error message from error object
+ */
+exports.getDetailedErrorMessage = function (err) {
+    // holds the error message
+    var message = '';
+
+    // if there is an error code
+    if (err.code) {
+        switch (err.code) {
+            default:
+                message = err.message;
+                break;
+        }
+    } 
+    // if there is just one error messsage
+    else if (err.message && !err.errors) {
+        message = err.message;
+    } 
+    // if there are mutliple errors
     else {
         for (var errName in err.errors) {
             if (err.errors[errName].message) {

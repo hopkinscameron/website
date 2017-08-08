@@ -31,7 +31,6 @@ function logUserIPInformation(req) {
 	var accessedBy = {
 		userPublicIP: undefined,
 		userLocalIP: ip,
-		requestType: req.method,
 		accessedTime: new Date()
 	};
 
@@ -58,7 +57,7 @@ function logUserIPInformation(req) {
         }
 
 		// log the page request
-		logPageRequest(accessedBy, correctUrl.toLowerCase());
+		logPageRequest(accessedBy, correctUrl.toLowerCase(), req.method);
 	})
 	.catch(function (response) {
 		console.log(clc.error("Couldn't get user's ip address: " + response.message));
@@ -84,7 +83,7 @@ function logUserIPInformation(req) {
         }
 
 		// log the page request
-		logPageRequest(accessedBy, correctUrl.toLowerCase());
+		logPageRequest(accessedBy, correctUrl.toLowerCase(), req.method);
     });
 };
 
@@ -147,9 +146,12 @@ function getUserIPObject(accessedBy, userIP, req) {
 };
 
 // logs the page requested
-function logPageRequest(accessedBy, pageRequested) {
+function logPageRequest(accessedBy, pageRequested, requestType) {
+	// setup the request index
+	var req = requestType + ":" + pageRequested;
+
 	// find page post based on id
-	AnalyticsPage.findOne({ url : pageRequested }).exec(function(err, foundPage) {
+	AnalyticsPage.findOne({ request: req }).exec(function(err, foundPage) {
 		// if error occured
 		if (err) {
 			console.log(clc.error(err.message));
@@ -166,7 +168,9 @@ function logPageRequest(accessedBy, pageRequested) {
 		else {
 			// create the analytics for this page
 			var analyticsPage = new AnalyticsPage({
+				request: requestType + ":" + pageRequested,
 				url: pageRequested,
+				method: requestType,
 				accessedBy: [accessedBy]
 			});
 

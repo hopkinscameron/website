@@ -18,10 +18,6 @@ exports.isAllowed = function (req, res, next) {
     }
 	else {
         // create forbidden error
-        var err = {
-            code: 403
-        };
-
-        return res.status(403).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) });
+        return res.status(403).send({ title: errorHandler.getErrorTitle({ code: 403 }), message: errorHandler.getGenericErrorMessage({ code: 403 }) });
     }
 };

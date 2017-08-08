@@ -32,7 +32,7 @@ angular.module('app').factory('BlogFactory', ['$http', '$location', function ($h
                 'Content-Type': 'application/json; odata=verbose',
                 'Accept': 'application/json; odata=verbose'
             },
-            data: 'undefined'
+            data: undefined
         };
 
         // send request
@@ -57,7 +57,7 @@ angular.module('app').factory('BlogFactory', ['$http', '$location', function ($h
                 'Content-Type': 'application/json; odata=verbose',
                 'Accept': 'application/json; odata=verbose'
             },
-            data: 'undefined'
+            data: undefined
         };
 
         // send request
@@ -74,7 +74,7 @@ angular.module('app').factory('BlogFactory', ['$http', '$location', function ($h
         // set the endpoint
         var endpoint = appPath + "/blog";        
 
-        // stringify the login data
+        // stringify the draft data
         var blogStrigified = JSON.stringify({
             "title": blogPostData.title,
             "image": blogPostData.image,
@@ -102,12 +102,46 @@ angular.module('app').factory('BlogFactory', ['$http', '$location', function ($h
         });
     };
 
+    // saves published blog as a draft
+    factory.savePublishedBlogAsDraft = function (blogPostData) {
+        // set the endpoint
+        var endpoint = appPath + "/blogDrafts";
+
+        // stringify the draft data
+        var draftStrigified = JSON.stringify({
+            "id": blogPostData.id,
+            "title": blogPostData.title,
+            "image": blogPostData.image,
+            "shortDescription": blogPostData.shortDescription,
+            "body": blogPostData.body
+        });
+
+        // create request
+        var req = {
+            method: 'POST',
+            url: endpoint,
+            headers: {
+                'Content-Type': 'application/json; odata=verbose',
+                'Accept': 'application/json; odata=verbose'
+            },
+            data: draftStrigified
+        };
+
+        // send request
+        return $http(req).then(function (response) {
+            return response.data;
+        })
+        .catch(function (response) {
+            return { "error": true, "title": response.data.title, "status": response.status, "message": response.data.message };
+        });
+    };
+
     // updates blog post
     factory.updateBlogPost = function (blogPostData) {
         // set the endpoint
         var endpoint = appPath + "/blog/" + blogPostData.id;        
 
-        // stringify the login data
+        // stringify the blog data
         var blogStrigified = JSON.stringify({
             "title": blogPostData.title,
             "image": blogPostData.image,
@@ -140,12 +174,6 @@ angular.module('app').factory('BlogFactory', ['$http', '$location', function ($h
         // set the endpoint
         var endpoint = appPath + "/blog/" + blogPostId;
 
-        // TODO: remove, not needed since it's in endpoint now
-        // stringify the login data
-        var blogStrigified = JSON.stringify({
-            "id": blogPostId
-        });
-
         // create request
         var req = {
             method: 'DELETE',
@@ -154,7 +182,7 @@ angular.module('app').factory('BlogFactory', ['$http', '$location', function ($h
                 'Content-Type': 'application/json; odata=verbose',
                 'Accept': 'application/json; odata=verbose'
             },
-            data: blogStrigified
+            data: undefined
         };
 
         // send request
@@ -170,10 +198,10 @@ angular.module('app').factory('BlogFactory', ['$http', '$location', function ($h
     // Blog Draft Functions ==========================================================
     // =========================================================================
 
-    // get new blog post page information
+    // get saved blog drafts
     factory.getSavedBlogDrafts = function () {
         // set the endpoint
-        var endpoint = appPath + "/blog/drafts";
+        var endpoint = appPath + "/blogDrafts";
 
         // create request
         var req = {
@@ -183,7 +211,7 @@ angular.module('app').factory('BlogFactory', ['$http', '$location', function ($h
                 'Content-Type': 'application/json; odata=verbose',
                 'Accept': 'application/json; odata=verbose'
             },
-            data: 'undefined'
+            data: undefined
         };
 
         // send request
@@ -198,7 +226,7 @@ angular.module('app').factory('BlogFactory', ['$http', '$location', function ($h
     // gets blog blog draft 
     factory.getBlogDraft = function (blogPostId) {
         // set the endpoint
-        var endpoint = appPath + "/blog/drafts/" + blogPostId;
+        var endpoint = appPath + "/blogDrafts/" + blogPostId;
 
         // create request
         var req = {
@@ -208,7 +236,7 @@ angular.module('app').factory('BlogFactory', ['$http', '$location', function ($h
                 'Content-Type': 'application/json; odata=verbose',
                 'Accept': 'application/json; odata=verbose'
             },
-            data: 'undefined'
+            data: undefined
         };
 
         // send request
@@ -223,9 +251,9 @@ angular.module('app').factory('BlogFactory', ['$http', '$location', function ($h
     // saves blog draft
     factory.saveBlogDraft = function (blogDraftData) {
         // set the endpoint
-        var endpoint = appPath + "/blog/drafts";
+        var endpoint = appPath + "/blogDrafts";
 
-        // stringify the login data
+        // stringify the draft data
         var draftStrigified = JSON.stringify({
             "title": blogDraftData.title,
             "image": blogDraftData.image,
@@ -254,11 +282,11 @@ angular.module('app').factory('BlogFactory', ['$http', '$location', function ($h
     };
 
     // updates blog draft
-    factory.updateBlogDraft = function (blogPostData) {
+    factory.updateBlogDraft = function (blogDraftData) {
         // set the endpoint
-        var endpoint = appPath + "/blog/drafts/" + blogDraftData.id;
+        var endpoint = appPath + "/blogDrafts/" + blogDraftData.id;
 
-        // stringify the login data
+        // stringify the draft data
         var draftStrigified = JSON.stringify({
             "title": blogDraftData.title,
             "image": blogDraftData.image,
@@ -287,17 +315,16 @@ angular.module('app').factory('BlogFactory', ['$http', '$location', function ($h
     };
 
     // posts blog draft
-    factory.postBlogDraft = function (blogPostData) {
+    factory.postBlogDraft = function (blogDraftData) {
         // set the endpoint
-        var endpoint = appPath + "/blog" ;        
+        var endpoint = appPath + "/blogDrafts/" + blogDraftData.id;      
 
-        // stringify the login data
-        var blogStrigified = JSON.stringify({
-            "id": blogPostData.id,
-            "title": blogPostData.title,
-            "image": blogPostData.image,
-            "shortDescription": blogPostData.shortDescription,
-            "body": blogPostData.body
+        // stringify the draft data
+        var draftStrigified = JSON.stringify({
+            "title": blogDraftData.title,
+            "image": blogDraftData.image,
+            "shortDescription": blogDraftData.shortDescription,
+            "body": blogDraftData.body
         });
 
         // create request
@@ -308,7 +335,7 @@ angular.module('app').factory('BlogFactory', ['$http', '$location', function ($h
                 'Content-Type': 'application/json; odata=verbose',
                 'Accept': 'application/json; odata=verbose'
             },
-            data: blogStrigified
+            data: draftStrigified
         };
 
         // send request
@@ -321,15 +348,9 @@ angular.module('app').factory('BlogFactory', ['$http', '$location', function ($h
     };
 
     // discards blog post draft
-    factory.discardBlogPostDraft = function (blogPostId) {
+    factory.discardBlogPostDraft = function (blogDraftId) {
         // set the endpoint
-        var endpoint = "/blog/drafts/" + blogPostId;
-
-        // TODO: remove, not needed since it's in endpoint now
-        // stringify the login data
-        var blogStrigified = JSON.stringify({
-            "id": blogPostId
-        });
+        var endpoint = appPath + "/blogDrafts/" + blogDraftId;
 
         // create request
         var req = {
@@ -339,7 +360,7 @@ angular.module('app').factory('BlogFactory', ['$http', '$location', function ($h
                 'Content-Type': 'application/json; odata=verbose',
                 'Accept': 'application/json; odata=verbose'
             },
-            data: blogStrigified
+            data: undefined
         };
 
         // send request

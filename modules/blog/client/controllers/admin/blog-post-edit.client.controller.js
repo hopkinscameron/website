@@ -168,32 +168,69 @@
                 "body": $scope.blogPostEditForm.inputs.body
             };
 
-            // save blog
-            BlogFactory.saveBlog(blogPostData).then(function (responseSB) {
-                // if no error
-                if(!responseSB.error) {
-                    // enable button showing the form has been saved
+            // if there is a previous draft
+            if($scope.post.hasDraft) {
+                // update draft
+                BlogFactory.updateBlogDraft(blogPostData).then(function (responseUBD) {
+                    // if no error
+                    if(!responseUBD.error) {
+                        // enable button showing the form has been saved
+                        $scope.blogPostEditForm.formSubmitted = false;
+
+                        // reset data
+                        $scope.post = responseUBD;
+                        $scope.post.hasDraft = true;
+
+                        // show success
+                        showSaveSuccessDialog();
+                    }
+                    else {
+                        // set not submitted
+                        $scope.blogPostEditForm.formSubmitted = false;
+
+                        // show error
+                        showErrorDialog(responseUBD.message);
+                    }
+                })
+                .catch(function (responseUBD) {
+                    // set not submitted
                     $scope.blogPostEditForm.formSubmitted = false;
 
-                    // reset data
-                    $scope.post = responseSB;
-
-                    // show success
-                    showSaveSuccessDialog();
-                }
-                else {
                     // show error
-                    $scope.blogPostEditForm.errors.errorMessage = responseSB.message;
-                    $scope.blogPostEditForm.errors.isError = true;
+                    showErrorDialog(responseUBD.message);
+                });
+            }
+            else {
+                // save draft
+                BlogFactory.savePublishedBlogAsDraft(blogPostData).then(function (responseSPBAD) {
+                    // if no error
+                    if(!responseSPBAD.error) {
+                        // enable button showing the form has been saved
+                        $scope.blogPostEditForm.formSubmitted = false;
+
+                        // reset data
+                        $scope.post = responseSPBAD;
+                        $scope.post.hasDraft = true;
+
+                        // show success
+                        showSaveSuccessDialog();
+                    }
+                    else {
+                        // set not submitted
+                        $scope.blogPostEditForm.formSubmitted = false;
+
+                        // show error
+                        showErrorDialog(responseSPBAD.message);
+                    }
+                })
+                .catch(function (responseSPBAD) {
+                    // set not submitted
                     $scope.blogPostEditForm.formSubmitted = false;
-                }
-            })
-            .catch(function (responseSB) {
-                // show error
-                $scope.blogPostEditForm.errors.errorMessage = responseSB.message;
-                $scope.blogPostEditForm.errors.isError = true;
-                $scope.blogPostEditForm.formSubmitted = false;
-            });
+
+                    // show error
+                    showErrorDialog(responseSPBAD.message);
+                });
+            }
         }
         else {
             $scope.blogPostEditForm.errors.title = true;
@@ -202,8 +239,8 @@
         }
     };
 
-    // posts the blog post
-    $scope.postBlog = function () {
+    // updates the blog post
+    $scope.updateBlog = function () {
         // check for empty values
         checkEmptyValues();
 
@@ -221,31 +258,33 @@
                 "body": $scope.blogPostEditForm.inputs.body
             };
 
-            // post blog
-            BlogFactory.postBlog(blogPostData).then(function (responsePB) {
+            // update blog post
+            BlogFactory.updateBlogPost(blogPostData).then(function (responseUPB) {
                 // if no error
-                if(!responsePB.error) {
+                if(!responseUPB.error) {
                     // enable button showing the form has been saved
                     $scope.blogPostEditForm.formSubmitted = false;
 
                     // reset data
-                    $scope.post = responsePB;
+                    $scope.post = responseUPB;
 
                     // show success
                     showPostSuccessDialog();
                 }
                 else {
-                    // show error
-                    $scope.blogPostEditForm.errors.errorMessage = responsePB.message;
-                    $scope.blogPostEditForm.errors.isError = true;
+                    // set not submitted
                     $scope.blogPostEditForm.formSubmitted = false;
+
+                    // show error
+                    showErrorDialog(responseUPB.message);
                 }
             })
-            .catch(function (responsePB) {
-                // show error
-                $scope.blogPostEditForm.errors.errorMessage = responsePB.message;
-                $scope.blogPostEditForm.errors.isError = true;
+            .catch(function (responseUPB) {
+                // set not submitted
                 $scope.blogPostEditForm.formSubmitted = false;
+
+                // show error
+                showErrorDialog(responseUPB.message);
             });
         }
     };
@@ -319,42 +358,69 @@
     
     // gets the page data
     function getPageData() {        
-        // get blog page data
-        BlogFactory.getBlogPostEditPageInformation(blogPostId).then(function (responseBIE) {
+        // get the blog
+        BlogFactory.getBlogPost(blogPostId).then(function (responseBP) {
             // if returned a valid response
-            if (!responseBIE.error) {
+            if (!responseBP.error) {
                 // set the data
-                $scope.post = responseBIE;
-                $scope.pageTitle = responseBIE.title + " | " + Service.appName;
+                $scope.post = responseBP;
+                $scope.pageTitle = responseBP.title + " | " + Service.appName;
                 
-                // populate form
-                $scope.blogPostEditForm.inputs.title = responseBIE.title;
-                $scope.blogPostEditForm.inputs.image = responseBIE.image;
-                $scope.blogPostEditForm.inputs.shortDescription = responseBIE.shortDescription;
-                $scope.blogPostEditForm.inputs.body = responseBIE.body;
+                // get the draft if it exists
+                BlogFactory.getBlogDraft(blogPostId).then(function (responseBD) {
+                    // if returned a valid response
+                    if (!responseBD.error) {
+                        // populate form with draft values
+                        $scope.blogPostEditForm.inputs.title = responseBD.title;
+                        $scope.blogPostEditForm.inputs.image = responseBD.image;
+                        $scope.blogPostEditForm.inputs.shortDescription = responseBD.shortDescription;
+                        $scope.blogPostEditForm.inputs.body = responseBD.body;
+                        $scope.post.hasDraft = true;
 
-                // setup page
-                setUpPage();
+                        // setup page
+                        setUpPage();
+                    }
+                    else {
+                        // populate form with origional values
+                        $scope.blogPostEditForm.inputs.title = responseBP.title;
+                        $scope.blogPostEditForm.inputs.image = responseBP.image;
+                        $scope.blogPostEditForm.inputs.shortDescription = responseBP.shortDescription;
+                        $scope.blogPostEditForm.inputs.body = responseBP.body;
+
+                        // setup page
+                        setUpPage();
+                    }
+                })
+                .catch(function (responseBD) {
+                    // populate form with origional values
+                    $scope.blogPostEditForm.inputs.title = responseBP.title;
+                    $scope.blogPostEditForm.inputs.image = responseBP.image;
+                    $scope.blogPostEditForm.inputs.shortDescription = responseBP.shortDescription;
+                    $scope.blogPostEditForm.inputs.body = responseBP.body;
+
+                    // setup page
+                    setUpPage();
+                });                
             }
             else {
                 // set error
-                $scope.pageTitle = responseBIE.title;
+                $scope.pageTitle = responseBP.title;
                 $scope.error.error = true;
-                $scope.error.title = responseBIE.title;
-                $scope.error.status = responseBIE.status;
-                $scope.error.message = responseBIE.message;
+                $scope.error.title = responseBP.title;
+                $scope.error.status = responseBP.status;
+                $scope.error.message = responseBP.message;
 
                 // setup page
                 setUpPage();
             }
         })
-        .catch(function (responseBIE) {
+        .catch(function (responseBP) {
             // set error
-            $scope.pageTitle = responseBIE.title;
+            $scope.pageTitle = responseBP.title;
             $scope.error.error = true;
-            $scope.error.title = responseBIE.title;
-            $scope.error.status = responseBIE.status;
-            $scope.error.message = responseBIE.message;
+            $scope.error.title = responseBP.title;
+            $scope.error.status = responseBP.status;
+            $scope.error.message = responseBP.message;
 
             // setup page
             setUpPage();
@@ -491,16 +557,13 @@
             className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'successHeader': header, 'successBody': body }
         });
-
-        // refresh the page
-        //$window.location.reload();
     };
 
     // shows successful dialog for posting blog
     function showPostSuccessDialog() {
         // create the header and body for the success
         var header = "Success!";
-        var body = "You have successfully posted this blog.";
+        var body = "You have successfully updated this blog.";
 
         // show dialog
         var successfulPostDialog = ngDialog.open({
@@ -512,8 +575,11 @@
 
         // on completion of close
         successfulPostDialog.closePromise.then(function (data) {
-            // redirect to this blog's page
-            $window.location.href = "#blog/post/" + $scope.post.url;
+            // check if user wanted to go to blog page or stay here
+            if(data.value && data.value.accepted) {
+                // redirect to this blog's page
+                $window.location.href = "#blog/post/" + $scope.post.url;
+            }
         });
     };
 

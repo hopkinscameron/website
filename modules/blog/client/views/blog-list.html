@@ -13,18 +13,17 @@
         <div id="pageShow" class="animated animation-delay fadeIn collapse" ng-if="pageFullyLoaded && !error.error">
             <!-- Begin Page Title -->
             <h2 class="font-weight-bold text-uppercase mb-3"><span ng-bind-html="blog.title | trustHTML"></span></h2>
-            <!-- End Page Title -->
-            <!-- Begin New Blog -->
-            <div class="row justify-content-end mb-3" ng-if="$root.isLoggedIn">
-                <div class="col-md-4 text-right">
-                    <a href="#/blog/new" class="btn btn-theme-primary decoration--never">New Blog</a>
-                </div>
-            </div>
-            <!-- End New Blog -->
-            <!-- Begin Filters -->
+            <!-- End Page Title -->           
+            <!-- Begin Filters/New Blog Button -->
             <div class="card card--dark card-block mb-3">
-                <div class="row justify-content-end">
-                    <div class="col-md-4">
+                <div class="row" ng-class="{'justify-content-end': !$root.isLoggedIn}">
+                    <!-- Begin New Blog -->
+                    <div class="col text-left" ng-if="$root.isLoggedIn">
+                        <a href="#/blog/new" class="btn btn-theme-primary decoration--never">New Blog</a>
+                    </div>
+                    <!-- End New Blog -->
+                    <!-- Begin Filters -->
+                    <div class="col-md-4 text-right">
                         <!-- Begin Search Filter -->
                         <div class="input-group" ng-class="{'mb-3': blog.filters.length > 0}">
                             <input type="text" class="form-control" placeholder="Search for..." ng-model="searchText.query" ng-keypress="onKeyPress($event)">
@@ -43,9 +42,10 @@
                         </div>
                         <!-- End Custom Filters -->
                     </div>
+                    <!-- End Filters -->
                 </div>
             </div>
-            <!-- End Filters -->
+            <!-- End Filters/New Blog Button -->
             <!-- Begin Posts -->
             <div class="row">
                 <div class="col-md-8">

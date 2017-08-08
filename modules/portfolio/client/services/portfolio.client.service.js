@@ -16,7 +16,7 @@ angular.module('app').factory('PortfolioFactory', ['$http', '$location', functio
                 'Content-Type': 'application/json; odata=verbose',
                 'Accept': 'application/json; odata=verbose'
             },
-            data: 'undefined'
+            data: undefined
         };
 
         // send request
@@ -41,7 +41,7 @@ angular.module('app').factory('PortfolioFactory', ['$http', '$location', functio
                 'Content-Type': 'application/json; odata=verbose',
                 'Accept': 'application/json; odata=verbose'
             },
-            data: 'undefined'
+            data: undefined
         };
 
         // send request

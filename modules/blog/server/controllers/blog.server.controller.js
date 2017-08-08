@@ -34,8 +34,8 @@ exports.blogList = function (req, res) {
         // if error
         if(err) {
             // send internal error
-            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) });
-            console.log(clc.error(errorHandler.getErrorMessage(err)));
+            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+            console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
         }
         else {
             // holds the parsed json data
@@ -100,17 +100,17 @@ exports.blogList = function (req, res) {
             }
             catch (err) {
                 // send internal error
-                res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) });
-                console.log(clc.error(errorHandler.getErrorMessage(err)));
+                res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+                console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
             }
         }
     });
 };
 
 /**
- * Create new blog
+ * Publish new blog from scratch
  */
-exports.createBlog = function (req, res) {
+exports.publishBlogFromScratch = function (req, res) {
     // validate existence
     req.checkBody('title', 'Title is required').notEmpty();
     req.checkBody('shortDescription', 'Short Description is required').notEmpty();
@@ -121,11 +121,6 @@ exports.createBlog = function (req, res) {
 
     // if errors exist
     if (errors) {
-        // setup the 400 error
-        var err = {
-            code: 400
-        };
-
         // holds all the errors in one text
         var errorText = "";
 
@@ -135,11 +130,41 @@ exports.createBlog = function (req, res) {
         }
 
         // send bad request
-        res.status(400).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) + errorText });
+        res.status(400).send({ title: errorHandler.getErrorTitle({ code: 400 }), message: errorHandler.getGenericErrorMessage({ code: 400 }) + errorText });
     }
     else {
-        // set post id
-        var postId = req.body.id;
+        // generate a short id
+        var shortId = shortid.generate();
+
+        // create the blog
+        var blogPost = new BlogPost({
+            customShort: shortId,
+            title: req.body.title,
+            image: req.body.image,
+            shortDescription: req.body.shortDescription,
+            body: req.body.body
+        });
+
+        // save the blog
+        blogPost.save(function(err, newPostedBlog) {
+            // if error occurred
+            if (err) {
+                // send internal error
+                res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+                console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
+            }
+            else {
+                // set url
+                var url = newPostedBlog.customShort;
+
+                // make an object
+                newPostedBlog = newPostedBlog.toObject({ hide: 'customShort', transform: true });
+                newPostedBlog.url = url;
+
+                // send success with blog data
+                res.end(JSON.stringify(newPostedBlog));
+            }
+        });
     }
 };
 
@@ -147,89 +172,125 @@ exports.createBlog = function (req, res) {
  * Show the specific blog
  */
 exports.readBlog = function (req, res) {
+    // get the blog from the request
+    var blogPost = req.blogPost;
+
+    // set url
+    var url = blogPost.customShort;
+
+    // make an object
+    blogPost = blogPost.toObject({ hide: 'customShort', transform: true });
+    blogPost.url = url;
+
     // send blog post
-    res.end(JSON.stringify(req.blogPost));
+    res.end(JSON.stringify(blogPost));
 };
 
 /**
  * Update the specific blog
  */
 exports.updateBlog = function (req, res) {
-    // set updated values 
-    var updatedValues = {
-        "title": req.blogPost.title,
-        "image": req.blogPost.image,
-        "shortDescription": req.blogPost.shortDescription,
-        "body": req.blogPost.body
-    };
+    // validate existence
+    req.checkBody('title', 'Title is required').notEmpty();
+    req.checkBody('shortDescription', 'Short Description is required').notEmpty();
+    req.checkBody('body', 'Body is required').notEmpty();
+    
+    // validate errors
+    var errors = req.validationErrors();
 
-    // find the blog and remove
-    BlogPost.findOneAndUpdate({ customShort : req.blogPost.url }, updatedValues).exec(function(err, updatedPostedBlog) {
-        // if an error occurred
-        if (err) {
-            // send internal error
-            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) });
-            console.log(clc.error(errorHandler.getErrorMessage(err)));
-        }
-        else if(updatedPostedBlog) {
-            // create the successful request
-            var err = {
-                code: 200
-            };
+    // if errors exist
+    if (errors) {
+        // holds all the errors in one text
+        var errorText = "";
 
-            // return success
-            res.status(200).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) + " You have updated the blog successfully!" });
+        // add all the errors
+        for(var x = 0; x < errors.length; x++) {
+            errorText += errors[x].msg + "\r\n";
         }
-        else {
-            // create the bad request
-            var err = {
-                code: 400
-            };
 
-            // send bad request
-            res.status(400).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) + " Blog not found." });
-        }
-    });
+        // send bad request
+        res.status(400).send({ title: errorHandler.getErrorTitle({ code: 400 }), message: errorHandler.getGenericErrorMessage({ code: 400 }) + errorText });
+    }
+    else {
+        // set draft from request
+        var blogPost = req.blogPost;
+
+        // set updated values 
+        var updatedValues = {
+            "title": req.body.title,
+            "image": req.body.image,
+            "shortDescription": req.body.shortDescription,
+            "body": req.body.body,
+            "dateUpdated": new Date()
+        };
+
+        // find the blog and remove
+        blogPost.update(updatedValues).exec(function(err) {
+            // if an error occurred
+            if (err) {
+                // send internal error
+                res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+                console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
+            }
+            else {
+                // see if there was a saved draft 
+                SavedBlogPost.findOneAndRemove({ customShort : blogPost.customShort }).exec(function(err) {
+                    // if error occured
+                    if (err) {
+                        // log error
+                        console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
+                    }
+
+                    // set url
+                    var url = blogPost.customShort;
+
+                    // make an object
+                    blogPost = blogPost.toObject({ hide: 'customShort', transform: true });
+
+                    // TODO: is there any way we don't have to do this, and instead get the updated document?
+                    // set all updated values
+                    blogPost.url = url;
+                    blogPost.title = updatedValues.title;
+                    blogPost.image = updatedValues.image;
+                    blogPost.shortDescription = updatedValues.shortDescription;
+                    blogPost.body = updatedValues.body;
+                    blogPost.dateUpdated = updatedValues.dateUpdated;
+
+                    // send blog post
+                    res.end(JSON.stringify(blogPost));
+                });
+            }
+        });
+    }
 };
 
 /**
  * Delete the specific blog
  */
 exports.deleteBlog = function (req, res) {
-    // find the blog and remove
-    BlogPost.findOneAndRemove({ customShort : req.blogPost.url }).exec(function(err, removedPostedBlog) {
+    // set draft from request
+    var blogPost = req.blogPost;
+
+    // remove blog post
+    blogPost.remove(function(err) {
         // if an error occurred
         if (err) {
             // send internal error
-            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) });
-            console.log(clc.error(errorHandler.getErrorMessage(err)));
+            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+            console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
         }
-        else if(removedPostedBlog) {
+        else {
             // see if there was saved draft of this same blog
             // find the draft and remove
             SavedBlogPost.findOneAndRemove({ customShort : req.blogPost.url }).exec(function(err, removedSavedBlog) {
                 // if an error occurred
                 if (err) {
-                    console.log(clc.error(errorHandler.getErrorMessage(err)));
+                    console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
                 }
 
-                // create the successful request
-                var err = {
-                    code: 200
-                };
-
                 // return success
-                res.status(200).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) + " You have deleted the blog successfully!" });
+                res.status(200).send({ title: errorHandler.getErrorTitle({ code: 200 }), message: errorHandler.getGenericErrorMessage({ code: 200 }) + " You have deleted the blog successfully!" });
             });
-        }
-        else {
-            // create the bad request
-            var err = {
-                code: 400
-            };
-
-            // send bad request
-            res.status(400).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) + " Blog not found." });
         }
     });
 };
@@ -247,22 +308,17 @@ exports.blogByID = function (req, res, next, id) {
         }
         // if blog was found
         else if(foundBlog) {
-            // set url
-            var url = foundBlog.customShort;
-
-            // make an object
-            foundBlog = foundBlog.toObject({ hide: 'customShort', transform: true });
-            foundBlog.url = url;
-            foundBlog.views++;
-
             // update the view count
-            BlogPost.update({ customShort : id }, { $inc: { views: 1 } }).exec(function(err, updatedBlog) {
+            foundBlog.update({ $inc: { views: 1 } }).exec(function(err, updatedBlog) {
                 // if error occured
                 if (err) {
                     // return error
                     return next(err);
                 }
                 else {
+                    // increase the view count since this model from the first 'find' isn't updated yet
+                    foundBlog.views++;
+
                     // bind the data to the request
                     req.blogPost = foundBlog;
                     next();
@@ -270,13 +326,8 @@ exports.blogByID = function (req, res, next, id) {
             });
         }
         else {
-            // create the not found error
-            var err = {
-                code: 404
-            };
-
             // send not found
-            res.status(404).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) + " Blog not found." });
+            res.status(404).send({ title: errorHandler.getErrorTitle({ code: 404 }), message: errorHandler.getGenericErrorMessage({ code: 404 }) + " Blog not found." });
         }
     });
 };
@@ -289,7 +340,7 @@ function logBlogSearchQuery(queryText) {
 	AnalyticsBlogSearch.findOne({ keyword : queryText.toLowerCase() }).exec(function(err, foundSearchText) {
 		// if error occured
 		if (err) {
-			console.log(clc.error(errorHandler.getErrorMessage(err)));
+			console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
 		}
 		else if(foundSearchText) {
 			// push the ip who accessed this page
@@ -329,8 +380,8 @@ exports.draftList = function (req, res) {
         // if error occured
         if (err) {
             // send internal error
-            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) });
-            console.log(clc.error(errorHandler.getErrorMessage(err)));
+            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+            console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
         }
         // if drafts were found
         else if(drafts) {
@@ -343,15 +394,82 @@ exports.draftList = function (req, res) {
             res.end(JSON.stringify({ "savedPosts": drafts }));
         }
         else {
-            // create the not found error
-            var err = {
-                code: 404
-            };
-
             // send not found
-            res.status(404).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) + " Blog drafts not found." });
+            res.status(404).send({ title: errorHandler.getErrorTitle({ code: 404 }), message: errorHandler.getGenericErrorMessage({ code: 404 }) + " Blog drafts not found." });
         }
     });
+};
+
+/**
+ * Publish new blog from draft
+ */
+exports.publishBlogFromDraft = function (req, res) {
+    // validate existence
+    req.checkBody('title', 'Title is required').notEmpty();
+    req.checkBody('shortDescription', 'Short Description is required').notEmpty();
+    req.checkBody('body', 'Body is required').notEmpty();
+    
+    // validate errors
+    var errors = req.validationErrors();
+
+    // if errors exist
+    if (errors) {
+        // holds all the errors in one text
+        var errorText = "";
+
+        // add all the errors
+        for(var x = 0; x < errors.length; x++) {
+            errorText += errors[x].msg + "\r\n";
+        }
+
+        // send bad request
+        res.status(400).send({ title: errorHandler.getErrorTitle({ code: 400 }), message: errorHandler.getGenericErrorMessage({ code: 400 }) + errorText });
+    }
+    else {
+        // set draft from request
+        var blogDraft = req.blogDraft;
+
+        // create the blog
+        var blogPost = new BlogPost({
+            customShort: blogDraft.customShort,
+            title: req.body.title,
+            image: req.body.image,
+            shortDescription: req.body.shortDescription,
+            body: req.body.body
+        });
+
+        // save the blog
+        blogPost.save(function(err, newPostedBlog) {
+            // if error occurred
+            if (err) {
+                // send internal error
+                res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+                console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
+            }
+            else {
+                // remove draft
+                blogDraft.remove(function(err, removedSavedBlog) {
+                    // if an error occurred
+                    if (err) {
+                        // send internal error
+                        res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+                        console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
+                    }
+                    else {
+                        // set url
+                        var url = newPostedBlog.customShort;
+
+                        // make an object
+                        newPostedBlog = newPostedBlog.toObject({ hide: 'customShort', transform: true });
+                        newPostedBlog.url = url;
+
+                        // send success with blog data
+                        res.end(JSON.stringify(newPostedBlog));
+                    }
+                });
+            }
+        });
+    }
 };
 
 /**
@@ -366,11 +484,6 @@ exports.createDraft = function (req, res) {
 
     // if errors exist
     if (errors) {
-        // setup the 400 error
-        var err = {
-            code: 400
-        };
-
         // holds all the errors in one text
         var errorText = "";
 
@@ -380,41 +493,85 @@ exports.createDraft = function (req, res) {
         }
 
         // send bad request
-        res.status(400).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) + errorText });
+        res.status(400).send({ title: errorHandler.getErrorTitle({ code: 400 }), message: errorHandler.getGenericErrorMessage({ code: 400 }) + errorText });
     }
     else {
-        // generate a short id
-        var shortId = shortid.generate();
+        // set a possible id
+        var postId = req.body.id;
 
-        // create the blog
-        var savedBlog = new SavedBlogPost({
-            "customShort": shortId,
-            "title": req.body.title,
-            "image": req.body.image,
-            "shortDescription": req.body.shortDescription,
-            "body": req.body.body
-        });
+        // if there is an id already attached (which means it was a blog that was being edited and now want to save a draft with the same customShort id)
+        if(postId) {
+            // check if id is valid
+            if(shortid.isValid(postId)) {
+                // create the blog
+                var savedBlog = new SavedBlogPost({
+                    "customShort": postId,
+                    "title": req.body.title,
+                    "image": req.body.image,
+                    "shortDescription": req.body.shortDescription,
+                    "body": req.body.body
+                });
 
-        // save the blog
-        savedBlog.save(function(err, newSavedBlog) {
-            // if error occured
-            if (err) {
-                // send internal error
-                res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) });
-                console.log(clc.error(errorHandler.getErrorMessage(err)));
+                // save the blog
+                savedBlog.save(function(err, newSavedBlog) {
+                    // if error occured
+                    if (err) {
+                        // send internal error
+                        res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+                        console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
+                    }
+                    else {
+                        // set url
+                        var url = newSavedBlog.customShort;
+
+                        // make an object
+                        newSavedBlog = newSavedBlog.toObject({ hide: 'customShort', transform: true });
+                        newSavedBlog.url = url;
+
+                        // send success with blog data
+                        res.end( JSON.stringify(newSavedBlog) );
+                    }
+                });
             }
             else {
-                // set url
-                var url = newSavedBlog.customShort;
-
-                // make an object
-                newSavedBlog = newSavedBlog.toObject({ hide: 'customShort', transform: true });
-                newSavedBlog.url = url;
-
-                // send success with blog data
-                res.end( JSON.stringify(newSavedBlog) );
+                // send bad request
+                res.status(400).send({ title: errorHandler.getErrorTitle({ code: 400 }), message: errorHandler.getGenericErrorMessage({ code: 400 }) + " Invalid Blog Post Id." });
             }
-        });
+        }
+        else {
+            // generate a short id
+            var shortId = shortid.generate();
+
+            // create the blog
+            var savedBlog = new SavedBlogPost({
+                "customShort": shortId,
+                "title": req.body.title,
+                "image": req.body.image,
+                "shortDescription": req.body.shortDescription,
+                "body": req.body.body
+            });
+
+            // save the blog
+            savedBlog.save(function(err, newSavedBlog) {
+                // if error occured
+                if (err) {
+                    // send internal error
+                    res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+                    console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
+                }
+                else {
+                    // set url
+                    var url = newSavedBlog.customShort;
+
+                    // make an object
+                    newSavedBlog = newSavedBlog.toObject({ hide: 'customShort', transform: true });
+                    newSavedBlog.url = url;
+
+                    // send success with blog data
+                    res.end( JSON.stringify(newSavedBlog) );
+                }
+            });
+        }
     }
 };
 
@@ -422,7 +579,17 @@ exports.createDraft = function (req, res) {
  * Shows the specific blog draft
  */
 exports.readDraft = function (req, res) {
-    // send blog post
+    // set draft from request
+    var blogDraft = req.blogDraft;
+
+    // set url
+    var url = blogDraft.customShort;
+
+    // make an object
+    blogDraft = blogDraft.toObject({ hide: 'customShort', transform: true });
+    blogDraft.url = url;
+
+    // send blog draft
     res.end(JSON.stringify(req.blogDraft));
 };
 
@@ -430,75 +597,87 @@ exports.readDraft = function (req, res) {
  * Updates the specific blog draft
  */
 exports.updateDraft = function (req, res) {
-    // set updated values 
-    var updatedValues = {
-        "title": req.blogDraft.title,
-        "image": req.blogDraft.image,
-        "shortDescription": req.blogDraft.shortDescription,
-        "body": req.blogDraft.body
-    };
+    // validate existence
+    req.checkBody('title', 'Title is required').notEmpty();
     
-    // find the blog draft and update
-    SavedBlogPost.findOneAndUpdate({ customShort : req.blogDraft.url }, updatedValues).exec(function(err, updatedSavedBlog) {
-        // if error occured
-        if (err) {
-            // send internal error
-            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) });
-            console.log(clc.error(errorHandler.getErrorMessage(err)));
-        }	
-        // if saved blog found
-        else if(updatedSavedBlog) {
-            // set url
-            var url = updatedSavedBlog.customShort;
+    // validate errors
+    var errors = req.validationErrors();
 
-            // make an object
-            updatedSavedBlog = updatedSavedBlog.toObject({ hide: 'customShort', transform: true });
-            updatedSavedBlog.url = url;
+    // if errors exist
+    if (errors) {
+        // holds all the errors in one text
+        var errorText = "";
 
-            // send success with blog data
-            res.end(JSON.stringify(updatedSavedBlog));
+        // add all the errors
+        for(var x = 0; x < errors.length; x++) {
+            errorText += errors[x].msg + "\r\n";
         }
-        else {
-            // create the not found error
-            var err = {
-                code: 404
-            };
 
-            // send not found
-            res.status(404).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) + " Blog draft not found." });
-        }
-    });
+        // send bad request
+        res.status(400).send({ title: errorHandler.getErrorTitle({ code: 400 }), message: errorHandler.getGenericErrorMessage({ code: 400 }) + errorText });
+    }
+    else {
+        // set draft from request
+        var blogDraft = req.blogDraft;
+
+        // set updated values 
+        var updatedValues = {
+            "title": req.body.title,
+            "image": req.body.image,
+            "shortDescription": req.body.shortDescription,
+            "body": req.body.body,
+            "dateSaved": new Date()
+        };
+
+        // update blog draft
+        blogDraft.update(updatedValues).exec(function(err) {
+            // if error occured
+            if (err) {
+                // send internal error
+                res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+                console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
+            }
+            else {
+                // set url
+                var url = blogDraft.customShort;
+
+                // make an object
+                blogDraft = blogDraft.toObject({ hide: 'customShort', transform: true });
+
+                // TODO: is there any way we don't have to do this, and instead get the updated document?
+                // set all updated values
+                blogDraft.url = url;
+                blogDraft.title = updatedValues.title;
+                blogDraft.image = updatedValues.image;
+                blogDraft.shortDescription = updatedValues.shortDescription;
+                blogDraft.body = updatedValues.body;
+                blogDraft.dateSaved = updatedValues.dateSaved;
+
+                // send success with blog data
+                res.end(JSON.stringify(blogDraft));
+            }
+        });
+    }
 };
 
 /**
  * Delete the specific blog draft
  */
 exports.deleteDraft = function (req, res) {
-    // find the blog and remove
-    SavedBlogPost.findOneAndRemove({ customShort : req.blogDraft.url }).exec(function(err, removedSavedBlog) {
+    // set draft from request
+    var blogDraft = req.blogDraft;
+
+    // remove draft
+    blogDraft.remove(function(err) {
         // if an error occurred
         if (err) {
             // send internal error
-            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) });
-            console.log(clc.error(errorHandler.getErrorMessage(err)));
-        }
-        else if(removedSavedBlog) {
-            // create the successful request
-            var err = {
-                code: 200
-            };
-
-            // return success
-            res.status(200).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) + " You have discarded the saved post successfully!" });
+            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+            console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
         }
         else {
-            // create the bad request
-            var err = {
-                code: 400
-            };
-
-            // send bad request
-            res.status(400).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) + " Blog draft not found." });
+            // return success
+            res.status(200).send({ title: errorHandler.getErrorTitle({ code: 200 }), message: errorHandler.getGenericErrorMessage({ code: 200 }) + " You have discarded the saved post successfully!" });
         }
     });
 };
@@ -516,25 +695,13 @@ exports.draftBlogByID = function (req, res, next, id) {
         }
         // if draft was found
         else if(foundDraft) {
-            // set url
-            var url = foundDraft.customShort;
-
-            // make an object
-            foundDraft = foundDraft.toObject({ hide: 'customShort', transform: true });
-            foundDraft.url = url;
-
             // bind the data to the request
             req.blogDraft = foundDraft;
             next();
         }
         else {
-            // create the not found error
-            var err = {
-                code: 404
-            };
-
             // send not found
-            res.status(404).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) + " Blog draft not found." });
+            res.status(404).send({ title: errorHandler.getErrorTitle({ code: 404 }), message: errorHandler.getGenericErrorMessage({ code: 404 }) + " Blog draft not found." });
         }
     });
 };

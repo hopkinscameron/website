@@ -22,6 +22,6 @@ exports.isAllowed = function (req, res, next) {
             code: 403
         };
 
-        return res.status(403).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getErrorMessage(err) });
+        return res.status(403).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
     }
 };

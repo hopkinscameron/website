@@ -12,7 +12,7 @@
         <!-- Begin Page Fully Loaded With No Errors -->
         <div id="pageShow" class="animated animation-delay--md fadeIn collapse" ng-if="pageFullyLoaded && !error.error">
             <!-- Begin Page Title -->
-            <h2 class="font-weight-bold text-uppercase mb-3">Blog Post New</h2>
+            <h2 class="font-weight-bold text-uppercase mb-3">New Blog Post</h2>
             <!-- End Page Title -->
             <!-- Begin Blog Insert and Saved Blog Posts -->
             <div class="row">
@@ -74,11 +74,11 @@
                                     <button class="btn btn-theme-primary" ng-class="{'w-100': $root.isDeviceWidthSmallerThan(425)}" ng-click="saveBlog()">Save</button>
                                 </div>
                                 <!-- End Save -->
-                                <!-- Begin Post -->
+                                <!-- Begin Publish -->
                                 <div class="col text-right" ng-class="{'col-12 mb-3': $root.isDeviceWidthSmallerThan(425)}">
-                                    <button class="btn btn-success" ng-class="{'w-100': $root.isDeviceWidthSmallerThan(425)}" ng-click="postBlog()" ng-disabled="blogPostForm.formSubmitted || blogPostForm.errors.isError">Post</button>
+                                    <button class="btn btn-success" ng-class="{'w-100': $root.isDeviceWidthSmallerThan(425)}" ng-click="publishBlog()" ng-disabled="blogPostForm.formSubmitted || blogPostForm.errors.isError">Publish</button>
                                 </div>
-                                <!-- End Post -->
+                                <!-- End Publish -->
                             </div>
                             <!-- End Post/Save -->
                         </form>

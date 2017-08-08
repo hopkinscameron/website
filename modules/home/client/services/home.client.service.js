@@ -16,7 +16,7 @@ angular.module('app').factory('HomeFactory', ['$http', '$location', function ($h
                 'Content-Type': 'application/json; odata=verbose',
                 'Accept': 'application/json; odata=verbose'
             },
-            data: 'undefined'
+            data: undefined
         };
 
         // send request

@@ -10,7 +10,7 @@ var // the path
     // the login controller to handle routes
     loginController = require('../controllers/login.server.controller');
 
-module.exports = function (app, passport) {
+module.exports = function (app) {
     // GET gets login page
     // POST log user in
 	// format /login
@@ -19,9 +19,5 @@ module.exports = function (app, passport) {
 
     // POST signs user up
 	// format /signup
-    app.route('/signup').post(ipLogger.log, passport.authenticate('local-signup', {
-		successRedirect : '/about', // redirect to the secure profile section
-		failureRedirect : '/login', // redirect back to the home page if there is an error
-		failureFlash : true // allow flash messages
-	}));
+    app.route('/signup').post(ipLogger.log, loginController.signUp);
 };

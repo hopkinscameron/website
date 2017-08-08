@@ -12,7 +12,7 @@
         <!-- Begin Page Fully Loaded With No Errors -->
         <div id="pageShow" class="animated animation-delay--md fadeIn collapse" ng-if="pageFullyLoaded && !error.error">
             <!-- Begin Page Title -->
-            <h2 class="font-weight-bold text-uppercase mb-3">Blog Post Edit</h2>
+            <h2 class="font-weight-bold text-uppercase mb-3">Edit Blog Post</h2>
             <!-- End Page Title -->
             <!-- Begin Blog Insert -->
             <div class="col-md-8 offset-md-2 animated animation-delay--xmd fadeInUp">
@@ -64,31 +64,31 @@
                             <!-- Begin Discard/Delete -->
                             <div class="row">
                                 <!-- Begin Discard Draft -->
-                                <div class="col-md-6 mb-2 text-left">
-                                    <button class="btn btn-warning w-100" ng-click="discardDraft()">Discard Draft</button>
+                                <div class="col-md-6 mb-2 text-left" ng-if="post.hasDraft">
+                                    <button class="btn btn-warning w-100" ng-click="discardDraft()" ng-disabled="blogPostEditForm.formSubmitted || blogPostEditForm.errors.isError">Discard Draft</button>
                                 </div>
                                 <!-- End Discard Draft -->
                                 <!-- Begin Delete -->
                                 <div class="col-md-6 mb-2 text-left">
-                                    <button class="btn btn-danger w-100" ng-click="deleteBlog()">Delete Post</button>
+                                    <button class="btn btn-danger w-100" ng-click="deleteBlog()" ng-disabled="blogPostEditForm.formSubmitted || blogPostEditForm.errors.isError">Delete Post</button>
                                 </div>
                                 <!-- End Delete -->
                             </div>
                             <!-- End Discard/Delete -->
-                            <!-- Begin Save/Post -->
+                            <!-- Begin Save/Update -->
                             <div class="row">
                                 <!-- Begin Save -->
                                 <div class="col-md-6 text-left" ng-class="{'mb-2': $root.isDeviceWidthSmallerThan(768)}">
-                                    <button class="btn btn-theme-primary w-100" ng-click="saveBlog()">Save</button>
+                                    <button class="btn btn-theme-primary w-100" ng-click="saveBlog()" ng-disabled="blogPostEditForm.formSubmitted || blogPostEditForm.errors.isError">Save Draft</button>
                                 </div>
                                 <!-- End Save -->
-                                <!-- Begin Post -->
+                                <!-- Begin Update -->
                                 <div class="col-md-6 text-left">
-                                    <button class="btn btn-success w-100" ng-click="postBlog()" ng-disabled="blogPostEditForm.formSubmitted || blogPostEditForm.errors.isError">Post</button>
+                                    <button class="btn btn-success w-100" ng-click="updateBlog()" ng-disabled="blogPostEditForm.formSubmitted || blogPostEditForm.errors.isError">Publish Update</button>
                                 </div>
-                                <!-- End Post -->
+                                <!-- End Update -->
                             </div>
-                            <!-- End Save/Post -->
+                            <!-- End Save/Update -->
                         </div>
                     </form>
                     <!-- End Form -->

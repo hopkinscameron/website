@@ -359,7 +359,7 @@
     // gets the page data
     function getPageData() {        
         // get the blog
-        BlogFactory.getBlogPost(blogPostId).then(function (responseBP) {
+        BlogFactory.getEditableBlogPost(blogPostId).then(function (responseBP) {
             // if returned a valid response
             if (!responseBP.error) {
                 // set the data

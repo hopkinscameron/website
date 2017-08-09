@@ -9,8 +9,6 @@ var // the path
     errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
     // chalk for console logging
     clc = require(path.resolve('./config/lib/clc')),
-    // the file system to read/write from/to files locallly
-    fs = require('fs'),
     // short id generator
     shortid = require('shortid'),
     // the mongoose
@@ -20,7 +18,9 @@ var // the path
     // load up the Saved Blog model
     SavedBlogPost = mongoose.model('SavedBlogPost'),
     // load up the Analytics Blog Search model
-    AnalyticsBlogSearch = mongoose.model('AnalyticsBlogSearch');
+    AnalyticsBlogSearch = mongoose.model('AnalyticsBlogSearch'),
+    // the file details for this view
+    blogDetails = require('../data/blog');
 
 // =========================================================================
 // Blog Functions ==========================================================
@@ -29,80 +29,56 @@ var // the path
  * Show blog list
  */
 exports.blogList = function (req, res) {
-    // read file to gain information
-    fs.readFile(path.resolve('./server/data/blog.json'), 'utf8', function (err, data) {
-        // if error
-        if(err) {
-            // send internal error
-            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
-            console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
+    // set page number
+    var pageNumber = req.query.page ? req.query.page : 1;
+
+    // the options/search query
+    var findOptions = req.query.q ? { $text: {$search: req.query.q} } : {};
+
+    // if query
+    if(req.query.q) {
+        // log the blog search query
+        logBlogSearchQuery(req.query.q);
+    }
+
+    // find all blog posts
+    BlogPost.find(findOptions).exec(function(err, foundBlogs) {
+        var pageSize = 1;
+
+        // parse the page number
+        pageNumber = parseInt(pageNumber);
+        
+        // set total pages
+        blogDetails.totalPages = foundBlogs ? Math.ceil(foundBlogs.length/pageSize) : 0;
+
+        // set current page
+        blogDetails.currentPage = pageNumber;
+
+        // if pages
+        if(blogDetails.totalPages > 0) {
+            // find all blog posts but limit based on page size
+            BlogPost.find(findOptions).sort({ datePublished: 'desc' }).skip(pageSize*(pageNumber-1)).limit(pageSize).exec(function(err, sortedPagedBlogs) {
+                // map blogs to transform to an array of JSON
+                blogDetails.posts = sortedPagedBlogs.map(function(blog) {
+                    // get the url
+                    var url = blog.customShort;
+
+                    // make an object
+                    blog = blog.toObject({ hide: 'customShort', transform: true });
+                    blog.url = url;
+                    return blog;
+                });
+
+                // send data
+                res.json(blogDetails);
+            });
         }
         else {
-            // holds the parsed json data
-            var jsonParse = undefined;
+            // set to empty
+            blogDetails.posts = [];
 
-            try {
-                // parse json
-                jsonParse = JSON.parse(data);
-
-                // set page number
-                var pageNumber = req.query.page ? req.query.page : 1;
-
-                // the options/search query
-                var findOptions = req.query.q ? { $text: {$search: req.query.q} } : {};
-
-                // if query
-                if(req.query.q) {
-                    // log the blog search query
-                    logBlogSearchQuery(req.query.q);
-                }
-
-                // find all blog posts
-                BlogPost.find(findOptions).exec(function(err, foundBlogs) {
-                    var pageSize = 1;
-
-                    // parse the page number
-                    pageNumber = parseInt(pageNumber);
-                    
-                    // set total pages
-                    jsonParse.totalPages = foundBlogs ? Math.ceil(foundBlogs.length/pageSize) : 0;
-
-                    // set current page
-                    jsonParse.currentPage = pageNumber;
-
-                    // if pages
-                    if(jsonParse.totalPages > 0) {
-                        // find all blog posts but limit based on page size
-                        BlogPost.find(findOptions).sort({ datePublished: 'desc' }).skip(pageSize*(pageNumber-1)).limit(pageSize).exec(function(err, sortedPagedBlogs) {
-                            // map blogs to transform to an array of JSON
-                            jsonParse.posts = sortedPagedBlogs.map(function(blog) {
-                                // get the url
-                                var url = blog.customShort;
-
-                                // make an object
-                                blog = blog.toObject({ hide: 'customShort', transform: true });
-                                blog.url = url;
-                                return blog;
-                            });
-
-                            // send data
-                            res.end(JSON.stringify(jsonParse));
-                        });
-                    }
-                    else {
-                        // set to empty
-                        jsonParse.posts = [];
-
-                        // send data
-                        res.end(JSON.stringify(jsonParse));
-                    }
-                });
-            }
-            catch (err) {
-                // send internal error
-                res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
-                console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
-            }
+            // send data
+            res.json(blogDetails);
         }
     });
 };
@@ -162,7 +138,7 @@ exports.publishBlogFromScratch = function (req, res) {
                 newPostedBlog.url = url;
 
                 // send success with blog data
-                res.end(JSON.stringify(newPostedBlog));
+                res.json(newPostedBlog);
             }
         });
     }
@@ -183,7 +159,7 @@ exports.readBlog = function (req, res) {
     blogPost.url = url;
 
     // send blog post
-    res.end(JSON.stringify(blogPost));
+    res.json(blogPost);
 };
 
 /**
@@ -257,7 +233,7 @@ exports.updateBlog = function (req, res) {
                     blogPost.dateUpdated = updatedValues.dateUpdated;
 
                     // send blog post
-                    res.end(JSON.stringify(blogPost));
+                    res.json(blogPost);
                 });
             }
         });
@@ -316,8 +292,11 @@ exports.blogByID = function (req, res, next, id) {
                     return next(err);
                 }
                 else {
-                    // increase the view count since this model from the first 'find' isn't updated yet
-                    foundBlog.views++;
+                    // if editing, don't increase the view count
+                    if(!req.body.editing) {
+                        // increase the view count since this model from the first 'find' isn't updated yet
+                        foundBlog.views++;
+                    }
 
                     // bind the data to the request
                     req.blogPost = foundBlog;
@@ -343,8 +322,8 @@ function logBlogSearchQuery(queryText) {
 			console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
 		}
 		else if(foundSearchText) {
-			// push the ip who accessed this page
-			AnalyticsBlogSearch.update({ keyword : queryText.toLowerCase() }, { $inc: { hits: 1 } }).exec(function(err, updatedSearchText) {
+			// update the count
+			foundSearchText.update({ $inc: { hits: 1 } }).exec(function(err) {
 				// if error occured
 				if (err) {
 					console.log(clc.error(err.message));
@@ -391,7 +370,7 @@ exports.draftList = function (req, res) {
             });
 
             // send drafts back
-            res.end(JSON.stringify({ "savedPosts": drafts }));
+            res.json({ "savedPosts": drafts });
         }
         else {
             // send not found
@@ -464,7 +443,7 @@ exports.publishBlogFromDraft = function (req, res) {
                         newPostedBlog.url = url;
 
                         // send success with blog data
-                        res.end(JSON.stringify(newPostedBlog));
+                        res.json(newPostedBlog);
                     }
                 });
             }
@@ -529,7 +508,7 @@ exports.createDraft = function (req, res) {
                         newSavedBlog.url = url;
 
                         // send success with blog data
-                        res.end( JSON.stringify(newSavedBlog) );
+                        res.json(newSavedBlog);
                     }
                 });
             }
@@ -568,7 +547,7 @@ exports.createDraft = function (req, res) {
                     newSavedBlog.url = url;
 
                     // send success with blog data
-                    res.end( JSON.stringify(newSavedBlog) );
+                    res.json(newSavedBlog);
                 }
             });
         }
@@ -590,7 +569,7 @@ exports.readDraft = function (req, res) {
     blogDraft.url = url;
 
     // send blog draft
-    res.end(JSON.stringify(req.blogDraft));
+    res.json(req.blogDraft);
 };
 
 /**
@@ -654,7 +633,7 @@ exports.updateDraft = function (req, res) {
                 blogDraft.dateSaved = updatedValues.dateSaved;
 
                 // send success with blog data
-                res.end(JSON.stringify(blogDraft));
+                res.json(blogDraft);
             }
         });
     }

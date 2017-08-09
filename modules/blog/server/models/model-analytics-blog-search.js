@@ -54,4 +54,4 @@ AnalyticsBlogSearchSchema.options.toObject.transform = function (doc, ret, optio
 };
 
 // export for other uses
-module.exports = mongoose.model("AnalyticsBlogSearch", AnalyticsBlogSearchSchema);
+module.exports = mongoose.model('AnalyticsBlogSearch', AnalyticsBlogSearchSchema);

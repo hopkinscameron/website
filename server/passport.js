@@ -1,12 +1,13 @@
-// config/passport.js
+/**
+ * Module dependencies
+ */
+var // use local strategy for sign up/logging in
+    LocalStrategy = require('passport-local').Strategy,
+    // the mongoose
+    mongoose = require('mongoose'),
+    // load up the user model
+    User = mongoose.model('User');
 
-// load all the things we need
-var LocalStrategy = require('passport-local').Strategy;
-
-// load up the user model
-var User = require('./models/model-user');
-
-// expose this function to our app using module.exports
 module.exports = function(passport) {
 
     // =========================================================================

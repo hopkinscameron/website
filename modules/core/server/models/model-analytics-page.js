@@ -126,4 +126,4 @@ AnalyticsPageSchema.options.toObject.transform = function (doc, ret, options) {
 };
 
 // export for other uses
-module.exports = mongoose.model("AnalyticsPage", AnalyticsPageSchema);
+module.exports = mongoose.model('AnalyticsPage', AnalyticsPageSchema);

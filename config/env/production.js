@@ -10,6 +10,12 @@ module.exports = {
     db: {
         uri: process.env.MONGODB || 'mongodb://localhost:27017/personal_website',
         options: {
+            db: { 
+                native_parser: true 
+            },
+            server: { 
+                poolSize: 5 
+            },
             user: '', // process.env.DB_USER
             pass: '' // process.env.DB_PASS
         },

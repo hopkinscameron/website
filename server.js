@@ -32,8 +32,6 @@ var // the server
 	glob = require('glob'),
 	// clc colors for console logging
 	clc = require('./config/lib/clc'),
-	// the secrets
-	secrets = require('./server/secrets'),
 	// get the default assets
   	defaultAssets = require(path.join(process.cwd(), 'config/assets/default')),
   	// get the environment assets
@@ -91,12 +89,12 @@ app.use(expressValidator());
 var options = {
 	db: { native_parser: true },
 	server: { poolSize: 5 },
-	user: secrets.db_user,
-	pass: secrets.db_pass
+	user: config.db.options.user,
+	pass: config.db.options.pass
 }
 
 // mongoose
-var mongooseDBConnect = mongoose.connect(secrets.db, { }, function(err) {
+var mongooseDBConnect = mongoose.connect(config.db.uri, { }, function(err) {
 	// if error
 	if(err) {
 		console.log(clc.error(err.message));
@@ -126,14 +124,14 @@ app.use(expressSession({
 	})
 }));
 
+// set up the routes
+setUpRoutes();
+
 // passport config -> 
 require('./server/passport')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-
-// set up the routes
-setUpRoutes();
 
 // logs client IP address with every request
 app.use(function (req, res, next) {
@@ -178,15 +176,14 @@ function startServer() {
 	setUpIOSocket();
 	
 	// begin server
-	server.listen(secrets.port, function () {
+	server.listen(config.port, function () {
 		var host = server.address().address;
 		var port = server.address().port;
-		//console.log(clc.success('App running at //%s:%s', host, port));
 		
-		// Create server URL
+		// create server URL
 		var url = (process.env.NODE_ENV === 'secure' ? 'https://' : 'http://') + config.host + ':' + config.port;
 
-		// Logging initialization
+		// logging initialization
 		console.log('--');
 		console.log(clc.success(config.app.title));
 		console.log();
@@ -304,10 +301,14 @@ function getGlobbedPaths(globPatterns, excludes) {
  * Set up routes
  */
 function setUpRoutes() {
-	// define the routes     
-	require('./server/routes')(app, passport);
+	// globbing model files
+	config.files.server.models.forEach(function (modelPath) {
+		require(path.resolve(modelPath));
+	});
 
-	//Seperate out
+	// define the routes     
+	require('./server/routes')(app)//, passport);
+
 	// globbing routing files
 	config.files.server.routes.forEach(function (routePath) {
 		require(path.resolve(routePath))(app);

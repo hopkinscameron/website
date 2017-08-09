@@ -5,11 +5,17 @@ var defaultEnvConfig = require('./default');
 module.exports = {
     livereload: true,
     app: {
-        title: defaultEnvConfig.app.title + ' - Development Environment'
+        title: defaultEnvConfig.app.title
     },
     db: {
         uri: process.env.MONGODB || 'mongodb://localhost:27017/personal_website',
         options: {
+            db: { 
+                native_parser: true 
+            },
+            server: { 
+                poolSize: 5 
+            },
             user: '', // process.env.DB_USER
             pass: '' // process.env.DB_PASS
         },

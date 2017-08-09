@@ -6,7 +6,7 @@
 var // the path
     path = require('path'),
     // error message center
-    errorMessageCenter = require(path.resolve('./config/errorMessages'));
+    errorMessageCenter = require(path.resolve('./config/lib/errorMessages'));
 
 /**
  * Get the error title from error object

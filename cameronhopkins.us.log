@@ -1737,3 +1737,81 @@ Error: listen EADDRINUSE 127.0.0.1:3000
 
 2017-08-01T18:06:49.016Z - info: 127.0.0.1 - - [01/Aug/2017:18:06:49 +0000] "GET /api/header HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
 
+2017-08-09T19:13:53.086Z - error: uncaughtException: Cannot read property 'clientID' of undefined date=Wed Aug 09 2017 15:13:52 GMT-0400 (Eastern Daylight Time), pid=17020, uid=null, gid=null, cwd=c:\Users\hopkic5\Documents\GitHub\website, execPath=C:\Program Files\nodejs\node.exe, version=v8.1.3, argv=[C:\Program Files\nodejs\node.exe, c:\Users\hopkic5\Documents\GitHub\website\server-mean.js], rss=77799424, heapTotal=32030720, heapUsed=27610464, external=17851787, loadavg=[0, 0, 0], uptime=144689.1488235
+TypeError: Cannot read property 'clientID' of undefined
+    at Object.module.exports.initLocalVariables (c:\Users\hopkic5\Documents\GitHub\website\config\lib\express.js:56:47)
+    at Object.module.exports.init (c:\Users\hopkic5\Documents\GitHub\website\config\lib\express.js:263:10)
+    at c:\Users\hopkic5\Documents\GitHub\website\config\lib\app.js:23:27
+    at c:\Users\hopkic5\Documents\GitHub\website\config\lib\mongoose.js:55:17
+    at c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\lib\connection.js:318:19
+    at open (c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\lib\connection.js:684:17)
+    at NativeConnection.Connection.onOpen (c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\lib\connection.js:694:5)
+    at c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\lib\connection.js:654:11
+    at c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\lib\drivers\node-mongodb-native\connection.js:71:5
+    at c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\node_modules\mongodb\lib\db.js:238:5
+    at Server.connectHandler (c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\node_modules\mongodb\lib\server.js:339:7)
+    at Object.onceWrapper (events.js:316:30)
+    at emitOne (events.js:115:13)
+    at Server.emit (events.js:210:7)
+    at c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\node_modules\mongodb-core\lib\topologies\server.js:299:14
+    at c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\node_modules\mongodb-core\lib\connection\pool.js:469:18
+    at _combinedTickCallback (internal/process/next_tick.js:95:7)
+    at process._tickCallback (internal/process/next_tick.js:161:9)
+2017-08-09T19:17:08.769Z - error: uncaughtException: Cannot find module '.././config/errorMessages' date=Wed Aug 09 2017 15:17:08 GMT-0400 (Eastern Daylight Time), pid=21812, uid=null, gid=null, cwd=c:\Users\hopkic5\Documents\GitHub\website, execPath=C:\Program Files\nodejs\node.exe, version=v8.1.3, argv=[C:\Program Files\nodejs\node.exe, c:\Users\hopkic5\Documents\GitHub\website\server-mean.js], rss=178139136, heapTotal=44613632, heapUsed=37336208, external=99386370, loadavg=[0, 0, 0], uptime=144884.83339
+Error: Cannot find module '.././config/errorMessages'
+    at Function.Module._resolveFilename (module.js:485:15)
+    at Function.Module._load (module.js:437:25)
+    at Module.require (module.js:513:17)
+    at require (internal/module.js:11:18)
+    at Object.<anonymous> (c:\Users\hopkic5\Documents\GitHub\website\server\routes.js:29:26)
+    at Module._compile (module.js:569:30)
+    at Object.Module._extensions..js (module.js:580:10)
+    at Module.load (module.js:503:32)
+    at tryModuleLoad (module.js:466:12)
+    at Function.Module._load (module.js:458:3)
+    at Module.require (module.js:513:17)
+    at require (internal/module.js:11:18)
+    at Object.module.exports.initModulesServerRoutes (c:\Users\hopkic5\Documents\GitHub\website\config\lib\express.js:215:5)
+    at Object.module.exports.init (c:\Users\hopkic5\Documents\GitHub\website\config\lib\express.js:285:10)
+    at c:\Users\hopkic5\Documents\GitHub\website\config\lib\app.js:23:27
+    at c:\Users\hopkic5\Documents\GitHub\website\config\lib\mongoose.js:55:17
+    at c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\lib\connection.js:318:19
+    at open (c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\lib\connection.js:684:17)
+    at NativeConnection.Connection.onOpen (c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\lib\connection.js:694:5)
+    at c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\lib\connection.js:654:11
+    at c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\lib\drivers\node-mongodb-native\connection.js:71:5
+    at c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\node_modules\mongodb\lib\db.js:238:5
+    at Server.connectHandler (c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\node_modules\mongodb\lib\server.js:339:7)
+    at Object.onceWrapper (events.js:316:30)
+    at emitOne (events.js:115:13)
+    at Server.emit (events.js:210:7)
+    at c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\node_modules\mongodb-core\lib\topologies\server.js:299:14
+    at c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\node_modules\mongodb-core\lib\connection\pool.js:469:18
+2017-08-09T19:18:07.523Z - error: uncaughtException: clc is not defined date=Wed Aug 09 2017 15:18:07 GMT-0400 (Eastern Daylight Time), pid=18796, uid=null, gid=null, cwd=c:\Users\hopkic5\Documents\GitHub\website, execPath=C:\Program Files\nodejs\node.exe, version=v8.1.3, argv=[C:\Program Files\nodejs\node.exe, c:\Users\hopkic5\Documents\GitHub\website\server-mean.js], rss=176279552, heapTotal=47235072, heapUsed=39080264, external=99667065, loadavg=[0, 0, 0], uptime=144943.5902651
+ReferenceError: clc is not defined
+    at Object.<anonymous> (c:\Users\hopkic5\Documents\GitHub\website\config\lib\socket.io.js:27:6)
+    at Module._compile (module.js:569:30)
+    at Object.Module._extensions..js (module.js:580:10)
+    at Module.load (module.js:503:32)
+    at tryModuleLoad (module.js:466:12)
+    at Function.Module._load (module.js:458:3)
+    at Module.require (module.js:513:17)
+    at require (internal/module.js:11:18)
+    at Object.module.exports.configureSocketIO (c:\Users\hopkic5\Documents\GitHub\website\config\lib\express.js:247:18)
+    at Object.module.exports.init (c:\Users\hopkic5\Documents\GitHub\website\config\lib\express.js:291:16)
+    at c:\Users\hopkic5\Documents\GitHub\website\config\lib\app.js:23:27
+    at c:\Users\hopkic5\Documents\GitHub\website\config\lib\mongoose.js:55:17
+    at c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\lib\connection.js:318:19
+    at open (c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\lib\connection.js:684:17)
+    at NativeConnection.Connection.onOpen (c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\lib\connection.js:694:5)
+    at c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\lib\connection.js:654:11
+    at c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\lib\drivers\node-mongodb-native\connection.js:71:5
+    at c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\node_modules\mongodb\lib\db.js:238:5
+    at Server.connectHandler (c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\node_modules\mongodb\lib\server.js:339:7)
+    at Object.onceWrapper (events.js:316:30)
+    at emitOne (events.js:115:13)
+    at Server.emit (events.js:210:7)
+    at c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\node_modules\mongodb-core\lib\topologies\server.js:299:14
+    at c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\node_modules\mongodb-core\lib\connection\pool.js:469:18
+    at _combinedTickCallback (internal/process/next_tick.js:95:7)
+    at process._tickCallback (internal/process/next_tick.js:161:9)

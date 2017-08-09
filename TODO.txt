@@ -3,16 +3,10 @@
 - Ability to updload images for projects and blogs
 
 All
-- 1. Seperate out neccessary api calls (title, blog list, etc.) -> do in header as well so that certain things have it;s own api call on the page
-- 2. see if I have to stringify the data or if I can just do res.json instead
-- 3. move json data files under server under the module (fix routes)
-- 4. move the models into its folders
-- 5. remove formatting from short description on blog
-- 6. blog views get updated on the blog edit page -> fix it
+- see if I can use lodash to speed up some stuff I might be doing in server stuff
 - blog draft put and blog update (put) method takes a very long time
 - seperate out admin views/regular views
-- move passport to config, seperate out express, app, etc.
-- add middleware back to prevent sniffing and all that
+
 
 - IE stuff not working
     - fancy font's not showing (could be proxy)

@@ -6,7 +6,7 @@
 var // the path
     path = require('path'),
 	// chalk for console logging
-    clc = require(path.resolve('./config/lib/clc')),
+	clc = require('./clc'),
     // the ability to create requests
     requestPromise = require('request-promise'),
     // the geo ip location

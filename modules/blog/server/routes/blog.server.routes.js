@@ -29,10 +29,12 @@ module.exports = function (app) {
 	
 	// single blog routes
 	// GET gets specific blog
+	// POST gets specific blog to be edited
 	// PUT updates specific blog
 	// DELETE deletes specific blog
 	// format /api/blog/:blogId
 	app.route('/api/blog/:blogId').get(ipLogger.log, blogController.readBlog)
+		.post([ipLogger.log, blogPolicy.isAllowed], blogController.readBlog)
 		.put([ipLogger.log, blogPolicy.isAllowed], blogController.updateBlog)
 		.delete([ipLogger.log, blogPolicy.isAllowed], blogController.deleteBlog);
 

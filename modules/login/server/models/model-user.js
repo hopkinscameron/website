@@ -7,12 +7,14 @@
 /**
  * Module dependencies
  */
-var // the communication to mongo database
+var  // the path
+    path = require('path'),
+    // get the default config
+	defaultConfig = require(path.resolve('./config/env/default')),
+    // the communication to mongo database
     mongoose = require('mongoose'),
     // the scheme for mongoose/mongodb
     Schema = mongoose.Schema,
-    // the secrets
-    secrets = require('.././secrets'),
     // bcrypt for cryptography
     bcrypt = require('bcryptjs'),
     // validator
@@ -72,7 +74,7 @@ UserSchema.pre('save', function(next) {
     if (!user.isModified('password')) return next();
 
     // generate a salt
-    bcrypt.genSalt(secrets.salt_rounds, function(err, salt) {
+    bcrypt.genSalt(defaultConfig.saltRounds, function(err, salt) {
         if (err) return next(err);
 
         // hash the password using our new salt
@@ -118,4 +120,4 @@ UserSchema.options.toObject.transform = function (doc, ret, options) {
 };
 
 // export for other uses
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model('User', UserSchema);

@@ -6,7 +6,7 @@ var requestPromise = require('request-promise');
 // the ability to send emails
 var nodemailer = require('nodemailer');
 
-// the file system to read/write from/to files locallly
+// the file system to read/write from/to files locally
 var fs = require('fs');
 
 // short id generator
@@ -26,8 +26,9 @@ var secrets = require('./secrets');
 var clc = require('.././config/lib/clc');
 
 // error message center
-var errorMessageCenter = require('.././config/errorMessages');
+var errorMessageCenter = require('.././config/lib/errorMessages');
 
+/*
 // load up the Blog Post model
 var BlogPost = require('./models/model-blog-post');
 
@@ -39,6 +40,7 @@ var AnalyticsPage = require('./models/model-analytics-page');
 
 // load up the Analytics Blog Search model
 var AnalyticsBlogSearch = require('./models/model-analytics-blog-search');
+*/
 
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({

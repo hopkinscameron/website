@@ -9,26 +9,29 @@ var // the path
     errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
     // chalk for console logging
     clc = require(path.resolve('./config/lib/clc')),
-    // the file system to read/write from/to files locallly
-    fs = require('fs');
+    // the file details for this view
+    portfolioDetails = require('../data/portfolio'),
+    // the file details for this project
+    driveOnMetzDetails = require('../data/drive-on-metz'),
+    // the file details for this project
+    forsakenDetails = require('../data/forsaken'),
+    // the file details for this project
+    memorylessDetails = require('../data/memoryless'),
+    // the file details for this project
+    overDriveDetails = require('../data/over-drive'),
+    // the file details for this project
+    roadRagerDetails = require('../data/road-rager'),
+    // the file details for this project
+    rollaballModDetails = require('../data/rollaball-mod'),
+    // the file details for this project
+    squirvivalDetails = require('../data/squirvival');
 
 /**
  * List of Portfolio Items
  */
 exports.list = function (req, res) {
-    // read file to gain information
-    fs.readFile(path.resolve('./server/data/portfolio.json'), 'utf8', function (err, data) {
-        // if error
-        if(err) {
-            // send internal error
-            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
-            console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
-        }
-        else {
-            // send data
-            res.end(data);
-        }
-    });
+    // send data
+    res.json(portfolioDetails);
 };
 
 /**
@@ -36,18 +39,18 @@ exports.list = function (req, res) {
  */
 exports.read = function (req, res) {
     // send portfolio item
-    res.end(JSON.stringify(req.portfolioItem));
+    res.json(req.portfolioItem);
 };
 
 /**
  * Portfolio Item middleware
  */
 exports.portfolioItemByID = function (req, res, next, id) {
-    // get correct file
-    var file = getPortfolioItemFile(id);
+    // get correct project
+    var project = getPortfolioItemFile(id);
 
-    // if file doesn't exist
-    if(!file) {
+    // if project doesn't exist
+    if(!project) {
         // create the error status
         var err = {
             code: 404
@@ -57,31 +60,9 @@ exports.portfolioItemByID = function (req, res, next, id) {
         res.status(404).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) + " Project not found." });
     }
     else {
-        // read file to gain information
-        fs.readFile(path.join(process.cwd(), 'server/data/', file), 'utf8', function (err, data) {
-            // if error
-            if(err) {
-                // return error
-                return next(err);
-            }
-            else {
-                // will hold the portfolio item
-                var portfolioItem = undefined;
-
-                try {
-                    // parse json
-                    portfolioItem = JSON.parse(data);
-
-                    // bind the data to the request
-                    req.portfolioItem = portfolioItem;
-                    next();
-                }
-                catch (err) {
-                    // return error
-                    return next(err);
-                }
-            }
-        });
+        // bind the data to the request
+        req.portfolioItem = project;
+        next();
     }
 };
 
@@ -89,14 +70,36 @@ exports.portfolioItemByID = function (req, res, next, id) {
  * Gets the file location of the matching portfolio item id
  */
 function getPortfolioItemFile(portfolioItemId) {
-	// if matching the correct id
-	if(portfolioItemId == 'drive-on-metz' || portfolioItemId == 'forsaken'
-		|| portfolioItemId == 'memoryless' || portfolioItemId == 'over-drive'
-		|| portfolioItemId == 'road-rager' || portfolioItemId == 'rollaball-mod'
-		|| portfolioItemId == 'squirvival'
-	) {
-		return portfolioItemId + ".json";
-	}
+    // the project 
+    var project = undefined;
+
+    // switch and match the correct project
+    switch(portfolioItemId) {
+        case 'drive-on-metz':
+            project = driveOnMetzDetails;
+            break;
+        case 'forsaken':
+            project = forsakenDetails;
+            break;
+        case 'memoryless':
+            project = memorylessDetails;
+            break;
+        case 'over-drive':
+            project = overDriveDetails;
+            break;
+        case 'road-rager':
+            project = roadRagerDetails;
+            break;
+        case 'rollaball-mod':
+            project = rollaballModDetails;
+            break;
+        case 'squirvival':
+            project = squirvivalDetails;
+            break;
+        default:
+            project = undefined;
+            break;
+    } 
 	
-	return undefined;
+	return project;
 };

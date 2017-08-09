@@ -9,24 +9,13 @@ var // the path
     errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
     // chalk for console logging
     clc = require(path.resolve('./config/lib/clc')),
-    // the file system to read/write from/to files locallly
-    fs = require('fs');
+    // the file details for this view
+    resumeDetails = require('../data/resume');
 
 /**
  * Show the current page
  */
 exports.read = function (req, res) {
-    // read file to gain information
-    fs.readFile(path.resolve('./server/data/resume.json'), 'utf8', function (err, data) {
-        // if error
-        if(err) {
-            // send internal error
-            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
-            console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
-        }
-        else {
-            // send data
-            res.end(data);
-        }
-    });
+    // send data
+    res.json(resumeDetails);
 };

@@ -69,6 +69,31 @@ angular.module('app').factory('BlogFactory', ['$http', '$location', function ($h
         });
     };
 
+    // gets editable blog post
+    factory.getEditableBlogPost = function (blogPostId) {
+        // set the endpoint
+        var endpoint = appPath + "/blog/" + blogPostId;
+
+        // create request
+        var req = {
+            method: 'POST',
+            url: endpoint,
+            headers: {
+                'Content-Type': 'application/json; odata=verbose',
+                'Accept': 'application/json; odata=verbose'
+            },
+            data: JSON.stringify({ "editing": true })
+        };
+
+        // send request
+        return $http(req).then(function (response) {
+            return response.data;
+        })
+        .catch(function (response) {
+            return { "error": true, "title": response.data.title, "status": response.status, "message": response.data.message };
+        });
+    };
+
     // creates blog post
     factory.createBlogPost = function (blogPostData) {
         // set the endpoint

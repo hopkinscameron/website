@@ -1,7 +1,7 @@
 'use strict';
 /**
- *  Name: The Blog Post Schema
-    Description: Determines how a blog post is defined
+ *  Name: The Saved Blog Post Schema
+    Description: Determines how a saved blog post is defined
  */
 
 /**
@@ -13,9 +13,9 @@ var // the communication to mongo database
     Schema = mongoose.Schema
 
 /**
- * Blog Post Schema
+ * Saved Blog Post Schema
  */ 
-var BlogPostSchema = new Schema({
+var SavedBlogPostSchema = new Schema({
     customShort: {
         type: String,
         required: true,
@@ -32,60 +32,44 @@ var BlogPostSchema = new Schema({
     },
     shortDescription: {
         type: String,
-        required: true,
         trim: true
     },
     body: {
         type: String,
-        required: true,
         trim: true
     },
-    author: {
-        type: String,
-        required: true,
-        trim: true,
-        default: "Cameron Hopkins"
-    },
-    datePublished: {
+    dateSaved: {
         type: Date,
         required: true,
         default: new Date()
-    },
-    dateUpdated: {
-        type: Date
-    },
-    views: {
-        type: Number,
-        required: true,
-        default: 0
     }
 });
 
-// add an index for searching text
-BlogPostSchema.index({ title: 'text', shortDescription: 'text', body: 'text', author: 'text' });
-
 // function that is called before updating to database
-BlogPostSchema.pre('save', function(next) {
-    // update the date published
-    this.datePublished = new Date();
+SavedBlogPostSchema.pre('save', function(next) {
+    // update the date saved
+    this.dateSaved = new Date();
     return next();
 });
 
 // function that is called before updating to database
-BlogPostSchema.pre('findOneAndUpdate', function(next) {
-    // update the date updated
-    this.update({},{ $set: { dateUpdated: new Date() } }).exec(function(err, updatedBlog) {
+SavedBlogPostSchema.pre('findOneAndUpdate', function(next) {
+    // update the date saved
+    this.update({},{ $set: { dateSaved: new Date() } }).exec(function(err, updatedSavedBlog) {
         return next();
     });
 });
 
 // specify the transform schema option
-if (!BlogPostSchema.options.toObject) {
-    BlogPostSchema.options.toObject = {};
+if (!SavedBlogPostSchema.options.toObject) {
+    SavedBlogPostSchema.options.toObject = {};
 }
 
 // set options for returning an object
-BlogPostSchema.options.toObject.transform = function (doc, ret, options) {
+SavedBlogPostSchema.options.toObject.transform = function (doc, ret, options) {
+    // get the short id
+    var shortId = ret.customShort;
+
     // if hide options
     if (options.hide) {
         // go through each option and remove
@@ -93,6 +77,9 @@ BlogPostSchema.options.toObject.transform = function (doc, ret, options) {
             delete ret[prop];
         });
     }
+    
+    // replace short id with url
+    ret.url = shortId;
 
     // always hide the id and version
     delete ret['_id'];
@@ -103,4 +90,4 @@ BlogPostSchema.options.toObject.transform = function (doc, ret, options) {
 };
 
 // export for other uses
-module.exports = mongoose.model("BlogPost", BlogPostSchema);
+module.exports = mongoose.model('SavedBlogPost', SavedBlogPostSchema);

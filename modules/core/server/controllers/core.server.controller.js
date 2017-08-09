@@ -8,12 +8,12 @@ var // the path
     errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
     // chalk for console logging
     clc = require(path.resolve('./config/lib/clc')),
-    // the file system to read/write from/to files locallly
-    fs = require('fs'),
     // the ability to send emails
     nodemailer = require('nodemailer'),
     // the ability to create requests/promises
-    requestPromise = require('request-promise');
+    requestPromise = require('request-promise'),
+    // the file details for this view
+    appDetails = require('../data/app-details');
 
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
@@ -70,40 +70,8 @@ exports.renderNotFound = function (req, res) {
  * Show the current page
  */
 exports.readAppName = function (req, res) {
-    // read file to gain information
-    fs.readFile("./server/data/app-details.json", 'utf8', function (err, data) {
-        // if error 
-        if(err) {
-            // send internal error
-            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
-            console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
-        }
-        else {
-            var appName = "";
-            var jsonParse = undefined;
-
-            // parse json
-            try {
-                jsonParse = JSON.parse(data);
-
-                // if appname exists
-                if(jsonParse.appName) {
-                    appName = jsonParse.appName;
-                }
-                else {
-                    appName = "Cameron Hopkins";					
-                }
-
-                // send data
-                res.end(JSON.stringify({ "appName": appName }));
-            }
-            catch (err) {
-                // send internal error
-                res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
-                console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
-            }
-        }
-    });
+    // send data
+    res.json(appDetails);
 };
 
 /**
@@ -223,7 +191,7 @@ exports.shortenUrl = function (req, res) {
             });
 
             // send data
-            res.end(returnReq);
+            res.json(returnReq);
         }).catch(function (responseSU) {
             // send internal error
             res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err)  });

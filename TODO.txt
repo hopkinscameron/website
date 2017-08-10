@@ -3,9 +3,20 @@
 - Ability to updload images for projects and blogs
 
 All
+- 1. remove app name from server, remove page titles from server and put in client controller instead
+- 2. make sure each request get's logged to console again... it's not showing
+- 3. seperate out routes on client side -> should we have different modules (instead of just one app)?
+- 4. move images/files to client locations -> make sure node creates a folder for this as well
+- 5. create on client side in core, the config.js and init.js files
+- 6. add 'use strict' to all js files
+- 7. in core.client.routes.js, use the has trailing slash thing
+- 8. add layout.server.view.html to core
+- 9. add social media to meta tags -> so add to config file
+- 10. follow https://docs.angularjs.org/guide/production 
 - see if I can use lodash to speed up some stuff I might be doing in server stuff
 - blog draft put and blog update (put) method takes a very long time
 - seperate out admin views/regular views
+- fix socket.io to not print so many error on disconnect
 
 
 - IE stuff not working

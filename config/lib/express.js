@@ -198,7 +198,7 @@ module.exports.initModulesClientRoutes = function (app) {
 };
 
 /**
- * Configure the modules ACL policies
+ * Configure the modules policies
  */
 module.exports.initModulesServerPolicies = function (app) {
     // globbing policy files

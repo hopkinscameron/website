@@ -32,7 +32,8 @@ let transporter = nodemailer.createTransport({
  * Render the main application page
  */
 exports.renderIndex = function (req, res) {
-    
+    // send the main file
+    res.sendFile(path.resolve('./modules/index.html'));
 };
 
 /**

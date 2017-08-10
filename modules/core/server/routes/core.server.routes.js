@@ -22,12 +22,10 @@ module.exports = function (app) {
 
     // Define application route
     app.route('/*').get(core.renderIndex);
-
-    // on get
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve('./modules/index.html'));
-    });
     */
+
+    // Define application route
+    app.route('/*').get(coreController.renderIndex);
 
     // GET gets the application name
 	// format /api/appName

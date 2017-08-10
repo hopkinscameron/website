@@ -45,7 +45,7 @@ module.exports.start = function start(callback) {
 
             // logging initialization
             console.log('--');
-            console.log(clc.success(_.join([config.app.title, process.env.NODE_ENV, 'Environment'], ' ')));
+            console.log(clc.success(_.join([config.app.title, process.env.NODE_ENV.charAt(0).toUpperCase(), 'Environment'], ' ')));
             console.log();
             console.log(clc.success('Environment:     ' + process.env.NODE_ENV));
             console.log(clc.success('Server:          ' + server));

@@ -1815,3 +1815,185 @@ ReferenceError: clc is not defined
     at c:\Users\hopkic5\Documents\GitHub\website\node_modules\mongoose\node_modules\mongodb-core\lib\connection\pool.js:469:18
     at _combinedTickCallback (internal/process/next_tick.js:95:7)
     at process._tickCallback (internal/process/next_tick.js:161:9)
+2017-08-10T11:26:36.262Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:36 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:36.600Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:36 +0000] "GET /core/client/css/bootstrap/bootstrap-grid.min.css HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:36.641Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:36 +0000] "GET /core/client/css/bootstrap/bootstrap.min.css HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:36.668Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:36 +0000] "GET /core/client/css/bootstrap/bootstrap-reboot.min.css HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:36.694Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:36 +0000] "GET /core/client/css/font-awesome/font-awesome.min.css HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:36.699Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:36 +0000] "GET /core/client/css/angular-loading-bar/loading-bar.min.css HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:36.736Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:36 +0000] "GET /core/client/css/ng-dialog/ngDialog.min.css HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:36.739Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:36 +0000] "GET /core/client/css/ng-dialog/ngDialog-theme-default.min.css HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:36.765Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:36 +0000] "GET /core/client/css/ng-dialog/ngDialog-theme-plain.min.css HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:36.787Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:36 +0000] "GET /core/client/css/style.css HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:36.881Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:36 +0000] "GET /core/client/third-party-scripts/angular/angular-animate.min.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:36.931Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:36 +0000] "GET /core/client/third-party-scripts/angular/angular.min.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:36.935Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:36 +0000] "GET /core/client/third-party-scripts/angular/angular-cookies.min.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:36.945Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:36 +0000] "GET /core/client/third-party-scripts/angular/angular-touch.min.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:36.947Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:36 +0000] "GET /core/client/third-party-scripts/angular/angular-sanitize.min.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:36.951Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:36 +0000] "GET /core/client/third-party-scripts/angular/angular-route.min.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.062Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /core/client/third-party-scripts/mark/mark.min.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.062Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /core/client/third-party-scripts/angular-loading-bar/loading-bar.min.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.063Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /core/client/third-party-scripts/angular-ui-tinymce/src/tinymce.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.065Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /core/client/controllers/main.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.068Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /core/client/third-party-scripts/ng-dialog/ngDialog.min.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.106Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /core/client/services/client.service.js HTTP/1.1" 200 990 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.113Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /core/client/services/data-access.client.service.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.133Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /core/client/controllers/error.client.controller.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.149Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /header/client/services/header.client.service.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.163Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /footer/client/services/footer.client.service.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.177Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /header/client/controllers/header.client.controller.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.199Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /home/client/services/home.client.service.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.217Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /footer/client/controllers/footer.client.controller.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.223Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /home/client/controllers/home.client.controller.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.246Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /about/client/services/about.client.service.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.253Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /about/client/controllers/about.client.controller.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.278Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /resume/client/services/resume.client.service.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.280Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /resume/client/controllers/resume.client.controller.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.317Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /portfolio/client/services/portfolio.client.service.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.319Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /portfolio/client/controllers/portfolio-list.client.controller.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.331Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /portfolio/client/controllers/portfolio-item.client.controller.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.333Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /blog/client/services/blog.client.service.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.350Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /blog/client/controllers/blog-list.client.controller.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.401Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /blog/client/controllers/admin/blog-post-edit.client.controller.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.429Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /blog/client/controllers/blog-post.client.controller.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.438Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /contact/client/services/contact.client.service.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.441Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /blog/client/controllers/admin/blog-post-new.client.controller.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.457Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /contact/client/controllers/contact.client.controller.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.488Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /login/client/services/login.client.service.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.495Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /dialog/client/controllers/dialog-error.client.controller.js HTTP/1.1" 200 420 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.496Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /logout/client/services/logout.client.service.js HTTP/1.1" 200 989 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.499Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /login/client/controllers/login.client.controller.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.501Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /logout/client/controllers/logout.client.controller.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.527Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /dialog/client/controllers/dialog-success.client.controller.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.530Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /dialog/client/controllers/dialog-warning.client.controller.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:37.872Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:37 +0000] "GET /core/client/third-party-scripts/tinymce/tinymce.js HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:43.238Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:43 +0000] "GET /core/client/third-party-scripts/angular/angular-animate.min.js.map HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:43.239Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:43 +0000] "GET /core/client/third-party-scripts/angular/angular-cookies.min.js.map HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:43.343Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:43 +0000] "GET /header/client/views/header.html HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:43.373Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:43 +0000] "GET /footer/client/views/footer.html HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:43.420Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:43 +0000] "GET /about/client/views/about.html HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:43.534Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:43 +0000] "GET /api/footer HTTP/1.1" 200 863 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:43.553Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:43 +0000] "GET /core/client/css/bootstrap/bootstrap.min.css.map HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:43.557Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:43 +0000] "GET /core/client/css/bootstrap/bootstrap-grid.min.css.map HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:43.648Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:43 +0000] "GET /core/client/css/bootstrap/bootstrap-reboot.min.css.map HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:43.684Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:43 +0000] "GET /core/client/third-party-scripts/angular/angular-sanitize.min.js.map HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:43.685Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:43 +0000] "GET /core/client/third-party-scripts/angular/angular-route.min.js.map HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:43.963Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:43 +0000] "GET /api/appName HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:43.966Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:43 +0000] "GET /api/about HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:43.996Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:43 +0000] "GET /api/appName HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:44.072Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:44 +0000] "GET /core/client/third-party-scripts/angular/angular-touch.min.js.map HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:44.088Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:44 +0000] "GET /core/client/third-party-scripts/angular/angular.min.js.map HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:44.151Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:44 +0000] "GET /images/social-media/facebook-white.svg HTTP/1.1" 200 540 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:44.154Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:44 +0000] "GET /images/social-media/youtube-play-white.svg HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:44.220Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:44 +0000] "GET /images/social-media/linkedin-white.svg HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:44.247Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:44 +0000] "GET /api/header HTTP/1.1" 200 712 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:44.250Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:44 +0000] "GET /api/header HTTP/1.1" 200 712 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:44.264Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:44 +0000] "GET /images/social-media/instagram-white.svg HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:44.265Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:44 +0000] "GET /images/social-media/twitter-white.svg HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:44.574Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:44 +0000] "GET /core/client/css/fonts//true-lies-webfont.ttf HTTP/1.1" 200 - "http://localhost:3000/core/client/css/style.css" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:44.666Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:44 +0000] "GET /core/client/css/fonts//no-more-lies-webfont.ttf HTTP/1.1" 200 - "http://localhost:3000/core/client/css/style.css" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:44.779Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:44 +0000] "GET /images/background/black-concrete.jpg HTTP/1.1" 200 1892195 "http://localhost:3000/core/client/css/style.css" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:26:45.211Z - info: 127.0.0.1 - - [10/Aug/2017:11:26:45 +0000] "GET /images/fav-icon/favicon.jpg HTTP/1.1" 200 21950 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:32:12.931Z - info: 127.0.0.1 - - [10/Aug/2017:11:32:12 +0000] "GET /blog/client/views/blog-list.html HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:32:12.938Z - info: 127.0.0.1 - - [10/Aug/2017:11:32:12 +0000] "GET /images/fav-icon/favicon.jpg HTTP/1.1" 200 21950 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:32:12.961Z - info: 127.0.0.1 - - [10/Aug/2017:11:32:12 +0000] "GET /api/appName HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:32:12.982Z - info: 127.0.0.1 - - [10/Aug/2017:11:32:12 +0000] "GET /api/header HTTP/1.1" 200 712 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:32:13.060Z - info: 127.0.0.1 - - [10/Aug/2017:11:32:13 +0000] "GET /api/blog HTTP/1.1" 200 297 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:32:13.611Z - info: 127.0.0.1 - - [10/Aug/2017:11:32:13 +0000] "GET /core/client/css/fonts/fontawesome-webfont.woff2?v=4.7.0 HTTP/1.1" 200 - "http://localhost:3000/core/client/css/font-awesome/font-awesome.min.css" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:32:18.704Z - info: 127.0.0.1 - - [10/Aug/2017:11:32:18 +0000] "GET /login/client/views/login.html HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:32:18.740Z - info: 127.0.0.1 - - [10/Aug/2017:11:32:18 +0000] "GET /images/fav-icon/favicon.jpg HTTP/1.1" 200 21950 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:32:18.763Z - info: 127.0.0.1 - - [10/Aug/2017:11:32:18 +0000] "GET /api/appName HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:32:18.779Z - info: 127.0.0.1 - - [10/Aug/2017:11:32:18 +0000] "GET /api/header HTTP/1.1" 200 712 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:32:18.798Z - info: 127.0.0.1 - - [10/Aug/2017:11:32:18 +0000] "GET /login HTTP/1.1" 301 169 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+
+2017-08-10T11:32:18.834Z - info: 127.0.0.1 - - [10/Aug/2017:11:32:18 +0000] "GET /login/ HTTP/1.1" 200 61 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+

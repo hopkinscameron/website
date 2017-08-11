@@ -12,7 +12,7 @@
         <!-- Begin Page Fully Loaded With No Errors -->
         <div id="pageShow" class="animated animation-delay--md fadeIn collapse" ng-if="pageFullyLoaded && !error.error">
             <!-- Begin Page Title -->
-            <h2 class="font-weight-bold text-uppercase mb-3">Edit Blog Post</h2>
+            <h2 class="font-weight-bold text-uppercase mb-3"><span ng-bind-html="post.title | trustHTML"></span></h2>
             <!-- End Page Title -->
             <!-- Begin Blog Insert -->
             <div class="col-md-8 offset-md-2 animated animation-delay--xmd fadeInUp">

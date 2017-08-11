@@ -1,4 +1,6 @@
-﻿angular.module('app').controller('PortfolioItemController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$routeParams', '$sce', '$timeout', 'cfpLoadingBar', 'Service', 'PortfolioFactory', function ($scope, $rootScope, $compile, $location, $window, $routeParams, $sce, $timeout, cfpLoadingBar, Service, PortfolioFactory) {
+﻿'use strict'
+
+angular.module('app').controller('PortfolioItemController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$routeParams', '$sce', '$timeout', 'cfpLoadingBar', 'Service', 'PortfolioFactory', function ($scope, $rootScope, $compile, $location, $window, $routeParams, $sce, $timeout, cfpLoadingBar, Service, PortfolioFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
 

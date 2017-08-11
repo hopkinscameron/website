@@ -11,9 +11,7 @@ var // the path
     // the ability to send emails
     nodemailer = require('nodemailer'),
     // the ability to create requests/promises
-    requestPromise = require('request-promise'),
-    // the file details for this view
-    appDetails = require('../data/app-details');
+    requestPromise = require('request-promise');
 
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
@@ -65,14 +63,6 @@ exports.renderNotFound = function (req, res) {
             res.send('Path not found');
         }
     });
-};
-
-/**
- * Show the current page
- */
-exports.readAppName = function (req, res) {
-    // send data
-    res.json(appDetails);
 };
 
 /**

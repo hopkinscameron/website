@@ -1,4 +1,6 @@
-﻿angular.module('app').controller('BlogListController', ['$scope', '$rootScope', '$compile', '$window', '$location', '$timeout', 'cfpLoadingBar', 'Service', 'BlogFactory', function ($scope, $rootScope, $compile, $window, $location, $timeout, cfpLoadingBar, Service, BlogFactory) {
+﻿'use strict';
+
+angular.module('app').controller('BlogListController', ['$scope', '$rootScope', '$compile', '$window', '$location', '$timeout', 'cfpLoadingBar', 'Service', 'BlogFactory', function ($scope, $rootScope, $compile, $window, $location, $timeout, cfpLoadingBar, Service, BlogFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
 
@@ -210,6 +212,7 @@
             if (!responseBL.error) {
                 // set the data
                 $scope.blog = responseBL;
+                $scope.blog.title = 'Blogs';
                 $scope.blog.totalPages = new Array($scope.blog.totalPages);
 
                 // the initial delayed start time of any animation

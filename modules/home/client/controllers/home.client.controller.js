@@ -1,4 +1,6 @@
-﻿angular.module('app').controller('HomeController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', '$window', 'cfpLoadingBar', 'Service', 'HomeFactory', function ($scope, $rootScope, $compile, $location, $timeout, $window, cfpLoadingBar, Service, HomeFactory) {
+﻿'use strict'
+
+angular.module('app').controller('HomeController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', '$window', 'cfpLoadingBar', 'Service', 'HomeFactory', function ($scope, $rootScope, $compile, $location, $timeout, $window, cfpLoadingBar, Service, HomeFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
     

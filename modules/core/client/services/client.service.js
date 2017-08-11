@@ -1,4 +1,6 @@
-﻿angular.module('app').service('Service', ['DataAccessFactory', function (DataAccessFactory) {
+﻿'use strict';
+
+angular.module('app').service('Service', ['DataAccessFactory', function (DataAccessFactory) {
     // set up the service
     var service = {};
 
@@ -6,18 +8,7 @@
     service.afterPath = "";
 
     // the app name
-    service.appName = "";
-
-    // set the application name
-    service.setAppName = function () {
-        // get app name
-        return DataAccessFactory.getAppName().then(function (responseAN) {
-            service.appName = responseAN.data.appName;
-        })
-        .catch(function (responseAN) {
-            service.appName = "Cameron Hopkins";
-        });
-    };
+    service.appName = "Cameron Hopkins";
 
     // shortens url
     service.shortenURL = function (url) {

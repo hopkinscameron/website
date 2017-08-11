@@ -1,4 +1,6 @@
-﻿angular.module('app').controller('ResumeController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'cfpLoadingBar', 'Service', 'ResumeFactory', function ($scope, $rootScope, $compile, $location, $timeout, cfpLoadingBar, Service, ResumeFactory) {
+﻿'use strict'
+
+angular.module('app').controller('ResumeController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'cfpLoadingBar', 'Service', 'ResumeFactory', function ($scope, $rootScope, $compile, $location, $timeout, cfpLoadingBar, Service, ResumeFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
 
@@ -99,6 +101,7 @@
             if (!responseR.error) {
                 // set the data
                 $scope.resume = responseR;
+                $scope.resume.title = 'R&eacute;sum&eacute;';
 
                 // the initial delayed start time of any animation
                 var startTime = 1.5;

@@ -1,4 +1,6 @@
-﻿angular.module('app').controller('BlogPostController', ['$scope', '$rootScope', '$compile', '$location', '$routeParams', '$timeout', 'cfpLoadingBar', 'Service', 'BlogFactory', function ($scope, $rootScope, $compile, $location, $routeParams, $timeout, cfpLoadingBar, Service, BlogFactory) {
+﻿'use strict';
+
+angular.module('app').controller('BlogPostController', ['$scope', '$rootScope', '$compile', '$location', '$routeParams', '$timeout', 'cfpLoadingBar', 'Service', 'BlogFactory', function ($scope, $rootScope, $compile, $location, $routeParams, $timeout, cfpLoadingBar, Service, BlogFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
     
@@ -105,6 +107,7 @@
             if (!responseBI.error) {
                 // set the data
                 $scope.post = responseBI;
+                $scope.post.title = 'Blog Post';
                 $scope.pageTitle = responseBI.title + " | " + Service.appName;
 
                 // setup page

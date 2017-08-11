@@ -1,4 +1,6 @@
-﻿angular.module('app').controller('AboutController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$timeout', 'cfpLoadingBar', 'Service', 'AboutFactory', function ($scope, $rootScope, $compile, $location, $window, $timeout, cfpLoadingBar, Service, AboutFactory) {
+﻿'use strict';
+
+angular.module('app').controller('AboutController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$timeout', 'cfpLoadingBar', 'Service', 'AboutFactory', function ($scope, $rootScope, $compile, $location, $window, $timeout, cfpLoadingBar, Service, AboutFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
 
@@ -112,6 +114,7 @@
             if (!responseAM.error) {
                 // set the data
                 $scope.about = responseAM;
+                $scope.about.title = 'About Me';
                 $scope.hobbiesColumnsPerRow = 4;
                 $scope.hobbiesPerColumn = 3;
                 $scope.hobbiesColumnsPerRowArray = new Array($scope.hobbiesColumnsPerRow);

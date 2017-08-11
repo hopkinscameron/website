@@ -1,27 +1,9 @@
-﻿angular.module('app').factory('DataAccessFactory', ['$http', '$location', function ($http, $location) {
+﻿'use strict';
+
+angular.module('app').factory('DataAccessFactory', ['$http', '$location', function ($http, $location) {
     // set up the factory
     var factory = {};
     var appPath = $location.$$absUrl.split('#')[0] + 'api';
-
-    // gets app name
-    factory.getAppName = function () {
-        // set the endpoint
-        var endpoint = appPath + "/appName";
-
-        // create request
-        var req = {
-            method: 'GET',
-            url: endpoint,
-            headers: {
-                'Content-Type': 'application/json; odata=verbose',
-                'Accept': 'application/json; odata=verbose'
-            },
-            data: undefined
-        };
-
-        // send request
-        return $http(req);
-    };
 
     // shortens url
     factory.shortenURL = function (url) {

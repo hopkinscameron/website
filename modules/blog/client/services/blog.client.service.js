@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('app').factory('BlogFactory', ['$http', '$location', function ($http, $location) {
     // set up the factory
     var factory = {};

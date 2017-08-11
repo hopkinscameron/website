@@ -1,3 +1,5 @@
+'use strict'
+
 angular.module('app').controller('LogoutController', ['$scope', '$rootScope', '$compile', '$window', 'cfpLoadingBar', 'LogoutFactory', function ($scope, $rootScope, $compile, $window, cfpLoadingBar, LogoutFactory) {
     // holds the error
     $scope.error = {

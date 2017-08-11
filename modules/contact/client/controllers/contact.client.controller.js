@@ -1,4 +1,6 @@
-﻿angular.module('app').controller('ContactController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'cfpLoadingBar', 'Service', 'ContactFactory', function ($scope, $rootScope, $compile, $location, $timeout, cfpLoadingBar, Service, ContactFactory) {
+﻿'use strict';
+
+angular.module('app').controller('ContactController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'cfpLoadingBar', 'Service', 'ContactFactory', function ($scope, $rootScope, $compile, $location, $timeout, cfpLoadingBar, Service, ContactFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
     
@@ -303,6 +305,7 @@
             if (!responseC.error) {
                 // set the data
                 $scope.contact = responseC;
+                $scope.contact.title = 'Contact';
                 
                 // the initial delayed start time of any animation
                 var startTime = 1.5;

@@ -1,4 +1,6 @@
-﻿// the Header Controller
+﻿'use strict'
+
+// the Header Controller
 angular.module('app').controller('HeaderController', ['$scope', '$rootScope', '$location', '$window', 'Service', 'HeaderFactory', function ($scope, $rootScope, $location, $window, Service, HeaderFactory) {
     // initialize variables
     initializeVariables();
@@ -234,21 +236,18 @@ angular.module('app').controller('HeaderController', ['$scope', '$rootScope', '$
 
     // gets the header information
     function getHeaderInformation() {
-        // set the app name
-        Service.setAppName().then(function (responseAN) {
-            // get the header information
-            HeaderFactory.getHeaderInformation().then(function (responseHeader) {
-                // set the header
-                $scope.header = responseHeader;
-                $rootScope.$root.isLoggedIn = responseHeader.isLoggedIn;
+        // get the header information
+        HeaderFactory.getHeaderInformation().then(function (responseHeader) {
+            // set the header
+            $scope.header = responseHeader;
+            $rootScope.$root.isLoggedIn = responseHeader.isLoggedIn;
 
-                // header refreshed
-                $rootScope.$emit("headerRefreshed", {});
-            })
-            .catch(function (responseHeader) {
-                // header refreshed with error
-                $rootScope.$emit("headerRefreshed", {"error": true, "message": responseHeader.message});
-            });
+            // header refreshed
+            $rootScope.$emit("headerRefreshed", {});
+        })
+        .catch(function (responseHeader) {
+            // header refreshed with error
+            $rootScope.$emit("headerRefreshed", {"error": true, "message": responseHeader.message});
         });
     };
 

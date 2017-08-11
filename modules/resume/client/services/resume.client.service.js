@@ -1,3 +1,5 @@
+'use strict'
+
 angular.module('app').factory('ResumeFactory', ['$http', '$location', function ($http, $location) {
     // set up the factory
     var factory = {};

@@ -18,9 +18,7 @@ var // the path
     // load up the Saved Blog model
     SavedBlogPost = mongoose.model('SavedBlogPost'),
     // load up the Analytics Blog Search model
-    AnalyticsBlogSearch = mongoose.model('AnalyticsBlogSearch'),
-    // the file details for this view
-    blogDetails = require('../data/blog');
+    AnalyticsBlogSearch = mongoose.model('AnalyticsBlogSearch');
 
 // =========================================================================
 // Blog Functions ==========================================================
@@ -29,6 +27,9 @@ var // the path
  * Show blog list
  */
 exports.blogList = function (req, res) {
+    // holds the blog details
+    var blogDetails = { };
+
     // set page number
     var pageNumber = req.query.page ? req.query.page : 1;
 

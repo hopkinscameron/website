@@ -1,16 +1,24 @@
-﻿// set up the application
-var app = angular.module('app', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngDialog', 'angular-loading-bar', 'ui.tinymce'])
-    .filter('trustUrl', function ($sce) {
+﻿'use strict';
+
+// set up the application
+var app = angular.module('app', ['ngRoute', 'ngSanitize', 'ngAnimate', 'angular-loading-bar', 'ngDialog',  'ui.tinymce']);
+
+// set up filters
+// trust the url
+app.filter('trustUrl', function ($sce) {
     return function (url) {
         return $sce.trustAsResourceUrl(url);
     };
-}).filter('trustHTML', function ($sce) {
+});
+
+// trust the html
+app.filter('trustHTML', function ($sce) {
     return function (html) {
         return $sce.trustAsHtml(html);
     };
 });
 
-// configure using app router
+// configure the module
 app.config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider', function ($routeProvider, $locationProvider, cfpLoadingBarProvider, $routeParams) {
     // remove default "!" in has prefix
     $locationProvider.hashPrefix('');
@@ -19,51 +27,76 @@ app.config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider', func
     $locationProvider.hashPrefix();
 
     $routeProvider
+        
         .when('/', {
             templateUrl: './home/client/views/home.html'
         })
+        
+        
         .when('/about', {
             templateUrl: './about/client/views/about.html'
         })
+        
+        
         .when('/resume', {
             templateUrl: './resume/client/views/resume.html'
         })
+        
+        
         .when('/portfolio', {
             templateUrl: './portfolio/client/views/portfolio-list.html'
         })
+        
+        
         .when('/portfolio/:portfolioItemId', {
             templateUrl: './portfolio/client/views/portfolio-item.html'
         })
+        
+        
         .when('/blog', {
             templateUrl: './blog/client/views/blog-list.html'/*,
             reloadOnSearch: false*/
         })
+        
+        
         .when('/blog/new', {
             templateUrl: './blog/client/views/admin/blog-post-new.html',
             reloadOnSearch: false
         })
+        
+
         .when('/blog/post/:blogPostId', {
             templateUrl: './blog/client/views/blog-post.html'
         })
+        
+
         .when('/blog/post/:blogPostId/edit', {
             templateUrl: './blog/client/views/admin/blog-post-edit.html'
         })
+        
+
         .when('/contact', {
             templateUrl: './contact/client/views/contact.html'
         })
+       
+
         .when('/login', {
             templateUrl: './login/client/views/login.html'
         })
+        
+        
         .when('/logout', {
             templateUrl: './logout/client/views/logout.html'
         })
+        
+        
         .otherwise({
-            templateUrl: './core/client/views/error.html'
+            templateUrl: './core/client/views/error.html',
+            controller: 'ErrorController'
         })
 
     // check browser support
     if (window.history && window.history.pushState) {
-
         // if you don't wish to set base URL then use this
         /*
         $locationProvider.html5Mode({

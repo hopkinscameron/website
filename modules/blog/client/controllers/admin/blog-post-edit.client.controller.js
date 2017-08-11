@@ -1,4 +1,6 @@
-﻿angular.module('app').controller('BlogPostEditController', ['$scope', '$rootScope', '$compile', '$window', '$location', '$routeParams', '$timeout', 'ngDialog', 'cfpLoadingBar', 'Service', 'BlogFactory', function ($scope, $rootScope, $compile, $window, $location, $routeParams, $timeout, ngDialog, cfpLoadingBar, Service, BlogFactory) {
+﻿'use strict';
+
+angular.module('app').controller('BlogPostEditController', ['$scope', '$rootScope', '$compile', '$window', '$location', '$routeParams', '$timeout', 'ngDialog', 'cfpLoadingBar', 'Service', 'BlogFactory', function ($scope, $rootScope, $compile, $window, $location, $routeParams, $timeout, ngDialog, cfpLoadingBar, Service, BlogFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
     
@@ -364,6 +366,7 @@
             if (!responseBP.error) {
                 // set the data
                 $scope.post = responseBP;
+                $scope.post.title = 'Edit Blog Post';
                 $scope.pageTitle = responseBP.title + " | " + Service.appName;
                 
                 // get the draft if it exists

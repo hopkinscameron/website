@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$timeout', 'ngDialog', 'cfpLoadingBar','Service', 'BlogFactory', function ($scope, $rootScope, $compile, $location, $window, $timeout, ngDialog, cfpLoadingBar, Service, BlogFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
@@ -294,7 +296,7 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
                             // if returned a valid response
                             if (!responseSBD.error) {
                                 // set the data
-                                $scope.newBlogPost = responseSBD;
+                                $scope.newBlogPost.savedPosts = responseSBD.savedPosts;
 
                                 // enable button showing the form has been saved
                                 $scope.blogPostForm.formSubmitted = false;
@@ -348,7 +350,7 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
                             // if returned a valid response
                             if (!responseSBD.error) {
                                 // set the data
-                                $scope.newBlogPost = responseSBD;
+                                $scope.newBlogPost.savedPosts = responseSBD.savedPosts;
 
                                 // enable button showing the form has been saved
                                 $scope.blogPostForm.formSubmitted = false;
@@ -527,7 +529,8 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
             if (!responseSBD.error) {
                 // set the data
                 $scope.newBlogPost = responseSBD;
-                
+                $scope.newBlogPost.title = 'New Blog Post';
+
                 // holds the animation times
                 $scope.newBlogPostAnimations = responseSBD.savedPosts.length > 0 ? new Array(2) : new Array(1);
 

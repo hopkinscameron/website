@@ -1,4 +1,6 @@
-﻿// dialog error controller
+﻿'use strict'
+
+// dialog error controller
 angular.module('app').controller('DialogErrorController', ["$scope", "$rootScope", "ngDialog", 'Service', function ($scope, $rootScope, ngDialog, Service) {
     // shows this is the error controller
     $scope.DialogErrorController = true;

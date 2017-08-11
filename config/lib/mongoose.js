@@ -40,8 +40,8 @@ module.exports.connect = function (cb) {
     var db = mongoose.connect(config.db.uri, config.db.options, function (err) {
         // log error
         if (err) {
-            console.error(chalk.red('Could not connect to MongoDB!'));
-            console.log(chalk.red(err));
+            console.error(clc.error('Could not connect to MongoDB!'));
+            console.log(clc.error(err));
 
             // exit from the application
             process.exit();

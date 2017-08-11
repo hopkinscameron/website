@@ -1,4 +1,6 @@
-﻿// dialog success controller
+﻿'use strict'
+
+// dialog success controller
 angular.module('app').controller('DialogSuccessController', ["$scope", "$rootScope", "ngDialog", 'Service', function ($scope, $rootScope, ngDialog, Service) {
 	// shows this is the success controller
     $scope.DialogSuccessController = true;

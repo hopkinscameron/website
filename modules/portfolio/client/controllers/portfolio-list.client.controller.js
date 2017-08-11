@@ -1,4 +1,6 @@
-﻿angular.module('app').controller('PortfolioListController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'cfpLoadingBar', 'Service', 'PortfolioFactory', function ($scope, $rootScope, $compile, $location, $timeout, cfpLoadingBar, Service, PortfolioFactory) {
+﻿'use strict'
+
+angular.module('app').controller('PortfolioListController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'cfpLoadingBar', 'Service', 'PortfolioFactory', function ($scope, $rootScope, $compile, $location, $timeout, cfpLoadingBar, Service, PortfolioFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
 
@@ -115,6 +117,7 @@
             if (!responsePL.error) {
                 // set the data
                 $scope.portfolio = responsePL;
+                $scope.portfolio.title = 'Portfolio';
 
                 // the initial delayed start time of any animation
                 var startTime = 1.5;

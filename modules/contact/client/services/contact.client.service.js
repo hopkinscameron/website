@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('app').factory('ContactFactory', ['$http', '$location', function ($http, $location) {
     // set up the factory
     var factory = {};
@@ -54,7 +56,7 @@ angular.module('app').factory('ContactFactory', ['$http', '$location', function 
         };
 
         // send request
-        return $http(req).then(function (response) {
+        return $http(req, { ignoreLoadingBar: true }).then(function (response) {
             return response.data;
         })
         .catch(function (response) {

@@ -1,19 +1,38 @@
-﻿angular.module('app').controller('ErrorController', ['$scope', '$compile', 'Service', function ($scope, $compile, Service) {
+﻿'use strict';
+
+angular.module('app').controller('ErrorController', ['$scope', '$compile', 'Service', function ($scope, $compile, Service) {
     // initialize
     $scope.pageTitle = 'Page not found' + " | " + Service.appName;
     $scope.status = 404; 
     $scope.message = 'The page you are looking for does not exist'; 
 
     // setup page
-    setUpPage();
+    //setUpPage();
+    initialize('Page not found', $scope.status, $scope.message);
 
     // initialization of controller
     $scope.init = function(title, status, message)
     {
+        initialize(title, status, message);
+    };
+
+    // on the destruction of the controller
+    $scope.$on("$destroy", function handler() {
+        // get body
+        var body = angular.element(document.body);
+
+        // if correct css, remove it
+        if(body && body.hasClass('body-error')) {
+            body.removeClass('body-error');
+        }
+    });
+    
+    // initialize the page
+    function initialize(title, status, message) {
         // initialize
-        $scope.pageTitle = title + " | " + Service.appName;
-        $scope.status = status; 
-        $scope.message = message; 
+        $scope.pageTitle = title ? title + " | " + Service.appName : $scope.pageTitle;
+        $scope.status = status ? status : $scope.status;
+        $scope.message = message ? message : $scope.message;
 
         // get correct error code
         switch(status) {
@@ -40,17 +59,6 @@
         setUpPage();
     };
 
-    // on the destruction of the controller
-    $scope.$on("$destroy", function handler() {
-        // get body
-        var body = angular.element(document.body);
-
-        // if correct css, remove it
-        if(body && body.hasClass('body-error')) {
-            body.removeClass('body-error');
-        }
-    });
-    
     // sets up the page
     function setUpPage() {
         // set up the title

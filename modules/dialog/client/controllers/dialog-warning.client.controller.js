@@ -1,4 +1,6 @@
-﻿// dialog warning controller
+﻿'use strict'
+
+// dialog warning controller
 angular.module('app').controller('DialogWarningController', ["$scope", "$rootScope", "ngDialog", 'Service', function ($scope, $rootScope, ngDialog, Service) {
 
 }]);

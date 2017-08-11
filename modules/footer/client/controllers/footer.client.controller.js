@@ -1,4 +1,6 @@
-﻿angular.module('app').controller('FooterController', ['$scope', '$rootScope', 'FooterFactory', function ($scope, $rootScope, FooterFactory) {
+﻿'use strict'
+
+angular.module('app').controller('FooterController', ['$scope', '$rootScope', 'FooterFactory', function ($scope, $rootScope, FooterFactory) {
     // initialize variables
     initializeVariables() ;
 

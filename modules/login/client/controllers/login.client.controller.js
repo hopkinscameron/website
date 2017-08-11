@@ -1,3 +1,5 @@
+'use strict'
+
 angular.module('app').controller('LoginController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$timeout', 'cfpLoadingBar','Service', 'LoginFactory', function ($scope, $rootScope, $compile, $location, $window, $timeout, cfpLoadingBar, Service, LoginFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;

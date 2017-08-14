@@ -1,6 +1,10 @@
 ﻿'use strict'
 
-angular.module('app').controller('FooterController', ['$scope', '$rootScope', 'FooterFactory', function ($scope, $rootScope, FooterFactory) {
+// set up the module
+var footerModule = angular.module('footer');
+
+// create the controller
+footerModule.controller('FooterController', ['$scope', '$rootScope', 'FooterFactory', function ($scope, $rootScope, FooterFactory) {
     // initialize variables
     initializeVariables() ;
 
@@ -8,7 +12,7 @@ angular.module('app').controller('FooterController', ['$scope', '$rootScope', 'F
     getFooterInformation();
 
     // on refresh
-    $rootScope.$on("refreshFooter", function (event, data) {
+    $rootScope.$on('refreshFooter', function (event, data) {
         // initialize variables
         initializeVariables() ;
 
@@ -33,11 +37,11 @@ angular.module('app').controller('FooterController', ['$scope', '$rootScope', 'F
             $scope.footer = responseF;
 
             // footer refreshed
-            $rootScope.$emit("footerRefreshed", {});
+            $rootScope.$emit('footerRefreshed', {});
         })
         .catch(function (responseF) {
             // footer refreshed with error
-            $rootScope.$emit("footerRefreshed", {"error": true, "message": responseF.message});
+            $rootScope.$emit('footerRefreshed', {'error': true, 'message': responseF.message});
         });
     };
 }]);

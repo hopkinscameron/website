@@ -1,13 +1,16 @@
 ﻿'use strict';
 
-angular.module('app').controller('ErrorController', ['$scope', '$compile', 'Service', function ($scope, $compile, Service) {
+// set up the module
+var coreModule = angular.module('core');
+
+// create the controller
+coreModule.controller('ErrorController', ['$scope', '$compile', 'Service', function ($scope, $compile, Service) {
     // initialize
-    $scope.pageTitle = 'Page not found' + " | " + Service.appName;
+    $scope.pageTitle = 'Page not found' + ' | ' + ApplicationConfiguration.applicationName;
     $scope.status = 404; 
     $scope.message = 'The page you are looking for does not exist'; 
 
     // setup page
-    //setUpPage();
     initialize('Page not found', $scope.status, $scope.message);
 
     // initialization of controller
@@ -17,7 +20,7 @@ angular.module('app').controller('ErrorController', ['$scope', '$compile', 'Serv
     };
 
     // on the destruction of the controller
-    $scope.$on("$destroy", function handler() {
+    $scope.$on('$destroy', function handler() {
         // get body
         var body = angular.element(document.body);
 
@@ -30,7 +33,7 @@ angular.module('app').controller('ErrorController', ['$scope', '$compile', 'Serv
     // initialize the page
     function initialize(title, status, message) {
         // initialize
-        $scope.pageTitle = title ? title + " | " + Service.appName : $scope.pageTitle;
+        $scope.pageTitle = title ? title + ' | ' + ApplicationConfiguration.applicationName : $scope.pageTitle;
         $scope.status = status ? status : $scope.status;
         $scope.message = message ? message : $scope.message;
 
@@ -62,9 +65,9 @@ angular.module('app').controller('ErrorController', ['$scope', '$compile', 'Serv
     // sets up the page
     function setUpPage() {
         // set up the title
-        var titleDOM = document.getElementById("pageTitle");
-        var title = "\'" + $scope.pageTitle + "\'";
-        titleDOM.setAttribute("ng-bind-html", title);
+        var titleDOM = document.getElementById('pageTitle');
+        var title = '\'' + $scope.pageTitle + '\'';
+        titleDOM.setAttribute('ng-bind-html', title);
         $compile(titleDOM)($scope);
 
         // get body

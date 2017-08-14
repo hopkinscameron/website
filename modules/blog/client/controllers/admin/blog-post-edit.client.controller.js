@@ -1,6 +1,10 @@
 ﻿'use strict';
 
-angular.module('app').controller('BlogPostEditController', ['$scope', '$rootScope', '$compile', '$window', '$location', '$routeParams', '$timeout', 'ngDialog', 'cfpLoadingBar', 'Service', 'BlogFactory', function ($scope, $rootScope, $compile, $window, $location, $routeParams, $timeout, ngDialog, cfpLoadingBar, Service, BlogFactory) {
+// set up the module
+var blogModule = angular.module('blog');
+
+// create the controller
+blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compile', '$window', '$location', '$routeParams', '$timeout', 'ngDialog', 'Service', 'BlogFactory', function ($scope, $rootScope, $compile, $window, $location, $routeParams, $timeout, ngDialog, Service, BlogFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
     
@@ -11,52 +15,52 @@ angular.module('app').controller('BlogPostEditController', ['$scope', '$rootScop
     Service.afterPath = $location.path();
 
     // holds the page title
-    $scope.pageTitle = Service.appName;
+    $scope.pageTitle = ApplicationConfiguration.applicationName;
 
     // get the parameters
     var blogPostId = $routeParams.blogPostId;
 
     // holds the error
     $scope.error = {
-        "error": false,
-        "title": "",
-        "status": 404,
-        "message": ""
+        'error': false,
+        'title': '',
+        'status': 404,
+        'message': ''
     };
 
     // holds the blog post edit form data
     $scope.blogPostEditForm = {
-        "formSubmitted": false,
-        "inputs": {
-            "title": "",
-            "image": "",
-            "shortDescription": "",
-            "body": ""
+        'formSubmitted': false,
+        'inputs': {
+            'title': '',
+            'image': '',
+            'shortDescription': '',
+            'body': ''
         },
-        "views": {
-            "title": "title",
-            "shortDescription": "shortDescription",
-            "body": "body"
+        'views': {
+            'title': 'title',
+            'shortDescription': 'shortDescription',
+            'body': 'body'
         },
-        "errors": {
-            "errorMessage": "",
-            "isError": false,
-            "title": false,
-            "shortDescription": false,
-            "body": false
+        'errors': {
+            'errorMessage': '',
+            'isError': false,
+            'title': false,
+            'shortDescription': false,
+            'body': false
         }
     };
 
     // tinyMCE options
     $scope.tinymceOptions = {
         setup: function(editor) {           
-            editor.on("init", function() {
+            editor.on('init', function() {
                 
             });
-            editor.on("click", function() {
+            editor.on('click', function() {
                 
             });
-            editor.on("focus", function() {
+            editor.on('focus', function() {
                 $scope.viewFocusEnter($scope.blogPostEditForm.views.body);
             });
         },
@@ -82,22 +86,22 @@ angular.module('app').controller('BlogPostEditController', ['$scope', '$rootScop
     // check if header/footer was initialized
     if($rootScope.$root.showHeader === undefined || $rootScope.$root.showFooter === undefined) {
         // refresh header
-        $rootScope.$emit("refreshHeader", {});
+        $rootScope.$emit('refreshHeader', {});
 
         // refresh footer
-        $rootScope.$emit("refreshFooter", {});
+        $rootScope.$emit('refreshFooter', {});
     }
     else {
         // always refresh header to ensure login
-        $rootScope.$emit("refreshHeader", {});
+        $rootScope.$emit('refreshHeader', {});
     }
 
     // on header refresh
-    $rootScope.$on("headerRefreshed", function (event, data) {
+    $rootScope.$on('headerRefreshed', function (event, data) {
         // if footer still hasn't been initialized
         if($rootScope.$root.showFooter === undefined) {
             // refresh footer
-            $rootScope.$emit("refreshFooter", {});
+            $rootScope.$emit('refreshFooter', {});
         }
         else {
             // initialize the page
@@ -106,29 +110,17 @@ angular.module('app').controller('BlogPostEditController', ['$scope', '$rootScop
     });
 
     // on footer refresh
-    $rootScope.$on("footerRefreshed", function (event, data) {
+    $rootScope.$on('footerRefreshed', function (event, data) {
         // if footer still hasn't been initialized
         if($rootScope.$root.showHeader === undefined) {
             // refresh header
-            $rootScope.$emit("refreshHeader", {});
+            $rootScope.$emit('refreshHeader', {});
         }
         else {
             // initialize the page
             initializePage();
         }
     });
-
-    // on loading http intercepter start
-    $scope.start = function () {
-        // start loader
-        cfpLoadingBar.start();
-    };
-
-    // on loading http intercepter complete
-    $scope.complete = function () {
-        // complete loader
-        cfpLoadingBar.complete();
-    };
 
     // on call event when the focus enters
     $scope.viewFocusEnter = function (viewId) {
@@ -163,11 +155,11 @@ angular.module('app').controller('BlogPostEditController', ['$scope', '$rootScop
 
             // the data to send
             var blogPostData = {
-                "id": $scope.post.url,
-                "title": $scope.blogPostEditForm.inputs.title,
-                "image": $scope.blogPostEditForm.inputs.image,
-                "shortDescription": $scope.blogPostEditForm.inputs.shortDescription,
-                "body": $scope.blogPostEditForm.inputs.body
+                'id': $scope.post.url,
+                'title': $scope.blogPostEditForm.inputs.title,
+                'image': $scope.blogPostEditForm.inputs.image,
+                'shortDescription': $scope.blogPostEditForm.inputs.shortDescription,
+                'body': $scope.blogPostEditForm.inputs.body
             };
 
             // if there is a previous draft
@@ -237,7 +229,7 @@ angular.module('app').controller('BlogPostEditController', ['$scope', '$rootScop
         else {
             $scope.blogPostEditForm.errors.title = true;
             $scope.blogPostEditForm.errors.isError = true;
-            $scope.blogPostEditForm.errors.errorMessage = "You must have a title before saving";
+            $scope.blogPostEditForm.errors.errorMessage = 'You must have a title before saving';
         }
     };
 
@@ -253,11 +245,11 @@ angular.module('app').controller('BlogPostEditController', ['$scope', '$rootScop
 
             // the data to send
             var blogPostData = {
-                "id": $scope.post.url,
-                "title": $scope.blogPostEditForm.inputs.title,
-                "image": $scope.blogPostEditForm.inputs.image,
-                "shortDescription": $scope.blogPostEditForm.inputs.shortDescription,
-                "body": $scope.blogPostEditForm.inputs.body
+                'id': $scope.post.url,
+                'title': $scope.blogPostEditForm.inputs.title,
+                'image': $scope.blogPostEditForm.inputs.image,
+                'shortDescription': $scope.blogPostEditForm.inputs.shortDescription,
+                'body': $scope.blogPostEditForm.inputs.body
             };
 
             // update blog post
@@ -367,7 +359,7 @@ angular.module('app').controller('BlogPostEditController', ['$scope', '$rootScop
                 // set the data
                 $scope.post = responseBP;
                 $scope.post.title = 'Edit Blog Post';
-                $scope.pageTitle = responseBP.title + " | " + Service.appName;
+                $scope.pageTitle = responseBP.title + ' | ' + ApplicationConfiguration.applicationName;
                 
                 // get the draft if it exists
                 BlogFactory.getBlogDraft(blogPostId).then(function (responseBD) {
@@ -433,9 +425,9 @@ angular.module('app').controller('BlogPostEditController', ['$scope', '$rootScop
     // sets up the page
     function setUpPage() {
         // set up the title
-        var titleDOM = document.getElementById("pageTitle");
-        var title = "\'" + $scope.pageTitle + "\'";
-        titleDOM.setAttribute("ng-bind-html", title);
+        var titleDOM = document.getElementById('pageTitle');
+        var title = '\'' + $scope.pageTitle + '\'';
+        titleDOM.setAttribute('ng-bind-html', title);
         $compile(titleDOM)($scope);
 
         // set page fully loaded
@@ -459,19 +451,19 @@ angular.module('app').controller('BlogPostEditController', ['$scope', '$rootScop
         // check for any empty values
         if (!$scope.blogPostEditForm.inputs.body || $scope.blogPostEditForm.inputs.body.length == 0) {
             // set error
-            $scope.blogPostEditForm.errors.errorMessage = "You must enter a body";
+            $scope.blogPostEditForm.errors.errorMessage = 'You must enter a body';
             $scope.blogPostEditForm.errors.body = true;
             $scope.blogPostEditForm.errors.isError = true;
         }
         if (!$scope.blogPostEditForm.inputs.shortDescription || $scope.blogPostEditForm.inputs.shortDescription.length == 0) {
             // set error
-            $scope.blogPostEditForm.errors.errorMessage = "You must enter a short description";
+            $scope.blogPostEditForm.errors.errorMessage = 'You must enter a short description';
             $scope.blogPostEditForm.errors.shortDescription = true;
             $scope.blogPostEditForm.errors.isError = true;
         }
         if (!$scope.blogPostEditForm.inputs.title || $scope.blogPostEditForm.inputs.title.length == 0) {
             // set error
-            $scope.blogPostEditForm.errors.errorMessage = "You must enter the title";
+            $scope.blogPostEditForm.errors.errorMessage = 'You must enter the title';
             $scope.blogPostEditForm.errors.title = true;
             $scope.blogPostEditForm.errors.isError = true;
         }
@@ -484,8 +476,8 @@ angular.module('app').controller('BlogPostEditController', ['$scope', '$rootScop
             // if returned a valid response
             if (!responseDB.error) {
                 // create the header and body for the success
-                var header = "It's done, no turning back";
-                var body = "You have successfully discarded.";
+                var header = 'It\'s done, no turning back';
+                var body = 'You have successfully discarded.';
 
                 // show dialog
                 var successfulDiscardDialog = ngDialog.open({
@@ -498,7 +490,7 @@ angular.module('app').controller('BlogPostEditController', ['$scope', '$rootScop
                 // on completion of close
                 successfulDiscardDialog.closePromise.then(function (data) {
                     // redirect to this blog's page
-                    $window.location.href = "#blog/post/" + $scope.post.url;
+                    $window.location.href = '#blog/post/' + $scope.post.url;
                 });
             }
             else {
@@ -519,8 +511,8 @@ angular.module('app').controller('BlogPostEditController', ['$scope', '$rootScop
             // if returned a valid response
             if (!responseDB.error) {
                 // create the header and body for the success
-                var header = "It's done, no turning back";
-                var body = "You have successfully deleted the blog.";
+                var header = 'It\'s done, no turning back';
+                var body = 'You have successfully deleted the blog.';
 
                 // show dialog
                 var successfulDeleteDialog = ngDialog.open({
@@ -533,7 +525,7 @@ angular.module('app').controller('BlogPostEditController', ['$scope', '$rootScop
                 // on completion of close
                 successfulDeleteDialog.closePromise.then(function (data) {
                     // redirect to this blog's page
-                    $window.location.href = "#blog";
+                    $window.location.href = '#blog';
                 });
             }
             else {
@@ -550,8 +542,8 @@ angular.module('app').controller('BlogPostEditController', ['$scope', '$rootScop
     // shows successful dialog for saving blog
     function showSaveSuccessDialog() {
         // create the header and body for the success
-        var header = "Success!";
-        var body = "You have successfully saved this draft.";
+        var header = 'Success!';
+        var body = 'You have successfully saved this draft.';
 
         // show dialog
         ngDialog.open({
@@ -565,8 +557,8 @@ angular.module('app').controller('BlogPostEditController', ['$scope', '$rootScop
     // shows successful dialog for posting blog
     function showPostSuccessDialog() {
         // create the header and body for the success
-        var header = "Success!";
-        var body = "You have successfully updated this blog.";
+        var header = 'Success!';
+        var body = 'You have successfully updated this blog.';
 
         // show dialog
         var successfulPostDialog = ngDialog.open({
@@ -581,7 +573,7 @@ angular.module('app').controller('BlogPostEditController', ['$scope', '$rootScop
             // check if user wanted to go to blog page or stay here
             if(data.value && data.value.accepted) {
                 // redirect to this blog's page
-                $window.location.href = "#blog/post/" + $scope.post.url;
+                $window.location.href = '#blog/post/' + $scope.post.url;
             }
         });
     };
@@ -589,8 +581,8 @@ angular.module('app').controller('BlogPostEditController', ['$scope', '$rootScop
     // show error dialog
     function showErrorDialog(err) {
         // create the header and body for the error
-        var header = "Error occurred";
-        var body = "An error occurred trying to process your request. " + err;
+        var header = 'Error occurred';
+        var body = 'An error occurred trying to process your request. ' + err;
 
         // show dialog
         ngDialog.open({

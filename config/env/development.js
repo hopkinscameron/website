@@ -5,7 +5,7 @@ var defaultEnvConfig = require('./default');
 module.exports = {
     livereload: true,
     app: {
-        title: defaultEnvConfig.app.title
+        title: defaultEnvConfig.app.title + ' - Development Enviornment'
     },
     db: {
         uri: process.env.MONGODB || 'mongodb://localhost:27017/personal_website',
@@ -25,7 +25,7 @@ module.exports = {
     log: {
         // logging with Morgan - https://github.com/expressjs/morgan
         // Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
-        format: process.env.LOG_FORMAT || 'combined',
+        format: 'dev',
         fileLogger: {
             directoryPath: process.env.LOG_DIR_PATH || process.cwd(),
             fileName: process.env.LOG_FILE || 'app.log',

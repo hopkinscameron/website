@@ -1,10 +1,10 @@
 'use strict';
 
 // set up the module
-var blogModule = angular.module('blog', ['app']);
+var blogRoutesModule = angular.module('blog.routes');
 
 // configure the module
-blogModule.config(['$routeProvider', function($routeProvider) {
+blogRoutesModule.config(['$routeProvider', function($routeProvider, $routeParams) {
     // set up the routes
     $routeProvider
         .when('/blog', {

@@ -1,10 +1,10 @@
 'use strict';
 
-// get the main application
-var app = angular.module('app');
+// set up the module
+var coreModule = angular.module('core');
 
 // trust the html
-app.filter('trustHTML', function ($sce) {
+coreModule.filter('trustHTML', function ($sce) {
     return function (html) {
         return $sce.trustAsHtml(html);
     };

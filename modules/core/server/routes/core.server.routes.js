@@ -26,9 +26,9 @@ module.exports = function (app) {
 
     // POST sends email
     // format /api/sendEmail
-    app.route('/api/sendEmail').get(ipLogger.log, coreController.sendEmail);
+    app.route('/api/sendEmail').post(ipLogger.log, coreController.sendEmail);
 
     // POST shortens the url
     // format /api/shortenUrl
-    app.route('/api/shortenUrl').get([ipLogger.log, corePolicy.isAllowed], coreController.shortenUrl);
+    app.route('/api/shortenUrl').post([ipLogger.log, corePolicy.isAllowed], coreController.shortenUrl);
 };

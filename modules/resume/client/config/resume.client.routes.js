@@ -1,10 +1,10 @@
 'use strict'
 
 // set up the module
-var resumeModule = angular.module('resume', ['app']);
+var resumeRoutesModule = angular.module('resume.routes');
 
 // configure the module
-resumeModule.config(['$routeProvider', function($routeProvider) {
+resumeRoutesModule.config(['$routeProvider', function($routeProvider) {
     // set up the routes
     $routeProvider
         .when('/resume', {

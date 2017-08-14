@@ -46,14 +46,14 @@ function logUserIPInformation(req) {
 
 		// if query
         if(searchQ) {
-            correctUrl += "?q=" + searchQ;
+            correctUrl += '?q=' + searchQ;
         }
 
         // if page number
         if(page) {
             // if search query has been applied
-            var delimeter = searchQ ? "&" : "?";
-            correctUrl += delimeter + "page=" + page;
+            var delimeter = searchQ ? '&' : '?';
+            correctUrl += delimeter + 'page=' + page;
         }
 
 		// log the page request
@@ -72,14 +72,14 @@ function logUserIPInformation(req) {
 
 		// if query
         if(searchQ) {
-            correctUrl += "?q=" + searchQ;
+            correctUrl += '?q=' + searchQ;
         }
 
         // if page number
         if(page) {
             // if search query has been applied
-            var delimeter = searchQ ? "&" : "?";
-            correctUrl += delimeter + "page=" + page;
+            var delimeter = searchQ ? '&' : '?';
+            correctUrl += delimeter + 'page=' + page;
         }
 
 		// log the page request
@@ -92,7 +92,7 @@ function getUserPublicIP() {
 	// create request
 	var options = {
 		method: 'GET',
-		uri: "http://bot.whatismyipaddress.com",
+		uri: 'http://bot.whatismyipaddress.com',
 		headers: {
 			'Content-Type': 'application/json; odata=verbose',
 			'Accept': 'application/json; odata=verbose'
@@ -148,7 +148,7 @@ function getUserIPObject(accessedBy, userIP, req) {
 // logs the page requested
 function logPageRequest(accessedBy, pageRequested, requestType) {
 	// setup the request index
-	var req = requestType + ":" + pageRequested;
+	var req = requestType + ':' + pageRequested;
 
 	// find page post based on id
 	AnalyticsPage.findOne({ request: req }).exec(function(err, foundPage) {
@@ -168,7 +168,7 @@ function logPageRequest(accessedBy, pageRequested, requestType) {
 		else {
 			// create the analytics for this page
 			var analyticsPage = new AnalyticsPage({
-				request: requestType + ":" + pageRequested,
+				request: requestType + ':' + pageRequested,
 				url: pageRequested,
 				method: requestType,
 				accessedBy: [accessedBy]

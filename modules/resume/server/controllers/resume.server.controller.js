@@ -17,5 +17,5 @@ var // the path
  */
 exports.read = function (req, res) {
     // send data
-    res.json(resumeDetails);
+    res.json({ 'd': resumeDetails });
 };

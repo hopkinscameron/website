@@ -1,20 +1,23 @@
 ﻿'use strict'
 
-// dialog warning controller
-angular.module('app').controller('DialogWarningController', ["$scope", "$rootScope", "ngDialog", 'Service', function ($scope, $rootScope, ngDialog, Service) {
+// set up the module
+var dialogModule = angular.module('dialog');
+
+// create the controller
+dialogModule.controller('DialogWarningController', ['$scope', 'ngDialog', function ($scope, ngDialog) {
 
 }]);
 
 // discard blog draft controller
-app.controller('DialogDiscardBlogDraftController', ["$scope", "$rootScope", 'ngDialog', 'Service', function ($scope, $rootScope, ngDialog, Service) {
+dialogModule.controller('DialogDiscardBlogDraftController', ['$scope', 'ngDialog', function ($scope, ngDialog) {
     // shows this is the discard blog draft controller
     $scope.DialogDiscardBlogDraftController = true;
 
     // the warning head 
-    $scope.warningHead = "GEEZ !?!?";
+    $scope.warningHead = 'GEEZ !?!?';
 
     // the warning body
-    $scope.warningBody = "Woah there, you are about to discard this draft, are you positive !?";
+    $scope.warningBody = 'Woah there, you are about to discard this draft, are you positive !?';
 
     // cancel
     $scope.cancel = function () {
@@ -30,15 +33,15 @@ app.controller('DialogDiscardBlogDraftController', ["$scope", "$rootScope", 'ngD
 }]);
 
 // delete blog controller
-app.controller('DialogDeleteBlogController', ["$scope", "$rootScope", 'ngDialog', 'Service', function ($scope, $rootScope, ngDialog, Service) {
+dialogModule.controller('DialogDeleteBlogController', ['$scope', 'ngDialog', function ($scope, ngDialog) {
     // shows this is the delete blog controller
     $scope.DialogDeleteBlogController = true;
 
     // the warning head 
-    $scope.warningHead = "GEEZ !?!?";
+    $scope.warningHead = 'GEEZ !?!?';
 
     // the warning body
-    $scope.warningBody = "Woah there, you are about to delete the blog '" + $scope.ngDialogData.blogToBeDeleted.title + "', are you positive !?";
+    $scope.warningBody = 'Woah there, you are about to delete the blog \'' + $scope.ngDialogData.blogToBeDeleted.title + '\', are you positive !?';
 
     // cancel
     $scope.cancel = function () {

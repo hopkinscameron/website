@@ -1,6 +1,10 @@
 'use strict';
 
-angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$timeout', 'ngDialog', 'cfpLoadingBar','Service', 'BlogFactory', function ($scope, $rootScope, $compile, $location, $window, $timeout, ngDialog, cfpLoadingBar, Service, BlogFactory) {
+// set up the module
+var blogModule = angular.module('blog');
+
+// create the controller
+blogModule.controller('BlogPostNewController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$timeout', 'ngDialog', 'Service', 'BlogFactory', function ($scope, $rootScope, $compile, $location, $window, $timeout, ngDialog, Service, BlogFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
 
@@ -12,45 +16,45 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
 
     // holds the error
     $scope.error = {
-        "error": false,
-        "title": "",
-        "status": 404,
-        "message": ""
+        'error': false,
+        'title': '',
+        'status': 404,
+        'message': ''
     };
 
     // holds the blog post form data
     $scope.blogPostForm = {
-        "formSubmitted": false,
-        "inputs": {
-            "title": "",
-            "image": "",
-            "shortDescription": "",
-            "body": ""
+        'formSubmitted': false,
+        'inputs': {
+            'title': '',
+            'image': '',
+            'shortDescription': '',
+            'body': ''
         },
-        "views": {
-            "title": "title",
-            "shortDescription": "shortDescription",
-            "body": "body"
+        'views': {
+            'title': 'title',
+            'shortDescription': 'shortDescription',
+            'body': 'body'
         },
-        "errors": {
-            "errorMessage": "",
-            "isError": false,
-            "title": false,
-            "shortDescription": false,
-            "body": false
+        'errors': {
+            'errorMessage': '',
+            'isError': false,
+            'title': false,
+            'shortDescription': false,
+            'body': false
         }
     };
 
     // tinyMCE options
     $scope.tinymceOptions = {
         setup: function(editor) {           
-            editor.on("init", function() {
+            editor.on('init', function() {
                 
             });
-            editor.on("click", function() {
+            editor.on('click', function() {
                 
             });
-            editor.on("focus", function() {
+            editor.on('focus', function() {
                 $scope.viewFocusEnter($scope.blogPostForm.views.body);
             });
         },
@@ -76,11 +80,11 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
     // socket io
     var socket = io.connect('http://localhost:3000',
         {
-            "rememberTransport": false, 
-            "reconnect": true,
-            "reconnection delay": 1000,
-            "max reconnection attempts": 10,
-            "secure": false
+            'rememberTransport': false, 
+            'reconnect': true,
+            'reconnection delay': 1000,
+            'max reconnection attempts': 10,
+            'secure': false
         }
     );
 
@@ -90,22 +94,22 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
     // check if header/footer was initialized
     if($rootScope.$root.showHeader === undefined || $rootScope.$root.showFooter === undefined) {
         // refresh header
-        $rootScope.$emit("refreshHeader", {});
+        $rootScope.$emit('refreshHeader', {});
 
         // refresh footer
-        $rootScope.$emit("refreshFooter", {});
+        $rootScope.$emit('refreshFooter', {});
     }
     else {
         // always refresh header to ensure login
-        $rootScope.$emit("refreshHeader", {});
+        $rootScope.$emit('refreshHeader', {});
     }
 
     // on header refresh
-    $rootScope.$on("headerRefreshed", function (event, data) {
+    $rootScope.$on('headerRefreshed', function (event, data) {
         // if footer still hasn't been initialized
         if($rootScope.$root.showFooter === undefined) {
             // refresh footer
-            $rootScope.$emit("refreshFooter", {});
+            $rootScope.$emit('refreshFooter', {});
         }
         else {
             // initialize the page
@@ -114,11 +118,11 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
     });
 
     // on footer refresh
-    $rootScope.$on("footerRefreshed", function (event, data) {
+    $rootScope.$on('footerRefreshed', function (event, data) {
         // if footer still hasn't been initialized
         if($rootScope.$root.showHeader === undefined) {
             // refresh header
-            $rootScope.$emit("refreshHeader", {});
+            $rootScope.$emit('refreshHeader', {});
         }
         else {
             // initialize the page
@@ -127,7 +131,7 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
     });
 
     // on the destruction of the controller
-    $scope.$on("$destroy", function handler() {
+    $scope.$on('$destroy', function handler() {
         // disconnect the socket
         socket.disconnect();
     });
@@ -162,25 +166,13 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
         $scope.dontUpdateRoute = false;
     });
 
-    // on loading http intercepter start
-    $scope.start = function() {
-        // start loader
-        cfpLoadingBar.start();
-    };
-
-    // on loading http intercepter complete
-    $scope.complete = function () {
-        // complete loader
-        cfpLoadingBar.complete();
-    };
-
     // parses date/time
     $scope.parseDateTime = function (dateTime) {
         // get the time since this date
         var timeSince = $rootScope.$root.getTimeSince(dateTime);
 
         // if this post is more than a day old or somehow it's in the future!?!
-        if(timeSince == "" || timeSince.toLowerCase().indexOf("day") || timeSince.toLowerCase().indexOf("month") || timeSince.toLowerCase().indexOf("year")) {
+        if(timeSince == '' || timeSince.toLowerCase().indexOf('day') || timeSince.toLowerCase().indexOf('month') || timeSince.toLowerCase().indexOf('year')) {
             // get the locale string format
             return $rootScope.$root.parseDateTime(dateTime);
         }
@@ -211,7 +203,7 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
             $scope.blogPostForm.errors.shortDescription = false;
             $scope.blogPostForm.errors.body = false;
             $scope.blogPostForm.errors.isError = false;
-            $scope.blogPostForm.errors.errorMessage = "";
+            $scope.blogPostForm.errors.errorMessage = '';
 
             // populate form
             $scope.blogPostForm.inputs.title = savedPost.title;
@@ -221,7 +213,7 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
 
             // set the current working post
             $scope.currentWorkingPost = savedPost;
-            $location.search("draftId", $scope.currentWorkingPost.url);
+            $location.search('draftId', $scope.currentWorkingPost.url);
         }
         else {
             // reset all errors
@@ -229,17 +221,17 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
             $scope.blogPostForm.errors.shortDescription = false;
             $scope.blogPostForm.errors.body = false;
             $scope.blogPostForm.errors.isError = false;
-            $scope.blogPostForm.errors.errorMessage = "";
+            $scope.blogPostForm.errors.errorMessage = '';
 
             // populate form
-            $scope.blogPostForm.inputs.title = "";
-            $scope.blogPostForm.inputs.image = "";
-            $scope.blogPostForm.inputs.shortDescription = "";
-            $scope.blogPostForm.inputs.body = "";
+            $scope.blogPostForm.inputs.title = '';
+            $scope.blogPostForm.inputs.image = '';
+            $scope.blogPostForm.inputs.shortDescription = '';
+            $scope.blogPostForm.inputs.body = '';
 
             // set the current working post
             $scope.currentWorkingPost = savedPost;
-            $location.search("draftId", savedPost);
+            $location.search('draftId', savedPost);
         }
     };
 
@@ -276,10 +268,10 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
 
             // the data to send
             var blogPostData = {
-                "title": $scope.blogPostForm.inputs.title,
-                "image": $scope.blogPostForm.inputs.image,
-                "shortDescription": $scope.blogPostForm.inputs.shortDescription,
-                "body": $scope.blogPostForm.inputs.body
+                'title': $scope.blogPostForm.inputs.title,
+                'image': $scope.blogPostForm.inputs.image,
+                'shortDescription': $scope.blogPostForm.inputs.shortDescription,
+                'body': $scope.blogPostForm.inputs.body
             };
 
             // if working with a previously saved blog post
@@ -398,7 +390,7 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
         else {
             $scope.blogPostForm.errors.title = true;
             $scope.blogPostForm.errors.isError = true;
-            $scope.blogPostForm.errors.errorMessage = "You must have a title before saving";
+            $scope.blogPostForm.errors.errorMessage = 'You must have a title before saving';
         }
     };
 
@@ -414,10 +406,10 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
 
             // the data to send
             var blogPostData = {
-                "title": $scope.blogPostForm.inputs.title,
-                "image": $scope.blogPostForm.inputs.image,
-                "shortDescription": $scope.blogPostForm.inputs.shortDescription,
-                "body": $scope.blogPostForm.inputs.body
+                'title': $scope.blogPostForm.inputs.title,
+                'image': $scope.blogPostForm.inputs.image,
+                'shortDescription': $scope.blogPostForm.inputs.shortDescription,
+                'body': $scope.blogPostForm.inputs.body
             };
 
             // if working with a previously saved blog post
@@ -550,7 +542,7 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
                 }
 
                 // holds the page title
-                $scope.pageTitle = "New Blog Post | " + Service.appName;
+                $scope.pageTitle = 'New Blog Post | ' + ApplicationConfiguration.applicationName;
 
                 // check to see if currently on a query with blog id
                 var draftId = $location.search().draftId;
@@ -594,9 +586,9 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
     // sets up the page
     function setUpPage() {
         // set up the title
-        var titleDOM = document.getElementById("pageTitle");
-        var title = "\'" + $scope.pageTitle + "\'";
-        titleDOM.setAttribute("ng-bind-html", title);
+        var titleDOM = document.getElementById('pageTitle');
+        var title = '\'' + $scope.pageTitle + '\'';
+        titleDOM.setAttribute('ng-bind-html', title);
         $compile(titleDOM)($scope);
 
         // set page fully loaded
@@ -623,19 +615,19 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
         // check for any empty values
         if (!$scope.blogPostForm.inputs.body || $scope.blogPostForm.inputs.body.length == 0) {
             // set error
-            $scope.blogPostForm.errors.errorMessage = "You must enter a body";
+            $scope.blogPostForm.errors.errorMessage = 'You must enter a body';
             $scope.blogPostForm.errors.body = true;
             $scope.blogPostForm.errors.isError = true;
         }
         if (!$scope.blogPostForm.inputs.shortDescription || $scope.blogPostForm.inputs.shortDescription.length == 0) {
             // set error
-            $scope.blogPostForm.errors.errorMessage = "You must enter a short description";
+            $scope.blogPostForm.errors.errorMessage = 'You must enter a short description';
             $scope.blogPostForm.errors.shortDescription = true;
             $scope.blogPostForm.errors.isError = true;
         }
         if (!$scope.blogPostForm.inputs.title || $scope.blogPostForm.inputs.title.length == 0) {
             // set error
-            $scope.blogPostForm.errors.errorMessage = "You must enter the title";
+            $scope.blogPostForm.errors.errorMessage = 'You must enter the title';
             $scope.blogPostForm.errors.title = true;
             $scope.blogPostForm.errors.isError = true;
         }
@@ -652,8 +644,8 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
                 getPageData();
 
                 // create the header and body for the success
-                var header = "It's done, no turning back";
-                var body = "You have successfully discarded.";
+                var header = 'It\'s done, no turning back';
+                var body = 'You have successfully discarded.';
 
                 // show dialog
                 var successfulDiscardDialog = ngDialog.open({
@@ -677,8 +669,8 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
     // shows successful dialog for saving blog
     function showSaveSuccessDialog() {
         // create the header and body for the success
-        var header = "Success!";
-        var body = "You have successfully saved this draft.";
+        var header = 'Success!';
+        var body = 'You have successfully saved this draft.';
 
         // show dialog
         ngDialog.open({
@@ -692,8 +684,8 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
     // shows successful dialog for posting blog
     function showPostSuccessDialog() {
         // create the header and body for the success
-        var header = "Success!";
-        var body = "You have successfully saved this draft.";
+        var header = 'Success!';
+        var body = 'You have successfully saved this draft.';
 
         // show dialog
         var successfulPostDialog = ngDialog.open({
@@ -708,7 +700,7 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
             // check if user wanted to go to blog page or stay here
             if(data.value && data.value.accepted) {
                 // redirect to this blog's page
-                $window.location.href = "#blog/post/" + $scope.currentWorkingPost.url;
+                $window.location.href = '#blog/post/' + $scope.currentWorkingPost.url;
             }
             else {
                 // reload page instead
@@ -720,8 +712,8 @@ angular.module('app').controller('BlogPostNewController', ['$scope', '$rootScope
     // show error dialog
     function showErrorDialog(err) {
         // create the header and body for the error
-        var header = "Error occurred";
-        var body = "An error occurred trying to process your request. " + err;
+        var header = 'Error occurred';
+        var body = 'An error occurred trying to process your request. ' + err;
 
         // show dialog
         ngDialog.open({

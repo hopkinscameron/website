@@ -1,7 +1,10 @@
 ﻿'use strict'
 
-// dialog success controller
-angular.module('app').controller('DialogSuccessController', ["$scope", "$rootScope", "ngDialog", 'Service', function ($scope, $rootScope, ngDialog, Service) {
+// set up the module
+var dialogModule = angular.module('dialog');
+
+// create the controller
+dialogModule.controller('DialogSuccessController', ['$scope', 'ngDialog', function ($scope, ngDialog) {
 	// shows this is the success controller
     $scope.DialogSuccessController = true;
 
@@ -13,7 +16,7 @@ angular.module('app').controller('DialogSuccessController', ["$scope", "$rootSco
 }]);
 
 // dialog successful post controller
-angular.module('app').controller('DialogSuccessfulPostController', ["$scope", "$rootScope", "ngDialog", 'Service', function ($scope, $rootScope, ngDialog, Service) {
+dialogModule.controller('DialogSuccessfulPostController', ['$scope', 'ngDialog', function ($scope, ngDialog) {
 	// shows this is the successful post controller
     $scope.DialogSuccessfulPostController = true;
 

@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 
-<!-- Begin HTML -->
-<html lang="en" ng-app="app">
+<!-- Begin HTML ng-app="app" -->
+<html lang="en">
     <!-- Begin Head -->
     <head>
         <meta content="IE=edge" http-equiv="X-UA-Compatible">
@@ -73,34 +73,47 @@
         <script src="./core/client/third-party-scripts/ng-dialog/ngDialog.min.js"></script>
         <script src="./core/client/third-party-scripts/mark/mark.min.js" charset="UTF-8"></script>
 
+        <script src="./core/client/app/config.js"></script>
+        <script src="./core/client/app/init.js"></script>
+        <script src="./core/client/core.client.module.js"></script>
         <script src="./core/client/config/core.client.routes.js"></script>
-        <script src="./core/client/services/data-access.client.service.js"></script>
+        <script src="./core/client/directives/spinner-load.client.directive.js"></script>
+        <script src="./core/client/directives/tool-tip.client.directive.js"></script>
+        <script src="./core/client/filters/trust-html.client.filter.js"></script>
+        <script src="./core/client/filters/trust-url.client.filter.js"></script>
         <script src="./core/client/services/client.service.js"></script>
         <script src="./core/client/controllers/error.client.controller.js"></script>
 
+        <script src="./header/client/header.client.module.js"></script>
         <script src="./header/client/services/header.client.service.js"></script>
         <script src="./header/client/controllers/header.client.controller.js"></script>
 
+        <script src="./footer/client/footer.client.module.js"></script>
         <script src="./footer/client/services/footer.client.service.js"></script>
         <script src="./footer/client/controllers/footer.client.controller.js"></script>
 
+        <script src="./home/client/home.client.module.js"></script>
         <script src="./home/client/config/home.client.routes.js"></script>
         <script src="./home/client/services/home.client.service.js"></script>
         <script src="./home/client/controllers/home.client.controller.js"></script>
 
+        <script src="./about/client/about.client.module.js"></script>
         <script src="./about/client/config/about.client.routes.js"></script>
         <script src="./about/client/services/about.client.service.js"></script>
         <script src="./about/client/controllers/about.client.controller.js"></script>
 
+        <script src="./resume/client/resume.client.module.js"></script>
         <script src="./resume/client/config/resume.client.routes.js"></script>
         <script src="./resume/client/services/resume.client.service.js"></script>
         <script src="./resume/client/controllers/resume.client.controller.js"></script>
 
-        <!-- <script src="./porfolio/client/config/porfolio.client.routes.js"></script> -->
+        <script src="./portfolio/client/portfolio.client.module.js"></script>
+        <script src="./portfolio/client/config/portfolio.client.routes.js"></script>
         <script src="./portfolio/client/services/portfolio.client.service.js"></script>
         <script src="./portfolio/client/controllers/portfolio-list.client.controller.js"></script>
         <script src="./portfolio/client/controllers/portfolio-item.client.controller.js"></script>
 
+        <script src="./blog/client/blog.client.module.js"></script>
         <script src="./blog/client/config/blog.client.routes.js"></script>
         <script src="./blog/client/services/blog.client.service.js"></script>
         <script src="./blog/client/controllers/blog-list.client.controller.js"></script>
@@ -108,18 +121,22 @@
         <script src="./blog/client/controllers/admin/blog-post-edit.client.controller.js"></script>
         <script src="./blog/client/controllers/admin/blog-post-new.client.controller.js"></script>
 
+        <script src="./contact/client/contact.client.module.js"></script>
         <script src="./contact/client/config/contact.client.routes.js"></script>
         <script src="./contact/client/services/contact.client.service.js"></script>
         <script src="./contact/client/controllers/contact.client.controller.js"></script>
 
+        <script src="./login/client/login.client.module.js"></script>
         <script src="./login/client/config/login.client.routes.js"></script>
         <script src="./login/client/services/login.client.service.js"></script>
         <script src="./login/client/controllers/login.client.controller.js"></script>
 
+        <script src="./logout/client/logout.client.module.js"></script>
         <script src="./logout/client/config/logout.client.routes.js"></script>
         <script src="./logout/client/services/logout.client.service.js"></script>
         <script src="./logout/client/controllers/logout.client.controller.js"></script>
 
+        <script src="./dialog/client/dialog.client.module.js"></script>
         <script src="./dialog/client/controllers/dialog-error.client.controller.js"></script>
         <script src="./dialog/client/controllers/dialog-success.client.controller.js"></script>
         <script src="./dialog/client/controllers/dialog-warning.client.controller.js"></script>

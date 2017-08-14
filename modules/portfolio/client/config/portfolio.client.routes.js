@@ -1,10 +1,10 @@
 'use strict'
 
 // set up the module
-var portfolioModule = angular.module('portfolio', ['app']);
+var portfolioRoutesModule = angular.module('portfolio.routes');
 
 // configure the module
-portfolioModule.config(['$routeProvider', function($routeProvider) {
+portfolioRoutesModule.config(['$routeProvider', function($routeProvider, $routeParams) {
     // set up the routes
     $routeProvider
         .when('/portfolio', {

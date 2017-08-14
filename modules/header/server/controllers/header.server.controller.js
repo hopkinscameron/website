@@ -26,10 +26,10 @@ exports.read = function (req, res) {
         headerAdminDetails.isLoggedIn = true;
 
         // send data
-        res.json(headerAdminDetails);
+        res.json({ 'd': headerAdminDetails });
     }
     else {
         // send data
-        res.json(headerDetails);
+        res.json({ 'd': headerDetails });
     }
 };

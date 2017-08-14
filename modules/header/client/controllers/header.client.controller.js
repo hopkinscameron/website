@@ -1,7 +1,10 @@
 ﻿'use strict'
 
-// the Header Controller
-angular.module('app').controller('HeaderController', ['$scope', '$rootScope', '$location', '$window', 'Service', 'HeaderFactory', function ($scope, $rootScope, $location, $window, Service, HeaderFactory) {
+// set up the module
+var headerModule = angular.module('header');
+
+// create the controller
+headerModule.controller('HeaderController', ['$scope', '$rootScope', '$location', '$window', 'Service', 'HeaderFactory', function ($scope, $rootScope, $location, $window, Service, HeaderFactory) {
     // initialize variables
     initializeVariables();
 
@@ -9,7 +12,7 @@ angular.module('app').controller('HeaderController', ['$scope', '$rootScope', '$
     getHeaderInformation();
     
     // on refresh
-    $rootScope.$on("refreshHeader", function (event, data) {
+    $rootScope.$on('refreshHeader', function (event, data) {
         // initialize variables
         initializeVariables();
 
@@ -28,7 +31,7 @@ angular.module('app').controller('HeaderController', ['$scope', '$rootScope', '$
 
             // if invalid
             if(diff < 0) {
-                return "";
+                return '';
             }
 
             var secs = Math.floor(diff/1000);
@@ -39,7 +42,7 @@ angular.module('app').controller('HeaderController', ['$scope', '$rootScope', '$
             var years = Math.floor(secs/31536000); // seconds in a year
 
             // holds the time message
-            var timeSince = ""; 
+            var timeSince = ''; 
 
             // if less than a day ago
             if(days <= 0){
@@ -49,29 +52,29 @@ angular.module('app').controller('HeaderController', ['$scope', '$rootScope', '$
                     if(mins <= 0) {
                         // if a second
                         if(secs == 1) {
-                            timeSince = secs + " second ago";
+                            timeSince = secs + ' second ago';
                         }
                         else {
-                            timeSince = secs + " seconds ago";
+                            timeSince = secs + ' seconds ago';
                         }
                     }
                     else {
                         // if a minute
                         if(mins == 1) {
-                            timeSince = mins + " minute ago";
+                            timeSince = mins + ' minute ago';
                         }
                         else {
-                            timeSince = mins + " minutes ago";
+                            timeSince = mins + ' minutes ago';
                         }
                     }
                 }
                 else {
                     // if an hour
                     if(hours == 1) {
-                        timeSince = hours + " hour ago";
+                        timeSince = hours + ' hour ago';
                     }
                     else {
-                        timeSince = hours + " hours ago";
+                        timeSince = hours + ' hours ago';
                     }
                 }
             }
@@ -82,29 +85,29 @@ angular.module('app').controller('HeaderController', ['$scope', '$rootScope', '$
                     if(months <= 0) {
                         // if a day
                         if(days == 1) {
-                            timeSince = days + " day ago";
+                            timeSince = days + ' day ago';
                         }
                         else {
-                            timeSince = days + " days ago";
+                            timeSince = days + ' days ago';
                         }
                     }
                     else {
                         // if a month
                         if(months == 1) {
-                            timeSince = months + " month ago";
+                            timeSince = months + ' month ago';
                         }
                         else {
-                            timeSince = months + " months ago";
+                            timeSince = months + ' months ago';
                         }
                     }
                 }
                 else {
                     // if a year
                     if(years == 1) {
-                        timeSince = years + " year ago";
+                        timeSince = years + ' year ago';
                     }
                     else {
-                        timeSince = years + " years ago";
+                        timeSince = years + ' years ago';
                     }
                 }
             }
@@ -150,7 +153,7 @@ angular.module('app').controller('HeaderController', ['$scope', '$rootScope', '$
         var windowSplit = $window.location.href.split('/');
         var pageSplit = page.split('/');
         var last = windowSplit[windowSplit.length - 1];
-        var queryIndex = last.indexOf("?");
+        var queryIndex = last.indexOf('?');
 
         // if query
         if(queryIndex != -1) {
@@ -188,17 +191,17 @@ angular.module('app').controller('HeaderController', ['$scope', '$rootScope', '$
                 return formatted;
             }
             catch (e) {
-                return "";
+                return '';
             }
         };
 
         // tinyMCE options
         $rootScope.$root.tinymceOptions = {
             setup: function(editor) {           
-                editor.on("init", function() {
+                editor.on('init', function() {
                     
                 });
-                editor.on("click", function() {
+                editor.on('click', function() {
                     
                 });
             },
@@ -228,7 +231,7 @@ angular.module('app').controller('HeaderController', ['$scope', '$rootScope', '$
     // sets up the regex
     function setUpRegex() {
         // email regex
-        $rootScope.$root.emailRegex = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        $rootScope.$root.emailRegex = /^(([^<>()\[\]\\.,;:\s@\']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
         // url regex
         $rootScope.$root.url = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
@@ -243,23 +246,23 @@ angular.module('app').controller('HeaderController', ['$scope', '$rootScope', '$
             $rootScope.$root.isLoggedIn = responseHeader.isLoggedIn;
 
             // header refreshed
-            $rootScope.$emit("headerRefreshed", {});
+            $rootScope.$emit('headerRefreshed', {});
         })
         .catch(function (responseHeader) {
             // header refreshed with error
-            $rootScope.$emit("headerRefreshed", {"error": true, "message": responseHeader.message});
+            $rootScope.$emit('headerRefreshed', {'error': true, 'message': responseHeader.message});
         });
     };
 
     // add document event listener on key down
-    document.addEventListener("keydown", function(event) {
+    document.addEventListener('keydown', function(event) {
         // if esc key
-        if(event.which == 27 || event.keyCode == 27 || event.key == "Escape") {
+        if(event.which == 27 || event.keyCode == 27 || event.key == 'Escape') {
             // if not already on login page
             if($location.path() != 'login') {
-                var loc = "#/login?redirect=" + $location.path();
+                var loc = '#/login?redirect=' + $location.path();
                 // redirect to login page
-                $window.location.href = "#/login?redirect=" + $location.path();
+                $window.location.href = '#/login?redirect=' + $location.path();
             }
         }
     });

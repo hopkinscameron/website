@@ -24,5 +24,5 @@ exports.logout = function (req, res) {
     };
     
     // return success
-    res.status(200).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) + " You have successfully logged out!" });
+    res.json({ 'd': { title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) + " You have successfully logged out!" } });
 };

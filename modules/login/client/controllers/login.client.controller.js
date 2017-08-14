@@ -1,6 +1,10 @@
 'use strict'
 
-angular.module('app').controller('LoginController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$timeout', 'cfpLoadingBar','Service', 'LoginFactory', function ($scope, $rootScope, $compile, $location, $window, $timeout, cfpLoadingBar, Service, LoginFactory) {
+// set up the module
+var loginModule = angular.module('login');
+
+// create the controller
+loginModule.controller('LoginController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$timeout', 'Service', 'LoginFactory', function ($scope, $rootScope, $compile, $location, $window, $timeout, Service, LoginFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
     
@@ -12,28 +16,28 @@ angular.module('app').controller('LoginController', ['$scope', '$rootScope', '$c
 
     // holds the error
     $scope.error = {
-        "error": false,
-        "title": "",
-        "status": 404,
-        "message": ""
+        'error': false,
+        'title': '',
+        'status': 404,
+        'message': ''
     };
 
     // holds the login form data
     $scope.loginForm = {
-        "formSubmitted": false,
-        "inputs": {
-            "username": "cam",
-            "password": "0000"
+        'formSubmitted': false,
+        'inputs': {
+            'username': 'cam',
+            'password': '0000'
         },
-        "views": {
-            "username": "username",
-            "password": "password"
+        'views': {
+            'username': 'username',
+            'password': 'password'
         },
-        "errors": {
-            "errorMessage": "",
-            "isError": false,
-            "username": false,
-            "password": false
+        'errors': {
+            'errorMessage': '',
+            'isError': false,
+            'username': false,
+            'password': false
         }
     };
 
@@ -43,22 +47,22 @@ angular.module('app').controller('LoginController', ['$scope', '$rootScope', '$c
     // check if header/footer was initialized
     if($rootScope.$root.showHeader === undefined || $rootScope.$root.showFooter === undefined) {
         // refresh header
-        $rootScope.$emit("refreshHeader", {});
+        $rootScope.$emit('refreshHeader', {});
 
         // refresh footer
-        $rootScope.$emit("refreshFooter", {});
+        $rootScope.$emit('refreshFooter', {});
     }
     else {
         // always refresh header to ensure login
-        $rootScope.$emit("refreshHeader", {});
+        $rootScope.$emit('refreshHeader', {});
     }
 
     // on header refresh
-    $rootScope.$on("headerRefreshed", function (event, data) {
+    $rootScope.$on('headerRefreshed', function (event, data) {
         // if footer still hasn't been initialized
         if($rootScope.$root.showFooter === undefined) {
             // refresh footer
-            $rootScope.$emit("refreshFooter", {});
+            $rootScope.$emit('refreshFooter', {});
         }
         else {
             // initialize the page
@@ -67,29 +71,17 @@ angular.module('app').controller('LoginController', ['$scope', '$rootScope', '$c
     });
 
     // on footer refresh
-    $rootScope.$on("footerRefreshed", function (event, data) {
+    $rootScope.$on('footerRefreshed', function (event, data) {
         // if footer still hasn't been initialized
         if($rootScope.$root.showHeader === undefined) {
             // refresh header
-            $rootScope.$emit("refreshHeader", {});
+            $rootScope.$emit('refreshHeader', {});
         }
         else {
             // initialize the page
             initializePage();
         }
     });
-
-    // on loading http intercepter start
-    $scope.start = function() {
-        // start loader
-        cfpLoadingBar.start();
-    };
-
-    // on loading http intercepter complete
-    $scope.complete = function () {
-        // complete loader
-        cfpLoadingBar.complete();
-    };
 
     // on call event when the focus enters
     $scope.viewFocusEnter = function (viewId) {
@@ -129,15 +121,15 @@ angular.module('app').controller('LoginController', ['$scope', '$rootScope', '$c
         // check to see if there is an error
         if ($scope.loginForm.errors.username) {
             // set error
-            $scope.loginForm.errors.errorMessage = "You must enter the username";
+            $scope.loginForm.errors.errorMessage = 'You must enter the username';
         }
         else if ($scope.loginForm.errors.password) {
             // set error
-            $scope.loginForm.errors.errorMessage = "You must enter the password";
+            $scope.loginForm.errors.errorMessage = 'You must enter the password';
         }
         else {
             // remove error
-            $scope.loginForm.errors.errorMessage = "";
+            $scope.loginForm.errors.errorMessage = '';
             $scope.loginForm.errors.isError = false;
         }
     };
@@ -154,8 +146,8 @@ angular.module('app').controller('LoginController', ['$scope', '$rootScope', '$c
 
             // the data to send
             var loginData = {
-                "username": $scope.loginForm.inputs.username,
-                "password": $scope.loginForm.inputs.password
+                'username': $scope.loginForm.inputs.username,
+                'password': $scope.loginForm.inputs.password
             };
 
             // login
@@ -165,15 +157,15 @@ angular.module('app').controller('LoginController', ['$scope', '$rootScope', '$c
                     // if a redirect callback
                     if($location.search().redirect){
                         // redirect to previous page
-                        $window.location.href = "#" + $location.search().redirect;
+                        $window.location.href = '#' + $location.search().redirect;
                     }
                     else {
                         // redirect to about page
-                        $window.location.href = "#/about";
+                        $window.location.href = '#/about';
                     }
 
                     // refresh header
-                    $rootScope.$emit("refreshHeader", {});
+                    $rootScope.$emit('refreshHeader', {});
                 }
                 else {
                     // show error
@@ -221,7 +213,7 @@ angular.module('app').controller('LoginController', ['$scope', '$rootScope', '$c
                 // if user is not logged in
                 if(!responseL.isLoggedIn) {
                     // holds the page title
-                    $scope.pageTitle = "Login | " + Service.appName;
+                    $scope.pageTitle = 'Login | ' + ApplicationConfiguration.applicationName;
                     
                      // setup page
                     setUpPage();
@@ -229,11 +221,11 @@ angular.module('app').controller('LoginController', ['$scope', '$rootScope', '$c
                 // if a redirect callback
                 else if($location.search().redirect){
                     // redirect to previous page
-                    $window.location.href = "#" + $location.search().redirect;
+                    $window.location.href = '#' + $location.search().redirect;
                 }
                 else {
                     // redirect to about page
-                    $window.location.href = "#/about";
+                    $window.location.href = '#/about';
                 }
             }
             else {
@@ -254,9 +246,9 @@ angular.module('app').controller('LoginController', ['$scope', '$rootScope', '$c
     // sets up the page
     function setUpPage() {
         // set up the title
-        var titleDOM = document.getElementById("pageTitle");
-        var title = "\'" + $scope.pageTitle + "\'";
-        titleDOM.setAttribute("ng-bind-html", title);
+        var titleDOM = document.getElementById('pageTitle');
+        var title = '\'' + $scope.pageTitle + '\'';
+        titleDOM.setAttribute('ng-bind-html', title);
         $compile(titleDOM)($scope);
 
         // set page fully loaded
@@ -280,13 +272,13 @@ angular.module('app').controller('LoginController', ['$scope', '$rootScope', '$c
         // check for any empty values
         if (!$scope.loginForm.inputs.password || $scope.loginForm.inputs.password.length == 0) {
             // set error
-            $scope.loginForm.errors.errorMessage = "You must enter the password";
+            $scope.loginForm.errors.errorMessage = 'You must enter the password';
             $scope.loginForm.errors.password = true;
             $scope.loginForm.errors.isError = true;
         }
         if (!$scope.loginForm.inputs.username || $scope.loginForm.inputs.username.length == 0) {
             // set error
-            $scope.loginForm.errors.errorMessage = "You must enter the username";
+            $scope.loginForm.errors.errorMessage = 'You must enter the username';
             $scope.loginForm.errors.username = true;
             $scope.loginForm.errors.isError = true;
         }

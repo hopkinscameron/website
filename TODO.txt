@@ -7,12 +7,9 @@ All
 
 Done
 
-
 Pending
-- 1. remove ctp.loading bar from all controllers
 - 2. make sure each request get's logged to console again... it's not showing -> figure out where this is
 - 4. move images/files to client locations -> make sure node creates a folder for this as well
-- 5. create on client side in core, the config.js and init.js files
 - 8. add layout.server.view.html to core
 - 9. add social media to meta tags -> so add to config file
 - 10. follow https://docs.angularjs.org/guide/production 

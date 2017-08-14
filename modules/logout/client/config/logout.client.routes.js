@@ -1,10 +1,10 @@
 'use strict'
 
 // set up the module
-var logoutModule = angular.module('logout', ['app']);
+var logoutRoutesModule = angular.module('logout.routes');
 
 // configure the module
-logoutModule.config(['$routeProvider', function($routeProvider) {
+logoutRoutesModule.config(['$routeProvider', function($routeProvider) {
     // set up the routes
     $routeProvider
         .when('/logout', {

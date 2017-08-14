@@ -1,10 +1,10 @@
 'use strict'
 
 // set up the module
-var homeModule = angular.module('home', ['app']);
+var homeRoutesModule = angular.module('home.routes');
 
 // configure the module
-homeModule.config(['$routeProvider', function($routeProvider) {
+homeRoutesModule.config(['$routeProvider', function($routeProvider) {
     // set up the routes
     $routeProvider
         .when('/', {

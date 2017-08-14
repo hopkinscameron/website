@@ -1,10 +1,10 @@
 'use strict';
 
-// set up the application
-var app = angular.module('app');
+// set up the module
+var coreModule = angular.module('core');
 
 // creates a directive for showing/hiding a custom tooltip
-app.directive('tooltip', function () {
+coreModule.directive('tooltip', function () {
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {

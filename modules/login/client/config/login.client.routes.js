@@ -1,10 +1,10 @@
 'use strict'
 
 // set up the module
-var loginModule = angular.module('login', ['app']);
+var loginRoutesModule = angular.module('login.routes');
 
 // configure the module
-loginModule.config(['$routeProvider', function($routeProvider) {
+loginRoutesModule.config(['$routeProvider', function($routeProvider) {
     // set up the routes
     $routeProvider
         .when('/login', {

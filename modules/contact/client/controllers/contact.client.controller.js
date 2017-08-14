@@ -1,6 +1,10 @@
 ﻿'use strict';
 
-angular.module('app').controller('ContactController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'cfpLoadingBar', 'Service', 'ContactFactory', function ($scope, $rootScope, $compile, $location, $timeout, cfpLoadingBar, Service, ContactFactory) {
+// set up the module
+var contactModule = angular.module('contact');
+
+// create the controller
+contactModule.controller('ContactController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'Service', 'ContactFactory', function ($scope, $rootScope, $compile, $location, $timeout, Service, ContactFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
     
@@ -12,43 +16,43 @@ angular.module('app').controller('ContactController', ['$scope', '$rootScope', '
 
     // holds the error
     $scope.error = {
-        "error": false,
-        "title": "",
-        "status": 404,
-        "message": ""
+        'error': false,
+        'title': '',
+        'status': 404,
+        'message': ''
     };
 
     // holds contact form information
     $scope.contactForm = {
-        "formSubmitted": false,
-        "inputs": {
-            "firstName": "", //"John",
-            "lastName": "", //"Doe",
-            "email": "", //"johndoedoebrobrolikewhatnow@johndoedoebrobrolikewhatnow.com",
-            "subject": "", //"Man, this John Doe Bro",
-            "message": "", //"Yo wassup bro, this is john doe bro. Just testing out your email to make sure it works"
+        'formSubmitted': false,
+        'inputs': {
+            'firstName': '', //'John',
+            'lastName': '', //'Doe',
+            'email': '', //'johndoedoebrobrolikewhatnow@johndoedoebrobrolikewhatnow.com',
+            'subject': '', //'Man, this John Doe Bro',
+            'message': '', //'Yo wassup bro, this is john doe bro. Just testing out your email to make sure it works'
         },
-        "maxLength": {
-            "firstName": 15,
-            "lastName": 15,
-            "subject": 30,
-            "message": 400
+        'maxLength': {
+            'firstName': 15,
+            'lastName': 15,
+            'subject': 30,
+            'message': 400
         },
-        "views": {
-            "firstName": "firstName",
-            "lastName": "lastName",
-            "email": "email",
-            "subject": "subject",
-            "message": "message"
+        'views': {
+            'firstName': 'firstName',
+            'lastName': 'lastName',
+            'email': 'email',
+            'subject': 'subject',
+            'message': 'message'
         },
-        "errors": {
-            "errorMessage": "",
-            "isError": false,
-            "firstName": false,
-            "lastName": false,
-            "email": false,
-            "subject": false,
-            "message": false
+        'errors': {
+            'errorMessage': '',
+            'isError': false,
+            'firstName': false,
+            'lastName': false,
+            'email': false,
+            'subject': false,
+            'message': false
         }
     }
 
@@ -61,22 +65,22 @@ angular.module('app').controller('ContactController', ['$scope', '$rootScope', '
     // check if header/footer was initialized
     if($rootScope.$root.showHeader === undefined || $rootScope.$root.showFooter === undefined) {
         // refresh header
-        $rootScope.$emit("refreshHeader", {});
+        $rootScope.$emit('refreshHeader', {});
 
         // refresh footer
-        $rootScope.$emit("refreshFooter", {});
+        $rootScope.$emit('refreshFooter', {});
     }
     else {
         // always refresh header to ensure login
-        $rootScope.$emit("refreshHeader", {});
+        $rootScope.$emit('refreshHeader', {});
     }
 
     // on header refresh
-    $rootScope.$on("headerRefreshed", function (event, data) {
+    $rootScope.$on('headerRefreshed', function (event, data) {
         // if footer still hasn't been initialized
         if($rootScope.$root.showFooter === undefined) {
             // refresh footer
-            $rootScope.$emit("refreshFooter", {});
+            $rootScope.$emit('refreshFooter', {});
         }
         else {
             // initialize the page
@@ -85,29 +89,17 @@ angular.module('app').controller('ContactController', ['$scope', '$rootScope', '
     });
 
     // on footer refresh
-    $rootScope.$on("footerRefreshed", function (event, data) {
+    $rootScope.$on('footerRefreshed', function (event, data) {
         // if footer still hasn't been initialized
         if($rootScope.$root.showHeader === undefined) {
             // refresh header
-            $rootScope.$emit("refreshHeader", {});
+            $rootScope.$emit('refreshHeader', {});
         }
         else {
             // initialize the page
             initializePage();
         }
     });
-
-    // on loading http intercepter start
-    $scope.start = function () {
-        // start loader
-        cfpLoadingBar.start();
-    };
-
-    // on loading http intercepter complete
-    $scope.complete = function () {
-        // complete loader
-        cfpLoadingBar.complete();
-    };
 
     // on call event when the focus enters
     $scope.viewFocusEnter = function (viewId) {
@@ -189,27 +181,27 @@ angular.module('app').controller('ContactController', ['$scope', '$rootScope', '
         // check to see if there is an error
         if ($scope.contactForm.errors.firstName) {
             // set error
-            $scope.contactForm.errors.errorMessage = "You must enter your first name";
+            $scope.contactForm.errors.errorMessage = 'You must enter your first name';
         }
         else if ($scope.contactForm.errors.lastName) {
             // set error
-            $scope.contactForm.errors.errorMessage = "You must enter your last name";
+            $scope.contactForm.errors.errorMessage = 'You must enter your last name';
         }
         else if ($scope.contactForm.errors.email) {
             // set error
-            $scope.contactForm.errors.errorMessage = "You must enter your email";
+            $scope.contactForm.errors.errorMessage = 'You must enter your email';
         }
         else if ($scope.contactForm.errors.subject) {
             // set error
-            $scope.contactForm.errors.errorMessage = "You must enter a subject";
+            $scope.contactForm.errors.errorMessage = 'You must enter a subject';
         }
         else if ($scope.contactForm.errors.message) {
             // set error
-            $scope.contactForm.errors.errorMessage = "You must enter a message";
+            $scope.contactForm.errors.errorMessage = 'You must enter a message';
         }
         else {
             // remove error
-            $scope.contactForm.errors.errorMessage = "";
+            $scope.contactForm.errors.errorMessage = '';
             $scope.contactForm.errors.isError = false;
         }
     };
@@ -247,11 +239,11 @@ angular.module('app').controller('ContactController', ['$scope', '$rootScope', '
             
             // the data to send
             var emailData = {
-                "firstName": $scope.contactForm.inputs.firstName,
-                "lastName": $scope.contactForm.inputs.lastName,
-                "email": $scope.contactForm.inputs.email,
-                "subject": $scope.contactForm.inputs.subject,
-                "message": $scope.contactForm.inputs.message
+                'firstName': $scope.contactForm.inputs.firstName,
+                'lastName': $scope.contactForm.inputs.lastName,
+                'email': $scope.contactForm.inputs.email,
+                'subject': $scope.contactForm.inputs.subject,
+                'message': $scope.contactForm.inputs.message
             };
 
             // send email
@@ -317,7 +309,7 @@ angular.module('app').controller('ContactController', ['$scope', '$rootScope', '
                 $scope.contactAnimations = $rootScope.$root.getAnimationDelays(startTime, incrementTime, 3);
 
                 // holds the page title
-                $scope.pageTitle = "Contact | " + Service.appName;
+                $scope.pageTitle = 'Contact | ' + ApplicationConfiguration.applicationName;
 
                 // setup page
                 setUpPage();
@@ -350,9 +342,9 @@ angular.module('app').controller('ContactController', ['$scope', '$rootScope', '
     // sets up the page
     function setUpPage() {
         // set up the title
-        var titleDOM = document.getElementById("pageTitle");
-        var title = "\'" + $scope.pageTitle + "\'";
-        titleDOM.setAttribute("ng-bind-html", title);
+        var titleDOM = document.getElementById('pageTitle');
+        var title = '\'' + $scope.pageTitle + '\'';
+        titleDOM.setAttribute('ng-bind-html', title);
         $compile(titleDOM)($scope);
 
         // set page fully loaded
@@ -375,32 +367,32 @@ angular.module('app').controller('ContactController', ['$scope', '$rootScope', '
     function checkEmptyValues() {
         if (!$scope.contactForm.inputs.message || $scope.contactForm.inputs.message.length == 0) {
             // set error
-            $scope.contactForm.errors.errorMessage = "You must enter a message";
+            $scope.contactForm.errors.errorMessage = 'You must enter a message';
             $scope.contactForm.errors.message = true;
             $scope.contactForm.errors.isError = true;
         }
         if (!$scope.contactForm.inputs.subject || $scope.contactForm.inputs.subject.length == 0) {
             // set error
-            $scope.contactForm.errors.errorMessage = "You must enter a subject";
+            $scope.contactForm.errors.errorMessage = 'You must enter a subject';
             $scope.contactForm.errors.subject = true;
             $scope.contactForm.errors.isError = true;
         }
         if (!$scope.contactForm.inputs.email || $scope.contactForm.inputs.email.length == 0) {
             // set error
-            $scope.contactForm.errors.errorMessage = "You must enter your email";
+            $scope.contactForm.errors.errorMessage = 'You must enter your email';
             $scope.contactForm.errors.email = true;
             $scope.contactForm.errors.isError = true;
         }
         if (!$scope.contactForm.inputs.lastName || $scope.contactForm.inputs.lastName.length == 0) {
             // set error
-            $scope.contactForm.errors.errorMessage = "You must enter your last name";
+            $scope.contactForm.errors.errorMessage = 'You must enter your last name';
             $scope.contactForm.errors.lastName = true;
             $scope.contactForm.errors.isError = true;
         }
         // check for any empty values
         if (!$scope.contactForm.inputs.firstName || $scope.contactForm.inputs.firstName.length == 0) {
             // set error
-            $scope.contactForm.errors.errorMessage = "You must enter your first name";
+            $scope.contactForm.errors.errorMessage = 'You must enter your first name';
             $scope.contactForm.errors.firstName = true;
             $scope.contactForm.errors.isError = true;
         }

@@ -31,7 +31,7 @@ var // the path
  */
 exports.list = function (req, res) {
     // send data
-    res.json(portfolioDetails);
+    res.json({ 'd': portfolioDetails });
 };
 
 /**
@@ -39,7 +39,7 @@ exports.list = function (req, res) {
  */
 exports.read = function (req, res) {
     // send portfolio item
-    res.json(req.portfolioItem);
+    res.json({ 'd': req.portfolioItem });
 };
 
 /**

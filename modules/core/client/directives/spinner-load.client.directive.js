@@ -1,10 +1,10 @@
 'use strict';
 
-// set up the application
-var app = angular.module('app');
+// set up the module
+var coreModule = angular.module('core');
 
 // creates a directive for loading a spinner in place of an image
-app.directive('spinnerLoad', [function spinnerLoad() {
+coreModule.directive('spinnerLoad', [function spinnerLoad() {
     return {
         restrict: 'A',
         link: function spinnerLoadLink(scope, elem, attrs) {

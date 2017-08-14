@@ -1,6 +1,10 @@
 ﻿'use strict'
 
-angular.module('app').controller('ResumeController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'cfpLoadingBar', 'Service', 'ResumeFactory', function ($scope, $rootScope, $compile, $location, $timeout, cfpLoadingBar, Service, ResumeFactory) {
+// set up the module
+var resumeModule = angular.module('resume');
+
+// create the controller
+resumeModule.controller('ResumeController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'Service', 'ResumeFactory', function ($scope, $rootScope, $compile, $location, $timeout, Service, ResumeFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
 
@@ -12,10 +16,10 @@ angular.module('app').controller('ResumeController', ['$scope', '$rootScope', '$
 
     // holds the error
     $scope.error = {
-        "error": false,
-        "title": "",
-        "status": 404,
-        "message": ""
+        'error': false,
+        'title': '',
+        'status': 404,
+        'message': ''
     };
 
     // determines if the page is fully loaded
@@ -24,22 +28,22 @@ angular.module('app').controller('ResumeController', ['$scope', '$rootScope', '$
     // check if header/footer was initialized
     if($rootScope.$root.showHeader === undefined || $rootScope.$root.showFooter === undefined) {
         // refresh header
-        $rootScope.$emit("refreshHeader", {});
+        $rootScope.$emit('refreshHeader', {});
 
         // refresh footer
-        $rootScope.$emit("refreshFooter", {});
+        $rootScope.$emit('refreshFooter', {});
     }
     else {
         // always refresh header to ensure login
-        $rootScope.$emit("refreshHeader", {});
+        $rootScope.$emit('refreshHeader', {});
     }
 
     // on header refresh
-    $rootScope.$on("headerRefreshed", function (event, data) {
+    $rootScope.$on('headerRefreshed', function (event, data) {
         // if footer still hasn't been initialized
         if($rootScope.$root.showFooter === undefined) {
             // refresh footer
-            $rootScope.$emit("refreshFooter", {});
+            $rootScope.$emit('refreshFooter', {});
         }
         else {
             // initialize the page
@@ -48,11 +52,11 @@ angular.module('app').controller('ResumeController', ['$scope', '$rootScope', '$
     });
 
     // on footer refresh
-    $rootScope.$on("footerRefreshed", function (event, data) {
+    $rootScope.$on('footerRefreshed', function (event, data) {
         // if footer still hasn't been initialized
         if($rootScope.$root.showHeader === undefined) {
             // refresh header
-            $rootScope.$emit("refreshHeader", {});
+            $rootScope.$emit('refreshHeader', {});
         }
         else {
             // initialize the page
@@ -113,7 +117,7 @@ angular.module('app').controller('ResumeController', ['$scope', '$rootScope', '$
                 $scope.resumeAnimations = $rootScope.$root.getAnimationDelays(startTime, incrementTime, 2);
 
                 // holds the page title
-                $scope.pageTitle = "R&eacute;sum&eacute; | " + Service.appName;
+                $scope.pageTitle = 'R&eacute;sum&eacute; | ' + ApplicationConfiguration.applicationName;
 
                 // setup page
                 setUpPage();
@@ -146,9 +150,9 @@ angular.module('app').controller('ResumeController', ['$scope', '$rootScope', '$
     // sets up the page
     function setUpPage() {
         // set up the title
-        var titleDOM = document.getElementById("pageTitle");
-        var title = "\'" + $scope.pageTitle + "\'";
-        titleDOM.setAttribute("ng-bind-html", title);
+        var titleDOM = document.getElementById('pageTitle');
+        var title = '\'' + $scope.pageTitle + '\'';
+        titleDOM.setAttribute('ng-bind-html', title);
         $compile(titleDOM)($scope);
 
         // set page fully loaded

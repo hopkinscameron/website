@@ -1,10 +1,10 @@
 'use strict';
 
-// get the main application
-var app = angular.module('app');
+// set up the module
+var coreModule = angular.module('core');
 
 // trust the url
-app.filter('trustUrl', function ($sce) {
+coreModule.filter('trustUrl', function ($sce) {
     return function (url) {
         return $sce.trustAsResourceUrl(url);
     };

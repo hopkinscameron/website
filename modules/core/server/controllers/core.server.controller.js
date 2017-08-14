@@ -182,7 +182,7 @@ exports.shortenUrl = function (req, res) {
             });
 
             // send data
-            res.json(returnReq);
+            res.json({ 'd': returnReq });
         }).catch(function (responseSU) {
             // send internal error
             res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err)  });

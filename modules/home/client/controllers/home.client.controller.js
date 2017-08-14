@@ -1,6 +1,10 @@
 ﻿'use strict'
 
-angular.module('app').controller('HomeController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', '$window', 'cfpLoadingBar', 'Service', 'HomeFactory', function ($scope, $rootScope, $compile, $location, $timeout, $window, cfpLoadingBar, Service, HomeFactory) {
+// set up the module
+var homeModule = angular.module('home');
+
+// create the controller
+homeModule.controller('HomeController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', '$window', 'Service', 'HomeFactory', function ($scope, $rootScope, $compile, $location, $timeout, $window, Service, HomeFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
     
@@ -12,36 +16,36 @@ angular.module('app').controller('HomeController', ['$scope', '$rootScope', '$co
 
     // holds the error
     $scope.error = {
-        "error": false,
-        "title": "",
-        "status": 404,
-        "message": ""
+        'error': false,
+        'title': '',
+        'status': 404,
+        'message': ''
     };
 
     // the initial text to display to the user
     $scope.initialText = {
-        'id': "initialText",
-        "display": false,
-        "text": "The portfolio of Cameron Hopkins"        
+        'id': 'initialText',
+        'display': false,
+        'text': 'The portfolio of Cameron Hopkins'        
     };
 
     // the next text to display to the user
     $scope.secondText = {
-        'id': "secondText",
-        "display": false,
-        "text": "Come take a look..."        
+        'id': 'secondText',
+        'display': false,
+        'text': 'Come take a look...'        
     };
 
     // the enter button display settings
     $scope.enterButton = {
-        'id': "enterButton",
-        "display": false,
-        "text": "Enter"
+        'id': 'enterButton',
+        'display': false,
+        'text': 'Enter'
     }
 
     // set window height
     $scope.windowHeight = {
-        "height": $( window ).height() - 90
+        'height': $( window ).height() - 90
     }
 
     // get body
@@ -56,7 +60,7 @@ angular.module('app').controller('HomeController', ['$scope', '$rootScope', '$co
     angular.element($window).resize(function() {
         $scope.$apply(function () {
                 $scope.windowHeight = {
-                "height": angular.element(window).height() - 90
+                'height': angular.element(window).height() - 90
             }
         });
     });
@@ -67,22 +71,22 @@ angular.module('app').controller('HomeController', ['$scope', '$rootScope', '$co
     // check if header/footer was initialized
     if($rootScope.$root.showHeader === undefined || $rootScope.$root.showFooter === undefined) {
         // refresh header
-        $rootScope.$emit("refreshHeader", {});
+        $rootScope.$emit('refreshHeader', {});
 
         // refresh footer
-        $rootScope.$emit("refreshFooter", {});
+        $rootScope.$emit('refreshFooter', {});
     }
     else {
-        // always refresh header to ensure login
-        $rootScope.$emit("refreshHeader", {});
+        // always refresh header to ensure home
+        $rootScope.$emit('refreshHeader', {});
     }
 
     // on header refresh
-    $rootScope.$on("headerRefreshed", function (event, data) {
+    $rootScope.$on('headerRefreshed', function (event, data) {
         // if footer still hasn't been initialized
         if($rootScope.$root.showFooter === undefined) {
             // refresh footer
-            $rootScope.$emit("refreshFooter", {});
+            $rootScope.$emit('refreshFooter', {});
         }
         else {
             // initialize the page
@@ -91,32 +95,20 @@ angular.module('app').controller('HomeController', ['$scope', '$rootScope', '$co
     });
 
     // on footer refresh
-    $rootScope.$on("footerRefreshed", function (event, data) {
+    $rootScope.$on('footerRefreshed', function (event, data) {
         // if footer still hasn't been initialized
         if($rootScope.$root.showHeader === undefined) {
             // refresh header
-            $rootScope.$emit("refreshHeader", {});
+            $rootScope.$emit('refreshHeader', {});
         }
         else {
             // initialize the page
             initializePage();
         }
     });
-    
-    // on loading http intercepter start
-    $scope.start = function() {
-        // start loader
-        cfpLoadingBar.start();
-    };
-
-    // on loading http intercepter complete
-    $scope.complete = function () {
-        // complete loader
-        cfpLoadingBar.complete();
-    };
 
     // on the destruction of the controller
-    $scope.$on("$destroy", function handler() {
+    $scope.$on('$destroy', function handler() {
         // remove class
         if(body) {
             body.removeClass('body-home');
@@ -154,7 +146,7 @@ angular.module('app').controller('HomeController', ['$scope', '$rootScope', '$co
                 $scope.home = responseH;
 
                 // holds the page title
-                $scope.pageTitle = "Home | " + Service.appName;
+                $scope.pageTitle = 'Home | ' + ApplicationConfiguration.applicationName;
 
                 // setup page
                 setUpPage();
@@ -187,9 +179,9 @@ angular.module('app').controller('HomeController', ['$scope', '$rootScope', '$co
     // sets up the page
     function setUpPage() {
         // set up the title
-        var titleDOM = document.getElementById("pageTitle");
-        var title = "\'" + $scope.pageTitle + "\'";
-        titleDOM.setAttribute("ng-bind-html", title);
+        var titleDOM = document.getElementById('pageTitle');
+        var title = '\'' + $scope.pageTitle + '\'';
+        titleDOM.setAttribute('ng-bind-html', title);
         $compile(titleDOM)($scope);
 
         // set page fully loaded

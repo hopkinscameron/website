@@ -1,6 +1,10 @@
 ﻿'use strict';
 
-angular.module('app').controller('AboutController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$timeout', 'cfpLoadingBar', 'Service', 'AboutFactory', function ($scope, $rootScope, $compile, $location, $window, $timeout, cfpLoadingBar, Service, AboutFactory) {
+// set up the module
+var aboutModule = angular.module('about');
+
+// create the controller
+aboutModule.controller('AboutController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$timeout', 'Service', 'AboutFactory', function ($scope, $rootScope, $compile, $location, $window, $timeout, Service, AboutFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
 
@@ -12,10 +16,10 @@ angular.module('app').controller('AboutController', ['$scope', '$rootScope', '$c
 
     // holds the error
     $scope.error = {
-        "error": false,
-        "title": "",
-        "status": 404,
-        "message": ""
+        'error': false,
+        'title': '',
+        'status': 404,
+        'message': ''
     };
 
     // determines if the page is fully loaded
@@ -24,22 +28,22 @@ angular.module('app').controller('AboutController', ['$scope', '$rootScope', '$c
     // check if header/footer was initialized
     if($rootScope.$root.showHeader === undefined || $rootScope.$root.showFooter === undefined) {
         // refresh header
-        $rootScope.$emit("refreshHeader", {});
+        $rootScope.$emit('refreshHeader', {});
 
         // refresh footer
-        $rootScope.$emit("refreshFooter", {});
+        $rootScope.$emit('refreshFooter', {});
     }
     else {
         // always refresh header to ensure login
-        $rootScope.$emit("refreshHeader", {});
+        $rootScope.$emit('refreshHeader', {});
     }
 
     // on header refresh
-    $rootScope.$on("headerRefreshed", function (event, data) {
+    $rootScope.$on('headerRefreshed', function (event, data) {
         // if footer still hasn't been initialized
         if($rootScope.$root.showFooter === undefined) {
             // refresh footer
-            $rootScope.$emit("refreshFooter", {});
+            $rootScope.$emit('refreshFooter', {});
         }
         else {
             // initialize the page
@@ -48,11 +52,11 @@ angular.module('app').controller('AboutController', ['$scope', '$rootScope', '$c
     });
 
     // on footer refresh
-    $rootScope.$on("footerRefreshed", function (event, data) {
+    $rootScope.$on('footerRefreshed', function (event, data) {
         // if footer still hasn't been initialized
         if($rootScope.$root.showHeader === undefined) {
             // refresh header
-            $rootScope.$emit("refreshHeader", {});
+            $rootScope.$emit('refreshHeader', {});
         }
         else {
             // initialize the page
@@ -62,8 +66,8 @@ angular.module('app').controller('AboutController', ['$scope', '$rootScope', '$c
     
     // TODO: may not need, might want to remove unless I figure out how to do this
     // on resize
-    angular.element($window).on("scroll", function() {
-        //console.log("scrolling");
+    angular.element($window).on('scroll', function() {
+        //console.log('scrolling');
         //console.log($window.scrollY);
         $scope.$apply(function () {
             // 
@@ -72,18 +76,6 @@ angular.module('app').controller('AboutController', ['$scope', '$rootScope', '$c
             }
         });
     });
-
-    // on loading http intercepter start
-    $scope.start = function() {
-        // start loader
-        cfpLoadingBar.start();
-    };
-
-    // on loading http intercepter complete
-    $scope.complete = function () {
-        // complete loader
-        cfpLoadingBar.complete();
-    };
 
     // initialize page
     function initializePage() {
@@ -146,7 +138,7 @@ angular.module('app').controller('AboutController', ['$scope', '$rootScope', '$c
                 $scope.aboutAnimations = $rootScope.$root.getAnimationDelays(startTime, incrementTime, 3);
 
                 // holds the page title
-                $scope.pageTitle = "About Me | " + Service.appName;
+                $scope.pageTitle = 'About Me | ' + ApplicationConfiguration.applicationName;
                 
                 // setup page
                 setUpPage();
@@ -179,9 +171,9 @@ angular.module('app').controller('AboutController', ['$scope', '$rootScope', '$c
     // sets up the page
     function setUpPage() {
         // set up the title
-        var titleDOM = document.getElementById("pageTitle");
-        var title = "\'" + $scope.pageTitle + "\'";
-        titleDOM.setAttribute("ng-bind-html", title);
+        var titleDOM = document.getElementById('pageTitle');
+        var title = '\'' + $scope.pageTitle + '\'';
+        titleDOM.setAttribute('ng-bind-html', title);
         $compile(titleDOM)($scope);
 
         // set page fully loaded

@@ -1,10 +1,10 @@
 'use strict';
 
 // set up the module
-var contactModule = angular.module('contact', ['app']);
+var contactRoutesModule = angular.module('contact.routes');
 
 // configure the module
-contactModule.config(['$routeProvider', function($routeProvider) {
+contactRoutesModule.config(['$routeProvider', function($routeProvider) {
     // set up the routes
     $routeProvider
         .when('/contact', {

@@ -1,10 +1,10 @@
 'use strict';
 
 // set up the module
-var aboutModule = angular.module('about', ['app']);
+var aboutRoutesModule = angular.module('about.routes');
 
 // configure the module
-aboutModule.config(['$routeProvider', function($routeProvider) {
+aboutRoutesModule.config(['$routeProvider', function($routeProvider) {
     // set up the routes
     $routeProvider
         .when('/about', {

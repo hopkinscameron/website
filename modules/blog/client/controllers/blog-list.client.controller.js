@@ -1,6 +1,10 @@
 ﻿'use strict';
 
-angular.module('app').controller('BlogListController', ['$scope', '$rootScope', '$compile', '$window', '$location', '$timeout', 'cfpLoadingBar', 'Service', 'BlogFactory', function ($scope, $rootScope, $compile, $window, $location, $timeout, cfpLoadingBar, Service, BlogFactory) {
+// set up the module
+var blogModule = angular.module('blog');
+
+// create the controller
+blogModule.controller('BlogListController', ['$scope', '$rootScope', '$compile', '$window', '$location', '$timeout', 'Service', 'BlogFactory', function ($scope, $rootScope, $compile, $window, $location, $timeout, Service, BlogFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
 
@@ -12,19 +16,19 @@ angular.module('app').controller('BlogListController', ['$scope', '$rootScope', 
 
     // holds the error
     $scope.error = {
-        "error": false,
-        "title": "",
-        "status": 404,
-        "message": ""
+        'error': false,
+        'title': '',
+        'status': 404,
+        'message': ''
     };
 
     // search query
     $scope.searchText = {
-        "query": ""
+        'query': ''
     };
 
     // set query
-    $scope.searchText.query = $location.search().q === undefined ? "" : $location.search().q;
+    $scope.searchText.query = $location.search().q === undefined ? '' : $location.search().q;
 
     // page threshold
     const threshold = 10;
@@ -38,22 +42,22 @@ angular.module('app').controller('BlogListController', ['$scope', '$rootScope', 
     // check if header/footer was initialized
     if($rootScope.$root.showHeader === undefined || $rootScope.$root.showFooter === undefined) {
         // refresh header
-        $rootScope.$emit("refreshHeader", {});
+        $rootScope.$emit('refreshHeader', {});
 
         // refresh footer
-        $rootScope.$emit("refreshFooter", {});
+        $rootScope.$emit('refreshFooter', {});
     }
     else {
         // always refresh header to ensure login
-        $rootScope.$emit("refreshHeader", {});
+        $rootScope.$emit('refreshHeader', {});
     }
 
     // on header refresh
-    $rootScope.$on("headerRefreshed", function (event, data) {
+    $rootScope.$on('headerRefreshed', function (event, data) {
         // if footer still hasn't been initialized
         if($rootScope.$root.showFooter === undefined) {
             // refresh footer
-            $rootScope.$emit("refreshFooter", {});
+            $rootScope.$emit('refreshFooter', {});
         }
         else {
             // initialize the page
@@ -62,29 +66,17 @@ angular.module('app').controller('BlogListController', ['$scope', '$rootScope', 
     });
 
     // on footer refresh
-    $rootScope.$on("footerRefreshed", function (event, data) {
+    $rootScope.$on('footerRefreshed', function (event, data) {
         // if footer still hasn't been initialized
         if($rootScope.$root.showHeader === undefined) {
             // refresh header
-            $rootScope.$emit("refreshHeader", {});
+            $rootScope.$emit('refreshHeader', {});
         }
         else {
             // initialize the page
             initializePage();
         }
     });
-
-    // on loading http intercepter start
-    $scope.start = function () {
-        // start loader
-        cfpLoadingBar.start();
-    };
-
-    // on loading http intercepter complete
-    $scope.complete = function () {
-        // complete loader
-        cfpLoadingBar.complete();
-    };
 
     // checks if filter is active
     $scope.isFilterActive = function(filter) {
@@ -100,7 +92,7 @@ angular.module('app').controller('BlogListController', ['$scope', '$rootScope', 
     // on key press
     $scope.onKeyPress = function (event) {
         // if enter key
-        if(event.which == 13 || event.keyCode == 13 || event.key == "Enter" || event.key == "NumpadEnter") {
+        if(event.which == 13 || event.keyCode == 13 || event.key == 'Enter' || event.key == 'NumpadEnter') {
             $scope.search();
         }
     };
@@ -109,20 +101,20 @@ angular.module('app').controller('BlogListController', ['$scope', '$rootScope', 
     $scope.search = function () {
         // if no search text
         if($scope.searchText.query.length == 0) {
-            $location.search("q", null);
+            $location.search('q', null);
         }
         else {
-            $location.search("q", $scope.searchText.query);
+            $location.search('q', $scope.searchText.query);
         }
 
         // setup the route
-        var route = "#/blog";
+        var route = '#/blog';
         var searchQ = $location.search().q,
             page = $location.search().page;
 
         // if searching
         if(searchQ){
-            route = "#/blog?q=" + searchQ;
+            route = '#/blog?q=' + searchQ;
         }
 
         // update location
@@ -141,17 +133,17 @@ angular.module('app').controller('BlogListController', ['$scope', '$rootScope', 
             // if specific query exist, remove
             if(i != -1) {
                 queryArray.splice(i, 1);
-                var q = queryArray.length > 0 ? queryArray.toString().replace(/,/g, "|") : null;
-                $location.search("q", q);
+                var q = queryArray.length > 0 ? queryArray.toString().replace(/,/g, '|') : null;
+                $location.search('q', q);
             }
             else {
                 // add
-                $location.search("q", queries.q + "|" + filter);
+                $location.search('q', queries.q + '|' + filter);
             }
         }
         else {
             // add
-            $location.search("q", filter);
+            $location.search('q', filter);
         }
 
         // TODO: call API to update results
@@ -175,9 +167,9 @@ angular.module('app').controller('BlogListController', ['$scope', '$rootScope', 
     // gets the fully quantified route value
     $scope.getRouteValue = function(index) {
         // setup the route
-        var route = "#/blog?page=" + index;
+        var route = '#/blog?page=' + index;
         if($location.search().q){
-            route = "#/blog?q=" + $location.search().q + "&page=" + index;
+            route = '#/blog?q=' + $location.search().q + '&page=' + index;
         }
 
         return route;
@@ -225,7 +217,7 @@ angular.module('app').controller('BlogListController', ['$scope', '$rootScope', 
                 $scope.blogAnimations = $rootScope.$root.getAnimationDelays(startTime, incrementTime, $scope.blog.posts.length);
 
                 // holds the page title
-                $scope.pageTitle = "Blog | " + Service.appName;
+                $scope.pageTitle = 'Blog | ' + ApplicationConfiguration.applicationName;
 
                 // setup page
                 setUpPage();
@@ -258,9 +250,9 @@ angular.module('app').controller('BlogListController', ['$scope', '$rootScope', 
     // sets up the page
     function setUpPage() {
         // set up the title
-        var titleDOM = document.getElementById("pageTitle");
-        var title = "\'" + $scope.pageTitle + "\'";
-        titleDOM.setAttribute("ng-bind-html", title);
+        var titleDOM = document.getElementById('pageTitle');
+        var title = '\'' + $scope.pageTitle + '\'';
+        titleDOM.setAttribute('ng-bind-html', title);
         $compile(titleDOM)($scope);
 
         // set page fully loaded
@@ -280,17 +272,17 @@ angular.module('app').controller('BlogListController', ['$scope', '$rootScope', 
             // when shown
             angular.element('#pageShow').on('shown.bs.collapse', function () {
                 // the class and instance to which the mark will apply
-                var context = document.querySelectorAll(".highlight-context");
+                var context = document.querySelectorAll('.highlight-context');
                 var markInstance = new Mark(context);
                 
                 // the keyword
-                var keyword = $scope.searchText.query.split(" ");
+                var keyword = $scope.searchText.query.split(' ');
 
                 // the options
                 var options = {
-                    "element": "span",
-                    "className": "highlight-text-foreground",
-                    "separateWordSearch": true
+                    'element': 'span',
+                    'className': 'highlight-text-foreground',
+                    'separateWordSearch': true
                 }
 
                 // if there is a filter

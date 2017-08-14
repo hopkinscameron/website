@@ -71,7 +71,7 @@ exports.blogList = function (req, res) {
                 });
 
                 // send data
-                res.json(blogDetails);
+                res.json({ 'd': blogDetails });
             });
         }
         else {
@@ -79,7 +79,7 @@ exports.blogList = function (req, res) {
             blogDetails.posts = [];
 
             // send data
-            res.json(blogDetails);
+            res.json({ 'd': blogDetails });
         }
     });
 };
@@ -139,7 +139,7 @@ exports.publishBlogFromScratch = function (req, res) {
                 newPostedBlog.url = url;
 
                 // send success with blog data
-                res.json(newPostedBlog);
+                res.json({ 'd': newPostedBlog });
             }
         });
     }
@@ -160,7 +160,7 @@ exports.readBlog = function (req, res) {
     blogPost.url = url;
 
     // send blog post
-    res.json(blogPost);
+    res.json({ 'd': blogPost });
 };
 
 /**
@@ -234,7 +234,7 @@ exports.updateBlog = function (req, res) {
                     blogPost.dateUpdated = updatedValues.dateUpdated;
 
                     // send blog post
-                    res.json(blogPost);
+                    res.json({ 'd': blogPost });
                 });
             }
         });
@@ -371,7 +371,7 @@ exports.draftList = function (req, res) {
             });
 
             // send drafts back
-            res.json({ "savedPosts": drafts });
+            res.json({ 'd': { "savedPosts": drafts } });
         }
         else {
             // send not found
@@ -444,7 +444,7 @@ exports.publishBlogFromDraft = function (req, res) {
                         newPostedBlog.url = url;
 
                         // send success with blog data
-                        res.json(newPostedBlog);
+                        res.json({ 'd': newPostedBlog });
                     }
                 });
             }
@@ -509,7 +509,7 @@ exports.createDraft = function (req, res) {
                         newSavedBlog.url = url;
 
                         // send success with blog data
-                        res.json(newSavedBlog);
+                        res.json({ 'd': newSavedBlog });
                     }
                 });
             }
@@ -548,7 +548,7 @@ exports.createDraft = function (req, res) {
                     newSavedBlog.url = url;
 
                     // send success with blog data
-                    res.json(newSavedBlog);
+                    res.json({ 'd': newSavedBlog });
                 }
             });
         }
@@ -570,7 +570,7 @@ exports.readDraft = function (req, res) {
     blogDraft.url = url;
 
     // send blog draft
-    res.json(req.blogDraft);
+    res.json({ 'd': blogDraft });
 };
 
 /**
@@ -634,7 +634,7 @@ exports.updateDraft = function (req, res) {
                 blogDraft.dateSaved = updatedValues.dateSaved;
 
                 // send success with blog data
-                res.json(blogDraft);
+                res.json({ 'd': blogDraft });
             }
         });
     }

@@ -16,14 +16,14 @@ var // the path
  * Checks if user is already authenticated
  */
 exports.checkLoggedIn = function (req, res) {
-    // if user is not authenticated in the session, carry on 
-    if (!req.isAuthenticated()) {
-        // return success
-        res.status(200).send({ title: errorHandler.getErrorTitle({ code: 200 }), message: errorHandler.getGenericErrorMessage({ code: 200 }) + " User not logged in." });
+    // if user is authenticated in the session
+    if (req.isAuthenticated()) {
+        // return is logged in
+        res.json({ 'd': { 'isLoggedIn': true } });
     }
     else {
-        // return success
-        res.status(200).send({ title: errorHandler.getErrorTitle({ code: 200 }), message: errorHandler.getGenericErrorMessage({ code: 200 }) + " User is logged in.", isLoggedIn: true });
+        // return is logged in
+        res.json({ 'd': { 'isLoggedIn': false } });
     }
 };
 
@@ -41,12 +41,12 @@ exports.login = function (req, res, next) {
         }
         // if user is not authenticated 
         else if(!user) {
-            // send incorrect information provided
-            res.status(200).send({ error: true, title: "Incorrect username/password.", message: "Incorrect username/password." });
+            // return not authenticated
+            res.json({ 'd': { error: true, title: "Incorrect username/password.", message: "Incorrect username/password." } });
         }
         else {
-            // return success
-            res.status(200).send({ title: errorHandler.getErrorTitle({ code: 200 }), message: errorHandler.getGenericErrorMessage({ code: 200 }) + " Successful login." });
+            // return authenticated
+            res.json({ 'd': { title: errorHandler.getErrorTitle({ code: 200 }), message: errorHandler.getGenericErrorMessage({ code: 200 }) + " Successful login." } });
         }
     })(req, res, next);
 };

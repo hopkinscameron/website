@@ -83,7 +83,8 @@ var validateEnvironmentVariable = function () {
     console.log(clc.default(''));
 };
 
-/** Validate config.domain is set
+/** 
+ * Validate config.domain is set
  */
 var validateDomainIsSet = function (config) {
     // if the domain has not been set yet

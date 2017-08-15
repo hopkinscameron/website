@@ -8,9 +8,9 @@ portfolioRoutesModule.config(['$routeProvider', function($routeProvider, $routeP
     // set up the routes
     $routeProvider
         .when('/portfolio', {
-            templateUrl: './portfolio/client/views/portfolio-list.html'
+            templateUrl: '/modules/portfolio/client/views/portfolio-list.html'
         })
         .when('/portfolio/:portfolioItemId', {
-            templateUrl: './portfolio/client/views/portfolio-item.html'
+            templateUrl: '/modules/portfolio/client/views/portfolio-item.html'
         })
 }]);

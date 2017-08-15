@@ -8,6 +8,6 @@ homeRoutesModule.config(['$routeProvider', function($routeProvider) {
     // set up the routes
     $routeProvider
         .when('/', {
-            templateUrl: '../views/home.html'
+            templateUrl: '/modules/home/client/views/home.html'
         })
 }]);

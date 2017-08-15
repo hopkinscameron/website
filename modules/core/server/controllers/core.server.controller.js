@@ -3,7 +3,7 @@
 var // the path
     path = require('path'),
     // get the current config
-	environmentConfig = require(path.join(process.cwd(), 'config/env/', process.env.NODE_ENV)) || {},
+	config = require(path.resolve('./config/config')),
     // the error handler
     errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
     // chalk for console logging
@@ -11,27 +11,52 @@ var // the path
     // the ability to send emails
     nodemailer = require('nodemailer'),
     // the ability to create requests/promises
-    requestPromise = require('request-promise');
+    requestPromise = require('request-promise'),
+    // for validators and sanitizers
+    validator = require('validator');
 
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
-    host: environmentConfig.mailer.options.host,
+    host: config.mailer.options.host,
     port: 465,
     secure: true, // secure:true for port 465, secure:false for port 587
     auth: {
-        user: environmentConfig.mailer.options.auth.user,
-        pass: environmentConfig.mailer.options.auth.pass
+        user: config.mailer.options.auth.user,
+        pass: config.mailer.options.auth.pass
     },
 	proxy: 'http://localhost:3128',
-	service: environmentConfig.mailer.options.service
+	service: config.mailer.options.service
 });
 
 /**
  * Render the main application page
  */
 exports.renderIndex = function (req, res) {
-    // send the main file
-    res.sendFile(path.resolve('./modules/index.html'));
+    // define the safe user object
+    var safeUserObject = null;
+
+    // if a user is logged in
+    if (req.user) {
+        // create the safe object
+        safeUserObject = {
+            displayName: validator.escape(req.user.displayName),
+            provider: validator.escape(req.user.provider),
+            username: validator.escape(req.user.username),
+            created: req.user.created.toString(),
+            roles: req.user.roles,
+            profileImageURL: req.user.profileImageURL,
+            email: validator.escape(req.user.email),
+            lastName: validator.escape(req.user.lastName),
+            firstName: validator.escape(req.user.firstName),
+            additionalProvidersData: req.user.additionalProvidersData
+        };
+    }
+
+    // render the main index
+    res.render('modules/core/server/views/index', {
+        user: JSON.stringify(safeUserObject),
+        sharedConfig: JSON.stringify(config.shared)
+    });
 };
 
 /**
@@ -103,7 +128,7 @@ exports.sendEmail = function (req, res) {
         // setup email data with unicode symbols
         let mailOptions = {
             from: fromString, // sender address
-            to: environmentConfig.mailer.options.auth.user, // list of receivers
+            to: config.mailer.options.auth.user, // list of receivers
             subject: req.body.subject, // Subject line
             text: req.body.message, // plain text body
             html: '<p>' + req.body.message + '</p>' // html body
@@ -162,7 +187,7 @@ exports.shortenUrl = function (req, res) {
         // create request
         var options = {
             method: 'POST',
-            uri: "https://www.googleapis.com/urlshortener/v1/url?key=" + environmentConfig.googleShortenUrl.clientSecret,
+            uri: "https://www.googleapis.com/urlshortener/v1/url?key=" + config.googleShortenUrl.clientSecret,
             headers: {
                 'Content-Type': 'application/json; odata=verbose',
                 'Accept': 'application/json; odata=verbose'

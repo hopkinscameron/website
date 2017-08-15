@@ -8,6 +8,6 @@ resumeRoutesModule.config(['$routeProvider', function($routeProvider) {
     // set up the routes
     $routeProvider
         .when('/resume', {
-            templateUrl: './resume/client/views/resume.html'
+            templateUrl: '/modules/resume/client/views/resume.html'
         })
 }]);

@@ -15,7 +15,7 @@ var // the application configuration
     https = require('https'),
     // cookie parsing
     cookieParser = require('cookie-parser'),
-    // passport for local authentication
+    // passport for authentication
     passport = require('passport'),
     // socket io
     socketio = require('socket.io'),

@@ -8,6 +8,6 @@ loginRoutesModule.config(['$routeProvider', function($routeProvider) {
     // set up the routes
     $routeProvider
         .when('/login', {
-            templateUrl: './login/client/views/login.html'
+            templateUrl: '/modules/login/client/views/login.html'
         })
 }]);

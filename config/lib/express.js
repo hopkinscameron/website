@@ -8,7 +8,9 @@ var // the application configuration
     // the server
     express = require('express'),
     // the http request validator
-	expressValidator = require('express-validator'),
+    expressValidator = require('express-validator'),
+    // passport for local authentication
+	passport = require('passport'),
     // middleware logger
     morgan = require('morgan'),
     // the logger configuration
@@ -31,6 +33,8 @@ var // the application configuration
     helmet = require('helmet'),
     // flash messages
     flash = require('connect-flash'),
+    // handlebars template
+    hbs = require('express-hbs'),
     // path 
     path = require('path'),
     // lodash
@@ -117,13 +121,16 @@ module.exports.initMiddleware = function (app) {
  * Configure view engine
  */
 module.exports.initViewEngine = function (app) {
-    /*
     app.engine('server.view.html', hbs.express4({
         extname: '.server.view.html'
     }));
-    */
+    app.set('view engine', 'server.view.html');
+    app.set('views', path.resolve('./'));
+
+    /* working
     app.set('view engine', 'html');
     app.set('views', path.resolve('./'));
+    */
     //app.set('views', path.resolve('./modules'));
 };
 
@@ -188,8 +195,8 @@ module.exports.initHelmetHeaders = function (app) {
  */
 module.exports.initModulesClientRoutes = function (app) {
     // setting the app router and static folder
-    //app.use('/', express.static(path.resolve('./public'), { maxAge: 86400000 }));
-    app.use(express.static(path.resolve('./modules')));  
+    app.use('/', express.static(path.resolve('./public'), { maxAge: 86400000 }));
+    //app.use(express.static(path.resolve('./modules')));  
 
     // globbing static routing
     config.folders.client.forEach(function (staticPath) {
@@ -212,7 +219,7 @@ module.exports.initModulesServerPolicies = function (app) {
  */
 module.exports.initModulesServerRoutes = function (app) {
     // define the routes     
-    require(path.resolve('./server/routes'))(app);
+    //require(path.resolve('./server/routes'))(app);
     
     // globbing routing files
     config.files.server.routes.forEach(function (routePath) {
@@ -237,6 +244,16 @@ module.exports.initErrorRoutes = function (app) {
         // redirect to error page
         res.redirect('/server-error');
     });
+};
+
+/**
+ * Configure Passport
+ */
+module.exports.configurePassport = function (app) {
+    // passport config -> 
+    //require('./passport')(passport);
+    //app.use(passport.initialize());
+    //app.use(passport.session());
 };
 
 /**
@@ -286,6 +303,9 @@ module.exports.init = function (db) {
 
     // initialize error routes
     //this.initErrorRoutes(app);
+
+    // configure Passport
+    this.configurePassport(app);
 
     // configure Socket.io
     app = this.configureSocketIO(app, db);

@@ -28,6 +28,18 @@ exports.checkLoggedIn = function (req, res) {
 };
 
 /**
+ * Signs user up
+ */
+exports.signUp = function (req, res, next) {
+    // authenticate the user with a signup
+    passport.authenticate('local-signup', {
+		successRedirect : '/about', // redirect to the secure profile section
+		failureRedirect : '/login', // redirect back to the home page if there is an error
+		failureFlash : true // allow flash messages
+	})(req, res, next);
+};
+
+/**
  * Logs user in
  */
 exports.login = function (req, res, next) {
@@ -49,16 +61,4 @@ exports.login = function (req, res, next) {
             res.json({ 'd': { title: errorHandler.getErrorTitle({ code: 200 }), message: errorHandler.getGenericErrorMessage({ code: 200 }) + " Successful login." } });
         }
     })(req, res, next);
-};
-
-/**
- * Signs user up
- */
-exports.signUp = function (req, res, next) {
-    // authenticate the user with a signup
-    passport.authenticate('local-signup', {
-		successRedirect : '/about', // redirect to the secure profile section
-		failureRedirect : '/login', // redirect back to the home page if there is an error
-		failureFlash : true // allow flash messages
-	})(req, res, next);
 };

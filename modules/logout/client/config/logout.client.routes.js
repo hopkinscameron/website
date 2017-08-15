@@ -8,6 +8,6 @@ logoutRoutesModule.config(['$routeProvider', function($routeProvider) {
     // set up the routes
     $routeProvider
         .when('/logout', {
-            templateUrl: './logout/client/views/logout.html'
+            templateUrl: '/modules/logout/client/views/logout.html'
         })
 }]);

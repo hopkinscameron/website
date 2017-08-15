@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<!-- Begin HTML -->
+<html lang="en">
+    <!-- Begin Head -->
+    <head>
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title id="pageTitle"></title>
+
+        <meta name="description" content="{{description}}">
+        <meta name="fragment" content="!">
+
+        <!-- Begin Apple META -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <!-- End Apple META -->
+
+        <!-- Begin Icons -->
+        <!-- for FF, Chrome, Opera -->
+        <link rel="icon" type="image/png" href="/{{logo}}" sizes="16x16" />
+        <!-- for IE -->
+        <link rel="icon" type="image/x-icon" href="/{{favicon}}" />
+        <link rel="shortcut icon" type="image/x-icon" href="/{{favicon}}" />
+        <!-- End Icons -->
+
+        <!-- Begin Styles -->
+        <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet" type="text/css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" rel="stylesheet">        
+        {{#each cssFiles}}<link rel="stylesheet" href="/{{this}}">{{/each}}
+        <!-- End Styles -->
+
+        <!-- Begin Scripts -->
+        <!--
+        To collect end-user usage analytics about your application,
+        insert the following script into each page you want to track.
+        Place this code immediately before the closing </head> tag,
+        and before any other scripts. Your first data will appear
+        automatically in just a few seconds.
+        -->
+        <script type="text/javascript">
+            var appInsights=window.appInsights||function(config){
+                function r(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s=u.createElement(o),i,f;s.src=config.url||"https://az416426.vo.msecnd.net/scripts/a/ai.0.js";u.getElementsByTagName(o)[0].parentNode.appendChild(s);try{t.cookie=u.cookie}catch(h){}for(t.queue=[],i=["Event","Exception","Metric","PageView","Trace","Dependency"];i.length;)r("track"+i.pop());return r("setAuthenticatedUserContext"),r("clearAuthenticatedUserContext"),config.disableExceptionTracking||(i="onerror",r("_"+i),f=e[i],e[i]=function(config,r,u,e,o){var s=f&&f(config,r,u,e,o);return s!==!0&&t["_"+i](config,r,u,e,o),s}),t
+            }({
+                instrumentationKey:"61c041f4-27da-4972-b9f3-7ca25e71fb33"
+            });
+
+            window.appInsights=appInsights;
+            appInsights.trackPageView();
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+        {{#each jsFiles}}<script type="text/javascript" src="/{{this}}"></script>{{/each}}
+        <!-- End Scripts -->
+    </head>
+    <!-- End Head -->
+    <!-- Begin Body -->
+    <body class="ng-cloak">
+        <!-- Begin Header -->
+        <div ng-include="'/modules/header/client/views/header.html'"></div>
+        <!-- End Header -->
+
+        {{{block "content"}}}
+
+        <!-- Begin Footer -->
+        <div id="footer" ng-include="'/modules/footer/client/views/footer.html'"></div>
+        <!-- End Footer -->
+
+        <!-- Begin No Script For Alerts -->
+        <noscript>
+            <style>
+                [ng\:cloak], [ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+                    display: block !important;
+                }
+            </style>
+            <div class="alert alert-warning">
+                <strong>This page requires JavaScript.</strong> Please enable it in your browser.
+            </div>
+        </noscript>
+        <!-- End No Script For Alerts -->
+
+        <!-- Begin Embedding The User Object -->
+        <script type="text/javascript">
+            var user = {{{ user }}};
+            var env = "{{ env }}";
+        </script>
+        <!-- End Embedding The User Object -->
+
+        {{#if livereload}}
+        <!-- Begin Livereload script rendered -->
+        <script type="text/javascript" src="{{host}}:35729/livereload.js"></script>
+        <!-- End Livereload script rendered -->
+        {{/if}}
+    </body>
+    <!-- End Body -->
+</html>
+<!-- End HTML -->

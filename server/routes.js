@@ -545,6 +545,7 @@ module.exports = function(app, passport) {
 	});
 	*/
 
+	/*
 	// GET image file in root directory
 	// format /images/:imageId
 	app.get('/images/:imageId', function (req, res) {
@@ -639,7 +640,8 @@ module.exports = function(app, passport) {
 		// send file
 		res.sendFile(req.params.fileId, options);
 	});
-
+	*/
+	
 	/*
 	// GET login page requested
 	// format /login

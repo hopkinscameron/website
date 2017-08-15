@@ -56,3 +56,6 @@ node_modules/
 
 # environment
 .env
+
+#log files
+*.log

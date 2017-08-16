@@ -260,9 +260,8 @@ headerModule.controller('HeaderController', ['$scope', '$rootScope', '$location'
         if(event.which == 27 || event.keyCode == 27 || event.key == 'Escape') {
             // if not already on login page
             if($location.path() != 'login') {
-                var loc = '#/login?redirect=' + $location.path();
                 // redirect to login page
-                $window.location.href = '#/login?redirect=' + $location.path();
+                $window.location.href = '#/login';
             }
         }
     });

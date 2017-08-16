@@ -6,10 +6,13 @@
 All 
 
 Done
+- logging in now works again!
+- signing up now works again!
+- fixed yellow background for login page
 
 Pending
-- 1. finish authentication -> make sure signup/login looks like the MEAN version
-- 2. fix yellow background for login page
+- 1. refresh page to update user object 
+- 2. SETUP PRODUCTION!! (get certs working as well)
 - follow https://docs.angularjs.org/guide/production 
 
 Next

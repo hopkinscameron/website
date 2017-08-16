@@ -4,7 +4,7 @@
 var logoutModule = angular.module('logout');
 
 // create the controller
-logoutModule.controller('LogoutController', ['$scope', '$rootScope', '$compile', '$window', 'LogoutFactory', function ($scope, $rootScope, $compile, $window, LogoutFactory) {
+logoutModule.controller('LogoutController', ['$scope', '$rootScope', '$compile', '$window', '$location', 'Service', 'LogoutFactory', function ($scope, $rootScope, $compile, $window, $location, Service, LogoutFactory) {
     // holds the error
     $scope.error = {
         'error': false,
@@ -13,12 +13,25 @@ logoutModule.controller('LogoutController', ['$scope', '$rootScope', '$compile',
         'message': ''
     };
     
+    // previous path
+    var previousPath = Service.afterPath;
+
+    // set the path
+    Service.afterPath = $location.path();
+
     // logout
     LogoutFactory.logout().then(function (responseL) {
         // if no error
         if(!responseL.error) {
-            // redirect to home page
-            $window.location.href = '#/about';
+            // if was on a previous route
+            if(previousPath && previousPath.length > 0) {
+                // redirect to previous page and reload page to refresh user object
+                $window.location.href = '#' + previousPath;
+            }
+            else {
+                // redirect to about page and reload page to refresh user object
+                $window.location.href = '#/about';
+            }
 
             // refresh header
             $rootScope.$emit('refreshHeader', {});

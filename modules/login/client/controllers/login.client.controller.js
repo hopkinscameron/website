@@ -11,6 +11,9 @@ loginModule.controller('LoginController', ['$scope', '$rootScope', '$compile', '
     // set jQuery
     $ = window.jQuery;
 
+    // previous path
+    var previousPath = Service.afterPath;
+
     // set the path
     Service.afterPath = $location.path();
 
@@ -154,13 +157,13 @@ loginModule.controller('LoginController', ['$scope', '$rootScope', '$compile', '
             LoginFactory.login(loginData).then(function (responseL) {
                 // if no error
                 if(!responseL.error) {
-                    // if a redirect callback
-                    if($location.search().redirect){
-                        // redirect to previous page
-                        $window.location.href = '#' + $location.search().redirect;
+                    // if was on a previous route
+                    if(previousPath && previousPath.length > 0) {
+                        // redirect to previous page and reload page to refresh user object
+                        $window.location.href = '#' + previousPath;
                     }
                     else {
-                        // redirect to about page
+                        // redirect to about page and reload page to refresh user object
                         $window.location.href = '#/about';
                     }
 

@@ -39,16 +39,7 @@ exports.renderIndex = function (req, res) {
     if (req.user) {
         // create the safe object
         safeUserObject = {
-            displayName: validator.escape(req.user.displayName),
-            provider: validator.escape(req.user.provider),
-            username: validator.escape(req.user.username),
-            created: req.user.created.toString(),
-            roles: req.user.roles,
-            profileImageURL: req.user.profileImageURL,
-            email: validator.escape(req.user.email),
-            lastName: validator.escape(req.user.lastName),
-            firstName: validator.escape(req.user.firstName),
-            additionalProvidersData: req.user.additionalProvidersData
+            username: validator.escape(req.user.username)
         };
     }
 
@@ -136,7 +127,7 @@ exports.sendEmail = function (req, res) {
 
         // send mail with defined transport object
         transporter.sendMail(mailOptions, (err, info) => {
-            // if an internal error occured
+            // if error occured
             if (err) {
                 // send internal error
                 res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });

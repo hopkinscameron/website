@@ -164,8 +164,8 @@ body {
           box-shadow: 0 0 75px #2C3035, 0 0 75px #899F99; }
 
 .box-shadow--primary {
-  -webkit-box-shadow: 0 0 6.25px #29a8d6, 0 0 6.25px #54b9de;
-          box-shadow: 0 0 6.25px #29a8d6, 0 0 6.25px #54b9de; }
+  -webkit-box-shadow: 0 0 6.25px #29a8d6, 0 0 6.25px #29a8d6;
+          box-shadow: 0 0 6.25px #29a8d6, 0 0 6.25px #29a8d6; }
 
 /* End Custom Box Shadows */
 /* Begin Custom Buttons */

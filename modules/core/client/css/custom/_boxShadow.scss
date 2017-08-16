@@ -16,7 +16,7 @@
         box-shadow: 0 0 $box-shadow-xl $dark, 0 0 $box-shadow-xl $dark-accent;
     }
     &--primary {
-        box-shadow: 0 0 $box-shadow-xs $brand-theme-main, 0 0 $box-shadow-xs lighten($brand-theme-main, 10%);
+        box-shadow: 0 0 $box-shadow-xs $brand-theme-main, 0 0 $box-shadow-xs $brand-theme-main;
     }
 }
 /* End Custom Box Shadows */

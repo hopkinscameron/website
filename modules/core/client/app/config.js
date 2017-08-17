@@ -6,8 +6,12 @@ const applicationModuleName = 'personalsite';
 // the application name
 const applicationName = 'Cameron Hopkins';
 
+// the application base
+const applicationBase = '/';
+
 // the service for the application
 var service = {
+    applicationBase: applicationBase,
     applicationName: applicationName,
     applicationEnvironment: window.env,
     applicationModuleName: applicationModuleName,

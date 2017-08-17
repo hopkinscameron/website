@@ -26,11 +26,11 @@ logoutModule.controller('LogoutController', ['$scope', '$rootScope', '$compile',
             // if was on a previous route
             if(previousPath && previousPath.length > 0) {
                 // redirect to previous page and reload page to refresh user object
-                $window.location.href = '#' + previousPath;
+                $window.location.href = '/' + previousPath;
             }
             else {
                 // redirect to about page and reload page to refresh user object
-                $window.location.href = '#/about';
+                $window.location.href = '/about';
             }
 
             // refresh header

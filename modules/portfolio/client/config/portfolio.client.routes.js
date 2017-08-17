@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 // set up the module
 var portfolioRoutesModule = angular.module('portfolio.routes');
@@ -8,9 +8,9 @@ portfolioRoutesModule.config(['$routeProvider', function($routeProvider, $routeP
     // set up the routes
     $routeProvider
         .when('/portfolio', {
-            templateUrl: '/modules/portfolio/client/views/portfolio-list.html'
+            templateUrl: '/modules/portfolio/client/views/portfolio-list.client.view.html'
         })
         .when('/portfolio/:portfolioItemId', {
-            templateUrl: '/modules/portfolio/client/views/portfolio-item.html'
+            templateUrl: '/modules/portfolio/client/views/portfolio-item.client.view.html'
         })
 }]);

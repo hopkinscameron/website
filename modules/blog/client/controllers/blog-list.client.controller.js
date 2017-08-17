@@ -108,13 +108,13 @@ blogModule.controller('BlogListController', ['$scope', '$rootScope', '$compile',
         }
 
         // setup the route
-        var route = '#/blog';
+        var route = '/blog';
         var searchQ = $location.search().q,
             page = $location.search().page;
 
         // if searching
         if(searchQ){
-            route = '#/blog?q=' + searchQ;
+            route = '/blog?q=' + searchQ;
         }
 
         // update location
@@ -167,9 +167,9 @@ blogModule.controller('BlogListController', ['$scope', '$rootScope', '$compile',
     // gets the fully quantified route value
     $scope.getRouteValue = function(index) {
         // setup the route
-        var route = '#/blog?page=' + index;
+        var route = '/blog?page=' + index;
         if($location.search().q){
-            route = '#/blog?q=' + $location.search().q + '&page=' + index;
+            route = '/blog?q=' + $location.search().q + '&page=' + index;
         }
 
         return route;

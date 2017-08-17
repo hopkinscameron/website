@@ -473,7 +473,7 @@ blogModule.controller('BlogPostNewController', ['$scope', '$rootScope', '$compil
     $scope.discardDraft = function () {
         // show dialog
 		var discardDraftDialog = ngDialog.open({
-			template: './dialog/client/views/dialog-warning.html',
+			template: './dialog/client/views/dialog-warning.client.view.html',
 			controller: 'DialogDiscardBlogDraftController',
 			className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
 			showClose: false,
@@ -649,7 +649,7 @@ blogModule.controller('BlogPostNewController', ['$scope', '$rootScope', '$compil
 
                 // show dialog
                 var successfulDiscardDialog = ngDialog.open({
-                    template: './dialog/client/views/dialog-success.html',
+                    template: './dialog/client/views/dialog-success.client.view.html',
                     controller: 'DialogSuccessController',
                     className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
                     data: { 'successHeader': header, 'successBody': body }
@@ -674,7 +674,7 @@ blogModule.controller('BlogPostNewController', ['$scope', '$rootScope', '$compil
 
         // show dialog
         ngDialog.open({
-            template: './dialog/client/views/dialog-success.html',
+            template: './dialog/client/views/dialog-success.client.view.html',
             controller: 'DialogSuccessController',
             className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'successHeader': header, 'successBody': body }
@@ -689,7 +689,7 @@ blogModule.controller('BlogPostNewController', ['$scope', '$rootScope', '$compil
 
         // show dialog
         var successfulPostDialog = ngDialog.open({
-            template: './dialog/client/views/dialog-success.html',
+            template: './dialog/client/views/dialog-success.client.view.html',
             controller: 'DialogSuccessfulPostController',
             className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'successHeader': header, 'successBody': body }
@@ -700,7 +700,7 @@ blogModule.controller('BlogPostNewController', ['$scope', '$rootScope', '$compil
             // check if user wanted to go to blog page or stay here
             if(data.value && data.value.accepted) {
                 // redirect to this blog's page
-                $window.location.href = '#blog/post/' + $scope.currentWorkingPost.url;
+                $window.location.href = '/blog/post/' + $scope.currentWorkingPost.url;
             }
             else {
                 // reload page instead
@@ -717,7 +717,7 @@ blogModule.controller('BlogPostNewController', ['$scope', '$rootScope', '$compil
 
         // show dialog
         ngDialog.open({
-            template: './dialog/client/views/dialog-error.html',
+            template: './dialog/client/views/dialog-error.client.view.html',
             controller: 'DialogErrorController',
             className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'errorHeader': header, 'errorBody': body }

@@ -7,7 +7,7 @@ var portfolioServiceModule = angular.module('portfolio.services');
 portfolioServiceModule.factory('PortfolioFactory', ['$http', '$location', function ($http, $location) {
     // set up the factory
     var factory = {};
-    var appPath = $location.$$absUrl.split('#')[0] + 'api';
+    var appPath = ApplicationConfiguration.applicationBase + 'api';
 
     // gets portfolio list page information 
     factory.getPortfolioListPageInformation = function () {

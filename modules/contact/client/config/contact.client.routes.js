@@ -8,6 +8,6 @@ contactRoutesModule.config(['$routeProvider', function($routeProvider) {
     // set up the routes
     $routeProvider
         .when('/contact', {
-            templateUrl: '/modules/contact/client/views/contact.html'
+            templateUrl: '/modules/contact/client/views/contact.client.view.html'
         })
 }]);

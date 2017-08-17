@@ -7,8 +7,8 @@ var aboutServiceModule = angular.module('about.services');
 aboutServiceModule.factory('AboutFactory', ['$http', '$location', function ($http, $location) {
     // set up the factory
     var factory = {};
-    var appPath = $location.$$absUrl.split('#')[0] + 'api';
-
+    var appPath = ApplicationConfiguration.applicationBase + 'api';
+    
     // gets about me page information 
     factory.getAboutMePageInformation = function () {
         // set the endpoint

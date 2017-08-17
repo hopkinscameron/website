@@ -4,6 +4,10 @@
 <html lang="en">
     <!-- Begin Head -->
     <head>
+        <!-- Begin Base href -->
+        <base href="/">
+        <!-- End Base href -->
+
         <meta content="IE=edge" http-equiv="X-UA-Compatible">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,13 +66,13 @@
     <!-- Begin Body -->
     <body class="ng-cloak">
         <!-- Begin Header -->
-        <div ng-include="'/modules/header/client/views/header.html'"></div>
+        <div ng-include="'/modules/header/client/views/header.client.view.html'"></div>
         <!-- End Header -->
 
         {{{block "content"}}}
 
         <!-- Begin Footer -->
-        <div id="footer" ng-include="'/modules/footer/client/views/footer.html'"></div>
+        <div id="footer" ng-include="'/modules/footer/client/views/footer.client.view.html'"></div>
         <!-- End Footer -->
 
         <!-- Begin No Script For Alerts -->

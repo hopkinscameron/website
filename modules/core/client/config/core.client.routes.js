@@ -7,15 +7,15 @@ var coreRoutesModule = angular.module('core.routes');
 coreRoutesModule.config(['$routeProvider', function ($routeProvider, $routeParams) {
     $routeProvider
         .when('/not-found', {
-            templateUrl: '/modules/core/client/views/error.html',
+            templateUrl: '/modules/core/client/views/error.client.view.html',
             controller: 'ErrorController'
         })
         .when('/bad-request', {
-            templateUrl: '/modules/core/client/views/error.html',
+            templateUrl: '/modules/core/client/views/error.client.view.html',
             controller: 'ErrorController'
         })
         .otherwise({
-            templateUrl: '/modules/core/client/views/error.html',
+            templateUrl: '/modules/core/client/views/error.client.view.html',
             controller: 'ErrorController'
         })
 }]);

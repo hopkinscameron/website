@@ -7,7 +7,7 @@ var logoutServiceModule = angular.module('logout.services');
 logoutServiceModule.factory('LogoutFactory', ['$http', '$location', function ($http, $location) {
     // set up the factory
     var factory = {};
-    var appPath = $location.$$absUrl.split('#')[0] + 'api';
+    var appPath = ApplicationConfiguration.applicationBase + 'api';
 
     // logout
     factory.logout = function () {

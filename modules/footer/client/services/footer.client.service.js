@@ -7,7 +7,7 @@ var footerServiceModule = angular.module('footer.services');
 footerServiceModule.factory('FooterFactory', ['$http', '$location', function ($http, $location) {
     // set up the factory
     var factory = {};
-    var appPath = $location.$$absUrl.split('#')[0] + 'api';
+    var appPath = ApplicationConfiguration.applicationBase + 'api';
 
     // gets footer information 
     factory.getFooterInformation = function () {

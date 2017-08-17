@@ -7,7 +7,7 @@ var loginServiceModule = angular.module('login.services');
 loginServiceModule.factory('LoginFactory', ['$http', '$location', function ($http, $location) {
     // set up the factory
     var factory = {};
-    var appPath = $location.$$absUrl.split('#')[0] + 'api';
+    var appPath = ApplicationConfiguration.applicationBase + 'api';
 
     // checks if user is logged in
     factory.isUserLoggedIn = function () {

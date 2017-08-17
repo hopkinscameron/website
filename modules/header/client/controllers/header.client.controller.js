@@ -261,7 +261,7 @@ headerModule.controller('HeaderController', ['$scope', '$rootScope', '$location'
             // if not already on login page
             if($location.path() != 'login') {
                 // redirect to login page
-                $window.location.href = '#/login';
+                $window.location.href = '/login';
             }
         }
     });

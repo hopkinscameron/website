@@ -7,7 +7,7 @@ var headerServiceModule = angular.module('header.services');
 headerServiceModule.factory('HeaderFactory', ['$http', '$location', function ($http, $location) {
     // set up the factory
     var factory = {};
-    var appPath = $location.$$absUrl.split('#')[0] + 'api';
+    var appPath = ApplicationConfiguration.applicationBase + 'api';
 
     // gets header information 
     factory.getHeaderInformation = function () {

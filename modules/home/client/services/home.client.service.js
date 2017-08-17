@@ -7,7 +7,7 @@ var homeServiceModule = angular.module('home.services');
 homeServiceModule.factory('HomeFactory', ['$http', '$location', function ($http, $location) {
     // set up the factory
     var factory = {};
-    var appPath = $location.$$absUrl.split('#')[0] + 'api';
+    var appPath = ApplicationConfiguration.applicationBase + 'api';
 
     // gets home page information 
     factory.getHomePageInformation = function () {

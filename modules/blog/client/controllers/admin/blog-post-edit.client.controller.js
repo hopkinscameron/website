@@ -287,7 +287,7 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
     $scope.discardDraft = function () {
         // show dialog
 		var discardDraftDialog = ngDialog.open({
-			template: './dialog/client/views/dialog-warning.html',
+			template: './dialog/client/views/dialog-warning.client.view.html',
 			controller: 'DialogDiscardBlogDraftController',
 			className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
 			showClose: false,
@@ -310,7 +310,7 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
     $scope.deleteBlog = function () {
         // show dialog
 		var deleteBlogDialog = ngDialog.open({
-			template: './dialog/client/views/dialog-warning.html',
+			template: './dialog/client/views/dialog-warning.client.view.html',
 			controller: 'DialogDeleteBlogController',
 			className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
 			showClose: false,
@@ -481,7 +481,7 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
 
                 // show dialog
                 var successfulDiscardDialog = ngDialog.open({
-                    template: './dialog/client/views/dialog-success.html',
+                    template: './dialog/client/views/dialog-success.client.view.html',
                     controller: 'DialogSuccessController',
                     className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
                     data: { 'successHeader': header, 'successBody': body }
@@ -490,7 +490,7 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
                 // on completion of close
                 successfulDiscardDialog.closePromise.then(function (data) {
                     // redirect to this blog's page
-                    $window.location.href = '#blog/post/' + $scope.post.url;
+                    $window.location.href = '/blog/post/' + $scope.post.url;
                 });
             }
             else {
@@ -516,7 +516,7 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
 
                 // show dialog
                 var successfulDeleteDialog = ngDialog.open({
-                    template: './dialog/client/views/dialog-success.html',
+                    template: './dialog/client/views/dialog-success.client.view.html',
                     controller: 'DialogSuccessController',
                     className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
                     data: { 'successHeader': header, 'successBody': body }
@@ -525,7 +525,7 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
                 // on completion of close
                 successfulDeleteDialog.closePromise.then(function (data) {
                     // redirect to this blog's page
-                    $window.location.href = '#blog';
+                    $window.location.href = '/blog';
                 });
             }
             else {
@@ -547,7 +547,7 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
 
         // show dialog
         ngDialog.open({
-            template: './dialog/client/views/dialog-success.html',
+            template: './dialog/client/views/dialog-success.client.view.html',
             controller: 'DialogSuccessController',
             className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'successHeader': header, 'successBody': body }
@@ -562,7 +562,7 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
 
         // show dialog
         var successfulPostDialog = ngDialog.open({
-            template: './dialog/client/views/dialog-success.html',
+            template: './dialog/client/views/dialog-success.client.view.html',
             controller: 'DialogSuccessfulPostController',
             className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'successHeader': header, 'successBody': body }
@@ -573,7 +573,7 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
             // check if user wanted to go to blog page or stay here
             if(data.value && data.value.accepted) {
                 // redirect to this blog's page
-                $window.location.href = '#blog/post/' + $scope.post.url;
+                $window.location.href = '/blog/post/' + $scope.post.url;
             }
         });
     };
@@ -586,7 +586,7 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
 
         // show dialog
         ngDialog.open({
-            template: './dialog/client/views/dialog-error.html',
+            template: './dialog/client/views/dialog-error.client.view.html',
             controller: 'DialogErrorController',
             className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'errorHeader': header, 'errorBody': body }

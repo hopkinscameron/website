@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 // set up the module
 var resumeRoutesModule = angular.module('resume.routes');
@@ -8,6 +8,6 @@ resumeRoutesModule.config(['$routeProvider', function($routeProvider) {
     // set up the routes
     $routeProvider
         .when('/resume', {
-            templateUrl: '/modules/resume/client/views/resume.html'
+            templateUrl: '/modules/resume/client/views/resume.client.view.html'
         })
 }]);

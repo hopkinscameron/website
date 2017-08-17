@@ -7,7 +7,7 @@ var blogServiceModule = angular.module('blog.services');
 blogServiceModule.factory('BlogFactory', ['$http', '$location', function ($http, $location) {
     // set up the factory
     var factory = {};
-    var appPath = $location.$$absUrl.split('#')[0] + 'api';
+    var appPath = ApplicationConfiguration.applicationBase + 'api';
 
     // =========================================================================
     // Blog Functions ==========================================================

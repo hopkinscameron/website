@@ -16,8 +16,8 @@ module.exports = {
             server: { 
                 poolSize: 5 
             },
-            user: '', // process.env.DB_USER
-            pass: '' // process.env.DB_PASS
+            user: process.env.DB_USER,
+            pass: process.env.DB_PASS
         },
         // Enable mongoose debug mode
         debug: process.env.MONGODB_DEBUG || false

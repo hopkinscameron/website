@@ -121,7 +121,7 @@ gulp.task('uglify', function () {
 		.pipe(plugins.uglify({
 			mangle: false
 		}))
-		.pipe(plugins.concat('application.min.js'))
+		.pipe(plugins.concat('cameronhopkins.min.js'))
 		.pipe(plugins.rev())
 		.pipe(gulp.dest('public/dist'));
 });
@@ -130,7 +130,7 @@ gulp.task('uglify', function () {
 gulp.task('cssmin', function () {
 	return gulp.src(defaultAssets.client.css)
 		.pipe(plugins.csso())
-		.pipe(plugins.concat('application.min.css'))
+		.pipe(plugins.concat('cameronhopkins.min.css'))
 		.pipe(plugins.rev())
 		.pipe(gulp.dest('public/dist'));
 });
@@ -271,8 +271,9 @@ gulp.task('watch', function () {
 
 // Lint CSS and JavaScript files.
 gulp.task('lint', function (done) {
-	  //runSequence('less', 'sass', ['csslint', 'eslint'], done);
-	  runSequence('sass', ['csslint', 'eslint'], done);
+	//runSequence('less', 'sass', ['csslint', 'eslint'], done);
+	//runSequence('sass', ['csslint', 'eslint'], done);
+	runSequence('sass', done);
 });
 
 // Lint project files and minify them into two production files.
@@ -282,7 +283,8 @@ gulp.task('build', function (done) {
 
 // run the project in production mode
 gulp.task('prod', function (done) {
-	runSequence(['copyLocalEnvConfig', 'templatecache'], 'build', 'env:prod', 'lint', ['nodemon-nodebug', 'watch'], done);
+	//runSequence(['copyLocalEnvConfig', 'templatecache'], 'build', 'env:prod', 'lint', ['nodemon-nodebug', 'watch'], done);
+	runSequence(['copyLocalEnvConfig'], 'build', 'env:prod', 'lint', ['nodemon-nodebug', 'watch'], done);
 });
 
 // run the project in development mode with node debugger enabled

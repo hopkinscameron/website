@@ -212,7 +212,7 @@ exports.updateBlog = function (req, res) {
             else {
                 // see if there was a saved draft 
                 SavedBlogPost.findOneAndRemove({ customShort : blogPost.customShort }).exec(function(err) {
-                    // if error occured
+                    // if error occurred
                     if (err) {
                         // log error
                         console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
@@ -278,7 +278,7 @@ exports.deleteBlog = function (req, res) {
 exports.blogByID = function (req, res, next, id) {
     // find blog post based on id
     BlogPost.findOne({ customShort : id }).exec(function(err, foundBlog) {
-        // if error occured
+        // if error occurred
         if (err) {
             // return error
             return next(err);
@@ -287,7 +287,7 @@ exports.blogByID = function (req, res, next, id) {
         else if(foundBlog) {
             // update the view count
             foundBlog.update({ $inc: { views: 1 } }).exec(function(err, updatedBlog) {
-                // if error occured
+                // if error occurred
                 if (err) {
                     // return error
                     return next(err);
@@ -318,14 +318,14 @@ exports.blogByID = function (req, res, next, id) {
 function logBlogSearchQuery(queryText) {
 	// find search text by query text
 	AnalyticsBlogSearch.findOne({ keyword : queryText.toLowerCase() }).exec(function(err, foundSearchText) {
-		// if error occured
+		// if error occurred
 		if (err) {
 			console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
 		}
 		else if(foundSearchText) {
 			// update the count
 			foundSearchText.update({ $inc: { hits: 1 } }).exec(function(err) {
-				// if error occured
+				// if error occurred
 				if (err) {
 					console.log(clc.error(err.message));
 				}
@@ -357,7 +357,7 @@ function logBlogSearchQuery(queryText) {
 exports.draftList = function (req, res) {
     // find all saved draft posts
     SavedBlogPost.find({}).sort({ dateSaved: 'desc' }).exec(function(err, drafts) {
-        // if error occured
+        // if error occurred
         if (err) {
             // send internal error
             res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
@@ -494,7 +494,7 @@ exports.createDraft = function (req, res) {
 
                 // save the blog
                 savedBlog.save(function(err, newSavedBlog) {
-                    // if error occured
+                    // if error occurred
                     if (err) {
                         // send internal error
                         res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
@@ -533,7 +533,7 @@ exports.createDraft = function (req, res) {
 
             // save the blog
             savedBlog.save(function(err, newSavedBlog) {
-                // if error occured
+                // if error occurred
                 if (err) {
                     // send internal error
                     res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
@@ -611,7 +611,7 @@ exports.updateDraft = function (req, res) {
 
         // update blog draft
         blogDraft.update(updatedValues).exec(function(err) {
-            // if error occured
+            // if error occurred
             if (err) {
                 // send internal error
                 res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
@@ -668,7 +668,7 @@ exports.deleteDraft = function (req, res) {
 exports.draftBlogByID = function (req, res, next, id) {
     // find saved blog post based on id
     SavedBlogPost.findOne({ customShort : id }).exec(function(err, foundDraft) {
-        // if error occured
+        // if error occurred
         if (err) {
             // return error
             return next(err);

@@ -310,7 +310,7 @@ module.exports = function(app, passport) {
 		if (postId) {
 			// find blog post based on id
 			BlogPost.findOne({ customShort : postId }).exec(function(err, foundBlog) {
-				// if error occured
+				// if error occurred
 				if (err) {
 					// send internal error
 					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
@@ -327,7 +327,7 @@ module.exports = function(app, passport) {
 
 					// update the view count
 					BlogPost.update({ customShort : postId },{ $inc: { views: 1 } }).exec(function(err, updatedBlog) {
-						// if error occured
+						// if error occurred
 						if (err) {
 							// send internal error
 							res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
@@ -433,7 +433,7 @@ module.exports = function(app, passport) {
 
 		// find all saved blog posts
 		SavedBlogPost.find({}).sort({ dateSaved: 'desc' }).exec(function(err, blogs) {
-			// if error occured
+			// if error occurred
 			if (err) {
 				// send internal error
 				res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
@@ -468,7 +468,7 @@ module.exports = function(app, passport) {
 		if (req.params.postId) {
 			// find blog post based on id
 			SavedBlogPost.findOne({ customShort : req.params.postId }).exec(function(err, foundSavedBlog) {
-				// if error occured
+				// if error occurred
 				if (err) {
 					// send internal error
 					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
@@ -489,7 +489,7 @@ module.exports = function(app, passport) {
 				else {
 					// find blog post based on id
 					BlogPost.findOne({ customShort : req.params.postId }).exec(function(err, foundBlog) {
-						// if error occured
+						// if error occurred
 						if (err) {
 							// send internal error
 							res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
@@ -723,7 +723,7 @@ module.exports = function(app, passport) {
 
 			// send mail with defined transport object
 			transporter.sendMail(mailOptions, (error, info) => {
-				// if an internal error occured
+				// if an internal error occurred
 				if (error) {
 					// send internal error
 					res.status(500).send({ error: true, title: errorMessageCenter.error.status500.title, message: errorMessageCenter.error.status500.message  });
@@ -1378,14 +1378,14 @@ function getUserPublicIP() {
 function logPageRequest(accessedBy, pageRequested) {
 	// find page post based on id
 	AnalyticsPage.findOne({ url : pageRequested }).exec(function(err, foundPage) {
-		// if error occured
+		// if error occurred
 		if (err) {
 			console.log(clc.error(err.message));
 		}
 		else if(foundPage) {
 			// push the ip who accessed this page
 			AnalyticsPage.update({ url : pageRequested }, { $push: { accessedBy: accessedBy }, $inc: { count: 1 } }).exec(function(err, updatedBlog) {
-				// if error occured
+				// if error occurred
 				if (err) {
 					console.log(clc.error(err.message));
 				}
@@ -1412,14 +1412,14 @@ function logPageRequest(accessedBy, pageRequested) {
 function logBlogSearchQuery(queryText) {
 	// find search text by query text
 	AnalyticsBlogSearch.findOne({ keyword : queryText.toLowerCase() }).exec(function(err, foundSearchText) {
-		// if error occured
+		// if error occurred
 		if (err) {
 			console.log(clc.error(err.message));
 		}
 		else if(foundSearchText) {
 			// push the ip who accessed this page
 			AnalyticsBlogSearch.update({ keyword : queryText.toLowerCase() }, { $inc: { hits: 1 } }).exec(function(err, updatedSearchText) {
-				// if error occured
+				// if error occurred
 				if (err) {
 					console.log(clc.error(err.message));
 				}

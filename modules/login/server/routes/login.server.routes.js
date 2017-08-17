@@ -20,4 +20,15 @@ module.exports = function (app) {
     // POST signs user up
 	// format /signup
     app.route('/signup').post(ipLogger.log, loginController.signUp);
+
+    // GET gets random passphrase
+	// format /generateRandomPassphrase
+    app.route('/generateRandomPassphrase').get(loginController.generateRandomPassphrase);
+
+    // PUT changes password
+	// format /changePassword/:username
+    app.route('/changePassword/:username').put(loginController.changePassword);
+
+    // if username exists, bind the User by username middleware
+	app.param('username', loginController.userById);
 };

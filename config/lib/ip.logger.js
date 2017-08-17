@@ -152,14 +152,14 @@ function logPageRequest(accessedBy, pageRequested, requestType) {
 
 	// find page post based on id
 	AnalyticsPage.findOne({ request: req }).exec(function(err, foundPage) {
-		// if error occured
+		// if error occurred
 		if (err) {
 			console.log(clc.error(err.message));
 		}
 		else if(foundPage) {
 			// push the ip who accessed this page
 			AnalyticsPage.update({ url : pageRequested }, { $push: { accessedBy: accessedBy }, $inc: { count: 1 } }).exec(function(err, updatedBlog) {
-				// if error occured
+				// if error occurred
 				if (err) {
 					console.log(clc.error(err.message));
 				}

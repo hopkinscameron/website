@@ -6,13 +6,15 @@
 All 
 
 Done
-- logging in now works again!
-- signing up now works again!
-- fixed yellow background for login page
+- password protected local db
+- added ability to change password
+- fixed bug with signup/login for capitilized usernames
+- added some additional fields for user model (last pw change, last login)
+- ready to start production test
 
 Pending
 - 1. refresh page to update user object 
-- 2. SETUP PRODUCTION!! (get certs working as well)
+- 3. SETUP PRODUCTION!! (get certs working as well)
 - follow https://docs.angularjs.org/guide/production 
 
 Next
@@ -32,3 +34,23 @@ Next
 MOBILE VIEW FIXES 
 Sub Portfolio
     - there are some empty "col-md-2" for innerIndex in gameDataColumnsPerRowArray track by $index -> come back to this.. this exist on about page as well
+
+Mongodb test stuff
+db.createUser({ user: "<username>", pwd: "<password>", roles: [ { role: "dbAdmin", db: "<db>" } ]})
+db.updateUser("<username>", { roles : [ { role: "dbOwner", db: "<db>" } ], pwd: "<password>"})
+./mongo --port 27017 -u "<username>" -p "<password>" --authenticationDatabase "<db>"
+db.changeUserPassword("<username>", "<newpassword>")
+db.updateUser("<username>", { roles : [ { role: "dbOwner", db: "<db>" } ], pwd: "<password>"})
+
+
+in bower.json in dependencies
+        "angular": "~1.6.4",
+        "angular-animate": "~1.6.4",
+        "angular-bootstrap": "~1.2.1",
+        "angular-messages": "~1.6.4",
+        "angular-mocks": "~1.6.4",
+        "angular-resource": "~1.6.4",
+        "angular-ui-router": "~0.2.18",
+        "bootstrap": "^4.0",
+        "ng-file-upload": "~12.1.0",
+        "owasp-password-strength-test": "~1.3.0"

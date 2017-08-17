@@ -65,7 +65,7 @@ logger.setupFileLogger = function setupFileLogger() {
         // if not in a test environment
         if (process.env.NODE_ENV !== 'test') {
             console.log();
-            console.log(clc.error('An error has occured during the creation of the File transport logger.'));
+            console.log(clc.error('An error has occurred during the creation of the File transport logger.'));
             console.log(clc.error(err));
             console.log();
         }

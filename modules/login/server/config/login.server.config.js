@@ -30,7 +30,7 @@ module.exports = function (app, db) {
     passport.deserializeUser(function(id, done) {
         // find the user
         User.findById(id, function(err, user) {
-            // if error occured
+            // if error occurred
             if (err) {
                 // send internal error
                 res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });

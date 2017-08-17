@@ -127,7 +127,7 @@ exports.sendEmail = function (req, res) {
 
         // send mail with defined transport object
         transporter.sendMail(mailOptions, (err, info) => {
-            // if error occured
+            // if error occurred
             if (err) {
                 // send internal error
                 res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });

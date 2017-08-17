@@ -45,6 +45,7 @@ module.exports = function () {
                     // set the user's local credentials
                     newUser.username = username;
                     newUser.password = password;
+                    newUser.passwordUpdatedLast = new Date();
 
                     // save the user
                     newUser.save(function(err) {
@@ -72,10 +73,13 @@ module.exports = function () {
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
     function (req, username, password, done) {
+        // convert to lowercase
+        username = username ? username.toLowerCase() : username;
+
         // find a user whose username is the same as the forms username
         // we are checking to see if the user trying to login already exists
-        User.findOne({ username :  username }, function (err, user) {
-            // if there are any errors, return the error before anything else
+        User.findOne({ 'username' : username }, function (err, user) {
+            // if error occurred
             if (err) {
                 return done(err);
             } 
@@ -88,26 +92,44 @@ module.exports = function () {
 
             // compare equality
             user.comparePassword(password, function(err, isMatch) {
-                // if the user is found but the password is wrong
+                // if the user is found but the password is wrong or an error occurred
 				if (err || !isMatch) {
                     // create the loginMessage and save it to session as flashdata
                     return done(null, false);
 				}
 
-                // get object value
-                user = user.toObject({ hide: 'password', transform: true });
+                // set updated values 
+                var updatedValues = {
+                    "lastLogin": new Date()
+                };
 
-                // login
-				req.login(user, function (err) {
+                // update user
+                user.update(updatedValues).exec(function(err) {
                     // if error occurred
-					if (err) {
-						return done(err);
-                    } 
+                    if (err) {
+                        return done(err);
+                    }
                     else {
-						// all is well, return successful user
-                        return done(null, user);
-					}
-				});
+                        // TODO: is there any way we don't have to do this, and instead get the updated document?
+                        // set all updated values
+                        user.lastLogin = updatedValues.lastLogin;
+
+                        // get object value
+                        user = user.toObject({ hide: 'password', transform: true });
+
+                        // login
+                        req.login(user, function (err) {
+                            // if error occurred
+                            if (err) {
+                                return done(err);
+                            } 
+                            else {
+                                // all is well, return successful user
+                                return done(null, user);
+                            }
+                        });
+                    }
+                });
 			});	
         });
     }));

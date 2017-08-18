@@ -64,6 +64,7 @@ exports.renderServerError = function (req, res) {
  * Performs content-negotiation on the Accept HTTP header
  */
 exports.renderNotFound = function (req, res) {
+    /*
     res.status(404).format({
     'text/html': function () {
             res.render('modules/core/server/views/404', {
@@ -78,7 +79,10 @@ exports.renderNotFound = function (req, res) {
     'default': function () {
             res.send('Path not found');
         }
-    });
+    });*/
+    
+    // redirect to not found
+    res.redirect('/not-found');
 };
 
 /**

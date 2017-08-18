@@ -17,7 +17,7 @@ exports.isAllowed = function (req, res, next) {
         return next();
     }
 	else {
-        // create forbidden error
-        return res.status(403).send({ title: errorHandler.getErrorTitle({ code: 403 }), message: errorHandler.getGenericErrorMessage({ code: 403 }) });
+        // create unauthorized error
+        return res.status(401).send({ title: errorHandler.getErrorTitle({ code: 401 }), message: errorHandler.getGenericErrorMessage({ code: 401 }) });
     }
 };

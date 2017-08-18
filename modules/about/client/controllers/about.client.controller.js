@@ -63,19 +63,6 @@ aboutModule.controller('AboutController', ['$scope', '$rootScope', '$compile', '
             initializePage();
         }
     });
-    
-    // TODO: may not need, might want to remove unless I figure out how to do this
-    // on resize
-    angular.element($window).on('scroll', function() {
-        //console.log('scrolling');
-        //console.log($window.scrollY);
-        $scope.$apply(function () {
-            // 
-            if($window.scrollY >= 129 && !$scope.showHobbies) {
-                $scope.showHobbies = true;
-            }
-        });
-    });
 
     // initialize page
     function initializePage() {

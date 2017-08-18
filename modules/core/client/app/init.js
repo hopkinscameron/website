@@ -46,20 +46,24 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope'
         // check to see if user is logged in
         LoginFactory.isUserLoggedIn().then(function(response) {
             // determines if user is logged in
-            var isLoggedIn = !response.isLoggedIn;
+            $rootScope.$root.isLoggedIn = response.isLoggedIn;
 
             // if the next route needs authentication
             if (next.$$route && next.$$route.authenticated) {
                 // if user is not logged in
-                if (!isLoggedIn) {
-                    // prevent the default
-                    event.preventDefault();
+                if (!$rootScope.$root.isLoggedIn) {
+                    // prevent the default route
+                    //event.preventDefault();
 
-                    // redirect to 403
-                    $location.path('/not-found');
+                    // redirect to 401
+                    //$location.path('/not-authorized');
 
                     // TODO: insert next template and controller instead
                     // use next.$route.templateUrl or something
+
+                    //next.loadedTemplateUrl = '/modules/core/client/views/error.client.view.html';
+                    //next.$$route.controller = 'ErrorController';
+                    //next.$$route.templateUrl = '/modules/core/client/views/error.client.view.html';
                 }
             }
         });

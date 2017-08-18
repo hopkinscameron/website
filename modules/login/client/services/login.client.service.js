@@ -12,7 +12,7 @@ loginServiceModule.factory('LoginFactory', ['$http', '$location', function ($htt
     // checks if user is logged in
     factory.isUserLoggedIn = function () {
         // set the endpoint
-        var endpoint = '/login';
+        var endpoint = appPath + '/login';
 
         // create request
         var req = {
@@ -33,7 +33,7 @@ loginServiceModule.factory('LoginFactory', ['$http', '$location', function ($htt
     // login
     factory.login = function (credentials) {
         // set the endpoint
-        var endpoint = '/login';
+        var endpoint = appPath + '/login';
 
         // stringify the login data
         var loginStrigified = JSON.stringify({

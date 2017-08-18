@@ -4,14 +4,19 @@
 var coreModule = angular.module('core');
 
 // create the controller
-coreModule.controller('ErrorController', ['$scope', '$compile', 'Service', function ($scope, $compile, Service) {
+coreModule.controller('ErrorController', ['$scope', '$compile', '$route', 'Service', function ($scope, $compile, $route, Service) {
+    // set the title/code/message of the error
+    const title = $route.current.$$route && $route.current.$$route.errorTitle ? $route.current.$$route.errorTitle : 'Page Not Found';
+    const code = $route.current.$$route && $route.current.$$route.errorCode ? $route.current.$$route.errorCode : 404;
+    const message = $route.current.$$route && $route.current.$$route.errorMessage ? $route.current.$$route.errorMessage : 'Sorry, looks like the page you were looking for does not exist.';
+    
     // initialize
-    $scope.pageTitle = 'Page not found' + ' | ' + ApplicationConfiguration.applicationName;
-    $scope.status = 404; 
-    $scope.message = 'The page you are looking for does not exist'; 
+    $scope.pageTitle = title + ' | ' + ApplicationConfiguration.applicationName;
+    $scope.status = code; 
+    $scope.message = message; 
 
     // setup page
-    initialize('Page not found', $scope.status, $scope.message);
+    initialize(title, $scope.status, $scope.message);
 
     // initialization of controller
     $scope.init = function(title, status, message)
@@ -40,7 +45,7 @@ coreModule.controller('ErrorController', ['$scope', '$compile', 'Service', funct
         // get correct error code
         switch(status) {
             case 400:
-                $scope.image = '/modules/core/client/img/errors/404.png';
+                $scope.image = '/modules/core/client/img/errors/400.png';
                 break;
             case 401:
                 $scope.image = '/modules/core/client/img/errors/401.png';

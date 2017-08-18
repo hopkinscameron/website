@@ -29,8 +29,8 @@ loginModule.controller('LoginController', ['$scope', '$rootScope', '$compile', '
     $scope.loginForm = {
         'formSubmitted': false,
         'inputs': {
-            'username': 'cam',
-            'password': '0000'
+            'username': '',
+            'password': ''
         },
         'views': {
             'username': 'username',
@@ -160,7 +160,7 @@ loginModule.controller('LoginController', ['$scope', '$rootScope', '$compile', '
                     // if was on a previous route
                     if(previousPath && previousPath.length > 0) {
                         // redirect to previous page and reload page to refresh user object
-                        $window.location.href = '/' + previousPath;
+                        $window.location.href = previousPath;
                     }
                     else {
                         // redirect to about page and reload page to refresh user object
@@ -221,13 +221,13 @@ loginModule.controller('LoginController', ['$scope', '$rootScope', '$compile', '
                      // setup page
                     setUpPage();
                 }
-                // if a redirect callback
-                else if($location.search().redirect){
-                    // redirect to previous page
-                    $window.location.href = '/' + $location.search().redirect;
+                // if was on a previous route
+                else if(previousPath && previousPath.length > 0) {
+                    // redirect to previous page and reload page to refresh user object
+                    $window.location.href = previousPath;
                 }
                 else {
-                    // redirect to about page
+                    // redirect to about page and reload page to refresh user object
                     $window.location.href = '/about';
                 }
             }

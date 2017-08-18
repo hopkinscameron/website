@@ -57,7 +57,7 @@ gulp.task('watch', ['watch:sass',]);
 // the default task (called when you run 'gulp' from cli)
 gulp.task('default', ['watch', 'sass']);
 
-// TODO: later to uglyify
+// 
 //gulp.task('default', ['watch', 'scripts']);
 */
 

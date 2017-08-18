@@ -14,20 +14,20 @@ module.exports = function (app) {
     // GET gets login page
     // POST log user in
 	// format /login
-    app.route('/login').get(ipLogger.log, loginController.checkLoggedIn)
+    app.route('/api/login').get(ipLogger.log, loginController.checkLoggedIn)
         .post(ipLogger.log, loginController.login);
 
     // POST signs user up
 	// format /signup
-    app.route('/signup').post(ipLogger.log, loginController.signUp);
+    app.route('/api/signup').post(ipLogger.log, loginController.signUp);
 
     // GET gets random passphrase
 	// format /generateRandomPassphrase
-    app.route('/generateRandomPassphrase').get(loginController.generateRandomPassphrase);
+    app.route('/api/generateRandomPassphrase').get(loginController.generateRandomPassphrase);
 
     // PUT changes password
 	// format /changePassword/:username
-    app.route('/changePassword/:username').put(loginController.changePassword);
+    app.route('/api/changePassword/:username').put(loginController.changePassword);
 
     // if username exists, bind the User by username middleware
 	app.param('username', loginController.userById);

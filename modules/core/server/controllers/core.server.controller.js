@@ -18,13 +18,13 @@ var // the path
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
     host: config.mailer.options.host,
-    port: 465,
-    secure: true, // secure:true for port 465, secure:false for port 587
+    port: process.env.NODE_ENV === 'production' ? 465 : 587,
+    secure: process.env.NODE_ENV === 'production' ? true : false, // secure:true for port 465, secure:false for port 587
     auth: {
         user: config.mailer.options.auth.user,
         pass: config.mailer.options.auth.pass
     },
-	proxy: 'http://localhost:3128',
+	//proxy: 'http://localhost:3128',
 	service: config.mailer.options.service
 });
 

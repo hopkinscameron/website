@@ -3,31 +3,31 @@
     "socialMediaLinks": [
         {
             "type": "LinkedIn",
-            "img": "/modules/footer/client/img/linkedin-white.svg",
+            "img": "/dist/img/linkedin-white.svg",
             "title": "Cameron Hopkins LinkedIn",
             "link": "https://www.linkedin.com/in/cameron-hopkins-7a67a5a4"
         },
         {
             "type": "Facebook",
-            "img": "/modules/footer/client/img/facebook-white.svg",
+            "img": "/dist/img/facebook-white.svg",
             "title": "Cameron Hopkins Facebook",
             "link": "https://www.facebook.com/cameron.hopkins.90"
         },
         {
             "type": "Instagram",
-            "img": "/modules/footer/client/img/instagram-white.svg",
+            "img": "/dist/img/instagram-white.svg",
             "title": "Cameron Hopkins Instagram",
             "link": "https://www.instagram.com/camthedragon"
         },
         {
             "type": "Twitter",
-            "img": "/modules/footer/client/img/twitter-white.svg",
+            "img": "/dist/img/twitter-white.svg",
             "title": "Cameron Hopkins Twitter",
             "link": "https://twitter.com/camthedragon"
         },
         {
             "type": "YouTube",
-            "img": "/modules/footer/client/img/youtube-play-white.svg",
+            "img": "/dist/img/youtube-play-white.svg",
             "title": "Cameron Hopkins YouTube",
             "link":  "https://www.youtube.com/channel/UCtQ-7FNTiTIRBElvzVJyrLg"
         }

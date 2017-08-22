@@ -4,12 +4,13 @@
  * Module dependencies.
  */
 var // the default environment configuration
-    defaultEnvConfig = require('./default');
+    defaultEnvConfig = require('./default'),
+    // the file system to read/write from/to files locally
+    fs = require('fs');
 
 module.exports = {
-    livereload: true,
     app: {
-        title: defaultEnvConfig.app.title + ' - Development Enviornment'
+        title: defaultEnvConfig.app.title + ' - UProduction Enviornment'
     },
     db: {
         uri: process.env.MONGODB || 'mongodb://localhost:27017/personal_website',
@@ -26,10 +27,13 @@ module.exports = {
         // Enable mongoose debug mode
         debug: process.env.MONGODB_DEBUG || false
     },
+    port: process.env.PORT_UNSECURE || 80,
+    // Binding to 127.0.0.1 is safer in production.
+    host: process.env.HOST || '0.0.0.0',
     log: {
         // logging with Morgan - https://github.com/expressjs/morgan
         // Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
-        format: 'dev',
+        format: process.env.LOG_FORMAT || 'combined',
         fileLogger: {
             directoryPath: process.env.LOG_DIR_PATH || process.cwd(),
             fileName: process.env.LOG_FILE || 'app.log',

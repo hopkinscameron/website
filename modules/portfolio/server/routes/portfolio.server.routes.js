@@ -11,7 +11,6 @@ var // the path
     portfolioController = require('../controllers/portfolio.server.controller');
 
 module.exports = function (app) {
-    // TODO: in controller seperate out each query functionality
     // GET gets portfolio list
 	// format /api/portfolio
     app.route('/api/portfolio').get(ipLogger.log, portfolioController.list);

@@ -1,18 +1,18 @@
 {
     "title": "Memoryless",
     "images": [
-        { "url": "/modules/portfolio/client/img/memoryless/memoryless-logo.jpg" },
-        { "url": "/modules/portfolio/client/img/memoryless/bathroom.png" },
-        { "url": "/modules/portfolio/client/img/memoryless/bear.png" },
-        { "url": "/modules/portfolio/client/img/memoryless/cabinet.png" },
-        { "url": "/modules/portfolio/client/img/memoryless/cartoon-house.png" },
-        { "url": "/modules/portfolio/client/img/memoryless/controls.png" },
-        { "url": "/modules/portfolio/client/img/memoryless/hallway.png" }
+        { "url": "/dist/img/memoryless-logo.jpg" },
+        { "url": "/dist/img/bathroom.png" },
+        { "url": "/dist/img/bear.png" },
+        { "url": "/dist/img/cabinet.png" },
+        { "url": "/dist/img/cartoon-house.png" },
+        { "url": "/dist/img/controls.png" },
+        { "url": "/dist/img/hallway.png" }
     ],
     "overviewContent": {
         "overview": "<i>Memoryless</i> is a single player adventure game built using Unity3D. Memoryless is about childhood memory loss, the disturbance of unwanted memory and the idea of reaching deep into your memories to regain what you once destroyed.<br /> <br />'Anna' has forcefully puts her deepest darkest memory into the back of her brain without the idea of bring it back to life. As Anna grew up, she began having issues with her past, having nightmares of this incident that happened when she was younger. The problem is, Anna can’t unlock that memory, she gets so deep into her dream that the moment she gets to the secret room, she blacks out, and nothing appears. Now that Anna is much older, she has a hard time remembering what is happening. She continues to visit doctors to help with this but she can’t seem to get the help she needs; until she met her new doctor, Dr. Montgomery. Dr. Montgomery specializing in psychotherapy and can help Anna reach into her deepest dreams to receive that memory she’s been longing for.<br /> <br />You’ve been treated to the hospital in which Dr. Montgomery is now trying to help you reach into your deepest dream. You have received some information about your history and your passion for drawing. You must now use your skills to roam throughout your dream to find out what happened. In this dream, you are inside you childhood home with memory pieces that are secretly hidden throughout your home, and you must find those memory pieces, put together your thoughts and remember which each memory piece means to you.",
         "gameDesignDocument": {
-            "url": "/files/game-design-documents/memoryless-game-design-document.pdf",
+            "url": "/dist/files/game-design-documents/memoryless-game-design-document.pdf",
             "title": "Forsaken Game Design Document"
         },
         "downloadLinks": [

@@ -1,6 +1,6 @@
 /* Begin Custom Body Styles */
 body {
-	font-family: "Trebuchet MS", sans-serif;
+	font-family: 'Trebuchet MS', sans-serif;
     color: $text-color;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -9,7 +9,7 @@ body {
   	image-rendering: crisp-edges;
   	image-rendering: optimizeSpeed;
   	image-rendering: optimize-contrast;
-    background-image: url("/modules/core/client/img/background/black-concrete.jpg");
+    background-image: url('/dist/img/black-concrete.jpg');
     background-position: center top;
     background-attachment: fixed;
     -o-background-size: cover;
@@ -36,6 +36,6 @@ body {
 }
 .body-error {
     background-color: $brand-theme-main;
-    background-image: url("");
+    background-image: url('');
 }
 /* End Custom Body Styles */

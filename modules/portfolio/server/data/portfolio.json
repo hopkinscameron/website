@@ -2,43 +2,43 @@
     "portfolioItems": [
         {
             "title": "Over Drive",
-            "pictureLink": "/modules/portfolio/client/img/overdrive/overdrive-logo.png",
+            "pictureLink": "/dist/img/overdrive-logo.png",
             "subPageLink": "over-drive",
             "shortDescription": "<i>Over Drive</i>, a first person shooter where players can run through a series of targets and try to aim for the highest finish rate!"
         },
         {
             "title": "Road Rager",
-            "pictureLink": "/modules/portfolio/client/img/roadrager/roadrager-logo.png",
+            "pictureLink": "/dist/img/roadrager-logo.png",
             "subPageLink": "road-rager",
             "shortDescription": "<i>Road Rage</i>, a phenomenal top down 2D racing game where you must dodge all traffic and use powerups to your advantage."
         },
         {
             "title": "Forsaken",
-            "pictureLink": "/modules/portfolio/client/img/forsaken/forsaken-logo.png",
+            "pictureLink": "/dist/img/forsaken-logo.png",
             "subPageLink": "forsaken",
             "shortDescription": "<i>Fosaken</i>, a cutural thriller game where you as a user can play as an unborn child and wreak havoc on those who abandoned you!"
         },
         {
             "title": "Memoryless",
-            "pictureLink": "/modules/portfolio/client/img/memoryless/memoryless-logo.jpg",
+            "pictureLink": "/dist/img/memoryless-logo.jpg",
             "subPageLink": "memoryless",
             "shortDescription": "<i>Memoryless</i>, a first person memory seeker. You're playing as Anna trying to search your old house finding clues as to what happened in your childhood that you forceabally blocked out."
         },
         {
             "title": "Squirvival",
-            "pictureLink": "/modules/portfolio/client/img/squirvival/squirvival-logo.png",
+            "pictureLink": "/dist/img/squirvival-logo.png",
             "subPageLink": "squirvival",
             "shortDescription": "<i>Squirvival</i>, a fun animated suirvial game. You're a squirrel hunting for nuts before the winter comes, can you collect enough nuts and dodge the predators before winter comes?!"
         },
         {
             "title": "Rollaball-Mod",
-            "pictureLink": "/modules/portfolio/client/img/rollaballmod/rollaballmod-logo.png",
+            "pictureLink": "/dist/img/rollaballmod-logo.png",
             "subPageLink": "rollaball-mod",
             "shortDescription": "<i>Rollaball-Mod</i>, a modification to the simple Rollaball game where the player is a ball and rolls around collecting the pickups on the map. Now, you must search the map with a limited view and dodge predators!!"
         },
         {
             "title": "Drive on Metz",
-            "pictureLink": "/modules/portfolio/client/img/driveonmetz/driveonmetz-logo.jpg",
+            "pictureLink": "/dist/img/driveonmetz-logo.jpg",
             "subPageLink": "drive-on-metz",
             "shortDescription": "<i>Drive on Metz</i>, the ultimate two player strategy game designed by James F. Dunnigan. Brought to you by the Air Force Research Lab, we bring Drive on Metz to the Android Device!"
         }

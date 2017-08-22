@@ -1,13 +1,16 @@
 'use strict';
 
 // the application module name
-const applicationModuleName = 'personalsite';
+// FIXME: had this as "const" is there a way to keep this during minification
+var applicationModuleName = 'personalsite';
 
 // the application name
-const applicationName = 'Cameron Hopkins';
+// FIXME: had this as "const" is there a way to keep this during minification
+var applicationName = 'Cameron Hopkins';
 
 // the application base
-const applicationBase = '/';
+// FIXME: had this as "const" is there a way to keep this during minification
+var applicationBase = '/';
 
 // the service for the application
 var service = {

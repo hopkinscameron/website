@@ -1,5 +1,13 @@
 'use strict';
 
+/**
+ * Module dependencies.
+ */
+var // the default environment configuration
+    defaultEnvConfig = require('./default'),
+    // the file system to read/write from/to files locally
+    fs = require('fs');
+
 module.exports = {
     app: {
         title: defaultEnvConfig.app.title + ' - Production Enviornment'
@@ -20,12 +28,27 @@ module.exports = {
                 poolSize: 5 
             },
             user: process.env.DB_USER,
-            pass: process.env.DB_PASS
+            pass: process.env.DB_PASS,
+            /**
+              * Uncomment to enable ssl certificate based authentication to mongodb
+              * servers. Adjust the settings below for your specific certificate
+              * setup.
+              * for connect to a replicaset, rename server:{...} to replset:{...}
+            
+            server: {
+                ssl: true,
+                sslValidate: false,
+                checkServerIdentity: false,
+                sslCA: fs.readFileSync('./config/sslcerts/ssl-ca.pem'),
+                sslCert: fs.readFileSync('./config/sslcerts/ssl-cert.pem'),
+                sslKey: fs.readFileSync('./config/sslcerts/ssl-key.pem'),
+                sslPass: '1234'
+            }*/
         },
         // Enable mongoose debug mode
         debug: process.env.MONGODB_DEBUG || false
     },
-    port: process.env.PORT || 8443,
+    port: process.env.PORT_SECURE || 8443,
     // Binding to 127.0.0.1 is safer in production.
     host: process.env.HOST || '0.0.0.0',
     log: {

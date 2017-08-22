@@ -1,5 +1,5 @@
 {
-    "resumePictureLink": "/modules/resume/client/img/hopkins-cameron-resume.png",
-    "resumeLink": "/modules/resume/client/files/hopkins-cameron-resume.pdf",
-    "cvLink": "/modules/resume/client/files/hopkins-cameron-cv.pdf"
+    "resumePictureLink": "/dist/img/hopkins-cameron-resume.png",
+    "resumeLink": "/dist/files/hopkins-cameron-resume.pdf",
+    "cvLink": "/dist/files/hopkins-cameron-cv.pdf"
 }

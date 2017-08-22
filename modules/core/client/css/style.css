@@ -8,7 +8,7 @@
 /*
     Breakpoints
 
-    Media queries are mobile-first, so read each as "when screen is greater than [size]"
+    Media queries are mobile-first, so read each as 'when screen is greater than [size]'
     These only apply to the grid by default. You can use them in components but they may
     require their own breakpoints as well.
 */
@@ -109,7 +109,7 @@
 /* End Custom Blog Post Styles */
 /* Begin Custom Body Styles */
 body {
-  font-family: "Trebuchet MS", sans-serif;
+  font-family: 'Trebuchet MS', sans-serif;
   color: #F5F7F9;
   background-repeat: no-repeat;
   background-size: cover;
@@ -118,7 +118,7 @@ body {
   image-rendering: crisp-edges;
   image-rendering: optimizeSpeed;
   image-rendering: optimize-contrast;
-  background-image: url("/modules/core/client/img/background/black-concrete.jpg");
+  background-image: url("/dist/img/black-concrete.jpg");
   background-position: center top;
   background-attachment: fixed;
   -o-background-size: cover;

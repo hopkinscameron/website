@@ -8,7 +8,8 @@ module.exports = {
         title: 'Cameron Hopkins Personal Website',
         description: 'Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js',
         keywords: 'mongodb, express, angularjs, node.js, mongoose, passport',
-        googleAnalyticsTrackingID: process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'GOOGLE_ANALYTICS_TRACKING_ID'
+        googleAnalyticsTrackingID: process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'GOOGLE_ANALYTICS_TRACKING_ID',
+        appInsightsAnalyticsTrackingID: process.env.APP_INSIGHTS_ANALYTICS_TRACKING_ID || 'APP_INSIGHTS_ANALYTICS_TRACKING_ID'
     },
     db: {
         promise: global.Promise
@@ -46,8 +47,8 @@ module.exports = {
         p3p: 'ABCDEF',
         xssProtection: true
     },
-    logo: 'modules/core/client/img/brand/logo.jpg',
-    favicon: 'modules/core/client/img/brand/favicon.ico',
+    logo: 'public/dist/img/logo.jpg',
+    favicon: 'public/dist/img/favicon.ico',
     illegalUsernames: ['administrator', 'password', 'admin', 'user',
         'unknown', 'anonymous', 'null', 'undefined', 'api'
     ],

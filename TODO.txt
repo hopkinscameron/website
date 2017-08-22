@@ -8,8 +8,9 @@ All
 Done
 
 Pending
-- 1. fix all TODO's in code
-- 2. SETUP PRODUCTION!! (get certs working as well) -> strip comments from html as well
+- 1. strip comments from server html
+- 2. make sure all links work properly
+- 3. make sure images work properly on dev (basically if there was no public file what would happen? maybe for dev, you still copy over images but don't compress)
 
 Next
 - see if I can use lodash to speed up some stuff I might be doing in server stuff

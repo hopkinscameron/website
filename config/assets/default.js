@@ -56,15 +56,18 @@ module.exports = {
             'modules/*/client/**/*.js'
         ],
         img: [
-            'modules/**/*/img/**/*.jpg',
-            'modules/**/*/img/**/*.png',
-            'modules/**/*/img/**/*.gif',
-            'modules/**/*/img/**/*.svg'
+            'modules/**/*/img/**/*.{jpg,jpeg,png,gif,svg}'
+        ],
+        icons: [
+            'modules/**/*/img/**/*.ico'
         ],
         files: [
             'modules/**/*/files/**/*.pdf'
         ],
         views: ['modules/*/client/views/**/*.html'],
+        fonts: [
+            'modules/*/client/{css,less,scss}/fonts/*.{eot,otf,ttf,woff,woff2}'
+        ],
         templates: ['build/templates.js']
     },
     server: {

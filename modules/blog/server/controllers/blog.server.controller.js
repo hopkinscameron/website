@@ -34,7 +34,7 @@ exports.blogList = function (req, res) {
     var pageNumber = req.query.page ? req.query.page : 1;
 
     // the options/search query
-    var findOptions = req.query.q ? { $text: {$search: req.query.q} } : {};
+    var findOptions = req.query.q ? { $text: { $search: req.query.q } } : { };
 
     // if query
     if(req.query.q) {
@@ -58,7 +58,7 @@ exports.blogList = function (req, res) {
         // if pages
         if(blogDetails.totalPages > 0) {
             // find all blog posts but limit based on page size
-            BlogPost.find(findOptions).sort({ datePublished: 'desc' }).skip(pageSize*(pageNumber-1)).limit(pageSize).exec(function(err, sortedPagedBlogs) {
+            BlogPost.find(findOptions).sort({ datePublished: 'desc' }).skip(pageSize * (pageNumber - 1)).limit(pageSize).exec(function(err, sortedPagedBlogs) {
                 // map blogs to transform to an array of JSON
                 blogDetails.posts = sortedPagedBlogs.map(function(blog) {
                     // get the url
@@ -224,7 +224,6 @@ exports.updateBlog = function (req, res) {
                     // make an object
                     blogPost = blogPost.toObject({ hide: 'customShort', transform: true });
 
-                    // TODO: is there any way we don't have to do this, and instead get the updated document?
                     // set all updated values
                     blogPost.url = url;
                     blogPost.title = updatedValues.title;
@@ -624,7 +623,6 @@ exports.updateDraft = function (req, res) {
                 // make an object
                 blogDraft = blogDraft.toObject({ hide: 'customShort', transform: true });
 
-                // TODO: is there any way we don't have to do this, and instead get the updated document?
                 // set all updated values
                 blogDraft.url = url;
                 blogDraft.title = updatedValues.title;

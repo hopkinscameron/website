@@ -17,7 +17,6 @@ module.exports = function (app) {
     // Blog Routes =============================================================
 	// =========================================================================
 	
-	// TODO: in controller seperate out each query functionality
 	// GET gets blog list
 	// POST creates new blog from scratch
 	// format /api/blog

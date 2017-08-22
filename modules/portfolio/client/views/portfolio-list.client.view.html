@@ -24,7 +24,7 @@
                             <h3 class="text-center text-capitalize font-weight-bold">{{portfolioItem.title}}</h3>
                             <!-- End Portfolio Item Title -->
                             <!-- Begin Portfolio Item Image -->
-                            <a class="decoration--never highlight--never card-link" ng-href="/{{currentPath}}/{{portfolioItem.subPageLink}}">
+                            <a class="decoration--never highlight--never card-link" ng-href="{{currentPath}}/{{portfolioItem.subPageLink}}">
                                 <div style="overflow: hidden;">
                                     <div class="img-thumb img--md img-zoom--sm" ng-style="{'background-image': 'url(' + portfolioItem.pictureLink + ')'}" ng-if="portfolioItem.pictureLink.length > 0"></div>
                                     <div class="img-thumb img--md img-zoom--sm d-table w-100" ng-if="portfolioItem.pictureLink.length == 0">
@@ -34,7 +34,7 @@
                             </a>
                             <!-- End Portfolio Item Image -->
                             <!-- Begin View More Details -->
-                            <p class="text-center pl-3 pr-3 mb-2 mt-2"><a class="decoration--never card-link" ng-href="/{{currentPath}}/{{portfolioItem.subPageLink}}">View more details <i class="fa fa-arrow-right" aria-hidden="true"></i></a></p>
+                            <p class="text-center pl-3 pr-3 mb-2 mt-2"><a class="decoration--never card-link" ng-href="{{currentPath}}/{{portfolioItem.subPageLink}}">View more details <i class="fa fa-arrow-right" aria-hidden="true"></i></a></p>
                             <!-- End View More Details -->
                             <!-- Begin Portfolio Item Short Description -->
                             <span class="pl-3 pr-3" ng-bind-html="portfolioItem.shortDescription | trustHTML"></span>

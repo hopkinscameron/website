@@ -1,17 +1,17 @@
 {
     "title": "Squirvival",
     "images": [
-        { "url": "/modules/portfolio/client/img/squirvival/squirvival-logo.png" },
-        { "url": "/modules/portfolio/client/img/squirvival/main-menu.png" },
-        { "url": "/modules/portfolio/client/img/squirvival/map.png" },
-        { "url": "/modules/portfolio/client/img/squirvival/shoulder-cam.png" },
-        { "url": "/modules/portfolio/client/img/squirvival/squirrels-vs-predator.png" },
-        { "url": "/modules/portfolio/client/img/squirvival/third-person.png" }
+        { "url": "/dist/img/squirvival-logo.png" },
+        { "url": "/dist/img/main-menu.png" },
+        { "url": "/dist/img/map.png" },
+        { "url": "/dist/img/shoulder-cam.png" },
+        { "url": "/dist/img/squirrels-vs-predator.png" },
+        { "url": "/dist/img/third-person.png" }
     ],
     "overviewContent": {
         "overview": "<i>Squirvival</i> is a survival based game built using Unity3D. In this game, the player is to survive in the forest as long as possible and collect enough nuts to survive each coming winter while avoiding predators, unless you are said predators, in which case your job is to devour squirrels. The player must collect nuts and bring them back to their home tree. The player has the option to climb trees, pick up acorns and achieve various power ups. The player has the ability to glide, so that their descent from treetops to the ground is smooth and controlled. The forest will consist of variously arranged trees, rocks, bushes, hills and dales. There also lies predators such as eagles, foxes, bears, and wolves. The player may see boars, stags and rabbits but not need to be afraid, those are for the bigger predators to hunt, other than the player of course. Take a look at the game design document. There is a bonus mode called 'Parkour' in which the player has to bounce/jump from tree to tree to collect a single acorn. Beware not to be afraid of heights or to fall out the tree, below the trees is a pit of hot lava!",
         "gameDesignDocument": {
-            "url": "/files/game-design-documents/squirvival-game-design-document.pdf",
+            "url": "/dist/files/game-design-documents/squirvival-game-design-document.pdf",
             "title": "Squirvival Game Design Document"
         },
         "downloadLinks": [

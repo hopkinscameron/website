@@ -7,7 +7,7 @@ var // lodash
     _ = require('lodash'),
     // clc colors for console logging
 	clc = require('./lib/clc'),
-    // glob for path matching
+    // glob for path/pattern matching
     glob = require('glob'),
     // the file system to read/write from/to files locally
     fs = require('fs'),
@@ -130,8 +130,8 @@ var validateSessionSecret = function (config, testing) {
         // if not currently in testing
         if (!testing) {
             console.log(clc.error('+ WARNING: It is strongly recommended that you change sessionSecret config while running in production!'));
-            console.log(clc.error('  Please add `sessionSecret: process.env.SESSION_SECRET || \'super amazing secret\'` to '));
-            console.log(clc.error('  `config/env/production.js` or `config/env/local.js`'));
+            console.log(clc.error('  Please add \'sessionSecret: process.env.SESSION_SECRET || \'super amazing secret\'\' to '));
+            console.log(clc.error('  \'config/env/production.js\' or \'config/env/local.js\''));
             console.log();
         }
 

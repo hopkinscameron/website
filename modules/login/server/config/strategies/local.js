@@ -110,7 +110,6 @@ module.exports = function () {
                         return done(err);
                     }
                     else {
-                        // TODO: is there any way we don't have to do this, and instead get the updated document?
                         // set all updated values
                         user.lastLogin = updatedValues.lastLogin;
 

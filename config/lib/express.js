@@ -57,6 +57,7 @@ module.exports.initLocalVariables = function (app) {
 
     app.locals.keywords = config.app.keywords;
     app.locals.googleAnalyticsTrackingID = config.app.googleAnalyticsTrackingID;
+    app.locals.appInsightsAnalyticsTrackingID = config.app.appInsightsAnalyticsTrackingID;
     app.locals.jsFiles = config.files.client.js;
     app.locals.cssFiles = config.files.client.css;
     app.locals.livereload = config.livereload;
@@ -101,6 +102,9 @@ module.exports.initMiddleware = function (app) {
     else if (process.env.NODE_ENV === 'production') {
         app.locals.cache = 'memory';
     }
+    else if (process.env.NODE_ENV === 'uproduction') {
+        app.locals.cache = 'memory';
+    }
 
     // request body parsing middleware should be above methodOverride
     app.use(bodyParser.urlencoded({
@@ -126,12 +130,6 @@ module.exports.initViewEngine = function (app) {
     }));
     app.set('view engine', 'server.view.html');
     app.set('views', path.resolve('./'));
-
-    /* working
-    app.set('view engine', 'html');
-    app.set('views', path.resolve('./'));
-    */
-    //app.set('views', path.resolve('./modules'));
 };
 
 /**
@@ -196,7 +194,6 @@ module.exports.initHelmetHeaders = function (app) {
 module.exports.initModulesClientRoutes = function (app) {
     // setting the app router and static folder
     app.use('/', express.static(path.resolve('./public'), { maxAge: 86400000 }));
-    //app.use(express.static(path.resolve('./modules')));  
 
     // globbing static routing
     config.folders.client.forEach(function (staticPath) {
@@ -218,9 +215,6 @@ module.exports.initModulesServerPolicies = function (app) {
  * Configure the modules server routes
  */
 module.exports.initModulesServerRoutes = function (app) {
-    // define the routes     
-    //require(path.resolve('./server/routes'))(app);
-    
     // globbing routing files
     config.files.server.routes.forEach(function (routePath) {
         require(path.resolve(routePath))(app);
@@ -244,16 +238,6 @@ module.exports.initErrorRoutes = function (app) {
         // redirect to error page
         res.redirect('/server-error');
     });
-};
-
-/**
- * Configure Passport
- */
-module.exports.configurePassport = function (app) {
-    // passport config -> 
-    //require('./passport')(passport);
-    //app.use(passport.initialize());
-    //app.use(passport.session());
 };
 
 /**
@@ -303,9 +287,6 @@ module.exports.init = function (db) {
 
     // initialize error routes
     //this.initErrorRoutes(app);
-
-    // configure Passport
-    this.configurePassport(app);
 
     // configure Socket.io
     app = this.configureSocketIO(app, db);

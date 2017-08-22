@@ -31,7 +31,8 @@ blogModule.controller('BlogListController', ['$scope', '$rootScope', '$compile',
     $scope.searchText.query = $location.search().q === undefined ? '' : $location.search().q;
 
     // page threshold
-    const threshold = 10;
+    // FIXME: had this as "const" is there a way to keep this during minification
+    var threshold = 10;
     
     // set page number
     var pageNumber = $location.search().page == undefined ? 1 : parseInt($location.search().page);
@@ -151,8 +152,9 @@ blogModule.controller('BlogListController', ['$scope', '$rootScope', '$compile',
 
     // determines if the page index should show
     $scope.shouldShowPageIndex = function (index) {
-        const half = threshold / 2;
-        const numLeft = pageNumber + threshold - $scope.blog.totalPages.length;
+        // FIXME: had these as "const" is there a way to keep this during minification
+        var half = threshold / 2;
+        var numLeft = pageNumber + threshold - $scope.blog.totalPages.length;
 
         // if page is less than threshold, show
         if(index < threshold && pageNumber < threshold) {

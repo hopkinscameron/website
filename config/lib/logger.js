@@ -139,7 +139,7 @@ logger.getLogFormat = function getLogFormat() {
 
         if (process.env.NODE_ENV !== 'test') {
             console.log();
-            console.log(clc.warning('Warning: An invalid format was provided. The logger will use the default format of "' + format + '"'));
+            console.log(clc.warn('Warning: An invalid format was provided. The logger will use the default format of "' + format + '"'));
             console.log();
         }
     }

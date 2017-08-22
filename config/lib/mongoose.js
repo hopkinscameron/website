@@ -64,7 +64,7 @@ module.exports.connect = function (cb) {
 module.exports.disconnect = function (cb) {
     // disconeect from mongo
     mongoose.disconnect(function (err) {
-        console.info(clc.warning('Disconnected from MongoDB.'));
+        console.info(clc.warn('Disconnected from MongoDB.'));
         cb(err);
     });
 };

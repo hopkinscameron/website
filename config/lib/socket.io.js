@@ -44,7 +44,7 @@ module.exports = function (app, db) {
             caBundle = fs.readFileSync(path.resolve(config.secure.caBundle), 'utf8');
         } 
         catch (err) {
-            console.log(clc.warning('Warning: couldn\'t find or read caBundle file'));
+            console.log(clc.warn('Warning: couldn\'t find or read caBundle file'));
         }
 
         var options = {
@@ -82,7 +82,7 @@ module.exports = function (app, db) {
 
         // create new HTTPS Server
         server = https.createServer(options, app);
-    } 
+    }
     else {
         // create a new HTTP server
         server = http.createServer(app);

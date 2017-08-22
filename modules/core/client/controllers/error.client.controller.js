@@ -6,9 +6,10 @@ var coreModule = angular.module('core');
 // create the controller
 coreModule.controller('ErrorController', ['$scope', '$compile', '$route', 'Service', function ($scope, $compile, $route, Service) {
     // set the title/code/message of the error
-    const title = $route.current.$$route && $route.current.$$route.errorTitle ? $route.current.$$route.errorTitle : 'Page Not Found';
-    const code = $route.current.$$route && $route.current.$$route.errorCode ? $route.current.$$route.errorCode : 404;
-    const message = $route.current.$$route && $route.current.$$route.errorMessage ? $route.current.$$route.errorMessage : 'Sorry, looks like the page you were looking for does not exist.';
+    // FIXME: had these as "const" is there a way to keep this during minification
+    var title = $route.current.$$route && $route.current.$$route.errorTitle ? $route.current.$$route.errorTitle : 'Page Not Found';
+    var code = $route.current.$$route && $route.current.$$route.errorCode ? $route.current.$$route.errorCode : 404;
+    var message = $route.current.$$route && $route.current.$$route.errorMessage ? $route.current.$$route.errorMessage : 'Sorry, looks like the page you were looking for does not exist.';
     
     // initialize
     $scope.pageTitle = title + ' | ' + ApplicationConfiguration.applicationName;
@@ -45,22 +46,22 @@ coreModule.controller('ErrorController', ['$scope', '$compile', '$route', 'Servi
         // get correct error code
         switch(status) {
             case 400:
-                $scope.image = '/modules/core/client/img/errors/400.png';
+                $scope.image = '/dist/img/errors/400.png';
                 break;
             case 401:
-                $scope.image = '/modules/core/client/img/errors/401.png';
+                $scope.image = '/dist/img/errors/401.png';
                 break;
             case 403:
-                $scope.image = '/modules/core/client/img/errors/403.png';
+                $scope.image = '/dist/img/errors/403.png';
                 break;
             case 404:
-                $scope.image = '/modules/core/client/img/errors/404.png';
+                $scope.image = '/dist/img/errors/404.png';
                 break;
             case 500:
-                $scope.image = '/modules/core/client/img/errors/500.png';
+                $scope.image = '/dist/img/errors/500.png';
                 break;
             default:
-                $scope.image = '/modules/core/client/img/errors/404.png';
+                $scope.image = '/dist/img/errors/404.png';
         }
 
         // setup page

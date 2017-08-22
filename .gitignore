@@ -57,5 +57,9 @@ node_modules/
 # environment
 .env
 
-#log files
+# log files
 *.log
+
+# build files
+build/
+public/dist/

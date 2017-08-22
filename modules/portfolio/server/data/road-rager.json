@@ -1,13 +1,13 @@
 {
     "title": "Road Rager",
     "images": [
-        { "url": "/modules/portfolio/client/img/roadrager/roadrager-logo.png" },
-        { "url": "/modules/portfolio/client/img/roadrager/use-powerup2.png" },
-        { "url": "/modules/portfolio/client/img/roadrager/died.png" },
-        { "url": "/modules/portfolio/client/img/roadrager/explosion.png" },
-        { "url": "/modules/portfolio/client/img/roadrager/main-screen.png" },
-        { "url": "/modules/portfolio/client/img/roadrager/powerup.png" },
-        { "url": "/modules/portfolio/client/img/roadrager/use-powerup.png" }
+        { "url": "/dist/img/roadrager/roadrager-logo.png" },
+        { "url": "/dist/img/roadrager/use-powerup2.png" },
+        { "url": "/dist/img/roadrager/died.png" },
+        { "url": "/dist/img/roadrager/explosion.png" },
+        { "url": "/dist/img/roadrager/main-screen.png" },
+        { "url": "/dist/img/roadrager/powerup.png" },
+        { "url": "/dist/img/roadrager/use-powerup.png" }
     ],
     "overviewContent": {
         "overview": "<i>Road Rager</i> is a 2D top down racing game built using Unity3D. In this game, the player controls their choice of car and uses their skills to race through traffic without causing accidents. <br /> <br />The players game score increases based on the time they can survive racing. To help the user, there are assest the user can pick up, such as a shield and a fireball, that allows the user to use these pickups to their advantage. The fireball gives the user on shot to shoot a fireball at an enemy car to stop the car from crashing into the player, causing them to lose. The shield pickup allows the user to surround themself with a shield that protects them for a short length of time. If an enemy car comes in contact with the shield, the car is destroyed, and so it the shield, but the player is safe, for now.<br /> <br />Play on different difficulty levels to test your skills and see what high score you can achieve!",

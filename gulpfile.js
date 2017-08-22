@@ -1,65 +1,39 @@
-/*
-var gulp = require('gulp');
-var shell = require('gulp-shell')
-var sass = require('gulp-sass');
-var uglify = require('gulp-uglify');
-var watch = require('gulp-watch');
-*/
-
 /**
  * Module dependencies.
  */
-var _ = require('lodash'),
+var // lodash
+	_ = require('lodash'),
+	// the file system to read/write from/to files locally
 	fs = require('fs'),
+	// the default application assets
 	defaultAssets = require('./config/assets/default'),
+	// glob for path/pattern matching
 	glob = require('glob'),
+	// gulp for pre processing tasks
 	gulp = require('gulp'),
+	// loading all gulp plugins
 	gulpLoadPlugins = require('gulp-load-plugins'),
+	// to run a sequence of gulp tasks
 	runSequence = require('run-sequence'),
+	// loading all plugins
 	plugins = gulpLoadPlugins({
 		rename: {
-			'gulp-angular-templatecache': 'templateCache'
+			'gulp-angular-templatecache': 'templateCache',
+			'gulp-strip-comments': 'strip'
 		}
 	}),
-  	//pngquant = require('imagemin-pngquant'),
+	// pngquant for image compression
+	pngquant = require('imagemin-pngquant'),
+	// wiredep for dependence injections
 	wiredep = require('wiredep').stream,
+	// path
 	path = require('path'),
-  	endOfLine = require('os').EOL,
+	// use to know when end of the line
+	endOfLine = require('os').EOL,
+	// for deleting directories and objects
 	del = require('del'),
+	// for versioning
 	semver = require('semver');
-
-/*
-var paths = {
-	'src':['package.json'],
-	'style': {*/
-		//all: './modules/core/client/css/**/*.scss',
-		/*output: './modules/core/client/css/'
-	}
-};
-*/
-
-/*
-// task for sass file changes
-gulp.task('watch:sass', function () {
-	gulp.watch(paths.style.all, ['sass']);
-});
-
-// task to compile sass
-gulp.task('sass', function() {
-	gulp.src(paths.style.all)
-		.pipe(sass().on('error', sass.logError))
-		.pipe(gulp.dest(paths.style.output));
-});
-
-// gulp watch tasks
-gulp.task('watch', ['watch:sass',]);
-
-// the default task (called when you run 'gulp' from cli)
-gulp.task('default', ['watch', 'sass']);
-
-// 
-//gulp.task('default', ['watch', 'scripts']);
-*/
 
 // set NODE_ENV to 'development'
 gulp.task('env:dev', function () {
@@ -69,6 +43,11 @@ gulp.task('env:dev', function () {
 // set NODE_ENV to 'production'
 gulp.task('env:prod', function () {
 	process.env.NODE_ENV = 'production';
+});
+
+// set NODE_ENV to 'unsecure production'
+gulp.task('env:uprod', function () {
+	process.env.NODE_ENV = 'uproduction';
 });
 
 // copy local development environment config example
@@ -91,8 +70,6 @@ gulp.task('csslint', function () {
 	return gulp.src(defaultAssets.client.css)
 		.pipe(plugins.csslint('.csslintrc'))
 		.pipe(plugins.csslint.formatter());
-	// Don't fail CSS issues yet
-	// .pipe(plugins.csslint.failFormatter());
 });
 
 // ESLint JS linting task
@@ -114,22 +91,59 @@ gulp.task('uglify', function () {
 		defaultAssets.client.js,
 		defaultAssets.client.templates
 	);
-	del(['public/dist/*']);
+
+	// delete first then move on
+	del.sync(['public/dist/cameronhopkins*']);
 
 	return gulp.src(assets)
 		.pipe(plugins.ngAnnotate())
 		.pipe(plugins.uglify({
-			mangle: false
+			mangle: true
 		}))
 		.pipe(plugins.concat('cameronhopkins.min.js'))
 		.pipe(plugins.rev())
 		.pipe(gulp.dest('public/dist'));
 });
 
+// copy fonts to public folder
+gulp.task('copyfonts', function () {
+	// fonts directory
+	var dir ='public/dist/fonts';
+
+	// delete first then move on
+	del.sync([dir]);
+
+	// make directory for the fonts
+	fs.mkdirSync(dir);
+
+	return gulp.src(defaultAssets.client.fonts)
+		.pipe(plugins.rename({ dirname: '' }))
+		.pipe(gulp.dest(dir));
+});
+
+// copy files to public folder
+gulp.task('copyfiles', function () {
+	// fonts directory
+	var dir ='public/dist/files';
+
+	// delete first then move on
+	del.sync([dir]);
+
+	// make directory for the fonts
+	fs.mkdirSync(dir);
+
+	return gulp.src(defaultAssets.client.files)
+		.pipe(plugins.rename({ dirname: '' }))
+		.pipe(gulp.dest(dir));
+});
+
 // CSS minifying task
 gulp.task('cssmin', function () {
 	return gulp.src(defaultAssets.client.css)
-		.pipe(plugins.csso())
+		.pipe(plugins.csso({
+            restructure: false,
+            sourceMap: true
+        }))
 		.pipe(plugins.concat('cameronhopkins.min.css'))
 		.pipe(plugins.rev())
 		.pipe(gulp.dest('public/dist'));
@@ -153,24 +167,39 @@ gulp.task('less', function () {
 });
 */
 
-/*
-// imagemin task
+// imagemin task and copy to public folder
 gulp.task('imagemin', function () {
 	return gulp.src(defaultAssets.client.img)
 		.pipe(plugins.imagemin({
-		progressive: true,
-		svgoPlugins: [{ removeViewBox: false }],
-		use: [pngquant()]
+			progressive: true,
+			svgoPlugins: [{ removeViewBox: false }],
+			use: [pngquant()]
 		}))
+		.pipe(plugins.rename({ dirname: '' }))
 		.pipe(gulp.dest('public/dist/img'));
 });
-*/
+	
+// copy icons to public folder
+gulp.task('copyicons', function () {
+	// fonts directory
+	var dir ='public/dist/img';
+
+	// if the directory doesn't exists
+	if (!fs.existsSync(dir)) {
+		// make directory for the fonts
+		fs.mkdirSync(dir);
+	}
+
+	return gulp.src(defaultAssets.client.icons)
+		.pipe(plugins.rename({ dirname: '' }))
+		.pipe(gulp.dest(dir));
+});
 
 // wiredep task to default
 gulp.task('wiredep', function () {
 	return gulp.src('config/assets/default.js')
 		.pipe(wiredep({
-		ignorePath: '../../'
+			ignorePath: '../../'
 		}))
 		.pipe(gulp.dest('config/assets/'));
 });
@@ -182,28 +211,28 @@ gulp.task('wiredep:prod', function () {
 			ignorePath: '../../',
 			fileTypes: {
 				js: {
-				replace: {
-					css: function (filePath) {
-						var minFilePath = filePath.replace('.css', '.min.css');
-						var fullPath = path.join(process.cwd(), minFilePath);
-						if (!fs.existsSync(fullPath)) {
-							return '\'' + filePath + '\',';
-						} 
-						else {
-							return '\'' + minFilePath + '\',';
-						}
-					},
-					js: function (filePath) {
-						var minFilePath = filePath.replace('.js', '.min.js');
-						var fullPath = path.join(process.cwd(), minFilePath);
-						if (!fs.existsSync(fullPath)) {
-							return '\'' + filePath + '\',';
-						} 
-						else {
-							return '\'' + minFilePath + '\',';
+					replace: {
+						css: function (filePath) {
+							var minFilePath = filePath.replace('.css', '.min.css');
+							var fullPath = path.join(process.cwd(), minFilePath);
+							if (!fs.existsSync(fullPath)) {
+								return '\'' + filePath + '\',';
+							} 
+							else {
+								return '\'' + minFilePath + '\',';
+							}
+						},
+						js: function (filePath) {
+							var minFilePath = filePath.replace('.js', '.min.js');
+							var fullPath = path.join(process.cwd(), minFilePath);
+							if (!fs.existsSync(fullPath)) {
+								return '\'' + filePath + '\',';
+							} 
+							else {
+								return '\'' + minFilePath + '\',';
+							}
 						}
 					}
-				}
 				}
 			}
 		}))
@@ -213,6 +242,7 @@ gulp.task('wiredep:prod', function () {
 // Angular template cache task
 gulp.task('templatecache', function () {
 	return gulp.src(defaultAssets.client.views)
+		.pipe(plugins.strip())
 		.pipe(plugins.templateCache('templates.js', {
 			root: '/modules/',
 			module: 'core',
@@ -253,15 +283,20 @@ gulp.task('watch', function () {
 
 	// add watch rules
 	gulp.watch(defaultAssets.server.views).on('change', plugins.refresh.changed);
-	gulp.watch(defaultAssets.server.allJS, ['eslint']).on('change', plugins.refresh.changed);
-	gulp.watch(defaultAssets.client.js, ['eslint']).on('change', plugins.refresh.changed);
+	gulp.watch(defaultAssets.server.allJS).on('change', plugins.refresh.changed);
+	gulp.watch(defaultAssets.client.js).on('change', plugins.refresh.changed);
+	gulp.watch(defaultAssets.client.css).on('change', plugins.refresh.changed);
+	gulp.watch(defaultAssets.client.sass, ['sass']).on('change', plugins.refresh.changed);
+	//gulp.watch(defaultAssets.server.allJS, ['eslint']).on('change', plugins.refresh.changed);
+	//gulp.watch(defaultAssets.client.js, ['eslint']).on('change', plugins.refresh.changed);
 	//gulp.watch(defaultAssets.client.css, ['csslint']).on('change', plugins.refresh.changed);
 	//gulp.watch(defaultAssets.client.sass, ['sass', 'csslint']).on('change', plugins.refresh.changed);
 	//gulp.watch(defaultAssets.client.less, ['less', 'csslint']).on('change', plugins.refresh.changed);
 
 	// if in production, watch for templatecache
-	if (process.env.NODE_ENV === 'production') {
-		gulp.watch(defaultAssets.server.gulpConfig, ['templatecache', 'eslint']);
+	if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'uproduction') {
+		//gulp.watch(defaultAssets.server.gulpConfig, ['templatecache', 'eslint']);
+		gulp.watch(defaultAssets.server.gulpConfig, ['templatecache']);
 		gulp.watch(defaultAssets.client.views, ['templatecache']).on('change', plugins.refresh.changed);
 	} 
 	else {
@@ -269,22 +304,27 @@ gulp.task('watch', function () {
 	}
 });
 
-// Lint CSS and JavaScript files.
+// lint CSS and JavaScript files.
 gulp.task('lint', function (done) {
 	//runSequence('less', 'sass', ['csslint', 'eslint'], done);
 	//runSequence('sass', ['csslint', 'eslint'], done);
 	runSequence('sass', done);
 });
 
-// Lint project files and minify them into two production files.
+// lint project files and minify them into two production files.
+// add the custom fonts to the files
 gulp.task('build', function (done) {
-  	runSequence('env:dev', 'wiredep:prod', 'lint', ['uglify', 'cssmin'], done);
+  	runSequence('env:dev', 'wiredep:prod', 'lint', ['uglify', 'cssmin', /*'copyfonts', 'imagemin', 'copyicons', 'copyfiles'*/], done);
 });
 
 // run the project in production mode
 gulp.task('prod', function (done) {
-	//runSequence(['copyLocalEnvConfig', 'templatecache'], 'build', 'env:prod', 'lint', ['nodemon-nodebug', 'watch'], done);
-	runSequence(['copyLocalEnvConfig'], 'build', 'env:prod', 'lint', ['nodemon-nodebug', 'watch'], done);
+	runSequence(['copyLocalEnvConfig', 'templatecache'], 'build', 'env:prod', 'lint', ['nodemon-nodebug', 'watch'], done);
+});
+
+// run the project in unsecure production mode
+gulp.task('uprod', function (done) {
+	runSequence(['copyLocalEnvConfig', 'templatecache'], 'build', 'env:uprod', 'lint', ['nodemon-nodebug', 'watch'], done);
 });
 
 // run the project in development mode with node debugger enabled

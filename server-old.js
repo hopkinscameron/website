@@ -28,7 +28,7 @@ var // the server
 	path = require('path'),
 	// lodash
 	_ = require('lodash'),
-	// glob for path matching
+	// glob for path/pattern matching
 	glob = require('glob'),
 	// clc colors for console logging
 	clc = require('./config/lib/clc'),

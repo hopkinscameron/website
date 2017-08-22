@@ -41,7 +41,7 @@ module.exports.start = function start(callback) {
         // start the app by listening on <port> at <host>
         app.listen(config.port, config.host, function () {
             // create server URL
-            var server = (process.env.NODE_ENV === 'secure' ? 'https://' : 'http://') + config.host + ':' + config.port;
+            var server = (process.env.NODE_ENV === 'production' ? 'https://' : 'http://') + config.host + ':' + config.port;
 
             // logging initialization
             console.log('--');

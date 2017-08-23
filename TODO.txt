@@ -9,6 +9,7 @@ Done
 
 Pending
 - 1. Create an animation for loading the page (like discord does)
+- 2. Create the loading page
 
 Next
 - see if I can use lodash to speed up some stuff I might be doing in server stuff

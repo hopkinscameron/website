@@ -2,6 +2,13 @@
 <section ng-controller="AboutController">
     <!-- Begin Container -->
     <div class="container">
+        <!-- Begin Page Not Fully Loaded -->
+        <div class="animated animation-delay--xs fadeIn" ng-if="!pageFullyLoaded">
+            <div class="w-100 text-center">
+                <img class="img-fluid img-thumbnail" width="300" height="300" src="/dist/img/dragon.gif" spinner-load />
+            </div>
+        </div>
+        <!-- End Page Not Fully Loaded -->
         <!-- Begin Page Fully Loaded With Errors -->
         <div id="pageShow" class="collapse" ng-if="pageFullyLoaded && error.error">
             <div ng-controller="ErrorController" ng-init="init(error.title, error.status, error.message)">

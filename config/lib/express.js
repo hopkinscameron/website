@@ -65,6 +65,11 @@ module.exports.initLocalVariables = function (app) {
     app.locals.favicon = config.favicon;
     app.locals.env = process.env.NODE_ENV;
     app.locals.domain = config.domain;
+    app.locals.facebookUsername = config.socialMedia.facebook.username;
+    app.locals.instagramUsername = config.socialMedia.instagram.username;
+    app.locals.linkedinUsername = config.socialMedia.linkedin.username;
+    app.locals.twitterUsername = config.socialMedia.twitter.username;
+    app.locals.youtubeUsername = config.socialMedia.youtube.username;
 
     // passing the request url to environment locals
     app.use(function (req, res, next) {

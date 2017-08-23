@@ -9,9 +9,6 @@ var // the default environment configuration
     fs = require('fs');
 
 module.exports = {
-    app: {
-        title: defaultEnvConfig.app.title + ' - Production Enviornment'
-    },
     secure: {
         ssl: true,
         privateKey: './config/sslcerts/key.pem',

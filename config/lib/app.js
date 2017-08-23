@@ -43,11 +43,14 @@ module.exports.start = function start(callback) {
             // create server URL
             var server = (process.env.NODE_ENV === 'production' ? 'https://' : 'http://') + config.host + ':' + config.port;
 
+            // environment
+            var env = process.env.NODE_ENV.charAt(0).toUpperCase() + process.env.NODE_ENV.slice(1);
+
             // logging initialization
             console.log('--');
-            console.log(clc.success(config.app.title));
+            console.log(clc.success(config.app.title  + ' - ' + env + ' Enviornment'));
             console.log();
-            console.log(clc.success('Environment:     ' + process.env.NODE_ENV));
+            console.log(clc.success('Environment:     ' + env));
             console.log(clc.success('Server:          ' + server));
             console.log(clc.success('Database:        ' + config.db.uri));
             console.log(clc.success('App version:     ' + config.personalWebsite.version));            

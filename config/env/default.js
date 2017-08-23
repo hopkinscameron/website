@@ -70,5 +70,22 @@ module.exports = {
             minPhraseLength: 20,
             minOptionalTestsToPass: 4
         }
+    },
+    socialMedia: {
+        facebook: {
+            username: process.env.FACEBOOK_USERNAME || 'FACEBOOK_USERNAME'
+        },
+        instagram: {
+            username: process.env.INSTAGRAM_USERNAME || 'INSTAGRAM_USERNAME'
+        },
+        linkedin: {
+            username: process.env.LINKEDIN_USERNAME || 'LINKEDIN_USERNAME'
+        },
+        twitter: {
+            username: process.env.TWITTER_USERNAME || 'TWITTER_USERNAME'
+        },
+        youtube: {
+            channel: process.env.YOUTUBE_USERNAME || 'YOUTUBE_USERNAME'
+        }
     }
 };

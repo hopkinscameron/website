@@ -32,6 +32,9 @@ let transporter = nodemailer.createTransport({
  * Render the main application page
  */
 exports.renderIndex = function (req, res) {
+    // get the index file path
+    var indexFilePath = process.env.NODE_ENV === 'uproduction' || process.env.NODE_ENV === 'production' ? 'modules/core/server/index/index' : 'modules/core/server/views/index'
+
     // define the safe user object
     var safeUserObject = null;
 
@@ -44,7 +47,7 @@ exports.renderIndex = function (req, res) {
     }
 
     // render the main index
-    res.render('modules/core/server/views/index', {
+    res.render(indexFilePath, {
         user: JSON.stringify(safeUserObject),
         sharedConfig: JSON.stringify(config.shared)
     });

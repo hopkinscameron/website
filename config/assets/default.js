@@ -78,6 +78,10 @@ module.exports = {
         sockets: 'modules/*/server/sockets/**/*.js',
         config: ['modules/*/server/config/*.js'],
         policies: 'modules/*/server/policies/*.js',
-        views: ['modules/*/server/views/*.html']
+        views: ['modules/*/server/views/*.html'],
+        index: [
+            'modules/core/server/views/index.server.view.html',
+            'modules/core/server/views/layout.server.view.html'
+        ]
     }
 };

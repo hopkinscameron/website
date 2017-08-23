@@ -46,22 +46,22 @@ coreModule.controller('ErrorController', ['$scope', '$compile', '$route', 'Servi
         // get correct error code
         switch(status) {
             case 400:
-                $scope.image = '/dist/img/errors/400.png';
+                $scope.image = '/dist/img/400.png';
                 break;
             case 401:
-                $scope.image = '/dist/img/errors/401.png';
+                $scope.image = '/dist/img/401.png';
                 break;
             case 403:
-                $scope.image = '/dist/img/errors/403.png';
+                $scope.image = '/dist/img/403.png';
                 break;
             case 404:
-                $scope.image = '/dist/img/errors/404.png';
+                $scope.image = '/dist/img/404.png';
                 break;
             case 500:
-                $scope.image = '/dist/img/errors/500.png';
+                $scope.image = '/dist/img/500.png';
                 break;
             default:
-                $scope.image = '/dist/img/errors/404.png';
+                $scope.image = '/dist/img/404.png';
         }
 
         // setup page

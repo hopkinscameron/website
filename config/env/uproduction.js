@@ -9,9 +9,6 @@ var // the default environment configuration
     fs = require('fs');
 
 module.exports = {
-    app: {
-        title: defaultEnvConfig.app.title + ' - UProduction Enviornment'
-    },
     db: {
         uri: process.env.MONGODB || 'mongodb://localhost:27017/personal_website',
         options: {

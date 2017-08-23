@@ -19,7 +19,8 @@ var // lodash
 	plugins = gulpLoadPlugins({
 		rename: {
 			'gulp-angular-templatecache': 'templateCache',
-			'gulp-strip-comments': 'strip'
+			'gulp-strip-comments': 'strip',
+			'gulp-htmlmin': 'minifyHTML'
 		}
 	}),
 	// pngquant for image compression
@@ -63,6 +64,33 @@ gulp.task('copyLocalEnvConfig', function () {
 	return gulp.src(src)
 		.pipe(plugins.rename(renameTo))
 		.pipe(gulp.dest('config/env'));
+});
+
+// copy copy over server index files
+gulp.task('copyindexviews', function () {
+	// index directory
+	var dir ='modules/core/server/index';
+
+	// delete first then move on
+	del.sync([dir]);
+
+	// make directory for the index files
+	fs.mkdirSync(dir);
+
+	return gulp.src(defaultAssets.server.index)
+		.pipe(plugins.minifyHTML({
+			collapseBooleanAttributes: true,
+			collapseInlineTagWhitespace: true,
+			collapseWhitespace: true,
+			ignoreCustomFragments: [/{{([^{}]+)}}/],
+			minifyCSS: true,
+			minifyJS: true,
+			preserveLineBreaks: false,
+			processScripts: ['text/html', 'text/ng-template', 'text/x-handlebars-template'],
+			removeComments: true,
+			removeEmptyAttributes: true
+		}))
+		.pipe(gulp.dest(dir));
 });
 
 // CSS linting task
@@ -114,7 +142,7 @@ gulp.task('copyfonts', function () {
 	del.sync([dir]);
 
 	// make directory for the fonts
-	fs.mkdirSync(dir);
+	//fs.mkdirSync(dir);
 
 	return gulp.src(defaultAssets.client.fonts)
 		.pipe(plugins.rename({ dirname: '' }))
@@ -123,30 +151,18 @@ gulp.task('copyfonts', function () {
 
 // copy files to public folder
 gulp.task('copyfiles', function () {
-	// fonts directory
+	// files directory
 	var dir ='public/dist/files';
 
 	// delete first then move on
 	del.sync([dir]);
 
-	// make directory for the fonts
-	fs.mkdirSync(dir);
+	// make directory for the files
+	//fs.mkdirSync(dir);
 
 	return gulp.src(defaultAssets.client.files)
 		.pipe(plugins.rename({ dirname: '' }))
 		.pipe(gulp.dest(dir));
-});
-
-// CSS minifying task
-gulp.task('cssmin', function () {
-	return gulp.src(defaultAssets.client.css)
-		.pipe(plugins.csso({
-            restructure: false,
-            sourceMap: true
-        }))
-		.pipe(plugins.concat('cameronhopkins.min.css'))
-		.pipe(plugins.rev())
-		.pipe(gulp.dest('public/dist'));
 });
 
 // SASS task
@@ -167,6 +183,18 @@ gulp.task('less', function () {
 });
 */
 
+// CSS minifying task
+gulp.task('cssmin', function () {
+	return gulp.src(defaultAssets.client.css)
+		.pipe(plugins.csso({
+            restructure: false,
+            sourceMap: true
+        }))
+		.pipe(plugins.concat('cameronhopkins.min.css'))
+		.pipe(plugins.rev())
+		.pipe(gulp.dest('public/dist'));
+});
+
 // imagemin task and copy to public folder
 gulp.task('imagemin', function () {
 	return gulp.src(defaultAssets.client.img)
@@ -179,15 +207,31 @@ gulp.task('imagemin', function () {
 		.pipe(gulp.dest('public/dist/img'));
 });
 	
+// copy images to public folder
+gulp.task('copyimages', function () {
+	// images directory
+	var dir ='public/dist/img';
+
+	// delete first then move on
+	del.sync([dir]);
+
+	// make directory for the images
+	//fs.mkdirSync(dir);
+
+	return gulp.src(defaultAssets.client.img)
+		.pipe(plugins.rename({ dirname: '' }))
+		.pipe(gulp.dest(dir));
+});
+
 // copy icons to public folder
 gulp.task('copyicons', function () {
-	// fonts directory
+	// images directory
 	var dir ='public/dist/img';
 
 	// if the directory doesn't exists
 	if (!fs.existsSync(dir)) {
-		// make directory for the fonts
-		fs.mkdirSync(dir);
+		// make directory for the icons
+		//fs.mkdirSync(dir);
 	}
 
 	return gulp.src(defaultAssets.client.icons)
@@ -314,7 +358,12 @@ gulp.task('lint', function (done) {
 // lint project files and minify them into two production files.
 // add the custom fonts to the files
 gulp.task('build', function (done) {
-  	runSequence('env:dev', 'wiredep:prod', 'lint', ['uglify', 'cssmin', /*'copyfonts', 'imagemin', 'copyicons', 'copyfiles'*/], done);
+  	runSequence('env:dev', 'copyindexviews', 'wiredep:prod', 'lint', ['uglify', 'cssmin'/*, 'copyfonts', 'copyfiles'*/]/*, 'imagemin', 'copyicons'*/, done);
+});
+
+// run the build:dev version
+gulp.task('build:dev', function (done) {
+  	runSequence(['copyfonts', 'copyfiles'], 'copyimages', 'copyicons', done);
 });
 
 // run the project in production mode
@@ -330,5 +379,5 @@ gulp.task('uprod', function (done) {
 // run the project in development mode with node debugger enabled
 gulp.task('default', function (done) {
 	//runSequence('env:dev', ['copyLocalEnvConfig'], 'lint', ['nodemon', 'watch'], done);
-	runSequence('env:dev', ['copyLocalEnvConfig'], 'sass', ['nodemon', 'watch'], done);
+	runSequence('env:dev', ['copyLocalEnvConfig'], 'sass', 'build:dev', ['nodemon', 'watch'], done);
 });

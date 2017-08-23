@@ -8,19 +8,44 @@
         <base href="/">
         <!-- End Base href -->
 
+        <!-- Begin Page Title -->
+        <title id="pageTitle"></title>
+        <!-- Begin Page Title -->
+
+        <!-- Begin Meta -->
         <meta content="IE=edge" http-equiv="X-UA-Compatible">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <title id="pageTitle"></title>
-
+        
         <meta name="description" content="{{description}}">
         <meta name="fragment" content="!">
 
-        <!-- Begin Apple META -->
+        <!-- Begin Apple Meta -->
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <!-- End Apple META -->
+        <!-- End Apple Meta -->
+
+        <!-- Begin Facebook Meta -->
+        <meta property="fb:app_id" content="{{facebookAppId}}">
+        <!-- End Facebook Meta -->
+
+        <!-- Begin Open General Meta -->
+        <meta property="og:site_name" content="{{title}}">
+        <meta property="og:title" content="{{title}}">
+        <meta property="og:description" content="{{description}}">
+        <meta property="og:url" content="{{url}}">
+        <meta property="og:image" content="{{logo}}">
+        <meta property="og:type" content="website">
+        <!-- End Open General Meta -->
+
+        <!-- Twitter Meta -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="{{twitterUsername}}">
+        <meta name="twitter:title" content="{{title}}">
+        <meta name="twitter:description" content="{{description}}">
+        <meta name="twitter:image" content="{{logo}}">
+        <!-- End Twitter Meta -->
+        <!-- End Meta -->
 
         <!-- Begin Icons -->
         <!-- for FF, Chrome, Opera -->
@@ -72,7 +97,7 @@
         {{{block "content"}}}
 
         <!-- Begin Footer -->
-        <div id="footer" ng-include="'/modules/footer/client/views/footer.client.view.html'"></div>
+        <div ng-include="'/modules/footer/client/views/footer.client.view.html'"></div>
         <!-- End Footer -->
 
         <!-- Begin No Script For Alerts -->

@@ -1,16 +1,14 @@
 ﻿Future
 - Create an admin page to add a new project (sub Portfolio)
 - Ability to updload images for projects and blogs
-- Have an animation for loading the page (like discord does)
 
 All 
 
 Done
 
+
 Pending
-- 1. strip comments from server html
-- 2. make sure all links work properly
-- 3. make sure images work properly on dev (basically if there was no public file what would happen? maybe for dev, you still copy over images but don't compress)
+- 1. Create an animation for loading the page (like discord does)
 
 Next
 - see if I can use lodash to speed up some stuff I might be doing in server stuff
@@ -36,6 +34,8 @@ db.updateUser("<username>", { roles : [ { role: "dbOwner", db: "<db>" } ], pwd: 
 ./mongo --port 27017 -u "<username>" -p "<password>" --authenticationDatabase "<db>"
 db.changeUserPassword("<username>", "<newpassword>")
 db.updateUser("<username>", { roles : [ { role: "dbOwner", db: "<db>" } ], pwd: "<password>"})
+./mongod --auth --port 27017 --dbpath /data/db1
+./mongod --auth --port 27017
 
 
 in bower.json in dependencies

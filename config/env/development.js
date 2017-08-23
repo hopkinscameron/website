@@ -8,9 +8,6 @@ var // the default environment configuration
 
 module.exports = {
     livereload: true,
-    app: {
-        title: defaultEnvConfig.app.title + ' - Development Enviornment'
-    },
     db: {
         uri: process.env.MONGODB || 'mongodb://localhost:27017/personal_website',
         options: {

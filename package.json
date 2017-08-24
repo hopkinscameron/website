@@ -19,7 +19,8 @@
     "update": "npm update && npm prune",
     "clean": "rm -rf node_modules/",
     "reinstall": "npm cache clean && npm run clean && npm install",
-    "start": "NODE_ENV=uproduction node server.js"
+    "start": "node server.js",
+    "uprod": "NODE_ENV=uproduction"
   },
   "dependencies": {
     "acl": "^0.4.10",

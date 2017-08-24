@@ -4,7 +4,7 @@
 var resumeModule = angular.module('resume');
 
 // create the controller
-resumeModule.controller('ResumeController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'Service', 'ResumeFactory', function ($scope, $rootScope, $compile, $location, $timeout, Service, ResumeFactory) {
+resumeModule.controller('ResumeController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'ngDialog', 'Service', 'ResumeFactory', function ($scope, $rootScope, $compile, $location, $timeout, ngDialog, Service, ResumeFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
 
@@ -24,6 +24,17 @@ resumeModule.controller('ResumeController', ['$scope', '$rootScope', '$compile',
 
     // determines if the page is fully loaded
     $scope.pageFullyLoaded = false;
+
+    // show loading dialog
+    var loadingDialog = ngDialog.open({
+        template: '/modules/dialog/client/views/dialog-loading.client.view.html',
+        controller: 'DialogLoadingController',
+        className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
+        showClose: false,
+        closeByEscape: false,
+        closeByDocument: false,
+        data: undefined
+    });
 
     // check if header/footer was initialized
     if($rootScope.$root.showHeader === undefined || $rootScope.$root.showFooter === undefined) {
@@ -64,18 +75,6 @@ resumeModule.controller('ResumeController', ['$scope', '$rootScope', '$compile',
         }
     });
 
-    // on loading http intercepter start
-    $scope.start = function() {
-        // start loader
-        cfpLoadingBar.start();
-    };
-
-    // on loading http intercepter complete
-    $scope.complete = function () {
-        // complete loader
-        cfpLoadingBar.complete();
-    };
-
     // initialize page
     function initializePage() {
         // show the header if not shown     
@@ -90,10 +89,11 @@ resumeModule.controller('ResumeController', ['$scope', '$rootScope', '$compile',
 
         // if page hasn't been requested yet
         if(!pageRequested) {
+            // set page has been requested
             pageRequested = true;
 
-            // get page data
-            getPageData();
+            // show the page after a timeout
+            $timeout(getPageData, $rootScope.$root.getPageDataTimeout);
         }
     };
     
@@ -155,11 +155,17 @@ resumeModule.controller('ResumeController', ['$scope', '$rootScope', '$compile',
         titleDOM.setAttribute('ng-bind-html', title);
         $compile(titleDOM)($scope);
 
-        // set page fully loaded
-        $scope.pageFullyLoaded = true;
+        // close the loading dialog
+        loadingDialog.close();
+        
+        // on completion of close
+        loadingDialog.closePromise.then(function (data) {
+            // set page fully loaded
+            $scope.pageFullyLoaded = true;
 
-        // show the page after a timeout
-        $timeout(showPage, $rootScope.$root.showPageTimeout);
+            // show the page after a timeout
+            $timeout(showPage, $rootScope.$root.showPageTimeout);
+        });
     };
 
     // shows the page

@@ -177,6 +177,9 @@ headerModule.controller('HeaderController', ['$scope', '$rootScope', '$location'
         // set animations
         $rootScope.$root.animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
 
+        // set obtaining page data timeout (used for a slight animation)
+        $rootScope.$root.getPageDataTimeout = 1500;
+
         // set show page timeout (timeout before a page shows (used for collapsing body))
         $rootScope.$root.showPageTimeout = 500;
         

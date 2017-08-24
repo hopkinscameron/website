@@ -147,7 +147,7 @@ exports.sendEmail = function (req, res) {
                 };
 
                 // return success
-                res.status(200).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) + " Your email has been sent!" });
+                res.status(200).send({ 'd': { title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) + " Your email has been sent!" } });
             }
         });		
     }

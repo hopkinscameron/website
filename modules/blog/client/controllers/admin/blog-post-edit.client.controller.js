@@ -83,6 +83,17 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
     // determines if the page is fully loaded
     $scope.pageFullyLoaded = false;
 
+    // show loading dialog
+    var loadingDialog = ngDialog.open({
+        template: '/modules/dialog/client/views/dialog-loading.client.view.html',
+        controller: 'DialogLoadingController',
+        className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
+        showClose: false,
+        closeByEscape: false,
+        closeByDocument: false,
+        data: undefined
+    });
+
     // check if header/footer was initialized
     if($rootScope.$root.showHeader === undefined || $rootScope.$root.showFooter === undefined) {
         // refresh header
@@ -287,7 +298,7 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
     $scope.discardDraft = function () {
         // show dialog
 		var discardDraftDialog = ngDialog.open({
-			template: './dialog/client/views/dialog-warning.client.view.html',
+			template: '/modules/dialog/client/views/dialog-warning.client.view.html',
 			controller: 'DialogDiscardBlogDraftController',
 			className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
 			showClose: false,
@@ -310,7 +321,7 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
     $scope.deleteBlog = function () {
         // show dialog
 		var deleteBlogDialog = ngDialog.open({
-			template: './dialog/client/views/dialog-warning.client.view.html',
+			template: '/modules/dialog/client/views/dialog-warning.client.view.html',
 			controller: 'DialogDeleteBlogController',
 			className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
 			showClose: false,
@@ -343,10 +354,11 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
 
         // if page hasn't been requested yet
         if(!pageRequested) {
+            // set page has been requested
             pageRequested = true;
 
-            // get page data
-            getPageData();
+            // show the page after a timeout
+            $timeout(getPageData, $rootScope.$root.getPageDataTimeout);
         }
     };
     
@@ -362,7 +374,7 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
                 $scope.pageTitle = responseBP.title + ' | ' + ApplicationConfiguration.applicationName;
                 
                 // get the draft if it exists
-                BlogFactory.getBlogDraft(blogPostId).then(function (responseBD) {
+                BlogFactory.getEditableBlogDraft(blogPostId).then(function (responseBD) {
                     // if returned a valid response
                     if (!responseBD.error) {
                         // populate form with draft values
@@ -430,11 +442,17 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
         titleDOM.setAttribute('ng-bind-html', title);
         $compile(titleDOM)($scope);
 
-        // set page fully loaded
-        $scope.pageFullyLoaded = true;
+        // close the loading dialog
+        loadingDialog.close();
+        
+        // on completion of close
+        loadingDialog.closePromise.then(function (data) {
+            // set page fully loaded
+            $scope.pageFullyLoaded = true;
 
-        // show the page after a timeout
-        $timeout(showPage, $rootScope.$root.showPageTimeout);
+            // show the page after a timeout
+            $timeout(showPage, $rootScope.$root.showPageTimeout);
+        });
     };
 
     // shows the page
@@ -481,7 +499,7 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
 
                 // show dialog
                 var successfulDiscardDialog = ngDialog.open({
-                    template: './dialog/client/views/dialog-success.client.view.html',
+                    template: '/modules/dialog/client/views/dialog-success.client.view.html',
                     controller: 'DialogSuccessController',
                     className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
                     data: { 'successHeader': header, 'successBody': body }
@@ -516,7 +534,7 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
 
                 // show dialog
                 var successfulDeleteDialog = ngDialog.open({
-                    template: './dialog/client/views/dialog-success.client.view.html',
+                    template: '/modules/dialog/client/views/dialog-success.client.view.html',
                     controller: 'DialogSuccessController',
                     className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
                     data: { 'successHeader': header, 'successBody': body }
@@ -547,7 +565,7 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
 
         // show dialog
         ngDialog.open({
-            template: './dialog/client/views/dialog-success.client.view.html',
+            template: '/modules/dialog/client/views/dialog-success.client.view.html',
             controller: 'DialogSuccessController',
             className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'successHeader': header, 'successBody': body }
@@ -562,7 +580,7 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
 
         // show dialog
         var successfulPostDialog = ngDialog.open({
-            template: './dialog/client/views/dialog-success.client.view.html',
+            template: '/modules/dialog/client/views/dialog-success.client.view.html',
             controller: 'DialogSuccessfulPostController',
             className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'successHeader': header, 'successBody': body }
@@ -586,7 +604,7 @@ blogModule.controller('BlogPostEditController', ['$scope', '$rootScope', '$compi
 
         // show dialog
         ngDialog.open({
-            template: './dialog/client/views/dialog-error.client.view.html',
+            template: '/modules/dialog/client/views/dialog-error.client.view.html',
             controller: 'DialogErrorController',
             className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
             data: { 'errorHeader': header, 'errorBody': body }

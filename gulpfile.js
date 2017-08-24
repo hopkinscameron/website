@@ -126,10 +126,10 @@ gulp.task('uglify', function () {
 	return gulp.src(assets)
 		.pipe(plugins.ngAnnotate())
 		.pipe(plugins.uglify({
-			mangle: true
+			mangle: false
 		}))
 		.pipe(plugins.concat('cameronhopkins.min.js'))
-		.pipe(plugins.rev())
+		//.pipe(plugins.rev())
 		.pipe(gulp.dest('public/dist'));
 });
 
@@ -191,7 +191,7 @@ gulp.task('cssmin', function () {
             sourceMap: true
         }))
 		.pipe(plugins.concat('cameronhopkins.min.css'))
-		.pipe(plugins.rev())
+		//.pipe(plugins.rev())
 		.pipe(gulp.dest('public/dist'));
 });
 
@@ -290,9 +290,9 @@ gulp.task('templatecache', function () {
 		.pipe(plugins.templateCache('templates.js', {
 			root: '/modules/',
 			module: 'core',
-			templateHeader: '(function () {' + endOfLine + '	\'use strict\';' + endOfLine + endOfLine + '	angular' + endOfLine + '		.module(\'<%= module %>\'<%= standalone %>)' + endOfLine + '		.run(templates);' + endOfLine + endOfLine + '	templates.$inject = [\'$templateCache\'];' + endOfLine + endOfLine + '	function templates($templateCache) {' + endOfLine,
-			templateBody: '		$templateCache.put(\'<%= url %>\', \'<%= contents %>\');',
-			templateFooter: '	}' + endOfLine + '})();' + endOfLine
+			templateHeader: '\'use strict\';' + endOfLine + endOfLine + 'var coreModule = angular.module(\'<%= module %>\'<%= standalone %>);' + endOfLine + endOfLine +  'coreModule.run([\'$templateCache\', function($templateCache) {' + endOfLine,
+			templateBody: '    $templateCache.put(\'<%= url %>\', \'<%= contents %>\');',
+			templateFooter: endOfLine + '}]);'
 		}))
 		.pipe(gulp.dest('build'));
 });
@@ -331,17 +331,21 @@ gulp.task('watch', function () {
 	gulp.watch(defaultAssets.client.js).on('change', plugins.refresh.changed);
 	gulp.watch(defaultAssets.client.css).on('change', plugins.refresh.changed);
 	gulp.watch(defaultAssets.client.sass, ['sass']).on('change', plugins.refresh.changed);
-	//gulp.watch(defaultAssets.server.allJS, ['eslint']).on('change', plugins.refresh.changed);
-	//gulp.watch(defaultAssets.client.js, ['eslint']).on('change', plugins.refresh.changed);
-	//gulp.watch(defaultAssets.client.css, ['csslint']).on('change', plugins.refresh.changed);
-	//gulp.watch(defaultAssets.client.sass, ['sass', 'csslint']).on('change', plugins.refresh.changed);
-	//gulp.watch(defaultAssets.client.less, ['less', 'csslint']).on('change', plugins.refresh.changed);
+	
+	// MEAN
+	/*
+	gulp.watch(defaultAssets.server.allJS, ['eslint']).on('change', plugins.refresh.changed);
+	gulp.watch(defaultAssets.client.js, ['eslint']).on('change', plugins.refresh.changed);
+	gulp.watch(defaultAssets.client.css, ['csslint']).on('change', plugins.refresh.changed);
+	gulp.watch(defaultAssets.client.sass, ['sass', 'csslint']).on('change', plugins.refresh.changed);
+	gulp.watch(defaultAssets.client.less, ['less', 'csslint']).on('change', plugins.refresh.changed);
+	*/
 
 	// if in production, watch for templatecache
 	if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'uproduction') {
 		//gulp.watch(defaultAssets.server.gulpConfig, ['templatecache', 'eslint']);
 		gulp.watch(defaultAssets.server.gulpConfig, ['templatecache']);
-		gulp.watch(defaultAssets.client.views, ['templatecache']).on('change', plugins.refresh.changed);
+		gulp.watch(defaultAssets.client.views, ['templatecache', 'uglify', 'cssmin']).on('change', plugins.refresh.changed);
 	} 
 	else {
 		gulp.watch(defaultAssets.client.views).on('change', plugins.refresh.changed);

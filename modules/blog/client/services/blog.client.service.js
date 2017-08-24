@@ -243,6 +243,27 @@ blogServiceModule.factory('BlogFactory', ['$http', '$location', function ($http,
         });
     };
 
+    // gets editable blog draft
+    factory.getEditableBlogDraft = function (blogPostId) {
+        // set the endpoint
+        var endpoint = appPath + '/blogDrafts/' + blogPostId + '?editing=true';
+
+        // create request
+        var req = {
+            method: 'GET',
+            url: endpoint,
+            data: undefined
+        };
+
+        // send request
+        return $http(req).then(function (response) {
+            return response.data.d;
+        })
+        .catch(function (response) {
+            return { 'error': true, 'title': response.data.title, 'status': response.status, 'message': response.data.message };
+        });
+    };
+
     // saves blog draft
     factory.saveBlogDraft = function (blogDraftData) {
         // set the endpoint

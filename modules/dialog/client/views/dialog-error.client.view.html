@@ -1,29 +1,27 @@
 ﻿<!-- Begin Error Dialog -->
 <section>
-    <form class="">
-        <!-- Begin Title Container -->
-        <div class="container">
-            <!-- Begin Title -->
-            <h3 class="">{{ngDialogData.errorHeader}}</h3>
-            <!-- End Title -->
-        </div>
-        <!-- End Title Container -->
-        <!-- Begin Body Container -->
-        <div class="container">
-            <!-- Begin Body Text -->
-            <p>{{ngDialogData.errorBody}}</p>
-            <!-- End Body Text -->
-            <!-- Begin Error Controller -->
-            <div class="row align-items-center text-center" ng-if="DialogErrorController">
-                <!-- Begin Okay Button -->
-                <div class="col text-center">
-                    <button type="button" class="btn btn-theme-primary" ng-click="okay()">Okay</button>
-                </div>
-                <!-- Begin Okay Button -->
+    <!-- Begin Title Container -->
+    <div class="container">
+        <!-- Begin Title -->
+        <h3 class="">{{ngDialogData.errorHeader}}</h3>
+        <!-- End Title -->
+    </div>
+    <!-- End Title Container -->
+    <!-- Begin Body Container -->
+    <div class="container">
+        <!-- Begin Body Text -->
+        <p>{{ngDialogData.errorBody}}</p>
+        <!-- End Body Text -->
+        <!-- Begin Error Controller -->
+        <div class="row align-items-center text-center" ng-if="DialogErrorController">
+            <!-- Begin Okay Button -->
+            <div class="col text-center">
+                <button type="button" class="btn btn-theme-primary" ng-click="okay()">Okay</button>
             </div>
-            <!-- End Error Controller -->
+            <!-- Begin Okay Button -->
         </div>
-        <!-- End Body Container -->
-    </form>
+        <!-- End Error Controller -->
+    </div>
+    <!-- End Body Container -->
 </section>
 <!-- End Error Dialog -->

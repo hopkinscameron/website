@@ -265,7 +265,7 @@ exports.deleteBlog = function (req, res) {
                 }
 
                 // return success
-                res.status(200).send({ title: errorHandler.getErrorTitle({ code: 200 }), message: errorHandler.getGenericErrorMessage({ code: 200 }) + " You have deleted the blog successfully!" });
+                res.status(200).send({ 'd': { title: errorHandler.getErrorTitle({ code: 200 }), message: errorHandler.getGenericErrorMessage({ code: 200 }) + " You have deleted the blog successfully!" } });
             });
         }
     });
@@ -655,7 +655,7 @@ exports.deleteDraft = function (req, res) {
         }
         else {
             // return success
-            res.status(200).send({ title: errorHandler.getErrorTitle({ code: 200 }), message: errorHandler.getGenericErrorMessage({ code: 200 }) + " You have discarded the saved post successfully!" });
+            res.status(200).send({ 'd': { title: errorHandler.getErrorTitle({ code: 200 }), message: errorHandler.getGenericErrorMessage({ code: 200 }) + " You have discarded the saved post successfully!" } });
         }
     });
 };
@@ -678,8 +678,15 @@ exports.draftBlogByID = function (req, res, next, id) {
             next();
         }
         else {
-            // send not found
-            res.status(404).send({ title: errorHandler.getErrorTitle({ code: 404 }), message: errorHandler.getGenericErrorMessage({ code: 404 }) + " Blog draft not found." });
+            // if editing an already posted blog, send back empty response
+            if(req.query.editing == 'true') {
+                // send not found
+                res.status(200).send({ 'd': { error: true, title: errorHandler.getErrorTitle({ code: 404 }), message: errorHandler.getGenericErrorMessage({ code: 404 }) + " Blog draft not found." } });
+            }
+            else {
+                // send not found
+                res.status(404).send({ title: errorHandler.getErrorTitle({ code: 404 }), message: errorHandler.getGenericErrorMessage({ code: 404 }) + " Blog draft not found." });
+            }
         }
     });
 };

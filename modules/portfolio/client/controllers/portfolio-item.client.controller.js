@@ -4,7 +4,7 @@
 var portfolioModule = angular.module('portfolio');
 
 // create the controller
-portfolioModule.controller('PortfolioItemController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$routeParams', '$sce', '$timeout', 'Service', 'PortfolioFactory', function ($scope, $rootScope, $compile, $location, $window, $routeParams, $sce, $timeout, Service, PortfolioFactory) {
+portfolioModule.controller('PortfolioItemController', ['$scope', '$rootScope', '$compile', '$location', '$window', '$routeParams', '$sce', '$timeout', 'ngDialog', 'Service', 'PortfolioFactory', function ($scope, $rootScope, $compile, $location, $window, $routeParams, $sce, $timeout, ngDialog, Service, PortfolioFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
 
@@ -42,6 +42,17 @@ portfolioModule.controller('PortfolioItemController', ['$scope', '$rootScope', '
 
     // determines if the page is fully loaded
     $scope.pageFullyLoaded = false;
+
+    // show loading dialog
+    var loadingDialog = ngDialog.open({
+        template: '/modules/dialog/client/views/dialog-loading.client.view.html',
+        controller: 'DialogLoadingController',
+        className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
+        showClose: false,
+        closeByEscape: false,
+        closeByDocument: false,
+        data: undefined
+    });
 
     // check if header/footer was initialized
     if($rootScope.$root.showHeader === undefined || $rootScope.$root.showFooter === undefined) {
@@ -166,10 +177,11 @@ portfolioModule.controller('PortfolioItemController', ['$scope', '$rootScope', '
 
         // if page hasn't been requested yet
         if(!pageRequested) {
+            // set page has been requested
             pageRequested = true;
 
-            // get page data
-            getPageData();
+            // show the page after a timeout
+            $timeout(getPageData, $rootScope.$root.getPageDataTimeout);
         }
     };
     
@@ -317,11 +329,17 @@ portfolioModule.controller('PortfolioItemController', ['$scope', '$rootScope', '
         titleDOM.setAttribute('ng-bind-html', title);
         $compile(titleDOM)($scope);
 
-        // set page fully loaded
-        $scope.pageFullyLoaded = true;
+        // close the loading dialog
+        loadingDialog.close();
+        
+        // on completion of close
+        loadingDialog.closePromise.then(function (data) {
+            // set page fully loaded
+            $scope.pageFullyLoaded = true;
 
-        // show the page after a timeout
-        $timeout(showPage, $rootScope.$root.showPageTimeout);
+            // show the page after a timeout
+            $timeout(showPage, $rootScope.$root.showPageTimeout);
+        });
     };
 
     // shows the page

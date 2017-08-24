@@ -4,7 +4,7 @@
 var blogModule = angular.module('blog');
 
 // create the controller
-blogModule.controller('BlogListController', ['$scope', '$rootScope', '$compile', '$window', '$location', '$timeout', 'Service', 'BlogFactory', function ($scope, $rootScope, $compile, $window, $location, $timeout, Service, BlogFactory) {
+blogModule.controller('BlogListController', ['$scope', '$rootScope', '$compile', '$window', '$location', '$timeout', 'ngDialog', 'Service', 'BlogFactory', function ($scope, $rootScope, $compile, $window, $location, $timeout, ngDialog, Service, BlogFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
 
@@ -39,6 +39,17 @@ blogModule.controller('BlogListController', ['$scope', '$rootScope', '$compile',
 
     // determines if the page is fully loaded
     $scope.pageFullyLoaded = false;
+
+    // show loading dialog
+    var loadingDialog = ngDialog.open({
+        template: '/modules/dialog/client/views/dialog-loading.client.view.html',
+        controller: 'DialogLoadingController',
+        className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
+        showClose: false,
+        closeByEscape: false,
+        closeByDocument: false,
+        data: undefined
+    });
 
     // check if header/footer was initialized
     if($rootScope.$root.showHeader === undefined || $rootScope.$root.showFooter === undefined) {
@@ -191,10 +202,11 @@ blogModule.controller('BlogListController', ['$scope', '$rootScope', '$compile',
 
         // if page hasn't been requested yet
         if(!pageRequested) {
+            // set page has been requested
             pageRequested = true;
 
-            // get page data
-            getPageData($scope.searchText.query, $location.search().page);
+            // show the page after a timeout
+            $timeout(function() { getPageData($scope.searchText.query, $location.search().page) }, $rootScope.$root.getPageDataTimeout); 
         }
     };
 
@@ -257,6 +269,21 @@ blogModule.controller('BlogListController', ['$scope', '$rootScope', '$compile',
         titleDOM.setAttribute('ng-bind-html', title);
         $compile(titleDOM)($scope);
 
+        // close the loading dialog
+        loadingDialog.close();
+        
+        // on completion of close
+        loadingDialog.closePromise.then(function (data) {
+            // set page fully loaded
+            $scope.pageFullyLoaded = true;
+
+            // show the page after a timeout
+            $timeout(showPage, $rootScope.$root.showPageTimeout);
+        });
+    };
+
+    // shows the page
+    function showPage() {
         // set page fully loaded
         $scope.pageFullyLoaded = true;
 

@@ -141,6 +141,17 @@ body {
   background-color: #29a8d6;
   background-image: url(""); }
 
+body::-webkit-scrollbar {
+  width: 12px;
+  background-color: transparent; }
+
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #2C3035; }
+
+body::-webkit-scrollbar-thumb {
+  background-color: #29a8d6; }
+
 /* End Custom Body Styles */
 /* Begin Custom Box Shadows */
 .box-shadow--xs {
@@ -175,10 +186,12 @@ body {
   border-color: #29a8d6; }
   .btn-theme-primary:active {
     background-color: #2186ab;
-    border-color: #2186ab; }
+    border-color: #2186ab;
+    color: #FFFFFF; }
   .btn-theme-primary:focus, .btn-theme-primary:hover {
     background-color: #2186ab;
-    background-position: 0 -15px; }
+    background-position: 0 -15px;
+    color: #FFFFFF; }
 
 /* End Custom Buttons */
 /* Begin Custom Cards */
@@ -432,6 +445,17 @@ nav {
 .ngdialog.ngdialog-theme-default.custom-width .ngdialog-content, .ngdialog.ngdialog-theme-plain.custom-width .ngdialog-content, .ngdialog.ngdialog-theme-dark.custom-width .ngdialog-content {
   width: 600px; }
 
+.ngdialog::-webkit-scrollbar {
+  width: 12px;
+  background-color: transparent; }
+
+.ngdialog::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #2C3035; }
+
+.ngdialog::-webkit-scrollbar-thumb {
+  background-color: #29a8d6; }
+
 /* End Custom ngDialog */
 /* Begin Custom Pagination */
 .page-item.disabled .page-link--dark {
@@ -458,20 +482,18 @@ nav {
 
 /* End Custom Pagination */
 /* Begin Custom Scroll Bar Styles */
+.scrollbar--1::-webkit-scrollbar {
+  width: 12px;
+  background-color: transparent; }
+
 .scrollbar--1::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   background-color: #C9CAC8; }
 
-.scrollbar--1::-webkit-scrollbar {
-  width: 12px;
-  background-color: transparent; }
-
 .scrollbar--1::-webkit-scrollbar-thumb {
   border-radius: 8px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #29a8d6;
-  /*background-image: -webkit-linear-gradient(top,#2597c1 0%, $brand-theme-main 50%, $brand-theme-main 51%,#2597c1 100%);*/ }
+  background-color: #29a8d6; }
 
 /* End Custom Scroll Bar Styles */
 /* Begin Custom Sub Portfolio Items */

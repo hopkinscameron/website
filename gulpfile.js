@@ -362,12 +362,17 @@ gulp.task('lint', function (done) {
 // lint project files and minify them into two production files.
 // add the custom fonts to the files
 gulp.task('build', function (done) {
-  	runSequence('env:dev', 'copyindexviews', 'wiredep:prod', 'lint', ['uglify', 'cssmin'/*, 'copyfonts', 'copyfiles'*/]/*, 'imagemin', 'copyicons'*/, done);
+  	runSequence('env:dev', 'copyindexviews', 'wiredep:prod', 'lint', ['uglify', 'cssmin', 'copyfonts', 'copyfiles'], 'imagemin', 'copyicons', done);
 });
 
 // run the build:dev version
 gulp.task('build:dev', function (done) {
   	runSequence(['copyfonts', 'copyfiles'], 'copyimages', 'copyicons', done);
+});
+
+// run the build:dev version
+gulp.task('build:uprod', function (done) {
+	runSequence('templatecache', 'copyindexviews', 'lint', ['uglify', 'cssmin', 'copyfonts', 'copyfiles'], 'imagemin', 'copyicons', done);
 });
 
 // run the project in production mode

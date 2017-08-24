@@ -37,7 +37,8 @@ module.exports.connect = function (cb) {
     mongoose.Promise = config.db.promise;
 
     // connect to mongodb
-    var db = mongoose.connect(config.db.uri, config.db.options, function (err) {
+    // var db = mongoose.connect(config.db.uri, config.db.options, function (err) {
+    var db = mongoose.connect(config.db.uri, function (err) {
         // log error
         if (err) {
             console.error(clc.error('Could not connect to MongoDB!'));

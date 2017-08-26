@@ -10,7 +10,7 @@ var // the default environment configuration
 
 module.exports = {
     db: {
-        uri: process.env.MONGODB || 'mongodb://localhost:27017/personal_website',
+        uri: process.env.MONGODB || 'mongodb://localhost:27017/cameronhopkins',
         options: {
             db: { 
                 native_parser: true 
@@ -24,7 +24,7 @@ module.exports = {
         // Enable mongoose debug mode
         debug: process.env.MONGODB_DEBUG || false
     },
-    port: process.env.PORT_UNSECURE || 80,
+    port: process.env.PORT_UNSECURE || 8443,
     // Binding to 127.0.0.1 is safer in production.
     host: process.env.HOST || '0.0.0.0',
     log: {

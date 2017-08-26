@@ -9,7 +9,7 @@ var // the default environment configuration
 module.exports = {
     livereload: true,
     db: {
-        uri: process.env.MONGODB || 'mongodb://localhost:27017/personal_website',
+        uri: process.env.MONGODB || 'mongodb://localhost:27017/cameronhopkins',
         options: {
             db: { 
                 native_parser: true 

@@ -10,7 +10,7 @@ var // the default environment configuration
 
 module.exports = {
     db: {
-        uri: process.env.MONGODB || 'mongodb://localhost:27017/cameronhopkins',
+        uri: process.env.MONGODB || 'mongodb://localhost:27017/personalwebsiteprodtest',
         options: {
             db: { 
                 native_parser: true 

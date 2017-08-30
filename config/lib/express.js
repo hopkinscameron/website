@@ -291,7 +291,7 @@ module.exports.init = function (db) {
     this.initModulesServerRoutes(app);
 
     // initialize error routes
-    //this.initErrorRoutes(app);
+    this.initErrorRoutes(app);
 
     // configure Socket.io
     app = this.configureSocketIO(app, db);

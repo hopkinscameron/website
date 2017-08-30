@@ -3,9 +3,13 @@
 /**
  * Module dependencies.
  */
-var app = require('./config/lib/app');
+// initialize enviornment variables
+require('dotenv').config()
 
 try {
+    // configure the app
+    var app = require('./config/lib/app');
+    // start server
     var server = app.start();
 }
 catch (e) {

@@ -39,11 +39,11 @@ module.exports = {
                 sslPass: '1234'
             }*/
         },
-        // Enable mongoose debug mode
+        // enable mongoose debug mode
         debug: process.env.MONGODB_DEBUG || false
     },
     port: process.env.PORT_SECURE || 1337,
-    // Binding to 127.0.0.1 is safer in production.
+    // binding to 127.0.0.1 is safer in production.
     host: process.env.HOST || '0.0.0.0',
     log: {
         // logging with Morgan - https://github.com/expressjs/morgan

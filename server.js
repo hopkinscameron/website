@@ -4,4 +4,10 @@
  * Module dependencies.
  */
 var app = require('./config/lib/app');
-var server = app.start();
+
+try {
+    var server = app.start();
+}
+catch (e) {
+    console.error(e);
+}

@@ -39,7 +39,7 @@ module.exports = {
                 sslPass: '1234'
             }*/
         },
-        // Enable mongoose debug mode
+        // enable mongoose debug mode
         debug: process.env.MONGODB_DEBUG || false
     },
     port: process.env.PORT_SECURE || 8443,
@@ -47,7 +47,7 @@ module.exports = {
     host: process.env.HOST || '0.0.0.0',
     log: {
         // logging with Morgan - https://github.com/expressjs/morgan
-        // Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
+        // can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
         format: process.env.LOG_FORMAT || 'combined',
         fileLogger: {
             directoryPath: process.env.LOG_DIR_PATH || process.cwd(),

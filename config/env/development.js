@@ -17,12 +17,12 @@ module.exports = {
             poolSize: 5,
             useMongoClient: true
         },
-        // Enable mongoose debug mode
+        // enable mongoose debug mode
         debug: process.env.MONGODB_DEBUG || false
     },
     log: {
         // logging with Morgan - https://github.com/expressjs/morgan
-        // Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
+        // can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
         format: 'dev',
         fileLogger: {
             directoryPath: process.env.LOG_DIR_PATH || process.cwd(),

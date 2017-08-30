@@ -1,7 +1,8 @@
 ﻿'use strict';
 
-// load environment variables
-require('dotenv').config();
+/**
+ * Module dependencies.
+ */
 
 module.exports = {
     app: {
@@ -12,7 +13,10 @@ module.exports = {
         appInsightsAnalyticsTrackingID: process.env.APP_INSIGHTS_ANALYTICS_TRACKING_ID || 'APP_INSIGHTS_ANALYTICS_TRACKING_ID'
     },
     db: {
-        promise: global.Promise
+        promise: global.Promise,
+        options: {
+            useMongoClient: true
+        }
     },
     port: process.env.PORT || 3000,
     host: process.env.HOST || '0.0.0.0',

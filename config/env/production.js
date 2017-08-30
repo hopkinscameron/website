@@ -16,16 +16,13 @@ module.exports = {
         caBundle: './config/sslcerts/cabundle.crt'
     },
     db: {
-        uri: process.env.MONGODB || 'mongodb://localhost:27017/personal_website',
+        uri: process.env.MONGODB || 'mongodb://localhost:27017/personalwebsiteprodtest',
         options: {
             db: { 
                 native_parser: true 
             },
-            server: { 
-                poolSize: 5 
-            },
-            user: process.env.DB_USER,
-            pass: process.env.DB_PASS,
+            poolSize: 5,
+            useMongoClient: true
             /**
               * Uncomment to enable ssl certificate based authentication to mongodb
               * servers. Adjust the settings below for your specific certificate
@@ -46,7 +43,7 @@ module.exports = {
         debug: process.env.MONGODB_DEBUG || false
     },
     port: process.env.PORT_SECURE || 8443,
-    // Binding to 127.0.0.1 is safer in production.
+    // binding to 127.0.0.1 is safer in production.
     host: process.env.HOST || '0.0.0.0',
     log: {
         // logging with Morgan - https://github.com/expressjs/morgan

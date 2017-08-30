@@ -154,7 +154,7 @@ module.exports.initSession = function (app, db) {
         name: config.sessionKey,
         unset: 'destroy',
         store: new MongoStore({
-            mongooseConnection: db.connection,
+            mongooseConnection: config.db.options.useMongoClient ? db : db.connection,
             collection: config.sessionCollection,
             clear_interval: config.clearInterval
         })

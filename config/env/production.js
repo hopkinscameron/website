@@ -21,11 +21,8 @@ module.exports = {
             db: { 
                 native_parser: true 
             },
-            server: { 
-                poolSize: 5 
-            },
-            user: process.env.DB_USER,
-            pass: process.env.DB_PASS,
+            poolSize: 5,
+            useMongoClient: true
             /**
               * Uncomment to enable ssl certificate based authentication to mongodb
               * servers. Adjust the settings below for your specific certificate

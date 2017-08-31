@@ -24,6 +24,8 @@ module.exports = {
     port: process.env.PORT_UNSECURE || 8443,
     // binding to 127.0.0.1 is safer in production.
     host: process.env.HOST || '0.0.0.0',
+    logo: 'public/dist/img/brand/logo.jpg',
+    favicon: 'public/dist/img/brand/favicon.ico/favicon.ico',
     log: {
         // logging with Morgan - https://github.com/expressjs/morgan
         // can specify one of 'combined', 'common', 'dev', 'short', 'tiny'

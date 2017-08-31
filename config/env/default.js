@@ -51,8 +51,8 @@ module.exports = {
         p3p: 'ABCDEF',
         xssProtection: true
     },
-    logo: 'public/dist/img/logo.jpg',
-    favicon: 'public/dist/img/favicon.ico',
+    logo: 'modules/core/client/img/brand/logo.jpg',
+    favicon: 'modules/core/client/img/brand/favicon.ico/favicon.ico',
     illegalUsernames: ['administrator', 'password', 'admin', 'user',
         'unknown', 'anonymous', 'null', 'undefined', 'api'
     ],

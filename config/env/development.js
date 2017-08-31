@@ -17,7 +17,7 @@ module.exports = {
             poolSize: 5,
             useMongoClient: true
         },
-        // Enable mongoose debug mode
+        // enable mongoose debug mode
         debug: process.env.MONGODB_DEBUG || false
     },
     log: {

@@ -57,7 +57,7 @@ module.exports.initLocalVariables = function (app) {
 
     app.locals.keywords = config.app.keywords;
     app.locals.googleAnalyticsTrackingID = config.app.googleAnalyticsTrackingID;
-    app.locals.appInsightsAnalyticsTrackingID = config.app.appInsightsAnalyticsTrackingID;
+    app.locals.appInsightsAnalyticsTrackingID = config.app.appInsightsAnalyticsTrackingID === 'APP_INSIGHTS_ANALYTICS_TRACKING_ID' ? null : config.app.appInsightsAnalyticsTrackingID;
     app.locals.jsFiles = config.files.client.js;
     app.locals.cssFiles = config.files.client.css;
     app.locals.livereload = config.livereload;

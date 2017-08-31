@@ -7,7 +7,7 @@ var // the default environment configuration
     defaultEnvConfig = require('./default');
 
 module.exports = {
-    livereload: true,
+    livereload: false,
     db: {
         uri: process.env.MONGODB || 'mongodb://localhost:27017/personalwebsitedevelopment',
         options: {

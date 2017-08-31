@@ -81,7 +81,9 @@ module.exports = {
         views: ['modules/*/server/views/*.html'],
         index: [
             'modules/core/server/views/index.server.view.html',
-            'modules/core/server/views/layout.server.view.html'
+            'modules/core/server/views/layout.server.view.html',
+            'modules/core/server/index/index.server.view.html',
+            'modules/core/server/index/layout.server.view.html'
         ]
     }
 };

@@ -370,7 +370,12 @@ gulp.task('build:dev', function (done) {
   	runSequence(['copyfonts', 'copyfiles'], 'copyimages', 'copyicons', done);
 });
 
-// run the build:dev version
+// run the build:prod version
+gulp.task('build:prod', function (done) {
+	runSequence('templatecache', 'copyindexviews', 'lint', ['uglify', 'cssmin', 'copyfonts', 'copyfiles'], 'imagemin', 'copyicons', done);
+});
+
+// run the build:uprod version
 gulp.task('build:uprod', function (done) {
 	runSequence('templatecache', 'copyindexviews', 'lint', ['uglify', 'cssmin', 'copyfonts', 'copyfiles'], 'imagemin', 'copyicons', done);
 });

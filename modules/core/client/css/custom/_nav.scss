@@ -96,7 +96,7 @@ nav {
     }
 }
 .navbar-toggler-right {
-    right: 0;
+    right: 1rem;
 }
 .nav-link {
     &.active {
@@ -125,6 +125,17 @@ nav {
 }
 
 /* Begin Media Queries */
+/* If [device width] is less than or equal to 376px */
+@media (max-width: 376px) {
+    .navbar-brand {
+        & > h5 {
+            font-size: 0.90rem;
+        }
+        span > h5 {
+            font-size: 0.90rem;
+        }
+    }
+}
 /* If [device width] is less than or equal to 991px */
 @media (max-width: 991px) {
     .navbar-inverse {

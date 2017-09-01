@@ -4,18 +4,11 @@
     <hr class="header-bar fixed-top" ng-if="$root.showHeader" />
     <!-- End Top Bar -->
     <!-- Begin Navigation -->
-    <nav class="navbar fixed-top navbar-shifted--down navbar-toggleable-md navbar-inverse bg-inverse navbar-fixed-size box-shadow--sm"  ng-if="$root.showHeader">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-shifted--down navbar-toggleable-md navbar-inverse bg-inverse navbar-fixed-size box-shadow--sm"  ng-if="$root.showHeader">
         <!-- Begin Container -->
         <div class="container">
             <!-- Begin Navigation Bar Header -->
             <div class="navbar-header">
-                <!-- Begin Toggle -->
-                <button class="navbar-toggler navbar-toggler--custom navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <!-- End Toggle -->
                 <!-- Begin Navigation Bar Branding -->
                 <a class="navbar-brand decoration--never" href="/">
                     <h5 class="h5 font-fancy--1 mb-0">{{header.headliner}}</h5>
@@ -25,10 +18,17 @@
                     </span>
                 </a>
                 <!-- End Navigation Bar Branding -->
+                <!-- Begin Toggle -->
+                <button class="navbar-toggler navbar-toggler--custom navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <!-- End Toggle -->
             </div>
             <!-- End Navigation Bar Header -->
             <!-- Begin Navigation Bar -->
-            <div id="navbarSupportedContent" class="collapse navbar-collapse">
+            <div id="navbarSupportedContent" class="navbar-collapse collapse mr-auto mt-2 mt-lg-0">
                 <div class="navbar-nav">
                     <div class="nav-item" ng-class="{'dropdown': navigation.dropdown !== undefined}" ng-repeat="navigation in header.navigation">
                         <!-- Begin Not Dropdown -->

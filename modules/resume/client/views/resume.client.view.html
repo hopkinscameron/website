@@ -16,7 +16,7 @@
             <!-- End Page Title -->
             <!-- Begin Resume Image -->
             <div class="animated fadeInUp" ng-style="resumeAnimations[0]">
-                <div class="card card--transparent card-block">
+                <div class="card card--transparent card-body">
                     <div class="w-100 text-center">
                         <img class="img-fluid img-thumbnail" width="700" height="450" ng-src="{{resume.resumePictureLink}}" title="R&eacute;sum&eacute;" alt="R&eacute;sum&eacute;" spinner-load />
                     </div>
@@ -28,11 +28,11 @@
                 <!-- Begin Content Break -->
                 <hr class="body-bar" />
                 <!-- End Content Break -->
-                <div class="card card--transparent card-block">
-                    <div class="row">
-                        <div class="col-md-6 offset-md-3 row">
+                <div class="card card--transparent card-body">
+                    <div class="row justify-content-md-center">
+                        <div class="col-md-6 row">
                             <!-- Begin Resume Download -->
-                            <div class="col text-center animated fadeInLeft" ng-style="resumeAnimations[1]">
+                            <div class="col text-center animated flipInX" ng-style="resumeAnimations[2]">
                                 <h5 class="">R&eacute;sum&eacute;</h5>
                                 <a ng-href="{{resume.resumeLink}}" target="_blank">
                                     <img class="" width="50" height="50" src="/dist/img/pdf-icon.png" alt="resume.pdf" title="resume.pdf" />
@@ -40,7 +40,7 @@
                             </div>
                             <!-- End Resume Download -->
                             <!-- Begin Curriculum Vitae Download -->
-                            <div class="col text-center animated fadeInRight" ng-style="resumeAnimations[1]">
+                            <div class="col text-center animated flipInX" ng-style="resumeAnimations[2]">
                                 <h5 class="">Curriculum Vitae</h5>
                                 <a ng-href="{{resume.cvLink}}" target="_blank">
                                     <img class="" width="50" height="50" src="/dist/img/pdf-icon.png" alt="cv.pdf" title="cv.pdf" />

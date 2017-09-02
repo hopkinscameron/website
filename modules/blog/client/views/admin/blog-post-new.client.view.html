@@ -18,7 +18,7 @@
             <div class="row">
                 <!-- Begin Blog Insert -->
                 <div class="col-md-8 animated fadeInUp" ng-class="{'mb-3': $root.isDeviceWidthSmallerThan(768)}" ng-style="newBlogPostAnimations[0]">
-                    <div class="card card--dark card-block box-shadow--sm">
+                    <div class="card card--dark card-body box-shadow--sm">
                         <!-- Begin Form Error -->
                         <div style="padding-bottom: 24px;" ng-if="!blogPostForm.errors.isError"></div>
                         <div ng-if="blogPostForm.errors.isError">
@@ -88,7 +88,7 @@
                 <!-- End Blog Insert -->
                 <!-- Begin Saved Blog Posts -->
                 <div class="col animated fadeInUp" ng-style="newBlogPostAnimations[1]">
-                    <div class="card card--dark card-block box-shadow--sm">
+                    <div class="card card--dark card-body box-shadow--sm">
                         <!-- Begin Drafts Header -->
                         <h5 class="text-capitalize font-weight-bold">Drafts</h5>
                         <!-- End Drafts Header -->

@@ -30,7 +30,7 @@ module.exports = {
                 'public/lib/angular-loading-bar/loading-bar.min.js',
                 'public/lib/tinymce/tinymce.min.js',
                 'public/lib/angular-ui-tinymce/dist/tinymce.min.js',
-                'public/lib/bootsrap/bootstrap.min.js',
+                'public/lib/bootstrap/bootstrap.min.js',
                 'public/lib/mark/mark.min.js',
                 'public/lib/ng-dialog/ngDialog.min.js'
                 // endbower

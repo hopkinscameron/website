@@ -3,7 +3,6 @@
 - Ability to updload images for projects and blogs
 
 All 
-- fix mobile view for nav bar toggler
 
 Done
 

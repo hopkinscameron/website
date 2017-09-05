@@ -2,11 +2,7 @@
  * Module dependencies
  */
 var // use local strategy for sign up/logging in
-    LocalStrategy = require('passport-local').Strategy,
-    // the mongoose
-    mongoose = require('mongoose'),
-    // load up the user model
-    User = mongoose.model('User');
+    LocalStrategy = require('passport-local').Strategy;
 
 module.exports = function(passport) {
     // =========================================================================
@@ -42,6 +38,7 @@ module.exports = function(passport) {
         // asynchronous
         // User.findOne wont fire unless data is sent back
         process.nextTick(function() {
+            // FIXME: fix to a local file
             // find a user whose username is the same as the forms username
             // we are checking to see if the user trying to login already exists
             User.findOne({ username : username }, function(err, user) {
@@ -84,7 +81,7 @@ module.exports = function(passport) {
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
     function(req, username, password, done) { // callback with username and password from our form
-
+        // FIXME: fix to a local file
         // find a user whose username is the same as the forms username
         // we are checking to see if the user trying to login already exists
         User.findOne({ username :  username }, function(err, user) {

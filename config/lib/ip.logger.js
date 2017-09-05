@@ -12,11 +12,7 @@ var // the path
     // the geo ip location
     geoip = require('geoip-lite'),
     // the user agent parser
-	useragent = require('useragent'),
-	// the mongoose
-    mongoose = require('mongoose'),
-    // load up the Analytics Page model
-    AnalyticsPage = mongoose.model('AnalyticsPage');
+	useragent = require('useragent');
 
 // set user agent true to stay up to date
 //useragent(true);
@@ -150,6 +146,7 @@ function logPageRequest(accessedBy, pageRequested, requestType) {
 	// setup the request index
 	var req = requestType + ':' + pageRequested;
 
+	// FIXME: fix to log to a file instead
 	// find page post based on id
 	AnalyticsPage.findOne({ request: req }).exec(function(err, foundPage) {
 		// if error occurred

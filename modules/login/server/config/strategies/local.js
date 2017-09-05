@@ -6,9 +6,7 @@
 var // passport for authentication
     passport = require('passport'),
     // the local strategy
-    LocalStrategy = require('passport-local').Strategy,
-    // the User model
-    User = require('mongoose').model('User');
+    LocalStrategy = require('passport-local').Strategy;
 
 module.exports = function () {
     // =========================================================================
@@ -26,6 +24,7 @@ module.exports = function () {
         // asynchronous
         // User.findOne wont fire unless data is sent back
         process.nextTick(function() {
+            // FIXME: fix to write to local file
             // find a user whose username is the same as the forms username
             // we are checking to see if the user trying to login already exists
             User.findOne({ username : username }, function(err, user) {
@@ -76,6 +75,7 @@ module.exports = function () {
         // convert to lowercase
         username = username ? username.toLowerCase() : username;
 
+        // FIXME: fix to read from local file
         // find a user whose username is the same as the forms username
         // we are checking to see if the user trying to login already exists
         User.findOne({ 'username' : username }, function (err, user) {

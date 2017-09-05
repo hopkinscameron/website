@@ -91,6 +91,7 @@ module.exports = function (app, db) {
     // create a new Socket.io server
     var io = socketio.listen(server);
 
+    // FIXME: fix to remove this
     // create a MongoDB storage object
     var mongoStore = new MongoStore({
         mongooseConnection: config.db.options.useMongoClient ? db : db.connection,

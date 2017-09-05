@@ -252,9 +252,9 @@ module.exports.initErrorRoutes = function (app) {
 /**
  * Configure Socket.io
  */
-module.exports.configureSocketIO = function (app, db) {
+module.exports.configureSocketIO = function (app) {
     // load the Socket.io configuration
-    var server = require('./socket.io')(app, db);
+    var server = require('./socket.io')(app);
 
     // return server object
     return server;
@@ -263,7 +263,7 @@ module.exports.configureSocketIO = function (app, db) {
 /**
  * Initialize the Express application
  */
-module.exports.init = function (db) {
+module.exports.init = function () {
     // initialize express app
     var app = express();
 
@@ -283,7 +283,7 @@ module.exports.init = function (db) {
     this.initModulesClientRoutes(app);
 
     // initialize Express session
-    this.initSession(app, db);
+    this.initSession(app);
 
     // initialize Modules configuration
     this.initModulesConfiguration(app);
@@ -298,7 +298,7 @@ module.exports.init = function (db) {
     //this.initErrorRoutes(app);
 
     // configure Socket.io
-    app = this.configureSocketIO(app, db);
+    app = this.configureSocketIO(app);
 
     return app;
 };

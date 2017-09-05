@@ -10,16 +10,9 @@ var // the path
     // chalk for console logging
     clc = require(path.resolve('./config/lib/clc')),
     // short id generator
-    shortid = require('shortid'),
-    // the mongoose
-    mongoose = require('mongoose'),
-    // load up the Blog Post model
-    BlogPost = mongoose.model('BlogPost'),
-    // load up the Saved Blog model
-    SavedBlogPost = mongoose.model('SavedBlogPost'),
-    // load up the Analytics Blog Search model
-    AnalyticsBlogSearch = mongoose.model('AnalyticsBlogSearch');
+    shortid = require('shortid');
 
+// FIXME: fix all mongo references and delete all models
 // =========================================================================
 // Blog Functions ==========================================================
 // =========================================================================

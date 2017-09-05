@@ -7,16 +7,10 @@
 module.exports = {
     app: {
         title: 'Cameron Hopkins Personal Website',
-        description: 'Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js',
-        keywords: 'mongodb, express, angularjs, node.js, mongoose, passport',
+        description: 'Full-Stack JavaScript with Express, AngularJS, and Node.js',
+        keywords: 'express, angularjs, node.js, passport',
         googleAnalyticsTrackingID: process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'GOOGLE_ANALYTICS_TRACKING_ID',
         appInsightsAnalyticsTrackingID: process.env.APP_INSIGHTS_ANALYTICS_TRACKING_ID || 'APP_INSIGHTS_ANALYTICS_TRACKING_ID'
-    },
-    db: {
-        promise: global.Promise,
-        options: {
-            useMongoClient: true
-        }
     },
     port: process.env.PORT || 3000,
     host: process.env.HOST || '0.0.0.0',
@@ -53,9 +47,7 @@ module.exports = {
     },
     logo: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'developmentp' ? 'public/dist/img/logo.jpg' : 'modules/core/client/img/brand/logo.jpg',
     favicon: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'developmentp' ? 'public/dist/img/favicon.ico' : 'modules/core/client/img/brand/favicon.ico',
-    illegalUsernames: ['administrator', 'password', 'admin', 'user',
-        'unknown', 'anonymous', 'null', 'undefined', 'api'
-    ],
+    illegalUsernames: ['administrator', 'password', 'admin', 'user', 'unknown', 'anonymous', 'null', 'undefined', 'api'],
     uploads: {
         profile: {
             image: {

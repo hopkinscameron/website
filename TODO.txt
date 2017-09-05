@@ -7,6 +7,10 @@ All
 Done
 
 Pending
+- Remove all mongoose mongo references
+- Remove all models -> or rename the file to handle all reads/writes/searches/etc.
+- Get express working without mongodb
+- Get passport working without mongodb
 
 Next
 - see if I can use lodash to speed up some stuff I might be doing in server stuff

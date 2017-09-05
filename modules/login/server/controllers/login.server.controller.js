@@ -16,9 +16,7 @@ var // the path
     // generator for a strong password
     generatePassword = require('generate-password'),
     // tester for generating a strong password
-    owasp = require('owasp-password-strength-test'),
-    // the User model
-    User = require('mongoose').model('User');
+    owasp = require('owasp-password-strength-test');
 
 // configure
 owasp.config(config.shared.owasp);
@@ -183,6 +181,7 @@ exports.userById = function (req, res, next, id) {
             // convert to lowercase
             id = id ? id.toLowerCase() : id;
 
+            // FIXME: fix to read from local file
             // find user based on id
             User.findOne({ username : id }).exec(function(err, foundUser) {
                 // if error occurred

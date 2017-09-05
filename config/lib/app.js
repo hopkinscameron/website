@@ -33,6 +33,9 @@ module.exports.init = function init(callback) {
 
 // on start
 module.exports.start = function start(callback) {
+    console.log('----- ');
+    console.log('----- Starting the server');
+    console.log('----- ');
     var _this = this;
 
     // initialize
@@ -60,6 +63,10 @@ module.exports.start = function start(callback) {
             if (callback) {
                 callback(app, db, config);
             }
+
+            console.log('----- ');
+            console.log('----- Finished starting the server');
+            console.log('----- ');
         });
     });
 };

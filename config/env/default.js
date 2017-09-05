@@ -51,8 +51,8 @@ module.exports = {
         p3p: 'ABCDEF',
         xssProtection: true
     },
-    logo: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'uproduction' ? 'public/dist/img/logo.jpg' : 'modules/core/client/img/brand/logo.jpg',
-    favicon: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'uproduction' ? 'public/dist/img/favicon.ico' : 'modules/core/client/img/brand/favicon.ico',
+    logo: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'testdev' ? 'public/dist/img/logo.jpg' : 'modules/core/client/img/brand/logo.jpg',
+    favicon: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'testdev' ? 'public/dist/img/favicon.ico' : 'modules/core/client/img/brand/favicon.ico',
     illegalUsernames: ['administrator', 'password', 'admin', 'user',
         'unknown', 'anonymous', 'null', 'undefined', 'api'
     ],

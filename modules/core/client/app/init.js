@@ -27,10 +27,10 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$routePr
 
     // disable debug data for production environment
     // @link https://docs.angularjs.org/guide/production
-    $compileProvider.debugInfoEnabled(ApplicationConfiguration.applicationEnvironment !== 'production' && ApplicationConfiguration.applicationEnvironment !== 'uproduction');
-    $compileProvider.commentDirectivesEnabled(ApplicationConfiguration.applicationEnvironment !== 'production' && ApplicationConfiguration.applicationEnvironment !== 'uproduction');
-    $compileProvider.cssClassDirectivesEnabled(ApplicationConfiguration.applicationEnvironment !== 'production' && ApplicationConfiguration.applicationEnvironment !== 'uproduction');
-    $logProvider.debugEnabled(ApplicationConfiguration.applicationEnvironment !== 'production' && ApplicationConfiguration.applicationEnvironment !== 'uproduction');
+    $compileProvider.debugInfoEnabled(ApplicationConfiguration.applicationEnvironment !== 'production' && ApplicationConfiguration.applicationEnvironment !== 'testdev');
+    $compileProvider.commentDirectivesEnabled(ApplicationConfiguration.applicationEnvironment !== 'production' && ApplicationConfiguration.applicationEnvironment !== 'testdev');
+    $compileProvider.cssClassDirectivesEnabled(ApplicationConfiguration.applicationEnvironment !== 'production' && ApplicationConfiguration.applicationEnvironment !== 'testdev');
+    $logProvider.debugEnabled(ApplicationConfiguration.applicationEnvironment !== 'production' && ApplicationConfiguration.applicationEnvironment !== 'testdev');
 
     // turn off spinner
     cfpLoadingBarProvider.includeSpinner = false;

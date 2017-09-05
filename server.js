@@ -7,8 +7,16 @@
 require('dotenv').config()
 
 try {
+    console.log('----- ');
+    console.log('----- Starting the application configuration');
+    console.log('----- ');
+
     // configure the app
     var app = require('./config/lib/app');
+
+    console.log('----- ');
+    console.log('----- Finised the application configuration');
+    console.log('----- ');
 
     process.on('uncaughtException', (err) => {
         console.error(err);

@@ -31,6 +31,10 @@ module.exports.loadModels = function (callback) {
  * Initialize Mongoose
  */
 module.exports.connect = function (cb) {
+    console.log('----- ');
+    console.log('----- Initializing Mongodb');
+    console.log('----- ');
+
     var _this = this;
 
     // setup the mongoose promise
@@ -54,6 +58,10 @@ module.exports.connect = function (cb) {
             if (cb) {
                 cb(db);
             }
+
+            console.log('----- ');
+            console.log('----- Done Initializing Mongodb');
+            console.log('----- ');
         }
     });
 };

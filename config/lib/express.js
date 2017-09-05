@@ -101,14 +101,18 @@ module.exports.initMiddleware = function (app) {
 
     // environment dependent middleware
     if (process.env.NODE_ENV === 'development') {
-        // Disable views cache
+        // disable views cache
         app.set('view cache', false);
     } 
     else if (process.env.NODE_ENV === 'production') {
         app.locals.cache = 'memory';
     }
-    else if (process.env.NODE_ENV === 'uproduction') {
+    else if (process.env.NODE_ENV === 'testdev') {
         app.locals.cache = 'memory';
+    }
+    else {
+        // disable views cache
+        app.set('view cache', false);
     }
 
     // request body parsing middleware should be above methodOverride
@@ -263,38 +267,110 @@ module.exports.init = function (db) {
     // initialize express app
     var app = express();
 
+    console.log('----- ');
+    console.log('----- Initializing local variables');
+    console.log('----- ');
+
     // initialize local variables
     this.initLocalVariables(app);
+
+    console.log('----- ');
+    console.log('----- Done Initializing local variables');
+    console.log('----- ');
+
+    console.log('----- ');
+    console.log('----- Initializing middleware');
+    console.log('----- ');
 
     // initialize Express middleware
     this.initMiddleware(app);
 
+    console.log('----- ');
+    console.log('----- Done Initializing middleware');
+    console.log('----- ');
+
+    console.log('----- ');
+    console.log('----- Initializing view engine');
+    console.log('----- ');
+
     // initialize Express view engine
     this.initViewEngine(app);
+
+    console.log('----- ');
+    console.log('----- Done Initializing view engine');
+    console.log('----- ');
+
+    console.log('----- ');
+    console.log('----- Initializing helmet headers');
+    console.log('----- ');
 
     // initialize Helmet security headers
     this.initHelmetHeaders(app);
 
+    console.log('----- ');
+    console.log('----- Done Initializing helmet headers');
+    console.log('----- ');
+
+    console.log('----- ');
+    console.log('----- Initializing client routes');
+    console.log('----- ');
+
     // initialize modules static client routes, before session!
     this.initModulesClientRoutes(app);
+
+    console.log('----- ');
+    console.log('----- Done Initializing client routes');
+    console.log('----- ');
+
+    console.log('----- ');
+    console.log('----- Initializing session');
+    console.log('----- ');
 
     // initialize Express session
     this.initSession(app, db);
 
+    console.log('----- ');
+    console.log('----- Done Initializing session');
+    console.log('----- ');
+
+    console.log('----- ');
+    console.log('----- Initializing module configuration');
+    console.log('----- ');
+
     // initialize Modules configuration
     this.initModulesConfiguration(app);
+
+    console.log('----- ');
+    console.log('----- Done Initializing module configuration');
+    console.log('----- ');
 
     // initialize modules server authorization policies
     //this.initModulesServerPolicies(app);
 
+    console.log('----- ');
+    console.log('----- Initializing server routes');
+    console.log('----- ');
+
     // initialize modules server routes
     this.initModulesServerRoutes(app);
+
+    console.log('----- ');
+    console.log('----- Done Initializing server routes');
+    console.log('----- ');
 
     // initialize error routes
     //this.initErrorRoutes(app);
 
+    console.log('----- ');
+    console.log('----- Initializing socket io');
+    console.log('----- ');
+
     // configure Socket.io
     app = this.configureSocketIO(app, db);
+
+    console.log('----- ');
+    console.log('----- Done Initializing socket io');
+    console.log('----- ');
 
     return app;
 };

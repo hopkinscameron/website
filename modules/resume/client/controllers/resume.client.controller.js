@@ -114,7 +114,7 @@ resumeModule.controller('ResumeController', ['$scope', '$rootScope', '$compile',
                 var incrementTime = 1;
 
                 // holds the animation times
-                $scope.resumeAnimations = $rootScope.$root.getAnimationDelays(startTime, incrementTime, 2);
+                $scope.resumeAnimations = $rootScope.$root.getAnimationDelays(startTime, incrementTime, 3);
 
                 // holds the page title
                 $scope.pageTitle = 'R&eacute;sum&eacute; | ' + ApplicationConfiguration.applicationName;

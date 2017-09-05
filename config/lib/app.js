@@ -39,11 +39,10 @@ module.exports.start = function start(callback) {
     _this.init(function (app, db, config) {
 
         // start the app by listening on <port> at <host>
-        //app.listen(config.port, config.host, function () {
-        app.listen(config.port, function () {
+        app.listen(config.port, config.host, function () {
             // create server URL
             var server = (process.env.NODE_ENV === 'production' && config.secure.ssl ? 'https://' : 'http://') + config.host + ':' + config.port;
-
+            
             // environment
             var env = process.env.NODE_ENV.charAt(0).toUpperCase() + process.env.NODE_ENV.slice(1);
 

@@ -6,7 +6,6 @@ module.exports = {
             css: [
                 // bower:css
                 'public/lib/bootstrap/bootstrap.css',
-                'public/lib/bootstrap/bootstrap-theme.css',
                 'public/lib/bootstrap/bootstrap-reboot.css',
                 'public/lib/bootstrap/bootstrap-grid.css',
                 'public/lib/angular-loading-bar/loading-bar.css',
@@ -18,22 +17,22 @@ module.exports = {
             ],
             js: [
                 // bower:js
-                //'public/lib/jquery/jquery-1.9.1.min.js',
-                'public/lib/angular/angular.min.js',
-                'public/lib/angular/angular-animate.min.js',
-                'public/lib/angular/angular-cookies.min.js',
-                'public/lib/angular/angular-route.min.js',
-                'public/lib/angular/angular-sanitize.min.js',
-                'public/lib/angular/angular-messages.min.js',
-                'public/lib/angular/angular-touch.min.js',
-                'public/lib/angular/angular-mocks.min.js',
-                'public/lib/angular/angular-resource.min.js',
-                'public/lib/angular-loading-bar/loading-bar.min.js',
+                //'public/lib/jquery/jquery-1.9.1.js',
+                'public/lib/angular/angular.js',
+                'public/lib/angular/angular-animate.js',
+                'public/lib/angular/angular-cookies.js',
+                'public/lib/angular/angular-route.js',
+                'public/lib/angular/angular-sanitize.js',
+                'public/lib/angular/angular-messages.js',
+                'public/lib/angular/angular-touch.js',
+                'public/lib/angular/angular-mocks.js',
+                'public/lib/angular/angular-resource.js',
+                'public/lib/angular-loading-bar/loading-bar.js',
                 'public/lib/tinymce/tinymce.js',
-                'public/lib/angular-ui-tinymce/dist/tinymce.min.js',
-                //'public/lib/bootsrap/bootstrap.min.js',
+                'public/lib/angular-ui-tinymce/src/tinymce.js',
+                'public/lib/bootstrap/bootstrap.js',
                 'public/lib/mark/mark.min.js',
-                'public/lib/ng-dialog/ngDialog.min.js'
+                'public/lib/ng-dialog/ngDialog.js'
                 // endbower
             ],
             tests: ['public/lib/angular/angular-mocks.js']

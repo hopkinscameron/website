@@ -1,7 +1,8 @@
 ﻿'use strict';
 
-// load environment variables
-require('dotenv').config();
+/**
+ * Module dependencies.
+ */
 
 module.exports = {
     app: {
@@ -50,8 +51,8 @@ module.exports = {
         p3p: 'ABCDEF',
         xssProtection: true
     },
-    logo: 'public/dist/img/logo.jpg',
-    favicon: 'public/dist/img/favicon.ico',
+    logo: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'uproduction' ? 'public/dist/img/brand/logo.jpg' : 'modules/core/client/img/brand/logo.jpg',
+    favicon: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'uproduction' ? 'public/dist/img/brand/favicon.ico' : 'modules/core/client/img/brand/favicon.ico',
     illegalUsernames: ['administrator', 'password', 'admin', 'user',
         'unknown', 'anonymous', 'null', 'undefined', 'api'
     ],

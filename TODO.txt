@@ -27,13 +27,6 @@ Sub Portfolio
     - there are some empty "col-md-2" for innerIndex in gameDataColumnsPerRowArray track by $index -> come back to this.. this exist on about page as well
 
 Mongodb test stuff
-1. start mongod without access control (./mongod)
-2. start a connection (./mongo)
-3. switch to admin db and create user/admin
-4. close connection
-5. restart mongod with access control (./mongod --auth --port 27017 or ./mongod --auth --port 27017 --dbpath /data/db1)
-6. start a connection (./mongo)
-
 db.createUser({ user: "<username>", pwd: "<password>", roles: [ { role: "dbAdmin", db: "<db>" } ]})
 db.updateUser("<username>", { roles : [ { role: "dbOwner", db: "<db>" } ], pwd: "<password>"})
 ./mongo --port 27017 -u "<username>" -p "<password>" --authenticationDatabase "<db>"

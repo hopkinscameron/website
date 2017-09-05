@@ -15,7 +15,7 @@
             <h2 class="font-weight-bold text-uppercase mb-3"><span ng-bind-html="blog.title | trustHTML"></span></h2>
             <!-- End Page Title -->           
             <!-- Begin Filters/New Blog Button -->
-            <div class="card card--dark card-block mb-3">
+            <div class="card card--dark card-body mb-3">
                 <div class="row" ng-class="{'justify-content-end': !$root.isLoggedIn}">
                     <!-- Begin New Blog -->
                     <div class="col text-left" ng-if="$root.isLoggedIn">
@@ -51,7 +51,7 @@
                 <div class="col-md-12">
                     <!-- Begin Posts -->
                     <div class="animated fadeInUp" ng-class="{'mb-5': $index < blog.posts.length - 1}" ng-style="blogAnimations[$index]" ng-repeat="post in blog.posts">
-                        <div class="card card--dark card-block box-shadow--sm">
+                        <div class="card card--dark card-body box-shadow--sm">
                             <!-- Begin Image -->
                             <a class="decoration--never highlight--never" ng-href="/blog/post/{{post.url}}">
                                 <div style="overflow: hidden;">

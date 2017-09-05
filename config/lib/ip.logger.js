@@ -19,7 +19,7 @@ var // the path
     AnalyticsPage = mongoose.model('AnalyticsPage');
 
 // set user agent true to stay up to date
-useragent(true);
+//useragent(true);
 
 // logs users IP information
 function logUserIPInformation(req) {

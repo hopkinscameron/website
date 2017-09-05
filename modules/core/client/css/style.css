@@ -348,49 +348,46 @@ nav {
   .navbar-inverse .navbar-brand, .navbar-inverse .navbar-toggler {
     color: #F5F7F9; }
   .navbar-inverse .navbar-toggler--custom {
-    border: 0;
+    border: none;
+    background: transparent !important;
     font-size: medium; }
-    .navbar-inverse .navbar-toggler--custom:focus, .navbar-inverse .navbar-toggler--custom:active {
+    .navbar-inverse .navbar-toggler--custom:focus, .navbar-inverse .navbar-toggler--custom:active, .navbar-inverse .navbar-toggler--custom:hover {
+      background: transparent !important;
       outline: 0; }
-    .navbar-inverse .navbar-toggler--custom span {
+    .navbar-inverse .navbar-toggler--custom .icon-bar {
       display: block;
       background-color: #F5F7F9;
       height: 3px;
       width: 25px;
       margin-top: 4px;
       margin-bottom: 4px;
-      -webkit-transform: rotate(0deg);
-      transform: rotate(0deg);
-      position: relative;
-      left: 0;
-      opacity: 0.9; }
-      .navbar-inverse .navbar-toggler--custom span:nth-child(1), .navbar-inverse .navbar-toggler--custom span:nth-child(3) {
-        -webkit-transition: transform .35s ease-in-out;
-        -webkit-transition: -webkit-transform .35s ease-in-out;
-        transition: -webkit-transform .35s ease-in-out;
-        transition: transform .35s ease-in-out;
-        transition: transform .35s ease-in-out, -webkit-transform .35s ease-in-out; }
-    .navbar-inverse .navbar-toggler--custom:not(.collapsed) span:nth-child(1) {
-      position: absolute;
-      left: 12px;
-      top: 10px;
-      -webkit-transform: rotate(135deg);
-      transform: rotate(135deg);
-      opacity: 0.9; }
-    .navbar-inverse .navbar-toggler--custom:not(.collapsed) span:nth-child(2) {
-      height: 12px;
-      visibility: hidden;
-      background-color: transparent; }
-    .navbar-inverse .navbar-toggler--custom:not(.collapsed) span:nth-child(3) {
-      position: absolute;
-      left: 12px;
-      top: 10px;
-      -webkit-transform: rotate(-135deg);
-      transform: rotate(-135deg);
-      opacity: 0.9; }
+      -webkit-transition: all 0.2s;
+      transition: all 0.2s; }
+      .navbar-inverse .navbar-toggler--custom .icon-bar:nth-of-type(1) {
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+        -webkit-transform-origin: 10% 10%;
+        transform-origin: 10% 10%; }
+      .navbar-inverse .navbar-toggler--custom .icon-bar:nth-of-type(2) {
+        opacity: 0;
+        filter: alpha(opacity=0); }
+      .navbar-inverse .navbar-toggler--custom .icon-bar:nth-of-type(3) {
+        -webkit-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        -webkit-transform-origin: 10% 90%;
+        transform-origin: 10% 90%; }
+    .navbar-inverse .navbar-toggler--custom.collapsed .icon-bar:nth-of-type(1) {
+      -webkit-transform: rotate(0);
+      transform: rotate(0); }
+    .navbar-inverse .navbar-toggler--custom.collapsed .icon-bar:nth-of-type(2) {
+      opacity: 1;
+      filter: alpha(opacity=100); }
+    .navbar-inverse .navbar-toggler--custom.collapsed .icon-bar:nth-of-type(3) {
+      -webkit-transform: rotate(0);
+      transform: rotate(0); }
 
 .navbar-toggler-right {
-  right: 0; }
+  right: 1rem; }
 
 .nav-link.active {
   color: #29a8d6 !important; }
@@ -411,23 +408,36 @@ nav {
     background-color: #29a8d6; }
 
 /* Begin Media Queries */
+/* If [device width] is less than or equal to 376px */
+@media (max-width: 376px) {
+  .navbar-brand > h5 {
+    font-size: 0.90rem; }
+  .navbar-brand > span {
+    font-size: 0.90rem; } }
+
 /* If [device width] is less than or equal to 991px */
 @media (max-width: 991px) {
   .navbar-inverse .navbar-collapse {
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2C3035), to(#000));
     background-image: linear-gradient(to bottom, #2C3035 0, #000 100%);
     background-repeat: repeat-x;
-    background-color: #181a1b !important;
-    margin-right: -15px;
-    margin-left: -15px; }
-  .navbar-collapse .navbar-nav {
-    margin-left: 1rem;
-    margin-right: 1rem; } }
+    background-color: #181a1b !important; }
+  .navbar-collapse {
+    margin-top: 0.3125rem; }
+    .navbar-collapse .navbar-nav {
+      margin-left: 1rem;
+      margin-right: 1rem; } }
 
 /* If [device width] is greater than or equal to 992px */
 @media (min-width: 992px) {
   .navbar-collapse .navbar-nav {
     margin-left: auto; } }
+
+/* If [device width] is greater than or equal to 1200px */
+@media (min-width: 1200px) {
+  .navbar-fixed-size {
+    padding-left: 4rem;
+    padding-right: 4rem; } }
 
 /* End Media Queries */
 /* End Custom Navigation Styles */

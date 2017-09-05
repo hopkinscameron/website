@@ -16,7 +16,7 @@
             <!-- End Page Title -->
             <!-- Begin Email -->
             <div class="animated fadeInUp" ng-style="contactAnimations[0]">
-                <div class="card card--transparent card-block">
+                <div class="card card--transparent card-body">
                     <h4 class="text-capitalize">Email</h4>
                     <div class="pl-3 pr-3">
                         <img class="img-fluid" width="200" height="30" ng-src="{{contact.emailPictureLink}}" title="Cameron Hopkins Email" alt="Cameron Hopkins Email" spinner-load />
@@ -29,7 +29,7 @@
                 <!-- Begin Content Break -->
                 <hr class="body-bar" />
                 <!-- End Content Break -->
-                <div class="card card--transparent card-block">
+                <div class="card card--transparent card-body">
                     <h4 class="text-capitalize">Postive Note</h4>
                     <span class="pl-3 pr-3">{{contact.positiveNote}} <i class="em em-satisfied"></i></span>
                 </div>
@@ -41,7 +41,7 @@
                     <!-- Begin Content Break -->
                     <hr class="body-bar" />
                     <!-- End Content Break -->
-                    <div class="card card--transparent card-block">
+                    <div class="card card--transparent card-body">
                         <h4 class="text-capitalize">Contact Me Directly</h4>
                         <div style="padding-bottom: 24px;" ng-if="!contactForm.errors.isError"></div>
                         <div class="pl-3 pr-3" ng-if="contactForm.errors.isError">
@@ -112,7 +112,7 @@
             <!-- End Contact Form -->
             <!-- Begin Thank You Note -->
             <div id="thank-you-message" class="collapse animated animation-delay--sm fadeIn">
-                <div class="card card--transparent card-block ">
+                <div class="card card--transparent card-body ">
                     <div class="col-md-6 offset-md-3">
                         <h4 class="text-capitalize font-weight-bold">Thank you, <span class="font-italic">{{contactForm.inputs.firstName}}</span></h4>
                         <p class="">I really appreciate your comment! I'll get back to you as soon as I can!</p>

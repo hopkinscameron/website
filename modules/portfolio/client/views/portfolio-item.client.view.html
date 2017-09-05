@@ -16,11 +16,11 @@
             <!-- End Page Title -->
             <!-- Begin Project Highlights -->
             <div class="animated fadeIn" ng-style="portfolioItemAnimations[0]">
-                <div class="card card--transparent card-block">
+                <div class="card card--transparent card-body">
                     <h4 class="text-capitalize">Project Highlights</h4>
                     <div class="row">
                         <!-- Begin Image Selection -->
-                        <div class="col-md-4 animated fadeInLeft" ng-class="{'mb-4': $root.isDeviceWidthSmallerThan(768)}" ng-style="portfolioItemAnimations[0]">
+                        <div class="col-md-4 animated fadeIn" ng-class="{'mb-4': $root.isDeviceWidthSmallerThan(768)}" ng-style="portfolioItemAnimations[0]">
                             <div class="row portfolio-item-img-container-max-height scrollbar--1">
                                 <div class="col-md-6" ng-class="{'mb-3': !isLastRowOfImages($index) || ($index < portfolioItem.images.length - 1 && $root.isDeviceWidthSmallerThan(768))}" ng-repeat="image in portfolioItem.images">
                                     <!-- <img role="button" class="d-block img-fluid mx-auto portfolio-item-img" ng-class="{'active': isActive('highlights', $index)}" ng-src="{{image.url}}" ng-click="changeProjectHighlightImage($index)" spinner-load> -->
@@ -30,7 +30,7 @@
                         </div>
                         <!-- End Image Selection -->
                         <!-- Begin Full Image Selected -->
-                        <div class="col animated fadeInRight" ng-style="portfolioItemAnimations[0]">
+                        <div class="col animated fadeIn" ng-style="portfolioItemAnimations[0]">
                             <!-- <img class="d-block img-fluid mx-auto portfolio-item-img-max-height" ng-src="{{currentProjectImage}}" spinner-load> -->
                             <div class="img-thumb portfolio-item-img-max-height mx-auto" ng-style="{'background-image': 'url(' + currentProjectImage + ')'}"></div>
                         </div>
@@ -44,7 +44,7 @@
                 <!-- Begin Content Break -->
                 <hr class="body-bar" />
                 <!-- End Content Break -->
-                <div class="card card--transparent card-block">
+                <div class="card card--transparent card-body">
                     <h4 class="text-capitalize">Overview</h4>
                     <span class="pl-3 pr-3" ng-class="{'mb-3': portfolioItem.overviewContent.gameDesignDocument.url.length > 0}" ng-bind-html="portfolioItem.overviewContent.overview | trustHTML"></span>
                     <!-- Begin Game Design Document -->
@@ -63,7 +63,7 @@
                 <!-- Begin Content Break -->
                 <hr class="body-bar" />
                 <!-- End Content Break -->
-                <div class="card card--transparent card-block">
+                <div class="card card--transparent card-body">
                     <h4 class="text-capitalize">Development Details</h4>
                     <!-- Begin Laptop/Large Tablet View -->
                     <div class="row pl-3 pr-3" ng-class="{'mb-5': $index < gameDataMaxRowCountArray.length - 1}" ng-repeat="index in gameDataMaxRowCountArray track by $index" ng-if="$root.isDeviceWidthLargerThan(767)">
@@ -97,7 +97,7 @@
                 <!-- Begin Content Break -->
                 <hr class="body-bar" />
                 <!-- End Content Break -->
-                <div class="card card--transparent card-block">
+                <div class="card card--transparent card-body">
                     <h4 class="text-capitalize">Downloads</h4>
                     <ul class="list-unstyled pl-3 pr-3 mb-0">
                         <li ng-repeat="spDownloadData in portfolioItem.overviewContent.downloadLinks">
@@ -112,7 +112,7 @@
                 <!-- Begin Content Break -->
                 <hr class="body-bar" />
                 <!-- End Content Break -->
-                <div class="card card--transparent card-block">
+                <div class="card card--transparent card-body">
                     <h4 class="text-capitalize">{{portfolioItem.title}} Trailer</h4>
                     <div class="pl-3 pr-3">
                         <div class="embed-responsive embed-responsive-16by9">
@@ -127,7 +127,7 @@
                 <!-- Begin Content Break -->
                 <hr class="body-bar" />
                 <!-- End Content Break -->
-                <div class="card card--transparent card-block">
+                <div class="card card--transparent card-body">
                     <h4 class="text-capitalize">{{portfolioItem.title}} Updates</h4>
                     <div class="pl-3 pr-3">
                         <div class="row">

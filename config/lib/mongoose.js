@@ -42,7 +42,7 @@ module.exports.connect = function (cb) {
         if (err) {
             console.error(clc.error('Could not connect to MongoDB!'));
             console.log(clc.error(err));
-            
+
             // exit from the application
             process.exit();
         } 

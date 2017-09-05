@@ -101,14 +101,18 @@ module.exports.initMiddleware = function (app) {
 
     // environment dependent middleware
     if (process.env.NODE_ENV === 'development') {
-        // Disable views cache
+        // disable views cache
         app.set('view cache', false);
     } 
     else if (process.env.NODE_ENV === 'production') {
         app.locals.cache = 'memory';
     }
-    else if (process.env.NODE_ENV === 'uproduction') {
+    else if (process.env.NODE_ENV === 'developmentp') {
         app.locals.cache = 'memory';
+    }
+    else {
+        // disable views cache
+        app.set('view cache', false);
     }
 
     // request body parsing middleware should be above methodOverride

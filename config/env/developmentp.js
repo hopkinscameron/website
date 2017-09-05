@@ -21,7 +21,7 @@ module.exports = {
         // enable mongoose debug mode
         debug: process.env.MONGODB_DEBUG || false
     },
-    port: process.env.PORT_UNSECURE || 8443,
+    port: process.env.PORT || 3000,
     // binding to 127.0.0.1 is safer in production.
     host: process.env.HOST || '0.0.0.0',
     log: {

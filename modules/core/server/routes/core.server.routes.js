@@ -23,6 +23,7 @@ module.exports = function (app) {
 
     // define application route
     app.route('/*').get(coreController.renderIndex);
+    //app.route('/*').get(coreController.testBasicHelloWorld);
 
     // POST sends email
     // format /api/sendEmail

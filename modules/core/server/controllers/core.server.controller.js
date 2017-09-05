@@ -18,8 +18,8 @@ var // the path
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
     host: config.mailer.options.host,
-    port: process.env.NODE_ENV === 'production' ? 465 : 587,
-    secure: process.env.NODE_ENV === 'production' ? true : false, // secure:true for port 465, secure:false for port 587
+    port: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'developmentp' ? 465 : 587,
+    secure: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'developmentp' ? true : false, // secure:true for port 465, secure:false for port 587
     auth: {
         user: config.mailer.options.auth.user,
         pass: config.mailer.options.auth.pass
@@ -33,7 +33,7 @@ let transporter = nodemailer.createTransport({
  */
 exports.renderIndex = function (req, res) {
     // get the index file path
-    var indexFilePath = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'testdev' ? 'modules/core/server/index/index' : 'modules/core/server/views/index'
+    var indexFilePath = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'developmentp' ? 'modules/core/server/index/index' : 'modules/core/server/views/index'
 
     // define the safe user object
     var safeUserObject = null;

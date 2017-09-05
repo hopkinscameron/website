@@ -107,7 +107,7 @@ module.exports.initMiddleware = function (app) {
     else if (process.env.NODE_ENV === 'production') {
         app.locals.cache = 'memory';
     }
-    else if (process.env.NODE_ENV === 'testdev') {
+    else if (process.env.NODE_ENV === 'developmentp') {
         app.locals.cache = 'memory';
     }
     else {

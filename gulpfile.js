@@ -46,9 +46,9 @@ gulp.task('env:prod', function () {
 	process.env.NODE_ENV = 'production';
 });
 
-// set NODE_ENV to 'unsecure production'
-gulp.task('env:uprod', function () {
-	process.env.NODE_ENV = 'uproduction';
+// set NODE_ENV to 'development production'
+gulp.task('env:devp', function () {
+	process.env.NODE_ENV = 'developmentp';
 });
 
 // copy local development environment config example
@@ -342,7 +342,7 @@ gulp.task('watch', function () {
 	*/
 
 	// if in production, watch for templatecache
-	if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'uproduction') {
+	if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'developmentp') {
 		//gulp.watch(defaultAssets.server.gulpConfig, ['templatecache', 'eslint']);
 		gulp.watch(defaultAssets.server.gulpConfig, ['templatecache']);
 		gulp.watch(defaultAssets.client.views, ['templatecache', 'uglify', 'cssmin']).on('change', plugins.refresh.changed);
@@ -375,8 +375,8 @@ gulp.task('build:prod', function (done) {
 	runSequence('templatecache', 'copyindexviews', 'lint', ['uglify', 'cssmin', 'copyfonts', 'copyfiles'], 'imagemin', 'copyicons', done);
 });
 
-// run the build:uprod version
-gulp.task('build:uprod', function (done) {
+// run the build:devp version
+gulp.task('build:devp', function (done) {
 	runSequence('templatecache', 'copyindexviews', 'lint', ['uglify', 'cssmin', 'copyfonts', 'copyfiles'], 'imagemin', 'copyicons', done);
 });
 
@@ -386,8 +386,8 @@ gulp.task('prod', function (done) {
 });
 
 // run the project in unsecure production mode
-gulp.task('uprod', function (done) {
-	runSequence(['copyLocalEnvConfig', 'templatecache'], 'build', 'env:uprod', 'lint', ['nodemon-nodebug', 'watch'], done);
+gulp.task('devp', function (done) {
+	runSequence(['copyLocalEnvConfig', 'templatecache'], 'build', 'env:devp', 'lint', ['nodemon-nodebug', 'watch'], done);
 });
 
 // run the project in development mode with node debugger enabled

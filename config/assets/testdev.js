@@ -36,37 +36,7 @@ module.exports = {
                 // endbower
             ]
         },
-        css: [
-            'modules/*/client/{css,less,scss}/*.css'
-        ],
-        less: [
-            'modules/*/client/less/*.less'
-        ],
-        sass: [
-            'modules/*/client/scss/*.scss',
-            'modules/core/client/css/**/*.scss'
-        ],
-        js: [
-            'modules/core/client/app/config.js',
-            'modules/core/client/app/init.js',
-            'modules/*/client/*.js',
-            'modules/*/client/**/*.js'
-        ],
-        img: [
-            'modules/**/*/img/**/*.jpg',
-            'modules/**/*/img/**/*.png',
-            'modules/**/*/img/**/*.gif',
-            'modules/**/*/img/**/*.svg'
-        ],
-        icons: [
-            'modules/**/*/img/**/*.ico'
-        ],
-        files: [
-            'modules/**/*/files/**/*.pdf'
-        ],
-        views: ['modules/*/client/views/**/*.html'],
-        fonts: [
-            'modules/*/client/{css,less,scss}/fonts/*.{eot,otf,ttf,woff,woff2}'
-        ]
+        css: 'public/dist/cameronhopkins*.min.css',
+        js: 'public/dist/cameronhopkins*.min.js'
     }
 };

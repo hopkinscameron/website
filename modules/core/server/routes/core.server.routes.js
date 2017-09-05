@@ -22,8 +22,8 @@ module.exports = function (app) {
     app.route('/:url(api|modules|lib)/*').get(coreController.renderNotFound);
 
     // define application route
-    //app.route('/*').get(coreController.testBasicHelloWorld);
-    app.route('/*').get(coreController.renderIndex);
+    app.route('/*').get(coreController.testBasicHelloWorld);
+    //app.route('/*').get(coreController.renderIndex);
 
     // POST sends email
     // format /api/sendEmail

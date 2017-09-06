@@ -12,7 +12,7 @@ var // the path
     // short id generator
     shortid = require('shortid');
 
-// FIXME: fix all mongo references and delete all models
+// FIXME-MODELS: fix all mongo references and delete all models
 // =========================================================================
 // Blog Functions ==========================================================
 // =========================================================================

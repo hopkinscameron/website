@@ -181,7 +181,7 @@ exports.userById = function (req, res, next, id) {
             // convert to lowercase
             id = id ? id.toLowerCase() : id;
 
-            // FIXME: fix to read from local file
+            // FIXME-MODELS: fix to read from local file
             // find user based on id
             User.findOne({ username : id }).exec(function(err, foundUser) {
                 // if error occurred

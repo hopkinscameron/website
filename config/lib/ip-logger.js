@@ -12,7 +12,9 @@ var // the path
     // the geo ip location
     geoip = require('geoip-lite'),
     // the user agent parser
-	useragent = require('useragent');
+	useragent = require('useragent'),
+    // load up the Analytics Page
+    AnalyticsPage = require(path.resolve('./modules/core/server/models/model-analytics-page'));
 
 // set user agent true to stay up to date
 //useragent(true);
@@ -146,16 +148,18 @@ function logPageRequest(accessedBy, pageRequested, requestType) {
 	// setup the request index
 	var req = requestType + ':' + pageRequested;
 
-	// FIXME: fix to log to a file instead
 	// find page post based on id
-	AnalyticsPage.findOne({ request: req }).exec(function(err, foundPage) {
+	AnalyticsPage.findOne({ request : req }, function(err, foundPage) {
 		// if error occurred
 		if (err) {
 			console.log(clc.error(err.message));
 		}
 		else if(foundPage) {
+			// add additional accessed by
+			foundPage.accessedBy.push(accessedBy);
+
 			// push the ip who accessed this page
-			AnalyticsPage.update({ url : pageRequested }, { $push: { accessedBy: accessedBy }, $inc: { count: 1 } }).exec(function(err, updatedBlog) {
+			AnalyticsPage.update({ request : req }, foundPage, function(err, updatedBlog) {
 				// if error occurred
 				if (err) {
 					console.log(clc.error(err.message));
@@ -164,15 +168,15 @@ function logPageRequest(accessedBy, pageRequested, requestType) {
 		}
 		else {
 			// create the analytics for this page
-			var analyticsPage = new AnalyticsPage({
+			var analyticsPage = {
 				request: requestType + ':' + pageRequested,
 				url: pageRequested,
 				method: requestType,
 				accessedBy: [accessedBy]
-			});
+			};
 
 			// save
-			analyticsPage.save(function(err, newAnalyticsPage) {
+			AnalyticsPage.save(analyticsPage, function(err, newAnalyticsPage) {
 				if (err) {
 					console.log(clc.error(err.message));
 				}
@@ -181,7 +185,7 @@ function logPageRequest(accessedBy, pageRequested, requestType) {
 	});
 };
 
- /**
+/**
  * Log IP Information
  */
 exports.log = function (req, res, next) {

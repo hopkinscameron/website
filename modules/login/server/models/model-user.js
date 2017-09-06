@@ -1,4 +1,5 @@
 'use strict';
+
 /**
  *  Name: The User Schema
     Description: Determines how a user is defined
@@ -7,132 +8,252 @@
 /**
  * Module dependencies
  */
-var  // the path
+var // generate UUID's
+    uuidv1 = require('uuid/v1'),
+    // lodash
+    _ = require('lodash'),
+    // the file system to read/write from/to files locally
+    fs = require('fs'),
+    // the path
     path = require('path'),
+    // the helper functions
+    helpers = require(path.resolve('./config/lib/global-model-helpers')),
+    // the Analytics db
+    db = require('./db/users'),
+    // the db full path
+    dbPath = 'modules/login/server/models/db/users.json',
     // get the default config
 	defaultConfig = require(path.resolve('./config/env/default')),
-    // the communication to mongo database
-    mongoose = require('mongoose'),
-    // the scheme for mongoose/mongodb
-    Schema = mongoose.Schema,
     // bcrypt for cryptography
-    bcrypt = require('bcryptjs'),
-    // validator
-    validator = require('validator')
-
-/**
- * A Validation function for local strategy properties
- */
-var validateLocalStrategyProperty = function (property) {
-  return (this.provider !== 'local' && !this.updated) || property.length;
-};
-
-/**
- * A Validation function for local strategy email
- */
-var validateLocalStrategyEmail = function (email) {
-  return (this.provider !== 'local' && !this.updated) || validator.isEmail(email, { require_tld: false });
-};
-
-/**
- * A Validation function for username
- * - at least 3 characters
- * - only a-z0-9_-.
- * - contain at least one alphanumeric character
- * - not in list of illegal usernames
- * - no consecutive dots: "." ok, ".." nope
- * - not begin or end with "."
- */
-var validateUsername = function(username) {
-  var usernameRegex = /^(?=[\w.-]+$)(?!.*[._-]{2})(?!\.)(?!.*\.$).{3,34}$/;
-  return this.provider !== 'local' || (username && usernameRegex.test(username));
-};
+    bcrypt = require('bcryptjs');
 
 /**
  * User Schema
  */ 
-var UserSchema = new Schema({
-    username: { 
+var UserSchema = {
+    _id: {
+        type: String
+    },
+    username: {
         type: String,
-        unique: 'Username already exists',
-        required: 'Please fill in a username',
-        validate: [validateUsername, 'Please enter a valid username: 3+ characters long, non restricted word, characters "_-.", no consecutive dots, does not begin or end with dots, letters a-z and numbers 0-9.'],
-        lowercase: true,
-        trim: true
+        required: true
     },
     password: {
         type: String,
         required: true
     },
     passwordUpdatedLast: {
-        type: Date,
-        required: true
+        type: Date
     },
     lastLogin: {
         type: Date
     }
-});
+};
 
-// function that is called before saving to database
-UserSchema.pre('save', function(next) {
-    var user = this;
+// the required properties
+var requiredSchemaProperties = helpers.getRequiredProperties(UserSchema);
 
-    // only hash the password if it has been modified (or is new)
-    if (!user.isModified('password')) {
-        return next();
-    } 
+/**
+ * Find One
+ */
+exports.findOne = function(query, callback) {
+    // find one
+    helpers.findOne(db, query, function(err, obj) {
+        // if a callback
+        if(callback) {
+            // hit the callback
+            callback(err, _.cloneDeep(obj));
+        }
+    });
+};
 
+/**
+ * Save
+ */
+exports.save = function(objToSave, callback) {
+    // the object to return
+    var obj = null;
+    
+    // the error to return
+    var err = null;
+
+    // the first property value that isn't present
+    var firstProp = null;
+
+    // find the first property that doesn't exists
+    _.forEach(requiredSchemaProperties, function(value) {
+        if(!_.has(objToSave, value)) {
+            firstProp = value;
+            return false;
+        }
+    });
+
+    // if there is a property that doesn't exist
+    if(firstProp) {
+        // create new error
+        err = new Error(`All required properties are not present on object. The property \'${firstProp}\' was not in the object.`);
+    }
+    else {
+        // find the object matching the object
+        obj = _.find(db, objToSave) || null;
+
+        // if object was found
+        if(obj) {
+            // get index of object
+            var index = _.findIndex(db, obj);
+
+            // merge old data with new data
+            _.merge(obj, objToSave);
+
+            // encrypt password
+            encryptPasswordSync(objToSave);
+
+            // replace item at index using native splice
+            db.splice(index, 1, obj);
+        }
+        else {
+            // generate UUID
+            objToSave._id = uuidv1();
+
+            // encrypt password
+            encryptPasswordSync(objToSave);
+
+            // push the new object
+            db.push(objToSave);
+        }
+
+        // update the db
+        helpers.updateDB(dbPath, db, function(e) {
+            // set error
+            err = e;
+
+            // if error, reset object
+            obj = err ? null : obj;
+        });
+    }
+
+    // if a callback
+    if(callback) {
+        // hit the callback
+        callback(err, _.cloneDeep(obj));
+    }
+};
+
+/**
+ * Update
+ */
+exports.update = function(query, updatedObj, callback) {
+    // the object to return
+    var obj = null;
+    
+    // the error to return
+    var err = null;
+
+    // find the object matching the object
+    obj = _.find(db, query) || null;
+
+    // if object was found
+    if(obj) {
+        // get index of object
+        var index = _.findIndex(db, obj);
+
+        // merge old data with new data
+        _.merge(obj, updatedObj);
+
+        // replace item at index using native splice
+        db.splice(index, 1, obj);
+
+        // update the db
+        helpers.updateDB(dbPath, db, function(e) {
+            // set error
+            err = e;
+
+            // if error, reset object
+            obj = err ? null : obj;
+        });
+    }
+
+    // if a callback
+    if(callback) {
+        // hit the callback
+        callback(err, _.cloneDeep(obj));
+    }
+};
+
+/**
+ * Compares password
+ */
+exports.comparePassword = function(user, plainTextPassword, callback) {
+    // compare the passwords
+    bcrypt.compare(plainTextPassword, user.password, function(err, isMatch) {
+        // if error occurred
+        if (err) {
+            return callback(err);
+        } 
+
+        callback(null, isMatch);
+    });
+};
+
+/**
+ * Converts to object
+ */
+exports.toObject = function(obj, options) {
+    // clone object
+    var clonedObj = _.cloneDeep(obj);
+
+    // if object
+    if(clonedObj) {
+        // if hide options
+        if (options.hide) {
+            // go through each option and remove
+            _.forEach(options.hide.split(' '), function (value) {
+                delete clonedObj[value];
+            });
+        }
+
+        // always hide the id and version
+        delete clonedObj['_id'];
+        delete clonedObj['__v'];
+    }
+
+    return clonedObj;
+};
+
+// encrypt password
+function encryptPasswordSync(user) {
+    try {
+        // get the salt and hash
+        var salt = bcrypt.genSaltSync(defaultConfig.saltRounds);
+        var hash = bcrypt.hashSync(user.password, salt);
+
+        // override the cleartext password with the hashed one
+        user.password = hash;
+    }
+    catch (err) {
+        throw err;
+    }
+};
+
+// encrypt password
+function encryptPassword(user, callback) {
     // generate a salt
     bcrypt.genSalt(defaultConfig.saltRounds, function(err, salt) {
         // if error occurred
         if (err) {
-            return next(err);
+            return callback(err);
         }
 
         // hash the password using our new salt
         bcrypt.hash(user.password, salt, function(err, hash) {
             // if error occurred
             if (err) {
-                return next(err);
+                return callback(err);
             } 
 
             // override the cleartext password with the hashed one
             user.password = hash;
-            next();
+            callback();
         });
     });
-});
-
-// compares passwords
-UserSchema.methods.comparePassword = function(plainTextPassword, cb) {
-    bcrypt.compare(plainTextPassword, this.password, function(err, isMatch) {
-        if (err) return cb(err);
-        cb(null, isMatch);
-    });
 };
-
-// specify the transform schema option
-if (!UserSchema.options.toObject) {
-    UserSchema.options.toObject = {};
-}
-
-// set options for returning an object
-UserSchema.options.toObject.transform = function (doc, ret, options) {
-    // if hide options
-    if (options.hide) {
-        // go through each option and remove
-        options.hide.split(' ').forEach(function (prop) {
-            delete ret[prop];
-        });
-    }
-
-    // always hide the id and version
-    //delete ret['_id'];
-    delete ret['__v'];
-
-    // return object
-    return ret;
-};
-
-// export for other uses
-module.exports = mongoose.model('User', UserSchema);

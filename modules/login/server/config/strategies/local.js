@@ -6,7 +6,11 @@
 var // passport for authentication
     passport = require('passport'),
     // the local strategy
-    LocalStrategy = require('passport-local').Strategy;
+    LocalStrategy = require('passport-local').Strategy,
+    // the path
+    path = require('path'),
+    // the User model
+    User = require(path.resolve('./modules/login/server/models/model-user'));
 
 module.exports = function () {
     // =========================================================================
@@ -24,30 +28,29 @@ module.exports = function () {
         // asynchronous
         // User.findOne wont fire unless data is sent back
         process.nextTick(function() {
-            // FIXME: fix to write to local file
+            // FIXME-MODELS: fix to write to local file
             // find a user whose username is the same as the forms username
             // we are checking to see if the user trying to login already exists
             User.findOne({ username : username }, function(err, user) {
                 // if there are any errors, return the error
-                if (err)
+                if (err) {
                     return done(err);
+                }
 
                 // check to see if theres already a user with that username
                 if (user) {
                     return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
                 } 
                 else {
-                    // if there is no user with that username
-                    // create the user
-                    var newUser = new User();
-
-                    // set the user's local credentials
-                    newUser.username = username;
-                    newUser.password = password;
-                    newUser.passwordUpdatedLast = new Date();
+                    // create the user and set the user's local credentials
+                    var newUser = {
+                        username: username,
+                        password: password,
+                        passwordUpdatedLast: new Date()
+                    };
 
                     // save the user
-                    newUser.save(function(err) {
+                    User.save(newUser, function(err) {
                         // if error occurred
                         if (err) {
                             throw err;
@@ -75,7 +78,7 @@ module.exports = function () {
         // convert to lowercase
         username = username ? username.toLowerCase() : username;
 
-        // FIXME: fix to read from local file
+        // FIXME-MODELS: fix to read from local file
         // find a user whose username is the same as the forms username
         // we are checking to see if the user trying to login already exists
         User.findOne({ 'username' : username }, function (err, user) {
@@ -91,10 +94,10 @@ module.exports = function () {
             }
 
             // compare equality
-            user.comparePassword(password, function(err, isMatch) {
+            User.comparePassword(user, password, function(err, isMatch) {
                 // if the user is found but the password is wrong or an error occurred
 				if (err || !isMatch) {
-                    // create the loginMessage and save it to session as flashdata
+                    // create the login message and save it to session as flashdata
                     return done(null, false);
 				}
 
@@ -104,17 +107,30 @@ module.exports = function () {
                 };
 
                 // update user
-                user.update(updatedValues).exec(function(err) {
+                User.update(user, updatedValues, function(err, updatedUser) {
                     // if error occurred
                     if (err) {
                         return done(err);
                     }
-                    else {
-                        // set all updated values
-                        user.lastLogin = updatedValues.lastLogin;
-
+                    else if(updatedUser) {
                         // get object value
-                        user = user.toObject({ hide: 'password', transform: true });
+                        updatedUser = User.toObject(updatedUser, { 'hide': 'password' });
+
+                        // login
+                        req.login(updatedUser, function (err) {
+                            // if error occurred
+                            if (err) {
+                                return done(err);
+                            } 
+                            else {
+                                // all is well, return successful user
+                                return done(null, updatedUser);
+                            }
+                        });
+                    }
+                    else {
+                        // get object value
+                        user = User.toObject(user, { 'hide': 'password' });
 
                         // login
                         req.login(user, function (err) {

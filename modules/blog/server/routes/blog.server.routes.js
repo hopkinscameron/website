@@ -6,7 +6,7 @@
 var // the path
     path = require('path'),
     // the ip logger
-	ipLogger = require(path.resolve('./config/lib/ip.logger')),
+	ipLogger = require(path.resolve('./config/lib/ip-logger')),
 	// the blog policy
 	blogPolicy = require('../policies/blog.server.policy'),
 	// the blog controller to handle routes

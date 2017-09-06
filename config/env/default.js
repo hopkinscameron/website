@@ -3,7 +3,6 @@
 /**
  * Module dependencies.
  */
-
 module.exports = {
     app: {
         title: 'Cameron Hopkins Personal Website',
@@ -17,10 +16,17 @@ module.exports = {
     // DOMAIN config should be set to the fully qualified application accessible
     // URL. For example: https://www.myapp.com (including port if required).
     domain: process.env.DOMAIN || 'http://127.0.0.1:80',
-    // Session Cookie settings
+    // session options
+    sessionOptions: {
+        path: 'modules/core/server/models/db',
+        ttl: 60, // 86400 24 hours (in seconds)
+        logFn: process.env.SESSION_LOG_FILE || 'session-logs.log',
+        secret: process.env.SESSION_SECRET || 'TEST',
+    },
+    // session Cookie settings
     sessionCookie: {
         // session expiration is set by default to 24 hours (in milliseconds)
-        maxAge: 24 * (60 * 60 * 1000),
+        maxAge: 60000, //24 * (60 * 60 * 1000),
         // httpOnly flag makes sure the cookie is only accessed
         // through the HTTP protocol and not JS/browser
         httpOnly: true,
@@ -29,11 +35,8 @@ module.exports = {
         // in HTTPS mode.
         secure: false
     },
-    // sessionSecret should be changed for security measures and concerns
-    sessionSecret: process.env.SESSION_SECRET || 'TEST',
     // sessionKey is the cookie session name
     sessionKey: 'sessionId',
-    sessionCollection: 'sessions',
     saltRounds: parseInt(process.env.SALT_ROUNDS) || 10,
     // clear interval after session expires (in seconds)
     clearInterval: 60,

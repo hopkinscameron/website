@@ -8,7 +8,9 @@ var // passport for authentication
     // path
     path = require('path'),
     // the application configuration
-    config = require(path.resolve('./config/config'));
+    config = require(path.resolve('./config/config')),
+    // the User model
+    User = require(path.resolve('./modules/login/server/models/model-user'));
 
 /**
  * Module init function
@@ -26,7 +28,7 @@ module.exports = function (app, db) {
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        // FIXME: fix to read from local file
+        // FIXME-MODELS: fix to read from local file
         // find the user
         User.findById(id, function(err, user) {
             // if error occurred
@@ -37,7 +39,7 @@ module.exports = function (app, db) {
             }
             else if(user) {
                 // get object value
-                user = user.toObject({ hide: 'password', transform: true });
+                user = User.toObject(user, { 'hide': 'password' });
                 done(err, user);
             }
             else {

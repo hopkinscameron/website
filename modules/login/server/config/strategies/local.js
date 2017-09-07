@@ -28,7 +28,6 @@ module.exports = function () {
         // asynchronous
         // User.findOne wont fire unless data is sent back
         process.nextTick(function() {
-            // FIXME-MODELS: fix to write to local file
             // find a user whose username is the same as the forms username
             // we are checking to see if the user trying to login already exists
             User.findOne({ username : username }, function(err, user) {
@@ -45,8 +44,7 @@ module.exports = function () {
                     // create the user and set the user's local credentials
                     var newUser = {
                         username: username,
-                        password: password,
-                        passwordUpdatedLast: new Date()
+                        password: password
                     };
 
                     // save the user
@@ -78,7 +76,6 @@ module.exports = function () {
         // convert to lowercase
         username = username ? username.toLowerCase() : username;
 
-        // FIXME-MODELS: fix to read from local file
         // find a user whose username is the same as the forms username
         // we are checking to see if the user trying to login already exists
         User.findOne({ 'username' : username }, function (err, user) {

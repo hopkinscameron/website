@@ -27,7 +27,27 @@ exports.getRequiredProperties = function (model) {
 };
 
 /**
- * Find one object
+ * Find By Id
+ */
+exports.findById = function (db, id, callback) {
+    // the object to return
+    var obj = null;
+    
+    // the error to return
+    var err = null;
+
+    // find the object matching the query
+    obj = _.find(db, { '_id': id }) || null;
+
+    // if a callback
+    if(callback) {
+        // hit the callback
+        callback(err, obj);
+    }
+};
+
+/**
+ * Find One
  */
 exports.findOne = function (db, query, callback) {
     // the object to return

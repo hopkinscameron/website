@@ -34,6 +34,9 @@ var UserSchema = {
     _id: {
         type: String
     },
+    created: {
+        type: Date
+    },
     username: {
         type: String,
         required: true
@@ -52,6 +55,20 @@ var UserSchema = {
 
 // the required properties
 var requiredSchemaProperties = helpers.getRequiredProperties(UserSchema);
+
+/**
+ * Find By Id
+ */
+exports.findById = function(id, callback) {
+    // find one
+    helpers.findById(db, id, function(err, obj) {
+        // if a callback
+        if(callback) {
+            // hit the callback
+            callback(err, _.cloneDeep(obj));
+        }
+    });
+};
 
 /**
  * Find One
@@ -104,38 +121,68 @@ exports.save = function(objToSave, callback) {
 
             // merge old data with new data
             _.merge(obj, objToSave);
-
+            
             // encrypt password
-            encryptPasswordSync(objToSave);
+            encryptPassword(objToSave, function(err) {
+                // if error occurred
+                if(err) {
+                    return callback(err);
+                }
+                else {
+                    // replace item at index using native splice
+                    db.splice(index, 1, obj);
 
-            // replace item at index using native splice
-            db.splice(index, 1, obj);
+                    // update the db
+                    helpers.updateDB(dbPath, db, function(e) {
+                        // set error
+                        err = e;
+
+                        // if error, reset object
+                        obj = err ? null : obj;
+
+                        // if a callback
+                        if(callback) {
+                            // hit the callback
+                            callback(err, _.cloneDeep(obj));
+                        }
+                    });
+                }
+            });
         }
         else {
             // generate UUID
             objToSave._id = uuidv1();
 
             // encrypt password
-            encryptPasswordSync(objToSave);
+            encryptPassword(objToSave, function(err) {
+                // if error occurred
+                if(err) {
+                    return callback(err);
+                }
+                else {
+                    // set created date
+                    objToSave.created = new Date();
 
-            // push the new object
-            db.push(objToSave);
+                    // push the new object
+                    db.push(objToSave);
+
+                    // update the db
+                    helpers.updateDB(dbPath, db, function(e) {
+                        // set error
+                        err = e;
+
+                        // if error, reset object
+                        obj = err ? null : obj;
+
+                        // if a callback
+                        if(callback) {
+                            // hit the callback
+                            callback(err, _.cloneDeep(obj));
+                        }
+                    });
+                }
+            });
         }
-
-        // update the db
-        helpers.updateDB(dbPath, db, function(e) {
-            // set error
-            err = e;
-
-            // if error, reset object
-            obj = err ? null : obj;
-        });
-    }
-
-    // if a callback
-    if(callback) {
-        // hit the callback
-        callback(err, _.cloneDeep(obj));
     }
 };
 
@@ -222,38 +269,48 @@ exports.toObject = function(obj, options) {
 
 // encrypt password
 function encryptPasswordSync(user) {
-    try {
-        // get the salt and hash
-        var salt = bcrypt.genSaltSync(defaultConfig.saltRounds);
-        var hash = bcrypt.hashSync(user.password, salt);
+    // if password exists
+    if(user.password) {
+        try {
+            // get the salt and hash
+            var salt = bcrypt.genSaltSync(defaultConfig.saltRounds);
+            var hash = bcrypt.hashSync(user.password, salt);
 
-        // override the cleartext password with the hashed one
-        user.password = hash;
-    }
-    catch (err) {
-        throw err;
+            // override the cleartext password with the hashed one
+            user.password = hash;
+        }
+        catch (err) {
+            throw err;
+        }
     }
 };
 
 // encrypt password
 function encryptPassword(user, callback) {
-    // generate a salt
-    bcrypt.genSalt(defaultConfig.saltRounds, function(err, salt) {
-        // if error occurred
-        if (err) {
-            return callback(err);
-        }
-
-        // hash the password using our new salt
-        bcrypt.hash(user.password, salt, function(err, hash) {
+    // if password exists
+    if(user.password) {
+        // generate a salt
+        bcrypt.genSalt(defaultConfig.saltRounds, function(err, salt) {
             // if error occurred
             if (err) {
                 return callback(err);
-            } 
+            }
 
-            // override the cleartext password with the hashed one
-            user.password = hash;
-            callback();
+            // hash the password using our new salt
+            bcrypt.hash(user.password, salt, function(err, hash) {
+                // if error occurred
+                if (err) {
+                    return callback(err);
+                } 
+
+                // override the cleartext password with the hashed one
+                user.password = hash;
+
+                // set password updated last
+                user.passwordUpdatedLast = new Date();
+
+                callback();
+            });
         });
-    });
+    }
 };

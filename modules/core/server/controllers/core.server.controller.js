@@ -100,7 +100,7 @@ exports.sendEmail = function (req, res) {
     req.checkBody('message', 'Message is required').notEmpty();
     
     // validate errors
-    var errors = req.validationErrors();
+    var errors = req.getValidationResult();
 
     // if errors exist
     if (errors) {
@@ -161,7 +161,7 @@ exports.shortenUrl = function (req, res) {
     req.checkBody('longUrl', 'Long url is required').notEmpty();
 
     // validate errors
-    var errors = req.validationErrors();
+    var errors = req.getValidationResult();
 
     // if errors exist
     if (errors) {

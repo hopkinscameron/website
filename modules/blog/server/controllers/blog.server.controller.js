@@ -87,7 +87,7 @@ exports.publishBlogFromScratch = function (req, res) {
     req.checkBody('body', 'Body is required').notEmpty();
     
     // validate errors
-    var errors = req.validationErrors();
+    var errors = req.getValidationResult();
 
     // if errors exist
     if (errors) {
@@ -166,7 +166,7 @@ exports.updateBlog = function (req, res) {
     req.checkBody('body', 'Body is required').notEmpty();
     
     // validate errors
-    var errors = req.validationErrors();
+    var errors = req.getValidationResult();
 
     // if errors exist
     if (errors) {
@@ -382,7 +382,7 @@ exports.publishBlogFromDraft = function (req, res) {
     req.checkBody('body', 'Body is required').notEmpty();
     
     // validate errors
-    var errors = req.validationErrors();
+    var errors = req.getValidationResult();
 
     // if errors exist
     if (errors) {
@@ -452,7 +452,7 @@ exports.createDraft = function (req, res) {
     req.checkBody('title', 'Title is required').notEmpty();
     
     // validate errors
-    var errors = req.validationErrors();
+    var errors = req.getValidationResult();
 
     // if errors exist
     if (errors) {
@@ -573,7 +573,7 @@ exports.updateDraft = function (req, res) {
     req.checkBody('title', 'Title is required').notEmpty();
     
     // validate errors
-    var errors = req.validationErrors();
+    var errors = req.getValidationResult();
 
     // if errors exist
     if (errors) {

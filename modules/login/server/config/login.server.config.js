@@ -28,7 +28,6 @@ module.exports = function (app, db) {
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        // FIXME-MODELS: fix to read from local file
         // find the user
         User.findById(id, function(err, user) {
             // if error occurred

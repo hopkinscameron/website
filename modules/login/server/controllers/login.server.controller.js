@@ -45,29 +45,35 @@ exports.signUp = function (req, res, next) {
     req.checkBody('password', 'Password is required.').notEmpty();
     
     // validate errors
-    var errors = req.validationErrors();
+    req.getValidationResult().then(function(errors) {
+        // if any errors exists
+        if(!errors.isEmpty()) {
+            // holds all the errors in one text
+            var errorText = "";
 
-    // if errors exist
-    if (errors) {
-        // holds all the errors in one text
-        var errorText = "";
+            // add all the errors
+            for(var x = 0; x < errors.array().length; x++) {
+                // if not the last error
+                if(x < errors.array().length - 1) {
+                    errorText += errors.array()[x].msg + '\r\n';
+                }
+                else {
+                    errorText += errors.array()[x].msg;
+                }
+            }
 
-        // add all the errors
-        for(var x = 0; x < errors.length; x++) {
-            errorText += errors[x].msg + "\r\n";
+            // send bad request
+            res.status(400).send({ title: errorHandler.getErrorTitle({ code: 400 }), message: errorText });
+        } 
+        else {
+            // authenticate the user with a signup
+            passport.authenticate('local-signup', {
+                successRedirect : '/about', // redirect to the secure profile section
+                failureRedirect : '/login', // redirect back to the home page if there is an error
+                failureFlash : true // allow flash messages
+            })(req, res, next);
         }
-
-        // send bad request
-        res.status(400).send({ title: errorHandler.getErrorTitle({ code: 400 }), message: errorHandler.getGenericErrorMessage({ code: 400 }) + errorText });
-    }
-    else {
-        // authenticate the user with a signup
-        passport.authenticate('local-signup', {
-            successRedirect : '/about', // redirect to the secure profile section
-            failureRedirect : '/login', // redirect back to the home page if there is an error
-            failureFlash : true // allow flash messages
-        })(req, res, next);
-    }
+    });
 };
 
 /**
@@ -162,7 +168,7 @@ exports.userById = function (req, res, next, id) {
         req.checkBody('newpassword', 'New Password is required.').notEmpty();
         
         // validate errors
-        var errors = req.validationErrors();
+        var errors = req.getValidationResult();
 
         // if errors exist
         if (errors) {
@@ -181,9 +187,8 @@ exports.userById = function (req, res, next, id) {
             // convert to lowercase
             id = id ? id.toLowerCase() : id;
 
-            // FIXME-MODELS: fix to read from local file
             // find user based on id
-            User.findOne({ username : id }).exec(function(err, foundUser) {
+            User.findOne({ 'username' : id }, function(err, foundUser) {
                 // if error occurred
                 if (err) {
                     // return error

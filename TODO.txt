@@ -5,8 +5,8 @@
 All 
 
 Done
-
 Pending
+- 1. getValidationResult() -> fix everywhere to match whats in login.server.controller
 - Remove all mongoose mongo references
 - Remove all models -> or rename the file to handle all reads/writes/searches/etc.
 - Get express working without mongodb
@@ -17,6 +17,7 @@ Next
 - blog draft put and blog update (put) method takes a very long time
 - seperate out admin views/regular views
 - fix socket.io to not print so many error on disconnect
+- change models so that functions are part of the schema, and so I can create a instance of a model
 
 
 - IE stuff not working

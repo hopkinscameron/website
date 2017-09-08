@@ -12,8 +12,6 @@ var // generate UUID's
     uuidv1 = require('uuid/v1'),
     // lodash
     _ = require('lodash'),
-    // the file system to read/write from/to files locally
-    fs = require('fs'),
     // the path
     path = require('path'),
     // the helper functions
@@ -32,10 +30,12 @@ var // generate UUID's
  */ 
 var UserSchema = {
     _id: {
-        type: String
+        type: String,
+        overwriteable: false
     },
     created: {
-        type: Date
+        type: Date,
+        overwriteable: false
     },
     username: {
         type: String,
@@ -46,7 +46,8 @@ var UserSchema = {
         required: true
     },
     passwordUpdatedLast: {
-        type: Date
+        type: Date,
+        overwriteable: false
     },
     lastLogin: {
         type: Date
@@ -55,6 +56,9 @@ var UserSchema = {
 
 // the required properties
 var requiredSchemaProperties = helpers.getRequiredProperties(UserSchema);
+
+// the non overwritable properties the user cannot self change
+var nonOverwritableSchemaProperties = helpers.getNonOverwritableProperties(UserSchema);
 
 /**
  * Find By Id
@@ -95,22 +99,17 @@ exports.save = function(objToSave, callback) {
     var err = null;
 
     // the first property value that isn't present
-    var firstProp = null;
-
-    // find the first property that doesn't exists
-    _.forEach(requiredSchemaProperties, function(value) {
-        if(!_.has(objToSave, value)) {
-            firstProp = value;
-            return false;
-        }
-    });
-
+    var firstProp = helpers.checkRequiredProperties(requiredSchemaProperties, objToSave);
+    
     // if there is a property that doesn't exist
     if(firstProp) {
         // create new error
         err = new Error(`All required properties are not present on object. The property \'${firstProp}\' was not in the object.`);
     }
     else {
+        // remove any keys that may have tried to been overwritten
+        helpers.removeAttemptedNonOverwritableProperties(nonOverwritableSchemaProperties, objToSave);
+
         // find the object matching the object
         obj = _.find(db, objToSave) || null;
 
@@ -150,6 +149,9 @@ exports.save = function(objToSave, callback) {
             });
         }
         else {
+            // set all defaults
+            helpers.setNonOverwritablePropertyDefaults(nonOverwritableSchemaProperties, UserSchema, objToSave);
+
             // generate UUID
             objToSave._id = uuidv1();
 
@@ -201,6 +203,9 @@ exports.update = function(query, updatedObj, callback) {
 
     // if object was found
     if(obj) {
+        // remove any keys that may have tried to been overwritten
+        helpers.removeAttemptedNonOverwritableProperties(nonOverwritableSchemaProperties, updatedObj);
+
         // get index of object
         var index = _.findIndex(db, obj);
 

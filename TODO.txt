@@ -3,11 +3,11 @@
 - Ability to updload images for projects and blogs
 
 All 
-
+ - getValidationResult() -> fix everywhere
 Done
 Pending
-- 1. getValidationResult() -> fix everywhere to match whats in login.server.controller
-- Remove all mongoose mongo references
+- Set Date Updated in blog model under update
+- Remove all mongoose mongo references (next up is Saved Blog model and controller)
 - Remove all models -> or rename the file to handle all reads/writes/searches/etc.
 - Get express working without mongodb
 - Get passport working without mongodb
@@ -18,6 +18,7 @@ Next
 - seperate out admin views/regular views
 - fix socket.io to not print so many error on disconnect
 - change models so that functions are part of the schema, and so I can create a instance of a model
+- add functionality where trying to add a value that doesn't exist in the model removes it (if object is  { id, password } then if { id, pass } was passed in, it would remove pass)
 
 
 - IE stuff not working

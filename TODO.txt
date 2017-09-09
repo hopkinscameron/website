@@ -3,10 +3,12 @@
 - Ability to updload images for projects and blogs
 
 All 
- - getValidationResult() -> fix everywhere
+- getValidationResult() -> fixed everywhere
+- added functionality to save the updated date on blogs
+
 Done
+
 Pending
-- Set Date Updated in blog model under update
 - Remove all mongoose mongo references (next up is Saved Blog model and controller)
 - Remove all models -> or rename the file to handle all reads/writes/searches/etc.
 - Get express working without mongodb

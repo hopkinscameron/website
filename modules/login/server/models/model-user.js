@@ -61,6 +61,14 @@ var requiredSchemaProperties = helpers.getRequiredProperties(UserSchema);
 var nonOverwritableSchemaProperties = helpers.getNonOverwritableProperties(UserSchema);
 
 /**
+ * Converts to object
+ */
+exports.toObject = function(obj, options) {
+    // returned the obj
+    return _.cloneDeep(helpers.toObject(obj, options));
+};
+
+/**
  * Find By Id
  */
 exports.findById = function(id, callback) {
@@ -245,31 +253,6 @@ exports.comparePassword = function(user, plainTextPassword, callback) {
 
         callback(null, isMatch);
     });
-};
-
-/**
- * Converts to object
- */
-exports.toObject = function(obj, options) {
-    // clone object
-    var clonedObj = _.cloneDeep(obj);
-
-    // if object
-    if(clonedObj) {
-        // if hide options
-        if (options.hide) {
-            // go through each option and remove
-            _.forEach(options.hide.split(' '), function (value) {
-                delete clonedObj[value];
-            });
-        }
-
-        // always hide the id and version
-        delete clonedObj['_id'];
-        delete clonedObj['__v'];
-    }
-
-    return clonedObj;
 };
 
 // encrypt password

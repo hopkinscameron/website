@@ -94,9 +94,54 @@ exports.removeAttemptedNonOverwritableProperties = function (properties, obj) {
 /**
  * Get existing keys of model
  */
-exports.getAllExistingKeys = function (model) {
+exports.getAllExistingKeysFromModel = function (model) {
     // return the keys
     return Object.keys(model);
+};
+
+/**
+ * Converts To Object
+ */
+exports.toObject = function(obj, options) {
+    // clone object
+    var clonedObj = _.cloneDeep(obj);
+
+    // if object
+    if(clonedObj) {
+        // if hide options
+        if (options.hide) {
+            // go through each option and remove
+            _.forEach(options.hide.split(' '), function (value) {
+                delete clonedObj[value];
+            });
+        }
+
+        // always hide the id and version
+        delete clonedObj['_id'];
+        delete clonedObj['__v'];
+    }
+
+    return clonedObj;
+};
+
+/**
+ * Find
+ */
+exports.find = function (db, query, callback) {
+    // the array of objects to return
+    var objs = null;
+    
+    // the error to return
+    var err = null;
+
+    // find the object matching the query
+    objs = _.filter(db, query) || null;
+
+    // if a callback
+    if(callback) {
+        // hit the callback
+        callback(err, objs);
+    }
 };
 
 /**
@@ -147,7 +192,50 @@ exports.save = function(dbPath, db, objToSave, callback) {
 };
 
 /**
- * Read database
+ * Remove
+ */
+exports.remove = function(db, objToRemove, callback) {
+    // the error to return
+    var err = null;
+
+    // get index of object
+    var index = _.findIndex(db, objToRemove);
+    
+    // if object was found
+    if(index != -1) {
+        // remove item at index using native splice
+        db.splice(index, 1);
+    }
+
+    // if a callback
+    if(callback) {
+        // hit the callback
+        callback(err);
+    }
+};
+
+/**
+ * Sort
+ */
+exports.sort = function(arr, query, callback) {
+    // the array of objects to return
+    var objs = null;
+    
+    // the error to return
+    var err = null;
+
+    // find the object matching the query
+    objs = _.orderBy(arr, Object.keys(query), Object.values(query)) || null;
+
+    // if a callback
+    if(callback) {
+        // hit the callback
+        callback(err, objs);
+    }
+};
+
+/**
+ * Read Database
  */
 exports.readDB = function (dbPath, callback) {
     // the database to return
@@ -171,7 +259,7 @@ exports.readDB = function (dbPath, callback) {
 };
 
 /**
- * Updates database
+ * Updates Database
  */
 exports.updateDB = function(dbPath, dbData, callback) {
     // the error to return

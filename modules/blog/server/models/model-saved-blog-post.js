@@ -62,6 +62,28 @@ var requiredSchemaProperties = helpers.getRequiredProperties(SavedBlogPostSchema
 var nonOverwritableSchemaProperties = helpers.getNonOverwritableProperties(SavedBlogPostSchema);
 
 /**
+ * Converts to object
+ */
+exports.toObject = function(obj, options) {
+    // returned the obj
+    return _.cloneDeep(helpers.toObject(obj, options));
+};
+
+/**
+ * Find
+ */
+exports.find = function(query, callback) {
+    // find
+    helpers.find(db, query, function(err, objs) {
+        // if a callback
+        if(callback) {
+            // hit the callback
+            callback(err, _.cloneDeep(objs));
+        }
+    });
+};
+
+/**
  * Find One
  */
 exports.findOne = function(query, callback) {
@@ -181,6 +203,9 @@ exports.update = function(query, updatedObj, callback) {
         // remove any keys that may have tried to been overwritten
         helpers.removeAttemptedNonOverwritableProperties(nonOverwritableSchemaProperties, updatedObj);
 
+        // set saved date
+        objToSave.dateSaved = new Date();
+
         // get index of object
         var index = _.findIndex(db, obj);
 
@@ -205,4 +230,45 @@ exports.update = function(query, updatedObj, callback) {
         // hit the callback
         callback(err, _.cloneDeep(obj));
     }
+};
+
+/**
+ * Remove
+ */
+exports.remove = function(obj, callback) {
+    // remove
+    helpers.remove(db, obj, function(err) {
+        // if error occurred
+        if(err) {
+            // if a callback
+            if(callback) {
+                // hit the callback
+                callback(err);
+            }
+        }
+        else {
+            // update the db
+            helpers.updateDB(dbPath, db, function(e) {
+                // if a callback
+                if(callback) {
+                    // hit the callback
+                    callback(e);
+                }
+            });
+        }
+    });
+};
+
+/**
+ * Sort
+ */
+exports.sort = function(arr, callback) {
+    // sort
+    helpers.sort(arr, query, function(err, objs) {
+        // if a callback
+        if(callback) {
+            // hit the callback
+            callback(err, _.cloneDeep(objs));
+        }
+    });
 };

@@ -193,6 +193,9 @@ exports.update = function(query, updatedObj, callback) {
         // remove any keys that may have tried to been overwritten
         helpers.removeAttemptedNonOverwritableProperties(nonOverwritableSchemaProperties, updatedObj);
 
+        // set date updated
+        objToSave.dateUpdated = new Date();
+        
         // get index of object
         var index = _.findIndex(db, obj);
 

@@ -149,7 +149,7 @@ function logPageRequest(accessedBy, pageRequested, requestType) {
 	var req = requestType + ':' + pageRequested;
 
 	// find page post based on id
-	AnalyticsPage.findOne({ request : req }, function(err, foundPage) {
+	AnalyticsPage.findOne({ 'request' : req }, function(err, foundPage) {
 		// if error occurred
 		if (err) {
 			console.log(clc.error(err.message));
@@ -159,7 +159,7 @@ function logPageRequest(accessedBy, pageRequested, requestType) {
 			foundPage.accessedBy.push(accessedBy);
 
 			// push the ip who accessed this page
-			AnalyticsPage.update({ request : req }, foundPage, function(err, updatedBlog) {
+			AnalyticsPage.update({ 'request' : req }, foundPage, function(err) {
 				// if error occurred
 				if (err) {
 					console.log(clc.error(err.message));

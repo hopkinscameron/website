@@ -38,7 +38,7 @@ module.exports = function (app, db) {
             }
             else if(user) {
                 // get object value
-                user = User.toObject(user, { 'hide': 'password' });
+                user = User.toObject(user, { 'hide': 'password internalName' });
                 done(err, user);
             }
             else {

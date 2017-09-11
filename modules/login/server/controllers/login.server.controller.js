@@ -193,7 +193,7 @@ exports.userById = function (req, res, next, id) {
                 id = id ? id.toLowerCase() : id;
 
                 // find user based on id
-                User.findOne({ 'username' : id }, function(err, foundUser) {
+                User.findOne({ 'username': id }, function(err, foundUser) {
                     // if error occurred
                     if (err) {
                         // return error

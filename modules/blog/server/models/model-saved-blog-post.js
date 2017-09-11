@@ -10,6 +10,8 @@
  */
 var // generate UUID's
     uuidv1 = require('uuid/v1'),
+    // short id generator
+    shortid = require('shortid'),
     // lodash
     _ = require('lodash'),
     // the path
@@ -34,8 +36,7 @@ var SavedBlogPostSchema = {
         overwriteable: false
     },
     customShort: {
-        type: String,
-        overwriteable: false
+        type: String
     },
     title: {
         type: String
@@ -65,7 +66,7 @@ var nonOverwritableSchemaProperties = helpers.getNonOverwritableProperties(Saved
  * Converts to object
  */
 exports.toObject = function(obj, options) {
-    // returned the obj
+    // return the obj
     return _.cloneDeep(helpers.toObject(obj, options));
 };
 
@@ -117,18 +118,22 @@ exports.save = function(objToSave, callback) {
     }
     else {
         // remove any keys that may have tried to been overwritten
-        helpers.setNonOverwritablePropertyDefaults(nonOverwritableSchemaProperties, objToSave);
+        helpers.removeAttemptedNonOverwritableProperties(nonOverwritableSchemaProperties, objToSave);
 
-        // find the object matching the object
-        obj = _.find(db, objToSave) || null;
+        // the index of the possible draft
+        var index = -1;
+
+        // if not creating a new draft
+        if(!objToSave.new) {
+            // find the object matching the object index
+            index = _.findIndex(db, objToSave);
+            obj = index != -1 ? db[index] : null;
+        }
 
         // if object was found
         if(obj) {
             // set saved date
             objToSave.dateSaved = new Date();
-            
-            // get index of object
-            var index = _.findIndex(db, obj);
 
             // merge old data with new data
             _.merge(obj, objToSave);
@@ -153,7 +158,7 @@ exports.save = function(objToSave, callback) {
         }
         else {
             // set all defaults
-            helpers.setNonOverwritablePropertyDefaults(nonOverwritableSchemaProperties, BlogPostSchema, objToSave);
+            helpers.setNonOverwritablePropertyDefaults(nonOverwritableSchemaProperties, SavedBlogPostSchema, objToSave);
 
             // generate UUID
             objToSave._id = uuidv1();
@@ -162,7 +167,10 @@ exports.save = function(objToSave, callback) {
             objToSave.created = new Date();
 
             // set saved date
-            objToSave.dateSaved = new Date();
+            objToSave.dateSaved = objToSave.created;
+
+            // generate a short id if the current one doesn't exist
+            objToSave.customShort = objToSave.customShort && shortid.isValid(objToSave.customShort) ? objToSave.customShort : shortid.generate();
 
             // push the new object
             db.push(objToSave);
@@ -173,12 +181,12 @@ exports.save = function(objToSave, callback) {
                 err = e;
 
                 // if error, reset object
-                obj = err ? null : obj;
+                objToSave = err ? null : objToSave;
 
                 // if a callback
                 if(callback) {
                     // hit the callback
-                    callback(err, _.cloneDeep(obj));
+                    callback(err, _.cloneDeep(objToSave));
                 }
             });
         }
@@ -195,8 +203,9 @@ exports.update = function(query, updatedObj, callback) {
     // the error to return
     var err = null;
 
-    // find the object matching the object
-    obj = _.find(db, query) || null;
+    // find the object matching the object index
+    var index = _.findIndex(db, query);
+    obj = index != -1 ? db[index] : null;
 
     // if object was found
     if(obj) {
@@ -204,10 +213,7 @@ exports.update = function(query, updatedObj, callback) {
         helpers.removeAttemptedNonOverwritableProperties(nonOverwritableSchemaProperties, updatedObj);
 
         // set saved date
-        objToSave.dateSaved = new Date();
-
-        // get index of object
-        var index = _.findIndex(db, obj);
+        updatedObj.dateSaved = new Date();
 
         // merge old data with new data
         _.merge(obj, updatedObj);
@@ -262,7 +268,7 @@ exports.remove = function(obj, callback) {
 /**
  * Sort
  */
-exports.sort = function(arr, callback) {
+exports.sort = function(arr, query, callback) {
     // sort
     helpers.sort(arr, query, function(err, objs) {
         // if a callback

@@ -18,15 +18,15 @@ module.exports = {
     domain: process.env.DOMAIN || 'http://127.0.0.1:80',
     // session options
     sessionOptions: {
-        path: 'modules/core/server/models/db',
-        ttl: 60, // 86400 24 hours (in seconds)
-        logFn: process.env.SESSION_LOG_FILE || 'session-logs.log',
+        path: 'modules/core/server/models/db/sessions',
+        ttl: 60, // 86400 24 hours (in seconds) // 60 -> 1 minute
+        //logFn: process.env.SESSION_LOG_FILE || 'session-logs.log',
         secret: process.env.SESSION_SECRET || 'TEST',
     },
     // session Cookie settings
     sessionCookie: {
         // session expiration is set by default to 24 hours (in milliseconds)
-        maxAge: 60000, //24 * (60 * 60 * 1000),
+        maxAge: 60000, //24 * (60 * 60 * 1000), // 60000 -> 1 minute
         // httpOnly flag makes sure the cookie is only accessed
         // through the HTTP protocol and not JS/browser
         httpOnly: true,

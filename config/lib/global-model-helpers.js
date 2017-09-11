@@ -235,6 +235,46 @@ exports.sort = function(arr, query, callback) {
 };
 
 /**
+ * Skip
+ */
+exports.skip = function(arr, howMany, callback) {
+    // the array of objects to return
+    var objs = null;
+    
+    // the error to return
+    var err = null;
+
+    // find the object matching the query
+    objs = _.drop(arr, howMany);
+
+    // if a callback
+    if(callback) {
+        // hit the callback
+        callback(err, objs);
+    }
+};
+
+/**
+ * Limit
+ */
+exports.limit = function(arr, howMany, callback) {
+    // the array of objects to return
+    var objs = null;
+    
+    // the error to return
+    var err = null;
+
+    // find the object matching the query
+    objs = _.dropRight(arr, arr.length - howMany);
+
+    // if a callback
+    if(callback) {
+        // hit the callback
+        callback(err, objs);
+    }
+};
+
+/**
  * Read Database
  */
 exports.readDB = function (dbPath, callback) {

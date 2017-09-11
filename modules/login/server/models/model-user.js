@@ -37,6 +37,10 @@ var UserSchema = {
         type: Date,
         overwriteable: false
     },
+    internalName: {
+        type: String,
+        overwriteable: false
+    },
     username: {
         type: String,
         required: true
@@ -64,7 +68,7 @@ var nonOverwritableSchemaProperties = helpers.getNonOverwritableProperties(UserS
  * Converts to object
  */
 exports.toObject = function(obj, options) {
-    // returned the obj
+    // return the obj
     return _.cloneDeep(helpers.toObject(obj, options));
 };
 
@@ -86,6 +90,10 @@ exports.findById = function(id, callback) {
  * Find One
  */
 exports.findOne = function(query, callback) {
+    // if querying on username, change to lowercase and delete username query
+    query.internalName = query.username ? query.username.toLowerCase() : null;
+    delete query['username'];
+
     // find one
     helpers.findOne(db, query, function(err, obj) {
         // if a callback
@@ -118,13 +126,17 @@ exports.save = function(objToSave, callback) {
         // remove any keys that may have tried to been overwritten
         helpers.removeAttemptedNonOverwritableProperties(nonOverwritableSchemaProperties, objToSave);
 
-        // find the object matching the object
-        obj = _.find(db, objToSave) || null;
+        // find the object matching the object index
+        var index = _.findIndex(db, objToSave);
+        obj = index != -1 ? db[index] : null;
 
         // if object was found
         if(obj) {
-            // get index of object
-            var index = _.findIndex(db, obj);
+            // if username was changed
+            if(objToSave.username) {
+                // update the internal name
+                objToSave.internalName = objToSave.username.toLowerCase();
+            }
 
             // merge old data with new data
             _.merge(obj, objToSave);
@@ -160,9 +172,6 @@ exports.save = function(objToSave, callback) {
             // set all defaults
             helpers.setNonOverwritablePropertyDefaults(nonOverwritableSchemaProperties, UserSchema, objToSave);
 
-            // generate UUID
-            objToSave._id = uuidv1();
-
             // encrypt password
             encryptPassword(objToSave, function(err) {
                 // if error occurred
@@ -170,8 +179,14 @@ exports.save = function(objToSave, callback) {
                     return callback(err);
                 }
                 else {
+                    // generate UUID
+                    objToSave._id = uuidv1();
+
                     // set created date
                     objToSave.created = new Date();
+
+                    // set the internal name
+                    objToSave.internalName = objToSave.username.toLowerCase();
 
                     // push the new object
                     db.push(objToSave);
@@ -182,12 +197,12 @@ exports.save = function(objToSave, callback) {
                         err = e;
 
                         // if error, reset object
-                        obj = err ? null : obj;
+                        objToSave = err ? null : objToSave;
 
                         // if a callback
                         if(callback) {
                             // hit the callback
-                            callback(err, _.cloneDeep(obj));
+                            callback(err, _.cloneDeep(objToSave));
                         }
                     });
                 }
@@ -206,16 +221,14 @@ exports.update = function(query, updatedObj, callback) {
     // the error to return
     var err = null;
 
-    // find the object matching the object
-    obj = _.find(db, query) || null;
+    // find the object matching the object index
+    var index = _.findIndex(db, query);
+    obj = index != -1 ? db[index] : null;
 
     // if object was found
     if(obj) {
         // remove any keys that may have tried to been overwritten
         helpers.removeAttemptedNonOverwritableProperties(nonOverwritableSchemaProperties, updatedObj);
-
-        // get index of object
-        var index = _.findIndex(db, obj);
 
         // merge old data with new data
         _.merge(obj, updatedObj);

@@ -33,14 +33,15 @@ exports.blogList = function (req, res) {
 
     // if query
     if(req.query.q) {
+        // FIXME-MODELS: fix all mongo references
         // log the blog search query
         logBlogSearchQuery(req.query.q);
     }
 
-    // FIXME-MODELS: fix all mongo references
     // find all blog posts
-    BlogPost.find(findOptions).exec(function(err, foundBlogs) {
-        var pageSize = 1;
+    BlogPost.find(findOptions, function(err, foundBlogs) {
+        // set page size to 1
+        var pageSize = 2;
 
         // parse the page number
         pageNumber = parseInt(pageNumber);
@@ -53,22 +54,28 @@ exports.blogList = function (req, res) {
 
         // if pages
         if(blogDetails.totalPages > 0) {
-            // FIXME-MODELS: fix all mongo references
-            // find all blog posts but limit based on page size
-            BlogPost.find(findOptions).sort({ datePublished: 'desc' }).skip(pageSize * (pageNumber - 1)).limit(pageSize).exec(function(err, sortedPagedBlogs) {
-                // map blogs to transform to an array of JSON
-                blogDetails.posts = sortedPagedBlogs.map(function(blog) {
-                    // get the url
-                    var url = blog.customShort;
+            // find all blog posts
+            BlogPost.sort(foundBlogs, { 'datePublished': 'desc' }, function(err, sortedPagedBlogs) {
+                // skip the number of returned items based on page size and page number
+                BlogPost.skip(sortedPagedBlogs, pageSize * (pageNumber - 1), function(err, skippedPagedBlogs) {
+                    // limit the return amount based on page size
+                    BlogPost.limit(skippedPagedBlogs, pageSize, function(err, limitedPagedBlogs) {
+                        // map blogs to transform to an array of JSON
+                        blogDetails.posts = limitedPagedBlogs.map(function(blog) {
+                            // get the url
+                            var url = blog.customShort;
 
-                    // make an object
-                    blog = blog.toObject({ hide: 'customShort', transform: true });
-                    blog.url = url;
-                    return blog;
+                            // make an object
+                            blog = BlogPost.toObject(blog, { 'hide': 'customShort' });
+                            blog.url = url;
+
+                            return blog;
+                        });
+
+                        // send data
+                        res.json({ 'd': blogDetails });
+                    });
                 });
-
-                // send data
-                res.json({ 'd': blogDetails });
             });
         }
         else {
@@ -95,7 +102,7 @@ exports.publishBlogFromScratch = function (req, res) {
         // if any errors exists
         if(!errors.isEmpty()) {
             // holds all the errors in one text
-            var errorText = "";
+            var errorText = '';
 
             // add all the errors
             for(var x = 0; x < errors.array().length; x++) {
@@ -112,22 +119,17 @@ exports.publishBlogFromScratch = function (req, res) {
             res.status(400).send({ title: errorHandler.getErrorTitle({ code: 400 }), message: errorText });
         }
         else {
-            // generate a short id
-            var shortId = shortid.generate();
-
-            // FIXME-MODELS: fix all mongo references
             // create the blog
-            var blogPost = new BlogPost({
-                customShort: shortId,
-                title: req.body.title,
-                image: req.body.image,
-                shortDescription: req.body.shortDescription,
-                body: req.body.body
-            });
+            var blogPost = {
+                'new': true,
+                'title': req.body.title,
+                'image': req.body.image,
+                'shortDescription': req.body.shortDescription,
+                'body': req.body.body
+            };
 
-            // FIXME-MODELS: fix all mongo references
             // save the blog
-            blogPost.save(function(err, newPostedBlog) {
+            BlogPost.save(blogPost, function(err, newPostedBlog) {
                 // if error occurred
                 if (err) {
                     // send internal error
@@ -139,7 +141,7 @@ exports.publishBlogFromScratch = function (req, res) {
                     var url = newPostedBlog.customShort;
 
                     // make an object
-                    newPostedBlog = newPostedBlog.toObject({ hide: 'customShort', transform: true });
+                    newPostedBlog = BlogPost.toObject(newPostedBlog, { 'hide': 'customShort' });
                     newPostedBlog.url = url;
 
                     // send success with blog data
@@ -160,9 +162,8 @@ exports.readBlog = function (req, res) {
     // set url
     var url = blogPost.customShort;
 
-    // FIXME-MODELS: fix all mongo references
     // make an object
-    blogPost = blogPost.toObject({ hide: 'customShort', transform: true });
+    blogPost = BlogPost.toObject(blogPost, { 'hide': 'customShort' });
     blogPost.url = url;
 
     // send blog post
@@ -183,7 +184,7 @@ exports.updateBlog = function (req, res) {
         // if any errors exists
         if(!errors.isEmpty()) {
             // holds all the errors in one text
-            var errorText = "";
+            var errorText = '';
 
             // add all the errors
             for(var x = 0; x < errors.array().length; x++) {
@@ -205,16 +206,14 @@ exports.updateBlog = function (req, res) {
 
             // set updated values 
             var updatedValues = {
-                "title": req.body.title,
-                "image": req.body.image,
-                "shortDescription": req.body.shortDescription,
-                "body": req.body.body,
-                "dateUpdated": new Date()
+                'title': req.body.title,
+                'image': req.body.image,
+                'shortDescription': req.body.shortDescription,
+                'body': req.body.body
             };
 
-            // FIXME-MODELS: fix all mongo references
             // find the blog and remove
-            blogPost.update(updatedValues).exec(function(err) {
+            BlogPost.update(blogPost, updatedValues, function(err, updatedBlog) {
                 // if an error occurred
                 if (err) {
                     // send internal error
@@ -222,9 +221,8 @@ exports.updateBlog = function (req, res) {
                     console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
                 }
                 else {
-                    // FIXME-MODELS: fix all mongo references
                     // see if there was a saved draft 
-                    SavedBlogPost.findOneAndRemove({ customShort : blogPost.customShort }).exec(function(err) {
+                    SavedBlogPost.remove({ 'customShort': updatedBlog.customShort }, function(err) {
                         // if error occurred
                         if (err) {
                             // log error
@@ -232,22 +230,16 @@ exports.updateBlog = function (req, res) {
                         }
 
                         // set url
-                        var url = blogPost.customShort;
+                        var url = updatedBlog.customShort;
 
-                        // FIXME-MODELS: fix all mongo references
                         // make an object
-                        blogPost = blogPost.toObject({ hide: 'customShort', transform: true });
+                        updatedBlog = BlogPost.toObject(updatedBlog, { 'hide': 'customShort' });
 
                         // set all updated values
-                        blogPost.url = url;
-                        blogPost.title = updatedValues.title;
-                        blogPost.image = updatedValues.image;
-                        blogPost.shortDescription = updatedValues.shortDescription;
-                        blogPost.body = updatedValues.body;
-                        blogPost.dateUpdated = updatedValues.dateUpdated;
+                        updatedBlog.url = url;
 
                         // send blog post
-                        res.json({ 'd': blogPost });
+                        res.json({ 'd': updatedBlog });
                     });
                 }
             });
@@ -262,9 +254,8 @@ exports.deleteBlog = function (req, res) {
     // set draft from request
     var blogPost = req.blogPost;
 
-    // FIXME-MODELS: fix all mongo references
     // remove blog post
-    blogPost.remove(function(err) {
+    BlogPost.remove(blogPost, function(err) {
         // if an error occurred
         if (err) {
             // send internal error
@@ -272,17 +263,16 @@ exports.deleteBlog = function (req, res) {
             console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
         }
         else {
-            // FIXME-MODELS: fix all mongo references
             // see if there was saved draft of this same blog
             // find the draft and remove
-            SavedBlogPost.findOneAndRemove({ customShort : req.blogPost.url }).exec(function(err, removedSavedBlog) {
+            SavedBlogPost.remove({ 'customShort': req.blogPost.customShort }, function(err) {
                 // if an error occurred
                 if (err) {
                     console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
                 }
 
                 // return success
-                res.status(200).send({ 'd': { title: errorHandler.getErrorTitle({ code: 200 }), message: errorHandler.getGenericErrorMessage({ code: 200 }) + " You have deleted the blog successfully!" } });
+                res.status(200).send({ 'd': { title: errorHandler.getErrorTitle({ code: 200 }), message: errorHandler.getGenericErrorMessage({ code: 200 }) + ' You have deleted the blog successfully!' } });
             });
         }
     });
@@ -292,9 +282,8 @@ exports.deleteBlog = function (req, res) {
  * Blog middleware
  */
 exports.blogByID = function (req, res, next, id) {
-    // FIXME-MODELS: fix all mongo references
     // find blog post based on id
-    BlogPost.findOne({ customShort : id }).exec(function(err, foundBlog) {
+    BlogPost.findOne({ 'customShort': id }, function(err, foundBlog) {
         // if error occurred
         if (err) {
             // return error
@@ -302,30 +291,42 @@ exports.blogByID = function (req, res, next, id) {
         }
         // if blog was found
         else if(foundBlog) {
-            // FIXME-MODELS: fix all mongo references
-            // update the view count
-            foundBlog.update({ $inc: { views: 1 } }).exec(function(err, updatedBlog) {
-                // if error occurred
-                if (err) {
-                    // return error
-                    return next(err);
-                }
-                else {
-                    // if editing, don't increase the view count
-                    if(!req.body.editing) {
-                        // increase the view count since this model from the first 'find' isn't updated yet
-                        foundBlog.views++;
-                    }
+            // if not editing, increase the view count
+            if(!req.body.editing) {
+                // set updated values
+                var updatedValues = {
+                    'views': foundBlog + 1
+                };
 
-                    // bind the data to the request
-                    req.blogPost = foundBlog;
-                    next();
-                }
-            });
+                // update the blog
+                BlogPost.update(foundBlog, updatedValues, function(err, updatedBlog) {
+                    // if error occurred
+                    if (err) {
+                        // return error
+                        return next(err);
+                    }
+                    else {
+                        // if editing, don't increase the view count
+                        if(!req.body.editing) {
+                            // increase the view count since this model from the first 'find' isn't updated yet
+                            foundBlog.views++;
+                        }
+
+                        // bind the data to the request
+                        req.blogPost = foundBlog;
+                        next();
+                    }
+                });
+            }
+            else {
+                // bind the data to the request
+                req.blogPost = foundBlog;
+                next();
+            }   
         }
         else {
             // send not found
-            res.status(404).send({ title: errorHandler.getErrorTitle({ code: 404 }), message: errorHandler.getGenericErrorMessage({ code: 404 }) + " Blog not found." });
+            res.status(404).send({ title: errorHandler.getErrorTitle({ code: 404 }), message: errorHandler.getGenericErrorMessage({ code: 404 }) + ' Blog not found.' });
         }
     });
 };

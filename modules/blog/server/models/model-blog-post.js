@@ -10,6 +10,8 @@
  */
 var // generate UUID's
     uuidv1 = require('uuid/v1'),
+    // short id generator
+    shortid = require('shortid'),
     // lodash
     _ = require('lodash'),
     // the path
@@ -51,7 +53,7 @@ var BlogPostSchema = {
     author: {
         type: String,
         overwriteable: false,
-        default: "Cameron Hopkins"
+        default: 'Cameron Hopkins'
     },
     datePublished: {
         type: Date,
@@ -72,6 +74,28 @@ var requiredSchemaProperties = helpers.getRequiredProperties(BlogPostSchema);
 
 // the non overwritable properties the user cannot self change
 var nonOverwritableSchemaProperties = helpers.getNonOverwritableProperties(BlogPostSchema);
+
+/**
+ * Converts to object
+ */
+exports.toObject = function(obj, options) {
+    // return the obj
+    return _.cloneDeep(helpers.toObject(obj, options));
+};
+
+/**
+ * Find
+ */
+exports.find = function(query, callback) {
+    // find
+    helpers.find(db, query, function(err, objs) {
+        // if a callback
+        if(callback) {
+            // hit the callback
+            callback(err, _.cloneDeep(objs));
+        }
+    });
+};
 
 /**
  * Find One
@@ -107,18 +131,22 @@ exports.save = function(objToSave, callback) {
     }
     else {
         // remove any keys that may have tried to been overwritten
-        helpers.setNonOverwritablePropertyDefaults(nonOverwritableSchemaProperties, objToSave);
+        helpers.removeAttemptedNonOverwritableProperties(nonOverwritableSchemaProperties, objToSave);
 
-        // find the object matching the object
-        obj = _.find(db, objToSave) || null;
+        // the index of the possible blog
+        var index = -1;
 
+        // if not creating a new blog
+        if(!objToSave.new) {
+            // find the object matching the object index
+            index = _.findIndex(db, objToSave);
+            obj = index != -1 ? db[index] : null;
+        }
+        
         // if object was found
         if(obj) {
             // set date updated
             objToSave.dateUpdated = new Date();
-
-            // get index of object
-            var index = _.findIndex(db, obj);
 
             // merge old data with new data
             _.merge(obj, objToSave);
@@ -154,6 +182,9 @@ exports.save = function(objToSave, callback) {
             // set date published
             objToSave.datePublished = new Date();
 
+            // generate a short id if one wasn't attached already (meaning it came from a draft and now publishing)
+            objToSave.customShort = objToSave.customShort ? objToSave.customShort : shortid.generate();
+
             // push the new object
             db.push(objToSave);
 
@@ -163,12 +194,12 @@ exports.save = function(objToSave, callback) {
                 err = e;
 
                 // if error, reset object
-                obj = err ? null : obj;
+                objToSave = err ? null : objToSave;
 
                 // if a callback
                 if(callback) {
                     // hit the callback
-                    callback(err, _.cloneDeep(obj));
+                    callback(err, _.cloneDeep(objToSave));
                 }
             });
         }
@@ -185,8 +216,9 @@ exports.update = function(query, updatedObj, callback) {
     // the error to return
     var err = null;
 
-    // find the object matching the object
-    obj = _.find(db, query) || null;
+    // find the object matching the object index
+    var index = _.findIndex(db, query);
+    obj = index != -1 ? db[index] : null;
 
     // if object was found
     if(obj) {
@@ -194,10 +226,7 @@ exports.update = function(query, updatedObj, callback) {
         helpers.removeAttemptedNonOverwritableProperties(nonOverwritableSchemaProperties, updatedObj);
 
         // set date updated
-        objToSave.dateUpdated = new Date();
-        
-        // get index of object
-        var index = _.findIndex(db, obj);
+        updatedObj.dateUpdated = new Date();
 
         // merge old data with new data
         _.merge(obj, updatedObj);
@@ -220,4 +249,73 @@ exports.update = function(query, updatedObj, callback) {
         // hit the callback
         callback(err, _.cloneDeep(obj));
     }
+};
+
+/**
+ * Remove
+ */
+exports.remove = function(obj, callback) {
+    // remove
+    helpers.remove(db, obj, function(err) {
+        // if error occurred
+        if(err) {
+            // if a callback
+            if(callback) {
+                // hit the callback
+                callback(err);
+            }
+        }
+        else {
+            // update the db
+            helpers.updateDB(dbPath, db, function(e) {
+                // if a callback
+                if(callback) {
+                    // hit the callback
+                    callback(e);
+                }
+            });
+        }
+    });
+};
+
+/**
+ * Sort
+ */
+exports.sort = function(arr, query, callback) {
+    // sort
+    helpers.sort(arr, query, function(err, objs) {
+        // if a callback
+        if(callback) {
+            // hit the callback
+            callback(err, _.cloneDeep(objs));
+        }
+    });
+};
+
+/**
+ * Skip
+ */
+exports.skip = function(arr, howMany, callback) {
+    // sort
+    helpers.skip(arr, howMany, function(err, objs) {
+        // if a callback
+        if(callback) {
+            // hit the callback
+            callback(err, _.cloneDeep(objs));
+        }
+    });
+};
+
+/**
+ * Limit
+ */
+exports.limit = function(arr, howMany, callback) {
+    // sort
+    helpers.limit(arr, howMany, function(err, objs) {
+        // if a callback
+        if(callback) {
+            // hit the callback
+            callback(err, _.cloneDeep(objs));
+        }
+    });
 };

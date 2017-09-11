@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "_id": 1,
+    "created": "2017-01-29T00:55:17Z",
+    "title": "TEST DUPLICATE",
+    "image": "",
+    "shortDescription": "TEST DUPLICATE",
+    "body": "TEST DUPLICATE",
+    "author": "TEST DUPLICATE",
+    "datePublished": "2017-01-29T00:55:17Z",
+    "views": 76,
+    "customShort": "sapien-ut-nunc-vestibulum-ante-ipsum-primis-in-faucibus"
+  }
+]

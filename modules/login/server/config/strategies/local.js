@@ -20,9 +20,9 @@ module.exports = function () {
     // by default, if there was no name, it would just be called 'local'
     passport.use('local-signup', new LocalStrategy({
         // by default, local strategy uses username and password
-        usernameField : 'username',
-        passwordField : 'password',
-        passReqToCallback : true // allows us to pass back the entire request to the callback
+        usernameField: 'username',
+        passwordField: 'password',
+        passReqToCallback: true // allows us to pass back the entire request to the callback
     },
     function(req, username, password, done) {
         // asynchronous
@@ -30,7 +30,7 @@ module.exports = function () {
         process.nextTick(function() {
             // find a user whose username is the same as the forms username
             // we are checking to see if the user trying to login already exists
-            User.findOne({ username : username }, function(err, user) {
+            User.findOne({ 'username': username }, function(err, user) {
                 // if there are any errors, return the error
                 if (err) {
                     return done(err);
@@ -53,7 +53,14 @@ module.exports = function () {
                         if (err) {
                             throw err;
                         }
-                            
+
+                        // save the id since it will be lost when going to object
+                        // hide the password for security purposes
+                        var id = newUser._id;
+                        newUser = User.toObject(newUser, { 'hide': 'password internalName' });
+                        newUser._id = id;
+
+                        // hide the password
                         return done(null, newUser);
                     });
                 }
@@ -68,9 +75,9 @@ module.exports = function () {
     // by default, if there was no name, it would just be called 'local'
     passport.use('local-login', new LocalStrategy({
         // by default, local strategy uses username and password
-        usernameField : 'username',
-        passwordField : 'password',
-        passReqToCallback : true // allows us to pass back the entire request to the callback
+        usernameField: 'username',
+        passwordField: 'password',
+        passReqToCallback: true // allows us to pass back the entire request to the callback
     },
     function (req, username, password, done) {
         // convert to lowercase
@@ -78,7 +85,7 @@ module.exports = function () {
 
         // find a user whose username is the same as the forms username
         // we are checking to see if the user trying to login already exists
-        User.findOne({ 'username' : username }, function (err, user) {
+        User.findOne({ 'username': username }, function (err, user) {
             // if error occurred
             if (err) {
                 return done(err);
@@ -110,8 +117,11 @@ module.exports = function () {
                         return done(err);
                     }
                     else if(updatedUser) {
-                        // get object value
-                        updatedUser = User.toObject(updatedUser, { 'hide': 'password' });
+                        // save the id since it will be lost when going to object
+                        // hide the password for security purposes
+                        var id = updatedUser._id;
+                        updatedUser = User.toObject(updatedUser, { 'hide': 'password internalName' });
+                        updatedUser._id = id;
 
                         // login
                         req.login(updatedUser, function (err) {
@@ -126,8 +136,11 @@ module.exports = function () {
                         });
                     }
                     else {
-                        // get object value
-                        user = User.toObject(user, { 'hide': 'password' });
+                        // save the id since it will be lost when going to object
+                        // hide the password for security purposes
+                        var id = user._id;
+                        user = User.toObject(user, { 'hide': 'password internalName' });
+                        user._id = id;
 
                         // login
                         req.login(user, function (err) {

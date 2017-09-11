@@ -23,7 +23,7 @@ exports.draftList = function (req, res) {
     // find all saved draft posts
     SavedBlogPost.find({}, function(err, drafts) {
         // sort drafts
-        SavedBlogPost.sort(drafts, { dateSaved: 'desc' }, function(err, sortedDrafts) {
+        SavedBlogPost.sort(drafts, { 'dateSaved': 'desc' }, function(err, sortedDrafts) {
             // if error occurred
             if (err) {
                 // send internal error
@@ -34,7 +34,14 @@ exports.draftList = function (req, res) {
             else if(sortedDrafts) {
                 // map drafts to transform to an array of JSON
                 sortedDrafts = sortedDrafts.map(function(draft) {
-                    return SavedBlogPost.toObject(draft, { 'hide': 'customShort' });
+                    // set url
+                    var url = draft.customShort;
+
+                    // make an object
+                    draft = SavedBlogPost.toObject(draft, { 'hide': 'customShort' });
+                    draft.url = url;
+
+                    return draft;
                 });
 
                 // send drafts back
@@ -120,12 +127,9 @@ exports.createDraft = function (req, res) {
                 }
             }
             else {
-                // generate a short id
-                var shortId = shortid.generate();
-
                 // create the blog
                 var savedBlog = {
-                    'customShort': shortId,
+                    'new': true,
                     'title': req.body.title,
                     'image': req.body.image,
                     'shortDescription': req.body.shortDescription,
@@ -140,7 +144,7 @@ exports.createDraft = function (req, res) {
                         res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
                         console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
                     }
-                    else {
+                    else if(newSavedBlog) {
                         // set url
                         var url = newSavedBlog.customShort;
 
@@ -150,6 +154,10 @@ exports.createDraft = function (req, res) {
 
                         // send success with blog data
                         res.json({ 'd': newSavedBlog });
+                    }
+                    else {
+                        // send bad request
+                        res.status(400).send({ title: errorHandler.getErrorTitle({ code: 400 }), message: errorHandler.getGenericErrorMessage({ code: 400 }) });
                     }
                 });
             }
@@ -216,9 +224,8 @@ exports.updateDraft = function (req, res) {
                 'dateSaved': new Date()
             };
 
-            // FIXME-MODELS: fix all mongo references
             // update blog draft
-            SavedBlogPost.update({ '_id' : blogDraft._id }, updatedValues, function(err, updatedBlog)  {
+            SavedBlogPost.update({ '_id' : blogDraft._id }, updatedValues, function(err, updatedDraft) {
                 // if error occurred
                 if (err) {
                     // send internal error
@@ -227,22 +234,14 @@ exports.updateDraft = function (req, res) {
                 }
                 else {
                     // set url
-                    var url = updatedBlog.customShort;
+                    var url = updatedDraft.customShort;
 
                     // make an object
-                    updatedBlog = SavedBlogPost.toObject(updatedBlog, { 'hide': 'customShort' });
-
-                    // FIXME-MODELS: fix all mongo references -> this can be removed except url
-                    // set all updated values
-                    updatedBlog.url = url;
-                    blogDraft.title = updatedValues.title;
-                    blogDraft.image = updatedValues.image;
-                    blogDraft.shortDescription = updatedValues.shortDescription;
-                    blogDraft.body = updatedValues.body;
-                    blogDraft.dateSaved = updatedValues.dateSaved;
+                    updatedDraft = SavedBlogPost.toObject(updatedDraft, { 'hide': 'customShort' });
+                    updatedDraft.url = url;
 
                     // send success with blog data
-                    res.json({ 'd': updatedBlog });
+                    res.json({ 'd': updatedDraft });
                 }
             });
         }
@@ -305,19 +304,17 @@ exports.publishBlogFromDraft = function (req, res) {
             // set draft from request
             var blogDraft = req.blogDraft;
 
-            // FIXME-MODELS: fix all mongo references
             // create the blog
-            var blogPost = new BlogPost({
-                customShort: blogDraft.customShort,
-                title: req.body.title,
-                image: req.body.image,
-                shortDescription: req.body.shortDescription,
-                body: req.body.body
-            });
+            var blogPost = {
+                'customShort': blogDraft.customShort,
+                'title': req.body.title,
+                'image': req.body.image,
+                'shortDescription': req.body.shortDescription,
+                'body': req.body.body
+            };
 
-            // FIXME-MODELS: fix all mongo references
             // save the blog
-            blogPost.save(function(err, newPostedBlog) {
+            BlogPost.save(blogPost, function(err, newPostedBlog) {
                 // if error occurred
                 if (err) {
                     // send internal error
@@ -325,9 +322,8 @@ exports.publishBlogFromDraft = function (req, res) {
                     console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
                 }
                 else {
-                    // FIXME-MODELS: fix all mongo references
                     // remove draft
-                    blogDraft.remove(function(err, removedSavedBlog) {
+                    SavedBlogPost.remove(blogDraft, function(err) {
                         // if an error occurred
                         if (err) {
                             // send internal error
@@ -338,9 +334,8 @@ exports.publishBlogFromDraft = function (req, res) {
                             // set url
                             var url = newPostedBlog.customShort;
 
-                            // FIXME-MODELS: fix all mongo references
                             // make an object
-                            newPostedBlog = newPostedBlog.toObject({ hide: 'customShort', transform: true });
+                            newPostedBlog = BlogPost.toObject(newPostedBlog, { 'hide': 'customShort' });
                             newPostedBlog.url = url;
 
                             // send success with blog data
@@ -358,7 +353,7 @@ exports.publishBlogFromDraft = function (req, res) {
  */
 exports.draftBlogByID = function (req, res, next, id) {
     // find saved blog post based on id
-    SavedBlogPost.findOne({ 'customShort' : id }, function(err, foundDraft) {
+    SavedBlogPost.findOne({ 'customShort': id }, function(err, foundDraft) {
         // if error occurred
         if (err) {
             // return error

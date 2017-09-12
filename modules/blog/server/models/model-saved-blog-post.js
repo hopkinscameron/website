@@ -39,7 +39,8 @@ var SavedBlogPostSchema = {
         type: String
     },
     title: {
-        type: String
+        type: String,
+        required: true
     },
     image: {
         type: String
@@ -62,6 +63,12 @@ var requiredSchemaProperties = helpers.getRequiredProperties(SavedBlogPostSchema
 // the non overwritable properties the user cannot self change
 var nonOverwritableSchemaProperties = helpers.getNonOverwritableProperties(SavedBlogPostSchema);
 
+// the non default properties
+var defaultSchemaProperties = helpers.getDefaultProperties(SavedBlogPostSchema);
+
+// the searchable properties
+var searchableSchemaProperties = helpers.getSearchableProperties(SavedBlogPostSchema);
+
 /**
  * Converts to object
  */
@@ -75,7 +82,7 @@ exports.toObject = function(obj, options) {
  */
 exports.find = function(query, callback) {
     // find
-    helpers.find(db, query, function(err, objs) {
+    helpers.find(db, query, searchableSchemaProperties, function(err, objs) {
         // if a callback
         if(callback) {
             // hit the callback
@@ -115,6 +122,12 @@ exports.save = function(objToSave, callback) {
     if(firstProp) {
         // create new error
         err = new Error(`All required properties are not present on object. The property \'${firstProp}\' was not in the object.`);
+        
+        // if a callback
+        if(callback) {
+            // hit the callback
+            callback(err);
+        }
     }
     else {
         // remove any keys that may have tried to been overwritten
@@ -126,9 +139,12 @@ exports.save = function(objToSave, callback) {
         // if not creating a new draft
         if(!objToSave.new) {
             // find the object matching the object index
-            index = _.findIndex(db, objToSave);
+            index = _.findIndex(db, { 'customShort': objToSave.customShort });
             obj = index != -1 ? db[index] : null;
         }
+
+        // delete the new object
+        delete objToSave['new'];
 
         // if object was found
         if(obj) {
@@ -158,7 +174,7 @@ exports.save = function(objToSave, callback) {
         }
         else {
             // set all defaults
-            helpers.setNonOverwritablePropertyDefaults(nonOverwritableSchemaProperties, SavedBlogPostSchema, objToSave);
+            helpers.setNonOverwritablePropertyDefaults(defaultSchemaProperties, SavedBlogPostSchema, objToSave);
 
             // generate UUID
             objToSave._id = uuidv1();
@@ -228,13 +244,20 @@ exports.update = function(query, updatedObj, callback) {
 
             // if error, reset object
             obj = err ? null : obj;
+
+            // if a callback
+            if(callback) {
+                // hit the callback
+                callback(err, _.cloneDeep(obj));
+            }
         });
     }
-
-    // if a callback
-    if(callback) {
-        // hit the callback
-        callback(err, _.cloneDeep(obj));
+    else {
+        // if a callback
+        if(callback) {
+            // hit the callback
+            callback(err, _.cloneDeep(obj));
+        }
     }
 };
 
@@ -243,7 +266,7 @@ exports.update = function(query, updatedObj, callback) {
  */
 exports.remove = function(obj, callback) {
     // remove
-    helpers.remove(db, obj, function(err) {
+    helpers.remove(db, obj, function(err, removedObjs) {
         // if error occurred
         if(err) {
             // if a callback

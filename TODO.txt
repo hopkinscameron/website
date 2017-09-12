@@ -3,18 +3,13 @@
 - Ability to updload images for projects and blogs
 
 All 
-- getValidationResult() -> fixed everywhere
-- added functionality to save the updated date on blogs
-- rename the file to handle all reads/writes/searches/etc.
+
 Done
 
 Pending
-- finish testing blog functions (all except find) and test saved blog post publish from draft
-- Remove all mongoose mongo references (next up is Blog Search Analytics)
 - Get express working without mongodb
 - Get passport working without mongodb
 - If an error happens on server (say server goes down in mid request, a response is still sent back to user), catch with not using response.data, instead use response.xhrStatus == 'error' and response.status == -1
-- change all queries so 'query' : someQuery
 - change models so that functions are part of the schema, and so I can create a instance of a model (look at how LocalStrategy was set up)
 - find out how to chain functions -> something.something.something -> follow mongoose of find.sort.skip.exec and exec be the last
 

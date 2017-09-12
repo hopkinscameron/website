@@ -57,7 +57,7 @@ module.exports = function () {
                         // save the id since it will be lost when going to object
                         // hide the password for security purposes
                         var id = newUser._id;
-                        newUser = User.toObject(newUser, { 'hide': 'password internalName' });
+                        newUser = User.toObject(newUser, { 'hide': 'password internalName created' });
                         newUser._id = id;
 
                         // hide the password
@@ -120,7 +120,7 @@ module.exports = function () {
                         // save the id since it will be lost when going to object
                         // hide the password for security purposes
                         var id = updatedUser._id;
-                        updatedUser = User.toObject(updatedUser, { 'hide': 'password internalName' });
+                        updatedUser = User.toObject(updatedUser, { 'hide': 'password internalName created' });
                         updatedUser._id = id;
 
                         // login
@@ -139,7 +139,7 @@ module.exports = function () {
                         // save the id since it will be lost when going to object
                         // hide the password for security purposes
                         var id = user._id;
-                        user = User.toObject(user, { 'hide': 'password internalName' });
+                        user = User.toObject(user, { 'hide': 'password internalName created' });
                         user._id = id;
 
                         // login

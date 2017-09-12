@@ -38,7 +38,7 @@ exports.draftList = function (req, res) {
                     var url = draft.customShort;
 
                     // make an object
-                    draft = SavedBlogPost.toObject(draft, { 'hide': 'customShort' });
+                    draft = SavedBlogPost.toObject(draft, { 'hide': 'customShort created' });
                     draft.url = url;
 
                     return draft;
@@ -48,8 +48,9 @@ exports.draftList = function (req, res) {
                 res.json({ 'd': { 'savedPosts': sortedDrafts } });
             }
             else {
-                // send not found
-                res.status(404).send({ title: errorHandler.getErrorTitle({ code: 404 }), message: errorHandler.getGenericErrorMessage({ code: 404 }) + ' Blog drafts not found.' });
+                // send internal error
+                res.status(500).send({ error: true, title: errorHandler.getErrorTitle({ code: 500 }), message: errorHandler.getGenericErrorMessage({ code: 500 }) });
+                console.log(clc.error(`In ${path.basename(__filename)} \'draftList\': ` + errorHandler.getDetailedErrorMessage({ code: 500 }) + ' Couldn\'t get draft list.'));
             }
         });
     });
@@ -93,6 +94,7 @@ exports.createDraft = function (req, res) {
                 if(shortid.isValid(postId)) {
                     // create the blog
                     var savedBlog = {
+                        'new': true,
                         'customShort': postId,
                         'title': req.body.title,
                         'image': req.body.image,
@@ -108,16 +110,21 @@ exports.createDraft = function (req, res) {
                             res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
                             console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
                         }
-                        else {
+                        else if(newSavedBlog) {
                             // set url
                             var url = newSavedBlog.customShort;
 
                             // make an object
-                            newSavedBlog = SavedBlogPost.toObject(newSavedBlog, { 'hide': 'customShort' });
+                            newSavedBlog = SavedBlogPost.toObject(newSavedBlog, { 'hide': 'customShort created' });
                             newSavedBlog.url = url;
 
                             // send success with blog data
                             res.json({ 'd': newSavedBlog });
+                        }
+                        else {
+                            // send internal error
+                            res.status(500).send({ error: true, title: errorHandler.getErrorTitle({ code: 500 }), message: errorHandler.getGenericErrorMessage({ code: 500 }) });
+                            console.log(clc.error(`In ${path.basename(__filename)} \'createDraft\': ` + errorHandler.getDetailedErrorMessage({ code: 500 }) + ' Couldn\'t save draft.'));
                         }
                     });
                 }
@@ -149,15 +156,16 @@ exports.createDraft = function (req, res) {
                         var url = newSavedBlog.customShort;
 
                         // make an object
-                        newSavedBlog = SavedBlogPost.toObject(newSavedBlog, { 'hide': 'customShort' });
+                        newSavedBlog = SavedBlogPost.toObject(newSavedBlog, { 'hide': 'customShort created' });
                         newSavedBlog.url = url;
 
                         // send success with blog data
                         res.json({ 'd': newSavedBlog });
                     }
                     else {
-                        // send bad request
-                        res.status(400).send({ title: errorHandler.getErrorTitle({ code: 400 }), message: errorHandler.getGenericErrorMessage({ code: 400 }) });
+                        // send internal error
+                        res.status(500).send({ error: true, title: errorHandler.getErrorTitle({ code: 500 }), message: errorHandler.getGenericErrorMessage({ code: 500 }) });
+                        console.log(clc.error(`In ${path.basename(__filename)} \'createDraft\': ` + errorHandler.getDetailedErrorMessage({ code: 500 }) + ' Couldn\'t save draft.'));
                     }
                 });
             }
@@ -176,7 +184,7 @@ exports.readDraft = function (req, res) {
     var url = blogDraft.customShort;
 
     // make an object
-    blogDraft = SavedBlogPost.toObject(blogDraft, { 'hide': 'customShort' });
+    blogDraft = SavedBlogPost.toObject(blogDraft, { 'hide': 'customShort created' });
     blogDraft.url = url;
 
     // send blog draft
@@ -232,16 +240,21 @@ exports.updateDraft = function (req, res) {
                     res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
                     console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
                 }
-                else {
+                else if(updatedDraft) {
                     // set url
                     var url = updatedDraft.customShort;
 
                     // make an object
-                    updatedDraft = SavedBlogPost.toObject(updatedDraft, { 'hide': 'customShort' });
+                    updatedDraft = SavedBlogPost.toObject(updatedDraft, { 'hide': 'customShort created' });
                     updatedDraft.url = url;
 
                     // send success with blog data
                     res.json({ 'd': updatedDraft });
+                }
+                else {
+                    // send internal error
+                    res.status(500).send({ error: true, title: errorHandler.getErrorTitle({ code: 500 }), message: errorHandler.getGenericErrorMessage({ code: 500 }) });
+                    console.log(clc.error(`In ${path.basename(__filename)} \'updateDraft\': ` + errorHandler.getDetailedErrorMessage({ code: 500 }) + ' Couldn\'t update draft.'));
                 }
             });
         }
@@ -256,16 +269,20 @@ exports.deleteDraft = function (req, res) {
     var blogDraft = req.blogDraft;
 
     // remove draft
-    SavedBlogPost.remove(blogDraft, function(err) {
+    SavedBlogPost.remove(blogDraft, function(err, removedDrafts) {
         // if an error occurred
         if (err) {
             // send internal error
             res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
             console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
         }
-        else {
+        else if(removedDrafts) {
             // return success
             res.status(200).send({ 'd': { title: errorHandler.getErrorTitle({ code: 200 }), message: errorHandler.getGenericErrorMessage({ code: 200 }) + ' You have discarded the saved post successfully!' } });
+        }
+        else {
+            // send not found
+            res.status(404).send({ title: errorHandler.getErrorTitle({ code: 404 }), message: errorHandler.getGenericErrorMessage({ code: 404 }) + ' Draft not found.' });
         }
     });
 };
@@ -335,7 +352,7 @@ exports.publishBlogFromDraft = function (req, res) {
                             var url = newPostedBlog.customShort;
 
                             // make an object
-                            newPostedBlog = BlogPost.toObject(newPostedBlog, { 'hide': 'customShort' });
+                            newPostedBlog = BlogPost.toObject(newPostedBlog, { 'hide': 'customShort created' });
                             newPostedBlog.url = url;
 
                             // send success with blog data

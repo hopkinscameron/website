@@ -16,7 +16,9 @@ var // the path
     // generator for a strong password
     generatePassword = require('generate-password'),
     // tester for generating a strong password
-    owasp = require('owasp-password-strength-test');
+    owasp = require('owasp-password-strength-test'),
+    // the User model
+    User = require(path.resolve('./modules/login/server/models/model-user'));
 
 // configure
 owasp.config(config.shared.owasp);
@@ -133,20 +135,26 @@ exports.changePassword = function (req, res, next) {
     // if found user
     if(user) {
         // set updated values 
-        user.password = req.body.newpassword;
-        user.passwordUpdatedLast = new Date();
+        var updatedValues = {
+            'password': req.body.newpassword
+        };
 
         // update user
-        user.save(function(err) {
+        User.update(user, updatedValues, function(err, updatedUser) {
             // if error occurred
             if (err) {
                 // send internal error
                 res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
                 console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
             }
-            else {
-                // return authenticated
+            else if(updatedUser) {
+                // return password changed
                 res.json({ 'd': { title: errorHandler.getErrorTitle({ code: 200 }), message: errorHandler.getGenericErrorMessage({ code: 200 }) + " Successful password change." } });
+            }
+            else {
+                // send internal error
+                res.status(500).send({ error: true, title: errorHandler.getErrorTitle({ code: 500 }), message: errorHandler.getGenericErrorMessage({ code: 500 }) });
+                console.log(clc.error(`In ${path.basename(__filename)} \'changePassword\': ` + errorHandler.getDetailedErrorMessage({ code: 500 }) + ' Couldn\'t update User.'));
             }
         });
     }

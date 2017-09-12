@@ -39,6 +39,7 @@ var AnalyticsBlogSearchSchema = {
     },
     hits: {
         type: Number,
+        overwriteable: false,
         default: 1
     }
 };
@@ -48,6 +49,12 @@ var requiredSchemaProperties = helpers.getRequiredProperties(AnalyticsBlogSearch
 
 // the non overwritable properties the user cannot self change
 var nonOverwritableSchemaProperties = helpers.getNonOverwritableProperties(AnalyticsBlogSearchSchema);
+
+// the non default properties
+var defaultSchemaProperties = helpers.getDefaultProperties(AnalyticsBlogSearchSchema);
+
+// the searchable properties
+var searchableSchemaProperties = helpers.getSearchableProperties(AnalyticsBlogSearchSchema);
 
 /**
  * Find One
@@ -83,10 +90,10 @@ exports.save = function(objToSave, callback) {
     }
     else {
         // remove any keys that may have tried to been overwritten
-        helpers.setNonOverwritablePropertyDefaults(nonOverwritableSchemaProperties, objToSave);
+        helpers.removeAttemptedNonOverwritableProperties(nonOverwritableSchemaProperties, objToSave);
 
         // find the object matching the object
-        obj = _.find(db, objToSave) || null;
+        obj = _.find(db, { 'keyword': objToSave.keyword }) || null;
 
         // if object was found
         if(obj) {
@@ -95,28 +102,16 @@ exports.save = function(objToSave, callback) {
 
             // merge old data with new data
             _.merge(obj, objToSave);
-            
+
+            // increase the hits
+            obj.hits++;
+
             // replace item at index using native splice
             db.splice(index, 1, obj);
-
-            // update the db
-            helpers.updateDB(dbPath, db, function(e) {
-                // set error
-                err = e;
-
-                // if error, reset object
-                obj = err ? null : obj;
-
-                // if a callback
-                if(callback) {
-                    // hit the callback
-                    callback(err, _.cloneDeep(obj));
-                }
-            });
         }
         else {
             // set all defaults
-            helpers.setNonOverwritablePropertyDefaults(nonOverwritableSchemaProperties, AnalyticsBlogSearchSchema, objToSave);
+            helpers.setNonOverwritablePropertyDefaults(defaultSchemaProperties, AnalyticsBlogSearchSchema, objToSave);
 
             // generate UUID
             objToSave._id = uuidv1();
@@ -127,21 +122,24 @@ exports.save = function(objToSave, callback) {
             // push the new object
             db.push(objToSave);
 
-            // update the db
-            helpers.updateDB(dbPath, db, function(e) {
-                // set error
-                err = e;
-
-                // if error, reset object
-                obj = err ? null : obj;
-
-                // if a callback
-                if(callback) {
-                    // hit the callback
-                    callback(err, _.cloneDeep(obj));
-                }
-            });
+            // set object to new saved object
+            obj = objToSave;
         }
+
+        // update the db
+        helpers.updateDB(dbPath, db, function(e) {
+            // set error
+            err = e;
+
+            // if error, reset object
+            obj = err ? null : obj;
+
+            // if a callback
+            if(callback) {
+                // hit the callback
+                callback(err, _.cloneDeep(obj));
+            }
+        });
     }
 };
 
@@ -155,19 +153,20 @@ exports.update = function(query, updatedObj, callback) {
     // the error to return
     var err = null;
 
-    // find the object matching the object
-    obj = _.find(db, query) || null;
+    // find the object matching the object index
+    var index = _.findIndex(db, query);
+    obj = index != -1 ? db[index] : null;
 
     // if object was found
     if(obj) {
         // remove any keys that may have tried to been overwritten
         helpers.removeAttemptedNonOverwritableProperties(nonOverwritableSchemaProperties, updatedObj);
 
-        // get index of object
-        var index = _.findIndex(db, obj);
-
         // merge old data with new data
         _.merge(obj, updatedObj);
+
+        // increase the hits
+        obj.hits++;
 
         // replace item at index using native splice
         db.splice(index, 1, obj);
@@ -179,12 +178,19 @@ exports.update = function(query, updatedObj, callback) {
 
             // if error, reset object
             obj = err ? null : obj;
+
+            // if a callback
+            if(callback) {
+                // hit the callback
+                callback(err, _.cloneDeep(obj));
+            }
         });
     }
-
-    // if a callback
-    if(callback) {
-        // hit the callback
-        callback(err, _.cloneDeep(obj));
+    else {
+        // if a callback
+        if(callback) {
+            // hit the callback
+            callback(err, _.cloneDeep(obj));
+        }
     }
 };

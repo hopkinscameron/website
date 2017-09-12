@@ -1,14 +1,1 @@
-[
-  {
-    "_id": 1,
-    "created": "2017-01-29T00:55:17Z",
-    "title": "TEST DUPLICATE",
-    "image": "",
-    "shortDescription": "TEST DUPLICATE",
-    "body": "TEST DUPLICATE",
-    "author": "TEST DUPLICATE",
-    "datePublished": "2017-01-29T00:55:17Z",
-    "views": 76,
-    "customShort": "sapien-ut-nunc-vestibulum-ante-ipsum-primis-in-faucibus"
-  }
-]
+[{"title":"Test Pbulsi","image":"","shortDescription":"sadadsa","body":"YEs","author":"Cameron Hopkins","views":0,"_id":"a7b5ce20-97c9-11e7-9509-290dbb5e7fb1","created":"2017-09-12T14:50:01.602Z","datePublished":"2017-09-12T14:50:01.602Z","customShort":"rkG7EuH9W","dateUpdated":"2017-09-12T15:13:40.281Z"}]

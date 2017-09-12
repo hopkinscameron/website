@@ -29,61 +29,92 @@ exports.blogList = function (req, res) {
     var pageNumber = req.query.page ? req.query.page : 1;
 
     // the options/search query
-    var findOptions = req.query.q ? { $text: { $search: req.query.q } } : { };
+    var findOptions = req.query.q ? { '$text': { '$search': req.query.q } } : { };
 
     // if query
     if(req.query.q) {
-        // FIXME-MODELS: fix all mongo references
         // log the blog search query
         logBlogSearchQuery(req.query.q);
     }
 
     // find all blog posts
     BlogPost.find(findOptions, function(err, foundBlogs) {
-        // set page size to 1
-        var pageSize = 2;
-
-        // parse the page number
-        pageNumber = parseInt(pageNumber);
-        
-        // set total pages
-        blogDetails.totalPages = foundBlogs ? Math.ceil(foundBlogs.length/pageSize) : 0;
-
-        // set current page
-        blogDetails.currentPage = pageNumber;
-
-        // if pages
-        if(blogDetails.totalPages > 0) {
-            // find all blog posts
-            BlogPost.sort(foundBlogs, { 'datePublished': 'desc' }, function(err, sortedPagedBlogs) {
-                // skip the number of returned items based on page size and page number
-                BlogPost.skip(sortedPagedBlogs, pageSize * (pageNumber - 1), function(err, skippedPagedBlogs) {
-                    // limit the return amount based on page size
-                    BlogPost.limit(skippedPagedBlogs, pageSize, function(err, limitedPagedBlogs) {
-                        // map blogs to transform to an array of JSON
-                        blogDetails.posts = limitedPagedBlogs.map(function(blog) {
-                            // get the url
-                            var url = blog.customShort;
-
-                            // make an object
-                            blog = BlogPost.toObject(blog, { 'hide': 'customShort' });
-                            blog.url = url;
-
-                            return blog;
-                        });
-
-                        // send data
-                        res.json({ 'd': blogDetails });
-                    });
-                });
-            });
+        // if error occurred
+        if (err) {
+            // send internal error
+            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+            console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
         }
         else {
-            // set to empty
-            blogDetails.posts = [];
+            // set page size to 1
+            var pageSize = 2;
 
-            // send data
-            res.json({ 'd': blogDetails });
+            // parse the page number
+            pageNumber = parseInt(pageNumber);
+            
+            // set total pages
+            blogDetails.totalPages = foundBlogs ? Math.ceil(foundBlogs.length/pageSize) : 0;
+
+            // set current page
+            blogDetails.currentPage = pageNumber;
+
+            // if pages
+            if(blogDetails.totalPages > 0) {
+                // find all blog posts
+                BlogPost.sort(foundBlogs, { 'datePublished': 'desc' }, function(err, sortedPagedBlogs) {
+                    // if error occurred
+                    if (err) {
+                        // send internal error
+                        res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+                        console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
+                    }
+                    else {
+                        // skip the number of returned items based on page size and page number
+                        BlogPost.skip(sortedPagedBlogs, pageSize * (pageNumber - 1), function(err, skippedPagedBlogs) {
+                            // if error occurred
+                            if (err) {
+                                // send internal error
+                                res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+                                console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
+                            }
+                            else {
+                                // limit the return amount based on page size
+                                BlogPost.limit(skippedPagedBlogs, pageSize, function(err, limitedPagedBlogs) {
+                                    // if error occurred
+                                    if (err) {
+                                        // send internal error
+                                        res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+                                        console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
+                                    }
+                                    else {
+                                        // map blogs to transform to an array of JSON
+                                        blogDetails.posts = limitedPagedBlogs.map(function(blog) {
+                                            // get the url
+                                            var url = blog.customShort;
+
+                                            // make an object
+                                            blog = BlogPost.toObject(blog, { 'hide': 'customShort created' });
+                                            blog.url = url;
+
+                                            return blog;
+                                        });
+
+                                        // send data
+                                        res.json({ 'd': blogDetails });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+            else {
+                // set to empty
+                blogDetails.posts = [];
+
+                // send data
+                res.json({ 'd': blogDetails });
+            }
         }
     });
 };
@@ -136,16 +167,21 @@ exports.publishBlogFromScratch = function (req, res) {
                     res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
                     console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
                 }
-                else {
+                else if(newPostedBlog) {
                     // set url
                     var url = newPostedBlog.customShort;
 
                     // make an object
-                    newPostedBlog = BlogPost.toObject(newPostedBlog, { 'hide': 'customShort' });
+                    newPostedBlog = BlogPost.toObject(newPostedBlog, { 'hide': 'customShort created' });
                     newPostedBlog.url = url;
 
                     // send success with blog data
                     res.json({ 'd': newPostedBlog });
+                }
+                else {
+                    // send internal error
+                    res.status(500).send({ error: true, title: errorHandler.getErrorTitle({ code: 500 }), message: errorHandler.getGenericErrorMessage({ code: 500 }) });
+                    console.log(`In ${path.basename(__filename)} \'publishBlogFromScratch\': ` + clc.error(errorHandler.getDetailedErrorMessage({ code: 500 })  + ' Couldn\'t save Blog.'));
                 }
             });
         }
@@ -163,7 +199,7 @@ exports.readBlog = function (req, res) {
     var url = blogPost.customShort;
 
     // make an object
-    blogPost = BlogPost.toObject(blogPost, { 'hide': 'customShort' });
+    blogPost = BlogPost.toObject(blogPost, { 'hide': 'customShort created' });
     blogPost.url = url;
 
     // send blog post
@@ -220,12 +256,12 @@ exports.updateBlog = function (req, res) {
                     res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
                     console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
                 }
-                else {
+                else if (updatedBlog) {
                     // see if there was a saved draft 
                     SavedBlogPost.remove({ 'customShort': updatedBlog.customShort }, function(err) {
                         // if error occurred
                         if (err) {
-                            // log error
+                            // log internal error
                             console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
                         }
 
@@ -233,7 +269,7 @@ exports.updateBlog = function (req, res) {
                         var url = updatedBlog.customShort;
 
                         // make an object
-                        updatedBlog = BlogPost.toObject(updatedBlog, { 'hide': 'customShort' });
+                        updatedBlog = BlogPost.toObject(updatedBlog, { 'hide': 'customShort created' });
 
                         // set all updated values
                         updatedBlog.url = url;
@@ -241,6 +277,11 @@ exports.updateBlog = function (req, res) {
                         // send blog post
                         res.json({ 'd': updatedBlog });
                     });
+                }
+                else {
+                    // send internal error
+                    res.status(500).send({ error: true, title: errorHandler.getErrorTitle({ code: 500 }), message: errorHandler.getGenericErrorMessage({ code: 500 }) });
+                    console.log(clc.error(`In ${path.basename(__filename)} \'updateBlog\': ` + errorHandler.getDetailedErrorMessage({ code: 500 }) + ' Couldn\'t update Blog.'));
                 }
             });
         }
@@ -255,25 +296,30 @@ exports.deleteBlog = function (req, res) {
     var blogPost = req.blogPost;
 
     // remove blog post
-    BlogPost.remove(blogPost, function(err) {
+    BlogPost.remove(blogPost, function(err, removedObjs) {
         // if an error occurred
         if (err) {
             // send internal error
             res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
             console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
         }
-        else {
+        else if(removedObjs) {
             // see if there was saved draft of this same blog
             // find the draft and remove
             SavedBlogPost.remove({ 'customShort': req.blogPost.customShort }, function(err) {
                 // if an error occurred
                 if (err) {
+                    // log internal error
                     console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
                 }
 
                 // return success
                 res.status(200).send({ 'd': { title: errorHandler.getErrorTitle({ code: 200 }), message: errorHandler.getGenericErrorMessage({ code: 200 }) + ' You have deleted the blog successfully!' } });
             });
+        }
+        else {
+            // send not found
+            res.status(404).send({ title: errorHandler.getErrorTitle({ code: 404 }), message: errorHandler.getGenericErrorMessage({ code: 404 }) + ' Blog not found.' });
         }
     });
 };
@@ -295,7 +341,7 @@ exports.blogByID = function (req, res, next, id) {
             if(!req.body.editing) {
                 // set updated values
                 var updatedValues = {
-                    'views': foundBlog + 1
+                    'views': foundBlog.views + 1
                 };
 
                 // update the blog
@@ -305,7 +351,7 @@ exports.blogByID = function (req, res, next, id) {
                         // return error
                         return next(err);
                     }
-                    else {
+                    else if(updatedBlog) {
                         // if editing, don't increase the view count
                         if(!req.body.editing) {
                             // increase the view count since this model from the first 'find' isn't updated yet
@@ -315,6 +361,11 @@ exports.blogByID = function (req, res, next, id) {
                         // bind the data to the request
                         req.blogPost = foundBlog;
                         next();
+                    }
+                    else {
+                        // send internal error
+                        console.log(clc.error(`In ${path.basename(__filename)} \'blogByID\': ` + errorHandler.getDetailedErrorMessage({ code: 500 }) + ' Couldn\'t update Blog.'));
+                        return next({ code: 500 });
                     }
                 });
             }
@@ -335,36 +386,45 @@ exports.blogByID = function (req, res, next, id) {
  * Logs the search query on the blog
  */
 function logBlogSearchQuery(queryText) {
-    // FIXME-MODELS: fix all mongo references
 	// find search text by query text
-	AnalyticsBlogSearch.findOne({ keyword : queryText.toLowerCase() }).exec(function(err, foundSearchText) {
+	AnalyticsBlogSearch.findOne({ 'keyword': queryText.toLowerCase() }, function(err, foundSearchText) {
 		// if error occurred
 		if (err) {
+            // log internal error
 			console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
 		}
 		else if(foundSearchText) {
-            // FIXME-MODELS: fix all mongo references
 			// update the count
-			foundSearchText.update({ $inc: { hits: 1 } }).exec(function(err) {
-				// if error occurred
-				if (err) {
-					console.log(clc.error(err.message));
-				}
+			AnalyticsBlogSearch.update(foundSearchText, { }, function(err, updatesSearchText) {
+				// if an error occurred
+                if (err) {
+                    // log internal error
+                    console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
+                }
+                else if(!updatesSearchText) {
+                    // send internal error
+                    console.log(clc.error(`In ${path.basename(__filename)} \'logBlogSearchQuery\': ` + errorHandler.getDetailedErrorMessage({ code: 500 }) + ' Couldn\'t update Search Analytics.'));
+                    return next({ code: 500 });
+                }
 			});
 		}
 		else {
-            // FIXME-MODELS: fix all mongo references
 			// create the analytics for search
-			var blogSearch = new AnalyticsBlogSearch({
+			var blogSearch = {
 				keyword: queryText.toLowerCase()
-			});
+			};
 
-            // FIXME-MODELS: fix all mongo references
 			// save
-			blogSearch.save(function(err, newSearch) {
-				if (err) {
-					console.log(clc.error(err.message));
-				}
+			AnalyticsBlogSearch.save(blogSearch, function(err, newSearch) {
+				// if an error occurred
+                if (err) {
+                    // log internal error
+                    console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
+                }
+                else if(!newSearch) {
+                    // log internal error
+                    console.log(clc.error(`In ${path.basename(__filename)} \'logBlogSearchQuery\': ` + errorHandler.getDetailedErrorMessage({ code: 500 }) + ' Couldn\'t update Search Analytics.'));
+                }
 			});
 		}
 	});

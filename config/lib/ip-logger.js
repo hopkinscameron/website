@@ -4,7 +4,9 @@
  * Module dependencies
  */
 var // the path
-    path = require('path'),
+	path = require('path'),
+	// the error handler
+    errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
 	// chalk for console logging
 	clc = require('./clc'),
     // the ability to create requests
@@ -149,7 +151,7 @@ function logPageRequest(accessedBy, pageRequested, requestType) {
 	var req = requestType + ':' + pageRequested;
 
 	// find page post based on id
-	AnalyticsPage.findOne({ 'request' : req }, function(err, foundPage) {
+	AnalyticsPage.findOne({ 'request': req }, function(err, foundPage) {
 		// if error occurred
 		if (err) {
 			console.log(clc.error(err.message));
@@ -159,26 +161,35 @@ function logPageRequest(accessedBy, pageRequested, requestType) {
 			foundPage.accessedBy.push(accessedBy);
 
 			// push the ip who accessed this page
-			AnalyticsPage.update({ 'request' : req }, foundPage, function(err) {
+			AnalyticsPage.update({ 'request': req }, foundPage, function(err, updatedBlog) {
 				// if error occurred
 				if (err) {
 					console.log(clc.error(err.message));
+				}
+				else if(!updatedBlog) {
+					// log internal error
+                    console.log(clc.error(`In ${path.basename(__filename)} \'logPageRequest\': ` + errorHandler.getDetailedErrorMessage({ code: 500 }) + ' Couldn\'t update Analytics.'));
 				}
 			});
 		}
 		else {
 			// create the analytics for this page
 			var analyticsPage = {
-				request: requestType + ':' + pageRequested,
-				url: pageRequested,
-				method: requestType,
-				accessedBy: [accessedBy]
+				'request': requestType + ':' + pageRequested,
+				'url': pageRequested,
+				'method': requestType,
+				'accessedBy': [accessedBy]
 			};
 
 			// save
 			AnalyticsPage.save(analyticsPage, function(err, newAnalyticsPage) {
+				// if error occurred
 				if (err) {
-					console.log(clc.error(err.message));
+					console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
+				}
+				else if(!newAnalyticsPage) {
+					// log internal error
+                    console.log(clc.error(`In ${path.basename(__filename)} \'logPageRequest\': ` + errorHandler.getDetailedErrorMessage({ code: 500 }) + ' Couldn\'t save Analytics.'));
 				}
 			});
 		}

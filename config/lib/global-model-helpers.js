@@ -13,12 +13,10 @@ exports.getRequiredProperties = function (model) {
     // the properties that aren't present
     var prop = [];
 
-    // get the keys
-    var keys = Object.keys(model);
-
     // loop over all keys
-    _.forEach(keys, function(value) {
-        if(model[value].required) {
+    _.forEach(_.keys(model), function(value) {
+        // check if required is true
+        if(model[value].required == true) {
             prop.push(value);
         }
     });
@@ -36,7 +34,8 @@ exports.checkRequiredProperties = function (properties, obj) {
 
     // find the first property that doesn't exists
     _.forEach(properties, function(value) {
-        if(!_.has(obj, value)) {
+        // check if the object has this property
+        if(!_.includes(_.keys(obj), value)) {
             firstProp = value;
             return false;
         }
@@ -53,12 +52,28 @@ exports.getNonOverwritableProperties = function (model) {
     // the properties that aren't overwritable by user
     var prop = [];
 
-    // get the keys
-    var keys = Object.keys(model);
+    // loop over all keys
+    _.forEach(_.keys(model), function(value) {
+        if(model[value].overwriteable == false) {
+            prop.push(value);
+        }
+    });
+
+    // return the properties
+    return prop;
+};
+
+/**
+ * Get default properties of model
+ */
+exports.getDefaultProperties = function (model) {
+    // the properties that aren't overwritable by user
+    var prop = [];
 
     // loop over all keys
-    _.forEach(keys, function(value) {
-        if(model[value].overwriteable == false) {
+    _.forEach(_.keys(model), function(value) {
+        // check if the default property exists
+        if(_.includes(_.keys(model[value]), 'default')) {
             prop.push(value);
         }
     });
@@ -71,11 +86,10 @@ exports.getNonOverwritableProperties = function (model) {
  * Set defaults to non overwritable properties of model
  */
 exports.setNonOverwritablePropertyDefaults = function (properties, model, obj) {
-    // loop over all keys
+    // loop over all properties
     _.forEach(properties, function(value) {
-        if(model[value].default) {
-            obj[value] = model[value].default;
-        }
+        // set the default
+        obj[value] = model[value].default;
     });
 };
 
@@ -84,7 +98,7 @@ exports.setNonOverwritablePropertyDefaults = function (properties, model, obj) {
  */
 exports.removeAttemptedNonOverwritableProperties = function (properties, obj) {
     // go through each option and remove the attempted overwritables
-    _.forEach(Object.keys(obj), function (value) {
+    _.forEach(_.keys(obj), function (value) {
         if(properties.includes(value)) {
             delete obj[value];
         }
@@ -92,11 +106,30 @@ exports.removeAttemptedNonOverwritableProperties = function (properties, obj) {
 };
 
 /**
+ * Get searchable properties of model
+ */
+exports.getSearchableProperties = function (model) {
+    // the properties that are searchable
+    var prop = [];
+
+    // loop over all keys
+    _.forEach(_.keys(model), function(value) {
+        // check if searchable is true
+        if(model[value].searchable == true) {
+            prop.push(value);
+        }
+    });
+
+    // return the properties
+    return prop;
+};
+
+/**
  * Get existing keys of model
  */
 exports.getAllExistingKeysFromModel = function (model) {
     // return the keys
-    return Object.keys(model);
+    return _.keys(model);
 };
 
 /**
@@ -127,16 +160,49 @@ exports.toObject = function(obj, options) {
 /**
  * Find
  */
-exports.find = function (db, query, callback) {
+exports.find = function (db, query, searchableProperties, callback) {
     // the array of objects to return
     var objs = null;
     
     // the error to return
     var err = null;
 
-    // find the object matching the query
-    objs = _.filter(db, query) || null;
+    // the regular expression to test
+    var re = new RegExp();
 
+    // if searching on text
+    if(query.$text && query.$text.$search) {
+        // get the search values
+        var searchValues = query.$text.$search.split(' ');
+
+        // create regular expression
+        re = new RegExp(searchValues.join('|'), 'gi');
+    }
+
+    // if searchables exist
+    if(searchableProperties.length > 0) {
+        // find the object matching the query
+        objs = _.filter(db, function(o) {
+            // determines if a search query has been found
+            var found = false;
+
+            // loop over all keys
+            _.forEach(searchableProperties, function(value) {
+                // test the regex
+                if(re.test(o[value])) {
+                    found = true;
+                }
+            });
+
+            // return found
+            return found; 
+        });
+    }
+    else {
+        // find the object matching the query
+        objs = _.filter(db, query);
+    }
+    
     // if a callback
     if(callback) {
         // hit the callback
@@ -195,6 +261,9 @@ exports.save = function(dbPath, db, objToSave, callback) {
  * Remove
  */
 exports.remove = function(db, objToRemove, callback) {
+    // the array of objects to return
+    var objs = [];
+
     // the error to return
     var err = null;
 
@@ -204,13 +273,13 @@ exports.remove = function(db, objToRemove, callback) {
     // if object was found
     if(index != -1) {
         // remove item at index using native splice
-        db.splice(index, 1);
+        objs = db.splice(index, 1);
     }
 
     // if a callback
     if(callback) {
         // hit the callback
-        callback(err);
+        callback(err, objs);
     }
 };
 
@@ -225,7 +294,7 @@ exports.sort = function(arr, query, callback) {
     var err = null;
 
     // find the object matching the query
-    objs = _.orderBy(arr, Object.keys(query), Object.values(query)) || null;
+    objs = _.orderBy(arr, _.keys(query), Object.values(query)) || null;
 
     // if a callback
     if(callback) {

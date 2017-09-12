@@ -39,21 +39,28 @@ var BlogPostSchema = {
         type: String
     },
     title: {
-        type: String
+        type: String,
+        required: true,
+        searchable: true
     },
     image: {
         type: String
     },
     shortDescription: {
-        type: String
+        type: String,
+        required: true,
+        searchable: true
     },
     body: {
-        type: String
+        type: String,
+        required: true,
+        searchable: true
     },
     author: {
         type: String,
         overwriteable: false,
-        default: 'Cameron Hopkins'
+        default: 'Cameron Hopkins',
+        searchable: true
     },
     datePublished: {
         type: Date,
@@ -75,6 +82,12 @@ var requiredSchemaProperties = helpers.getRequiredProperties(BlogPostSchema);
 // the non overwritable properties the user cannot self change
 var nonOverwritableSchemaProperties = helpers.getNonOverwritableProperties(BlogPostSchema);
 
+// the non default properties
+var defaultSchemaProperties = helpers.getDefaultProperties(BlogPostSchema);
+
+// the searchable properties
+var searchableSchemaProperties = helpers.getSearchableProperties(BlogPostSchema);
+
 /**
  * Converts to object
  */
@@ -88,7 +101,7 @@ exports.toObject = function(obj, options) {
  */
 exports.find = function(query, callback) {
     // find
-    helpers.find(db, query, function(err, objs) {
+    helpers.find(db, query, searchableSchemaProperties, function(err, objs) {
         // if a callback
         if(callback) {
             // hit the callback
@@ -128,6 +141,12 @@ exports.save = function(objToSave, callback) {
     if(firstProp) {
         // create new error
         err = new Error(`All required properties are not present on object. The property \'${firstProp}\' was not in the object.`);
+        
+        // if a callback
+        if(callback) {
+            // hit the callback
+            callback(err);
+        }
     }
     else {
         // remove any keys that may have tried to been overwritten
@@ -139,9 +158,12 @@ exports.save = function(objToSave, callback) {
         // if not creating a new blog
         if(!objToSave.new) {
             // find the object matching the object index
-            index = _.findIndex(db, objToSave);
+            index = _.findIndex(db, { 'customShort': objToSave.customShort });
             obj = index != -1 ? db[index] : null;
         }
+        
+        // delete the new object
+        delete objToSave['new'];
         
         // if object was found
         if(obj) {
@@ -171,7 +193,7 @@ exports.save = function(objToSave, callback) {
         }
         else {
             // set all defaults
-            helpers.setNonOverwritablePropertyDefaults(nonOverwritableSchemaProperties, BlogPostSchema, objToSave);
+            helpers.setNonOverwritablePropertyDefaults(defaultSchemaProperties, BlogPostSchema, objToSave);
 
             // generate UUID
             objToSave._id = uuidv1();
@@ -241,13 +263,20 @@ exports.update = function(query, updatedObj, callback) {
 
             // if error, reset object
             obj = err ? null : obj;
+
+            // if a callback
+            if(callback) {
+                // hit the callback
+                callback(err, _.cloneDeep(obj));
+            }
         });
     }
-
-    // if a callback
-    if(callback) {
-        // hit the callback
-        callback(err, _.cloneDeep(obj));
+    else {
+        // if a callback
+        if(callback) {
+            // hit the callback
+            callback(err, _.cloneDeep(obj));
+        }
     }
 };
 
@@ -256,7 +285,7 @@ exports.update = function(query, updatedObj, callback) {
  */
 exports.remove = function(obj, callback) {
     // remove
-    helpers.remove(db, obj, function(err) {
+    helpers.remove(db, obj, function(err, removedObjs) {
         // if error occurred
         if(err) {
             // if a callback
@@ -271,7 +300,7 @@ exports.remove = function(obj, callback) {
                 // if a callback
                 if(callback) {
                     // hit the callback
-                    callback(e);
+                    callback(e, removedObjs);
                 }
             });
         }

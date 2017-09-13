@@ -4,7 +4,7 @@
 var contactServiceModule = angular.module('contact.services');
 
 // create the factory
-contactServiceModule.factory('ContactFactory', ['$http', '$location', function ($http, $location) {
+contactServiceModule.factory('ContactFactory', ['$http', '$location', '$rootScope', function ($http, $location, $rootScope) {
     // set up the factory
     var factory = {};
     var appPath = ApplicationConfiguration.applicationBase + 'api';
@@ -26,7 +26,13 @@ contactServiceModule.factory('ContactFactory', ['$http', '$location', function (
             return response.data.d;
         })
         .catch(function (response) {
-            return { 'error': true, 'title': response.data.title, 'status': response.status, 'message': response.data.message };
+            // if the response was sent back with the custom data response
+            if(response.data) {
+                return { 'error': true, 'title': response.data.title, 'status': response.status, 'message': response.data.message };
+            }
+
+            // return default response
+            return { 'error': true, 'title': $rootScope.$root.generalStatusError, 'status': response.status, 'message': response.xhrStatus };
         });
     };
 
@@ -49,7 +55,13 @@ contactServiceModule.factory('ContactFactory', ['$http', '$location', function (
             return response.data;
         })
         .catch(function (response) {
-            return { 'error': true, 'title': response.data.title, 'status': response.status, 'message': response.data.message };
+            // if the response was sent back with the custom data response
+            if(response.data) {
+                return { 'error': true, 'title': response.data.title, 'status': response.status, 'message': response.data.message };
+            }
+
+            // return default response
+            return { 'error': true, 'title': $rootScope.$root.generalStatusError, 'status': response.status, 'message': response.xhrStatus };
         });
     };
 

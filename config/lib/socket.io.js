@@ -21,8 +21,6 @@ var // the application configuration
     socketio = require('socket.io'),
     // express session used for storing logged in sessions
     session = require('express-session'),
-    // File Store
-    FileStore = require('session-file-store')(session),
     // clc colors for console logging
 	clc = require('./clc');
 
@@ -93,7 +91,7 @@ module.exports = function (app, db) {
 
     // FIXME-MONGO: fix to remove this
     // create a MongoDB storage object
-    var fileStore = new FileStore(config.sessionOptions);
+    //var fileStore = new FileStore(config.sessionOptions);
 
     // intercept Socket.io's handshake request
     io.use(function (socket, next) {

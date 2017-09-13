@@ -4,7 +4,7 @@
 var blogModule = angular.module('blog');
 
 // create the controller
-blogModule.controller('BlogPostController', ['$scope', '$rootScope', '$compile', '$location', '$routeParams', '$timeout', 'ngDialog', 'Service', 'BlogFactory', function ($scope, $rootScope, $compile, $location, $routeParams, $timeout, ngDialog, Service, BlogFactory) {
+blogModule.controller('BlogPostController', ['$scope', '$rootScope', '$compile', '$location', '$routeParams', '$timeout', 'Service', 'BlogFactory', function ($scope, $rootScope, $compile, $location, $routeParams, $timeout, Service, BlogFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
     
@@ -30,17 +30,6 @@ blogModule.controller('BlogPostController', ['$scope', '$rootScope', '$compile',
 
     // determines if the page is fully loaded
     $scope.pageFullyLoaded = false;
-
-    // show loading dialog
-    var loadingDialog = ngDialog.open({
-        template: '/modules/dialog/client/views/dialog-loading.client.view.html',
-        controller: 'DialogLoadingController',
-        className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
-        showClose: false,
-        closeByEscape: false,
-        closeByDocument: false,
-        data: undefined
-    });
 
     // check if header/footer was initialized
     if($rootScope.$root.showHeader === undefined || $rootScope.$root.showFooter === undefined) {
@@ -150,17 +139,11 @@ blogModule.controller('BlogPostController', ['$scope', '$rootScope', '$compile',
         titleDOM.setAttribute('ng-bind-html', title);
         $compile(titleDOM)($scope);
 
-        // close the loading dialog
-        loadingDialog.close();
-        
-        // on completion of close
-        loadingDialog.closePromise.then(function (data) {
-            // set page fully loaded
-            $scope.pageFullyLoaded = true;
+        // set page fully loaded
+        $scope.pageFullyLoaded = true;
 
-            // show the page after a timeout
-            $timeout(showPage, $rootScope.$root.showPageTimeout);
-        });
+        // show the page after a timeout
+        $timeout(showPage, $rootScope.$root.showPageTimeout);
     };
 
     // shows the page

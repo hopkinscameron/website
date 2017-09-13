@@ -11,6 +11,12 @@ module.exports = {
         googleAnalyticsTrackingID: process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'GOOGLE_ANALYTICS_TRACKING_ID',
         appInsightsAnalyticsTrackingID: process.env.APP_INSIGHTS_ANALYTICS_TRACKING_ID || 'APP_INSIGHTS_ANALYTICS_TRACKING_ID'
     },
+    db: {
+        promise: global.Promise,
+        options: {
+            useMongoClient: true
+        }
+    },
     port: process.env.PORT || 3000,
     host: process.env.HOST || '0.0.0.0',
     // DOMAIN config should be set to the fully qualified application accessible
@@ -18,15 +24,20 @@ module.exports = {
     domain: process.env.DOMAIN || 'http://127.0.0.1:80',
     // session options
     sessionOptions: {
-        path: 'modules/core/server/models/db/sessions',
+        type: 'tingodb',
+        dbPath: 'modules/core/server/models/db/sessions',
         ttl: 60, // 86400 24 hours (in seconds) // 60 -> 1 minute
-        //logFn: process.env.SESSION_LOG_FILE || 'session-logs.log',
+        timeout: 10000, 
+        collectionName: 'sessions',
         secret: process.env.SESSION_SECRET || 'TEST',
+        autoRemove: 'interval',
+        autoRemoveInterval: 1
     },
     // session Cookie settings
     sessionCookie: {
         // session expiration is set by default to 24 hours (in milliseconds)
-        maxAge: 60000, //24 * (60 * 60 * 1000), // 60000 -> 1 minute
+        maxAge: 30000, //24 * (60 * 60 * 1000), // 60000 -> 1 minute
+        expires: 30000,
         // httpOnly flag makes sure the cookie is only accessed
         // through the HTTP protocol and not JS/browser
         httpOnly: true,

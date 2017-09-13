@@ -240,7 +240,11 @@ exports.update = function(query, updatedObj, callback) {
         encryptPassword(updatedObj, function(err) {
             // if error occurred
             if(err) {
-                return callback(err);
+                // if a callback
+                if(callback) {
+                    // hit the callback
+                    callback(err);
+                }
             }
             else {
                 // merge old data with new data
@@ -283,29 +287,17 @@ exports.comparePassword = function(user, plainTextPassword, callback) {
     bcrypt.compare(plainTextPassword, user.password, function(err, isMatch) {
         // if error occurred
         if (err) {
-            return callback(err);
+            // if a callback
+            if(callback) {
+                // hit the callback
+                callback(err);
+            }
         } 
-
-        callback(null, isMatch);
+        else if(callback) {
+            // hit the callback
+            callback(null, isMatch);
+        }
     });
-};
-
-// encrypt password
-function encryptPasswordSync(user) {
-    // if password exists
-    if(user.password) {
-        try {
-            // get the salt and hash
-            var salt = bcrypt.genSaltSync(defaultConfig.saltRounds);
-            var hash = bcrypt.hashSync(user.password, salt);
-
-            // override the cleartext password with the hashed one
-            user.password = hash;
-        }
-        catch (err) {
-            throw err;
-        }
-    }
 };
 
 // encrypt password
@@ -316,14 +308,22 @@ function encryptPassword(user, callback) {
         bcrypt.genSalt(defaultConfig.saltRounds, function(err, salt) {
             // if error occurred
             if (err) {
-                return callback(err);
+                // if a callback
+                if(callback) {
+                    // hit the callback
+                    callback(err);
+                }
             }
 
             // hash the password using our new salt
             bcrypt.hash(user.password, salt, function(err, hash) {
                 // if error occurred
                 if (err) {
-                    return callback(err);
+                    // if a callback
+                    if(callback) {
+                        // hit the callback
+                        callback(err);
+                    }
                 } 
 
                 // override the cleartext password with the hashed one
@@ -332,8 +332,19 @@ function encryptPassword(user, callback) {
                 // set password updated last
                 user.passwordUpdatedLast = new Date();
 
-                callback();
+                // if a callback
+                if(callback) {
+                    // hit the callback
+                    callback();
+                }
             });
         });
+    }
+    else {
+        // if a callback
+        if(callback) {
+            // hit the callback
+            callback();
+        }
     }
 };

@@ -37,8 +37,11 @@ module.exports = function (app, db) {
                 console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
             }
             else if(user) {
-                // get object value
+                // save the id since it will be lost when going to object
+                // hide the password for security purposes
+                var id = user._id;
                 user = User.toObject(user, { 'hide': 'password internalName created' });
+                user._id = id;
                 done(err, user);
             }
             else {

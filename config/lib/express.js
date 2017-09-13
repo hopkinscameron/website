@@ -21,8 +21,8 @@ var // the application configuration
     bodyParser = require('body-parser'),
     // express session used for storing logged in sessions
     session = require('express-session'),
-    // File Store
-    FileStore = require('session-file-store')(session),
+    // session store for multiple databases
+    sessionstore = require('sessionstore'),
     // fav icon serve
     favicon = require('serve-favicon'),
     // file compression
@@ -161,7 +161,7 @@ module.exports.initSession = function (app, db) {
         },
         name: config.sessionKey,
         unset: 'destroy',
-        store: new FileStore(config.sessionOptions)
+        store: sessionstore.createSessionStore(config.sessionOptions)
     }));
 
     // add Lusca CSRF Middleware

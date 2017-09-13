@@ -4,7 +4,7 @@
 var headerServiceModule = angular.module('header.services');
 
 // create the factory
-headerServiceModule.factory('HeaderFactory', ['$http', '$location', function ($http, $location) {
+headerServiceModule.factory('HeaderFactory', ['$http', '$location', '$rootScope', function ($http, $location, $rootScope) {
     // set up the factory
     var factory = {};
     var appPath = ApplicationConfiguration.applicationBase + 'api';
@@ -26,7 +26,13 @@ headerServiceModule.factory('HeaderFactory', ['$http', '$location', function ($h
             return response.data.d;
         })
         .catch(function (response) {
-            return { 'error': true, 'title': response.data.title, 'status': response.status, 'message': response.data.message };
+            // if the response was sent back with the custom data response
+            if(response.data) {
+                return { 'error': true, 'title': response.data.title, 'status': response.status, 'message': response.data.message };
+            }
+
+            // return default response
+            return { 'error': true, 'title': $rootScope.$root.generalStatusError, 'status': response.status, 'message': response.xhrStatus };
         });
     };
 

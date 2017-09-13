@@ -4,7 +4,7 @@
 var contactModule = angular.module('contact');
 
 // create the controller
-contactModule.controller('ContactController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'ngDialog', 'Service', 'ContactFactory', function ($scope, $rootScope, $compile, $location, $timeout, ngDialog, Service, ContactFactory) {
+contactModule.controller('ContactController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'Service', 'ContactFactory', function ($scope, $rootScope, $compile, $location, $timeout, Service, ContactFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
     
@@ -61,17 +61,6 @@ contactModule.controller('ContactController', ['$scope', '$rootScope', '$compile
 
     // determines if the page is fully loaded
     $scope.pageFullyLoaded = false;
-
-    // show loading dialog
-    var loadingDialog = ngDialog.open({
-        template: '/modules/dialog/client/views/dialog-loading.client.view.html',
-        controller: 'DialogLoadingController',
-        className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
-        showClose: false,
-        closeByEscape: false,
-        closeByDocument: false,
-        data: undefined
-    });
 
     // check if header/footer was initialized
     if($rootScope.$root.showHeader === undefined || $rootScope.$root.showFooter === undefined) {
@@ -359,17 +348,11 @@ contactModule.controller('ContactController', ['$scope', '$rootScope', '$compile
         titleDOM.setAttribute('ng-bind-html', title);
         $compile(titleDOM)($scope);
 
-        // close the loading dialog
-        loadingDialog.close();
-        
-        // on completion of close
-        loadingDialog.closePromise.then(function (data) {
-            // set page fully loaded
-            $scope.pageFullyLoaded = true;
+        // set page fully loaded
+        $scope.pageFullyLoaded = true;
 
-            // show the page after a timeout
-            $timeout(showPage, $rootScope.$root.showPageTimeout);
-        });
+        // show the page after a timeout
+        $timeout(showPage, $rootScope.$root.showPageTimeout);
     };
 
     // shows the page

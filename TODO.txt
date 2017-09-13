@@ -5,9 +5,6 @@
 All 
 
 Done
-- get express working without mongodb
-- get passport working without mongodb
-- if an error happens on server (say server goes down in mid request, a response is still sent back to user), catch with not using response.data, instead use response.xhrStatus == 'error' and response.status == -1
 
 Pending
 - change models so that functions are part of the schema, and so I can create a instance of a model (look at how LocalStrategy was set up)

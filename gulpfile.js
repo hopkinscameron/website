@@ -385,7 +385,7 @@ gulp.task('prod', function (done) {
 	runSequence(['copyLocalEnvConfig', 'templatecache'], 'build', 'env:prod', 'lint', ['nodemon-nodebug', 'watch'], done);
 });
 
-// run the project in unsecure production mode
+// run the project in development production mode
 gulp.task('devp', function (done) {
 	runSequence(['copyLocalEnvConfig', 'templatecache'], 'build', 'env:devp', 'lint', ['nodemon-nodebug', 'watch'], done);
 });

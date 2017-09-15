@@ -18,8 +18,6 @@ var // the path
  * Show the current page
  */
 exports.read = function (req, res) {
-    // FIXME: maybe there is a better way to handle adding admin headers
-
     // if user is authenticated in the session get admin header
     if (req.isAuthenticated()) {
         // set authenticated

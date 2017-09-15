@@ -15,33 +15,6 @@ module.exports = {
         certificate: './config/sslcerts/cert.pem',
         caBundle: './config/sslcerts/cabundle.crt'
     },
-    db: {
-        uri: process.env.MONGODB || 'mongodb://localhost:27017/personalwebsiteprodtest',
-        options: {
-            db: { 
-                native_parser: true 
-            },
-            poolSize: 5,
-            useMongoClient: true
-            /**
-              * Uncomment to enable ssl certificate based authentication to mongodb
-              * servers. Adjust the settings below for your specific certificate
-              * setup.
-              * for connect to a replicaset, rename server:{...} to replset:{...}
-            
-            server: {
-                ssl: true,
-                sslValidate: false,
-                checkServerIdentity: false,
-                sslCA: fs.readFileSync('./config/sslcerts/ssl-ca.pem'),
-                sslCert: fs.readFileSync('./config/sslcerts/ssl-cert.pem'),
-                sslKey: fs.readFileSync('./config/sslcerts/ssl-key.pem'),
-                sslPass: '1234'
-            }*/
-        },
-        // enable mongoose debug mode
-        debug: process.env.MONGODB_DEBUG || false
-    },
     port: process.env.PORT_SECURE || 8443,
     // binding to 127.0.0.1 is safer in production.
     host: process.env.HOST || '0.0.0.0',

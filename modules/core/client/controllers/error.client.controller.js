@@ -45,6 +45,9 @@ coreModule.controller('ErrorController', ['$scope', '$compile', '$route', 'Servi
 
         // get correct error code
         switch(status) {
+            case -1:
+                $scope.image = '/dist/img/500.png';
+                break;
             case 400:
                 $scope.image = '/dist/img/400.png';
                 break;

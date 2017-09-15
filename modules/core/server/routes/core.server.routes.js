@@ -6,7 +6,7 @@
 var // the path
     path = require('path'),
     // the ip logger
-    ipLogger = require(path.resolve('./config/lib/ip.logger')),
+    ipLogger = require(path.resolve('./config/lib/ip-logger')),
     // the core policy
 	corePolicy = require('../policies/core.server.policy'),
     // the core controller to handle routes
@@ -22,8 +22,8 @@ module.exports = function (app) {
     app.route('/:url(api|modules|lib)/*').get(coreController.renderNotFound);
 
     // define application route
-    //app.route('/*').get(coreController.testBasicHelloWorld);
     app.route('/*').get(coreController.renderIndex);
+    //app.route('/*').get(coreController.testBasicHelloWorld);
 
     // POST sends email
     // format /api/sendEmail

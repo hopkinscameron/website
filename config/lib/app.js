@@ -5,41 +5,30 @@
  */
 var // the application configuration
     config = require('../config'),
-    // mongoose configuration
-    mongoose = require('./mongoose'),
     // express configuration
     express = require('./express'),
     // lodash
     _ = require('lodash'),
     // clc colors for console logging
     clc = require('./clc');
-    
-// initialize models
-mongoose.loadModels();
 
-// on initialize mongoose
+// on initialize app
 module.exports.init = function init(callback) {
-    // connect to mongodb
-    mongoose.connect(function (db) {
-        // initialize express
-        var app = express.init(db);
+    // initialize express
+    var app = express.init();
 
-        // if there is a callback
-        if (callback) {
-            callback(app, db, config);
-        } 
-    });
+    // if there is a callback
+    if (callback) {
+        callback(app, config);
+    }
 };
 
 // on start
 module.exports.start = function start(callback) {
-    console.log('----- ');
-    console.log('----- Starting the server');
-    console.log('----- ');
     var _this = this;
 
     // initialize
-    _this.init(function (app, db, config) {
+    _this.init(function (app, config) {
 
         // start the app by listening on <port> at <host>
         app.listen(config.port, config.host, function () {
@@ -55,18 +44,13 @@ module.exports.start = function start(callback) {
             console.log();
             console.log(clc.success('Environment:     ' + env));
             console.log(clc.success('Server:          ' + server));
-            console.log(clc.success('Database:        ' + config.db.uri));
             console.log(clc.success('App version:     ' + config.personalWebsite.version));            
             console.log('--');
 
             // if there is a callback
             if (callback) {
-                callback(app, db, config);
+                callback(app, config);
             }
-
-            console.log('----- ');
-            console.log('----- Finished starting the server');
-            console.log('----- ');
         });
     });
 };

@@ -18,7 +18,7 @@ var // the path
     // tester for generating a strong password
     owasp = require('owasp-password-strength-test'),
     // the User model
-    User = require('mongoose').model('User');
+    User = require(path.resolve('./modules/login/server/models/model-user'));
 
 // configure
 owasp.config(config.shared.owasp);
@@ -47,29 +47,35 @@ exports.signUp = function (req, res, next) {
     req.checkBody('password', 'Password is required.').notEmpty();
     
     // validate errors
-    var errors = req.validationErrors();
+    req.getValidationResult().then(function(errors) {
+        // if any errors exists
+        if(!errors.isEmpty()) {
+            // holds all the errors in one text
+            var errorText = "";
 
-    // if errors exist
-    if (errors) {
-        // holds all the errors in one text
-        var errorText = "";
+            // add all the errors
+            for(var x = 0; x < errors.array().length; x++) {
+                // if not the last error
+                if(x < errors.array().length - 1) {
+                    errorText += errors.array()[x].msg + '\r\n';
+                }
+                else {
+                    errorText += errors.array()[x].msg;
+                }
+            }
 
-        // add all the errors
-        for(var x = 0; x < errors.length; x++) {
-            errorText += errors[x].msg + "\r\n";
+            // send bad request
+            res.status(400).send({ title: errorHandler.getErrorTitle({ code: 400 }), message: errorText });
+        } 
+        else {
+            // authenticate the user with a signup
+            passport.authenticate('local-signup', {
+                successRedirect : '/about', // redirect to the secure profile section
+                failureRedirect : '/login', // redirect back to the home page if there is an error
+                failureFlash : true // allow flash messages
+            })(req, res, next);
         }
-
-        // send bad request
-        res.status(400).send({ title: errorHandler.getErrorTitle({ code: 400 }), message: errorHandler.getGenericErrorMessage({ code: 400 }) + errorText });
-    }
-    else {
-        // authenticate the user with a signup
-        passport.authenticate('local-signup', {
-            successRedirect : '/about', // redirect to the secure profile section
-            failureRedirect : '/login', // redirect back to the home page if there is an error
-            failureFlash : true // allow flash messages
-        })(req, res, next);
-    }
+    });
 };
 
 /**
@@ -129,20 +135,26 @@ exports.changePassword = function (req, res, next) {
     // if found user
     if(user) {
         // set updated values 
-        user.password = req.body.newpassword;
-        user.passwordUpdatedLast = new Date();
+        var updatedValues = {
+            'password': req.body.newpassword
+        };
 
         // update user
-        user.save(function(err) {
+        User.update(user, updatedValues, function(err, updatedUser) {
             // if error occurred
             if (err) {
                 // send internal error
                 res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
                 console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
             }
-            else {
-                // return authenticated
+            else if(updatedUser) {
+                // return password changed
                 res.json({ 'd': { title: errorHandler.getErrorTitle({ code: 200 }), message: errorHandler.getGenericErrorMessage({ code: 200 }) + " Successful password change." } });
+            }
+            else {
+                // send internal error
+                res.status(500).send({ error: true, title: errorHandler.getErrorTitle({ code: 500 }), message: errorHandler.getGenericErrorMessage({ code: 500 }) });
+                console.log(clc.error(`In ${path.basename(__filename)} \'changePassword\': ` + errorHandler.getDetailedErrorMessage({ code: 500 }) + ' Couldn\'t update User.'));
             }
         });
     }
@@ -164,59 +176,65 @@ exports.userById = function (req, res, next, id) {
         req.checkBody('newpassword', 'New Password is required.').notEmpty();
         
         // validate errors
-        var errors = req.validationErrors();
+        req.getValidationResult().then(function(errors) {
+            // if any errors exists
+            if(!errors.isEmpty()) {
+                // holds all the errors in one text
+                var errorText = "";
 
-        // if errors exist
-        if (errors) {
-            // holds all the errors in one text
-            var errorText = "";
+                // add all the errors
+                for(var x = 0; x < errors.array().length; x++) {
+                    // if not the last error
+                    if(x < errors.array().length - 1) {
+                        errorText += errors.array()[x].msg + '\r\n';
+                    }
+                    else {
+                        errorText += errors.array()[x].msg;
+                    }
+                }
 
-            // add all the errors
-            for(var x = 0; x < errors.length; x++) {
-                errorText += errors[x].msg + "\r\n";
+                // send bad request
+                res.status(400).send({ title: errorHandler.getErrorTitle({ code: 400 }), message: errorText });
             }
+            else {
+                // convert to lowercase
+                id = id ? id.toLowerCase() : id;
 
-            // send bad request
-            res.status(400).send({ title: errorHandler.getErrorTitle({ code: 400 }), message: errorHandler.getGenericErrorMessage({ code: 400 }) + errorText });
-        }
-        else {
-            // convert to lowercase
-            id = id ? id.toLowerCase() : id;
-
-            // find user based on id
-            User.findOne({ username : id }).exec(function(err, foundUser) {
-                // if error occurred
-                if (err) {
-                    // return error
-                    return next(err);
-                }
-                // if draft was found
-                else if(foundUser) {
-                    // compare equality
-                    foundUser.comparePassword(req.body.oldpassword, function(err, isMatch) {
-                        // if error occurred
-                        if (err) {
-                            // send internal error
-                            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
-                            console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
-                        }
-                        else if(!isMatch) {
-                            // send not found
-                            res.status(404).send({ title: errorHandler.getErrorTitle({ code: 404 }), message: "Username/Password is incorrect." });
-                        }
-                        else {
-                            // bind the data to the request
-                            req.foundUser = foundUser;
-                            next();
-                        }
-                    });	
-                }
-                else {
-                    // send not found
-                    res.status(404).send({ title: errorHandler.getErrorTitle({ code: 404 }), message: "Usernmae/Password is incorrect." });
-                }
-            });
-        }
+                // find user based on id
+                User.findOne({ 'username': id }, function(err, foundUser) {
+                    // if error occurred
+                    if (err) {
+                        // return error
+                        return next(err);
+                    }
+                    // if draft was found
+                    else if(foundUser) {
+                        // compare equality
+                        foundUser.comparePassword(req.body.oldpassword, function(err, isMatch) {
+                            // if error occurred
+                            if (err) {
+                                // send internal error
+                                res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+                                console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
+                            }
+                            else if(!isMatch) {
+                                // send not found
+                                res.status(404).send({ title: errorHandler.getErrorTitle({ code: 404 }), message: "Username/Password is incorrect." });
+                            }
+                            else {
+                                // bind the data to the request
+                                req.foundUser = foundUser;
+                                next();
+                            }
+                        });	
+                    }
+                    else {
+                        // send not found
+                        res.status(404).send({ title: errorHandler.getErrorTitle({ code: 404 }), message: "Usernmae/Password is incorrect." });
+                    }
+                });
+            }
+        });
     }
     else {
         // create forbidden error

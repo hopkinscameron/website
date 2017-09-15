@@ -53,7 +53,6 @@ Temporary Items
 node_modules/
 
 # Package file package.json
-package-lock.json
 
 # environment
 .env
@@ -63,7 +62,4 @@ package-lock.json
 
 # build files
 build/
-.bowerrc
-.csslintrc
-.eslintrc.js
-bower.json
+public/dist/

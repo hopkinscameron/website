@@ -121,9 +121,9 @@ var validateSecureMode = function (config) {
  */
 var validateSessionSecret = function (config, testing) {
     // if not in production
-    if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'developmentp') {
-        return true;
-    }
+	if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'developmentp') {
+		return true;
+	}
 
     // if the session secret is still the default
     if (config.sessionSecret === 'TEST') {

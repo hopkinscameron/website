@@ -6,11 +6,13 @@
 var // the path
     path = require('path'),
     // the ip logger
-	ipLogger = require(path.resolve('./config/lib/ip.logger')),
+	ipLogger = require(path.resolve('./config/lib/ip-logger')),
 	// the blog policy
 	blogPolicy = require('../policies/blog.server.policy'),
 	// the blog controller to handle routes
-    blogController = require('../controllers/blog.server.controller');
+	blogController = require('../controllers/blog.server.controller'),
+	// the blog controller to handle routes
+    savedBogController = require('../controllers/saved-blog.server.controller');
 
 module.exports = function (app) {
 	// =========================================================================
@@ -47,8 +49,8 @@ module.exports = function (app) {
 	// GET gets blog drafts list
 	// POST creates new blog draft
 	// format /api/blogDrafts
-	app.route('/api/blogDrafts').get([ipLogger.log, blogPolicy.isAllowed], blogController.draftList)
-		.post([ipLogger.log, blogPolicy.isAllowed], blogController.createDraft);
+	app.route('/api/blogDrafts').get([ipLogger.log, blogPolicy.isAllowed], savedBogController.draftList)
+		.post([ipLogger.log, blogPolicy.isAllowed], savedBogController.createDraft);
 
 	// single blog draft routes
 	// GET gets specific draft
@@ -56,11 +58,11 @@ module.exports = function (app) {
 	// PUT updates specific draft
 	// DELETE deletes specific draft
 	// format /api/blogDrafts/:draftBlogId
-	app.route('/api/blogDrafts/:draftBlogId').get([ipLogger.log, blogPolicy.isAllowed], blogController.readDraft)
-		.post([ipLogger.log, blogPolicy.isAllowed], blogController.publishBlogFromDraft)
-		.put([ipLogger.log, blogPolicy.isAllowed], blogController.updateDraft)
-		.delete([ipLogger.log, blogPolicy.isAllowed], blogController.deleteDraft);
+	app.route('/api/blogDrafts/:draftBlogId').get([ipLogger.log, blogPolicy.isAllowed], savedBogController.readDraft)
+		.post([ipLogger.log, blogPolicy.isAllowed], savedBogController.publishBlogFromDraft)
+		.put([ipLogger.log, blogPolicy.isAllowed], savedBogController.updateDraft)
+		.delete([ipLogger.log, blogPolicy.isAllowed], savedBogController.deleteDraft);
 	  
 	// if draft blog id exists, bind the draft blog by id middleware
-	app.param('draftBlogId', blogController.draftBlogByID);
+	app.param('draftBlogId', savedBogController.draftBlogByID);
 };

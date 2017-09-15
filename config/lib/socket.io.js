@@ -21,8 +21,6 @@ var // the application configuration
     socketio = require('socket.io'),
     // express session used for storing logged in sessions
     session = require('express-session'),
-    // mongo session
-    MongoStore = require('connect-mongo')(session),
     // clc colors for console logging
 	clc = require('./clc');
 
@@ -91,11 +89,9 @@ module.exports = function (app, db) {
     // create a new Socket.io server
     var io = socketio.listen(server);
 
+    // FIXME-MONGO: fix to remove this
     // create a MongoDB storage object
-    var mongoStore = new MongoStore({
-        mongooseConnection: config.db.options.useMongoClient ? db : db.connection,
-        collection: config.sessionCollection
-    });
+    //var fileStore = new FileStore(config.sessionOptions);
 
     // intercept Socket.io's handshake request
     io.use(function (socket, next) {
@@ -109,8 +105,9 @@ module.exports = function (app, db) {
                 return next(new Error('sessionId was not found in socket.request'), false);
             }
 
-            // use the mongoStorage instance to get the Express session information
-            mongoStore.get(sessionId, function (err, session) {
+            /*
+            // use the fileStore instance to get the Express session information
+            fileStore.get(sessionId, function (err, session) {
                 // if error occurred
                 if (err) {
                     return next(err, false);
@@ -137,6 +134,7 @@ module.exports = function (app, db) {
                     });
                 });
             });
+            */
         });
     });
 

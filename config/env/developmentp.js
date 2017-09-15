@@ -9,18 +9,6 @@ var // the default environment configuration
     fs = require('fs');
 
 module.exports = {
-    db: {
-        uri: process.env.MONGODB || 'mongodb://localhost:27017/personalwebsiteprodtest',
-        options: {
-            db: { 
-                native_parser: true 
-            },
-            poolSize: 5,
-            useMongoClient: true
-        },
-        // enable mongoose debug mode
-        debug: process.env.MONGODB_DEBUG || false
-    },
     port: process.env.PORT || 3000,
     // binding to 127.0.0.1 is safer in production.
     host: process.env.HOST || '0.0.0.0',

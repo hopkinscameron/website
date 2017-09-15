@@ -5,6 +5,8 @@
  */
 var // the application configuration
     config = require('../config'),
+    // the path
+    path = require('path'),
     // the server
     express = require('express'),
     // the http request validator
@@ -19,8 +21,8 @@ var // the application configuration
     bodyParser = require('body-parser'),
     // express session used for storing logged in sessions
     session = require('express-session'),
-    // mongo session
-    MongoStore = require('connect-mongo')(session),
+    // session store for multiple databases
+    sessionstore = require('sessionstore'),
     // fav icon serve
     favicon = require('serve-favicon'),
     // file compression
@@ -105,9 +107,11 @@ module.exports.initMiddleware = function (app) {
         app.set('view cache', false);
     } 
     else if (process.env.NODE_ENV === 'production') {
+        // set cache to memory
         app.locals.cache = 'memory';
     }
     else if (process.env.NODE_ENV === 'developmentp') {
+        // set cache to memory
         app.locals.cache = 'memory';
     }
     else {
@@ -149,7 +153,7 @@ module.exports.initSession = function (app, db) {
     app.use(session({
         saveUninitialized: false,
         resave: false,
-        secret: config.sessionSecret,
+        secret: config.sessionOptions.secret,
         cookie: {
             maxAge: config.sessionCookie.maxAge,
             httpOnly: config.sessionCookie.httpOnly,
@@ -157,11 +161,7 @@ module.exports.initSession = function (app, db) {
         },
         name: config.sessionKey,
         unset: 'destroy',
-        store: new MongoStore({
-            mongooseConnection: config.db.options.useMongoClient ? db : db.connection,
-            collection: config.sessionCollection,
-            clear_interval: config.clearInterval
-        })
+        store: sessionstore.createSessionStore(config.sessionOptions)
     }));
 
     // add Lusca CSRF Middleware
@@ -252,9 +252,9 @@ module.exports.initErrorRoutes = function (app) {
 /**
  * Configure Socket.io
  */
-module.exports.configureSocketIO = function (app, db) {
+module.exports.configureSocketIO = function (app) {
     // load the Socket.io configuration
-    var server = require('./socket.io')(app, db);
+    var server = require('./socket.io')(app);
 
     // return server object
     return server;
@@ -263,114 +263,42 @@ module.exports.configureSocketIO = function (app, db) {
 /**
  * Initialize the Express application
  */
-module.exports.init = function (db) {
+module.exports.init = function () {
     // initialize express app
     var app = express();
-
-    console.log('----- ');
-    console.log('----- Initializing local variables');
-    console.log('----- ');
 
     // initialize local variables
     this.initLocalVariables(app);
 
-    console.log('----- ');
-    console.log('----- Done Initializing local variables');
-    console.log('----- ');
-
-    console.log('----- ');
-    console.log('----- Initializing middleware');
-    console.log('----- ');
-
     // initialize Express middleware
     this.initMiddleware(app);
-
-    console.log('----- ');
-    console.log('----- Done Initializing middleware');
-    console.log('----- ');
-
-    console.log('----- ');
-    console.log('----- Initializing view engine');
-    console.log('----- ');
 
     // initialize Express view engine
     this.initViewEngine(app);
 
-    console.log('----- ');
-    console.log('----- Done Initializing view engine');
-    console.log('----- ');
-
-    console.log('----- ');
-    console.log('----- Initializing helmet headers');
-    console.log('----- ');
-
     // initialize Helmet security headers
     this.initHelmetHeaders(app);
-
-    console.log('----- ');
-    console.log('----- Done Initializing helmet headers');
-    console.log('----- ');
-
-    console.log('----- ');
-    console.log('----- Initializing client routes');
-    console.log('----- ');
 
     // initialize modules static client routes, before session!
     this.initModulesClientRoutes(app);
 
-    console.log('----- ');
-    console.log('----- Done Initializing client routes');
-    console.log('----- ');
-
-    console.log('----- ');
-    console.log('----- Initializing session');
-    console.log('----- ');
-
     // initialize Express session
-    this.initSession(app, db);
-
-    console.log('----- ');
-    console.log('----- Done Initializing session');
-    console.log('----- ');
-
-    console.log('----- ');
-    console.log('----- Initializing module configuration');
-    console.log('----- ');
+    this.initSession(app);
 
     // initialize Modules configuration
     this.initModulesConfiguration(app);
 
-    console.log('----- ');
-    console.log('----- Done Initializing module configuration');
-    console.log('----- ');
-
     // initialize modules server authorization policies
     //this.initModulesServerPolicies(app);
-
-    console.log('----- ');
-    console.log('----- Initializing server routes');
-    console.log('----- ');
 
     // initialize modules server routes
     this.initModulesServerRoutes(app);
 
-    console.log('----- ');
-    console.log('----- Done Initializing server routes');
-    console.log('----- ');
-
     // initialize error routes
     //this.initErrorRoutes(app);
 
-    console.log('----- ');
-    console.log('----- Initializing socket io');
-    console.log('----- ');
-
     // configure Socket.io
-    app = this.configureSocketIO(app, db);
-
-    console.log('----- ');
-    console.log('----- Done Initializing socket io');
-    console.log('----- ');
+    app = this.configureSocketIO(app);
 
     return app;
 };

@@ -4,7 +4,7 @@
 var resumeServiceModule = angular.module('resume.services');
 
 // create the factory
-resumeServiceModule.factory('ResumeFactory', ['$http', '$location', function ($http, $location) {
+resumeServiceModule.factory('ResumeFactory', ['$http', '$location', '$rootScope', function ($http, $location, $rootScope) {
     // set up the factory
     var factory = {};
     var appPath = ApplicationConfiguration.applicationBase + 'api';
@@ -26,7 +26,13 @@ resumeServiceModule.factory('ResumeFactory', ['$http', '$location', function ($h
             return response.data.d;
         })
         .catch(function (response) {
-            return { 'error': true, 'title': response.data.title, 'status': response.status, 'message': response.data.message };
+            // if the response was sent back with the custom data response
+            if(response.data) {
+                return { 'error': true, 'title': response.data.title, 'status': response.status, 'message': response.data.message };
+            }
+
+            // return default response
+            return { 'error': true, 'title': $rootScope.$root.generalStatusError, 'status': response.status, 'message': response.xhrStatus };
         });
     };
 

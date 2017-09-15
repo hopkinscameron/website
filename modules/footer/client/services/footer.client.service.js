@@ -4,7 +4,7 @@
 var footerServiceModule = angular.module('footer.services');
 
 // create the factory
-footerServiceModule.factory('FooterFactory', ['$http', '$location', function ($http, $location) {
+footerServiceModule.factory('FooterFactory', ['$http', '$location', '$rootScope', function ($http, $location, $rootScope) {
     // set up the factory
     var factory = {};
     var appPath = ApplicationConfiguration.applicationBase + 'api';
@@ -26,8 +26,13 @@ footerServiceModule.factory('FooterFactory', ['$http', '$location', function ($h
             return response.data.d;
         })
         .catch(function (response) {
-            return { 'error': true, 'title': response.data.title, 'status': response.status, 'message': response.data.message };
-        });
+            // if the response was sent back with the custom data response
+            if(response.data) {
+                return { 'error': true, 'title': response.data.title, 'status': response.status, 'message': response.data.message };
+            }
+
+            // return default response
+            return { 'error': true, 'title': $rootScope.$root.generalStatusError, 'status': response.status, 'message': response.xhrStatus };        });
     };
 
     return factory;

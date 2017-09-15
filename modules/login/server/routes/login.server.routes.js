@@ -6,7 +6,7 @@
 var // the path
     path = require('path'),
     // the ip logger
-    ipLogger = require(path.resolve('./config/lib/ip.logger')),
+    ipLogger = require(path.resolve('./config/lib/ip-logger')),
     // the login controller to handle routes
     loginController = require('../controllers/login.server.controller');
 
@@ -14,7 +14,7 @@ module.exports = function (app) {
     // GET gets login page
     // POST log user in
 	// format /login
-    app.route('/api/login').get(ipLogger.log, loginController.checkLoggedIn)
+    app.route('/api/login').get(loginController.checkLoggedIn)
         .post(ipLogger.log, loginController.login);
 
     // POST signs user up

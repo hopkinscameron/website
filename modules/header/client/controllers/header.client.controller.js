@@ -178,13 +178,16 @@ headerModule.controller('HeaderController', ['$scope', '$rootScope', '$location'
         $rootScope.$root.animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
 
         // set obtaining page data timeout (used for a slight animation)
-        $rootScope.$root.getPageDataTimeout = 1500;
+        $rootScope.$root.getPageDataTimeout = 0;
 
         // set show page timeout (timeout before a page shows (used for collapsing body))
         $rootScope.$root.showPageTimeout = 500;
         
         // initialize show header
         $rootScope.$root.showHeader = false;
+
+        // general status error when something goes wrong
+        $rootScope.$root.generalStatusError = 'Sorry, something went wrong on our end.';
 
         // parses date/time
         $rootScope.$root.parseDateTime = function (dateTime) {

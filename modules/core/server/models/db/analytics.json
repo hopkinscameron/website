@@ -1,1 +1,1 @@
-[]
+[{"request":"GET:/api/home","url":"/api/home","method":"GET","accessedBy":[{"userPublicIP":"155.188.123.18","userLocalIP":"127.0.0.1","accessedTime":"2017-09-18T14:24:50.800Z","location":{"city":"Columbus","country":"US","ll":{"latitude":40.0486,"longitude":-83.0726},"metro":535,"range":{"lowBoundIPBlock":2612813824,"highBoundIPBlock":2612822015},"region":"OH","zip":43220}}],"count":1,"_id":"21fb4590-9c7d-11e7-bd75-6d2e54fa146b","created":"2017-09-18T14:24:51.305Z"}]

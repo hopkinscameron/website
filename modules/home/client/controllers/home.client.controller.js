@@ -195,16 +195,11 @@ homeModule.controller('HomeController', ['$scope', '$rootScope', '$compile', '$l
     };
 
     // show next item
-    function showNextItem(item, classToAdd, hideAfter) {
+    function showNextItem(item, classToAdd) {
         // display
         if(item.id == 'initialText') {
             $scope.$apply(function () {
                 $scope.initialText.display = true;
-            });
-        }
-        else if(item.id == 'secondText') {
-            $scope.$apply(function () {
-                $scope.secondText.display = true;
             });
         }
         else if(item.id == 'enterButton') {
@@ -215,35 +210,13 @@ homeModule.controller('HomeController', ['$scope', '$rootScope', '$compile', '$l
 
         // add animation
         angular.element(document.querySelector('#' + item.id)).addClass(classToAdd).one($rootScope.$root.animationEnd, function () {
-            // if hide after complete
-            if(hideAfter) {
-                // if initial text
-                if(item.id == 'initialText') {
-                    // remove animation
-                    angular.element(document.querySelector('#' + item.id)).removeClass(classToAdd);
-
-                    $scope.$apply(function () {
-                        $scope.initialText.display = false;
-                    });
-
-                    // show next text
-                    $timeout(function() { showNextItem($scope.secondText, 'animated fadeIn', false) }, 1500);
-                }
-            }
-            else {
-                // if initial text
-                if(item.id == 'initialText') {
-                    // remove animation
-                    angular.element(document.querySelector('#' + item.id)).removeClass(classToAdd);
-                    
-                    // show next text
-                    $timeout(function() { showNextItem($scope.initialText, 'animated fadeOut', true) }, 1000);
-                }
-                // if initial text
-                else if(item.id == 'secondText') {
-                    // show button
-                    $timeout(function() { showNextItem($scope.enterButton, 'animated fadeInUp', false) }, 1000);
-                }
+            // if initial text
+            if(item.id == 'initialText') {
+                // remove animation
+                angular.element(document.querySelector('#' + item.id)).removeClass(classToAdd);
+                
+                // show button
+                $timeout(function() { showNextItem($scope.enterButton, 'animated fadeInUp') }, 1000);
             }
         });
     };

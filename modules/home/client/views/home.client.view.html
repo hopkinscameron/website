@@ -11,13 +11,12 @@
         <!-- End Page Fully Loaded With Errors -->
         <!-- Begin Page Fully Loaded With No Errors -->
         <div class="col-auto d-flex align-items-center" ng-style="windowHeight" ng-if="pageFullyLoaded && !error.error">
-            <div class="col-md-6 ml-auto mr-auto d-block">
-                <h1 id="initialText" class="font-fancy--1 text-center" ng-if="initialText.display">{{initialText.text}}</h1>
+            <div class="col-md-10 ml-auto mr-auto d-block">
                 <div style="height: 80px;">
-                    <h2 id="secondText" class="font-fancy--1 text-center" ng-if="secondText.display">{{secondText.text}}</h2>
-                    <h3 id="enterButton" class="font-fancy--1 text-center" ng-if="enterButton.display">
+                    <h1 id="initialText" class="font-fancy--1 text-center" ng-if="initialText.display">{{initialText.text}}</h1>
+                    <h1 id="enterButton" class="font-fancy--1 text-center" ng-if="enterButton.display">
                         <a class="decoration--never" href="/about">{{enterButton.text}} <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </h3>
+                    </h1>
                 </div>
             </div>
         </div>

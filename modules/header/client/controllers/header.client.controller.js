@@ -150,18 +150,12 @@ headerModule.controller('HeaderController', ['$scope', '$rootScope', '$location'
 
     // checks if the page is active
     $scope.isActive = function (page) {
-        var windowSplit = $window.location.href.split('/');
-        var pageSplit = page.split('/');
-        var last = windowSplit[windowSplit.length - 1];
-        var queryIndex = last.indexOf('?');
-
-        // if query
-        if(queryIndex != -1) {
-            last = last.substring(0, queryIndex);
-        }
-
+        // get the third index of forward slash
+        var index = nthIndexOf($window.location.href, '/', 3);
+        var link = $window.location.href.substring(index + 1);
+        
         // check if on page
-        if (last == pageSplit[pageSplit.length - 1]) {
+        if (link == page) {
             // set the class as active
             return true;
         }
@@ -259,6 +253,11 @@ headerModule.controller('HeaderController', ['$scope', '$rootScope', '$location'
             $rootScope.$emit('headerRefreshed', {'error': true, 'message': responseHeader.message});
         });
     };
+
+    // gets the nth index of substring
+    function nthIndexOf(string, subString, index) {
+        return string.split(subString, index).join(subString).length;
+    }
 
     // add document event listener on key down
     document.addEventListener('keydown', function(event) {

@@ -1,14 +1,17 @@
 ﻿Future
 - Create an admin page to add a new project (sub Portfolio)
 - Ability to updload images for projects and blogs
+- change models so that functions are part of the schema, and so I can create a instance of a model (look at how LocalStrategy was set up)
+- find out how to chain functions -> something.something.something -> follow mongoose of find.sort.skip.exec and exec be the last
 
 All 
 
 Done
 
+
 Pending
-- change models so that functions are part of the schema, and so I can create a instance of a model (look at how LocalStrategy was set up)
-- find out how to chain functions -> something.something.something -> follow mongoose of find.sort.skip.exec and exec be the last
+
+- after sign up, send a status back rather than an html
 
 Next
 - see if I can use lodash to speed up some stuff I might be doing in server stuff

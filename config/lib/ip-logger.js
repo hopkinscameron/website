@@ -16,7 +16,7 @@ var // the path
     // the user agent parser
 	useragent = require('useragent'),
     // load up the Analytics Page
-    AnalyticsPage = require(path.resolve('./modules/core/server/models/model-analytics-page'));
+    AnalyticsPage = require(path.resolve('./modules/dashboard/server/models/model-analytics-page'));
 
 // set user agent true to stay up to date
 //useragent(true);

@@ -63,3 +63,6 @@ node_modules/
 # build files
 build/
 public/dist/
+
+# local sessions
+modules/core/server/models/db/sessions/sessions.tingo

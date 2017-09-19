@@ -1,0 +1,66 @@
+<!-- Begin Dashboard Page -->
+<section ng-controller="DashboardController">
+    <!-- Begin Container -->
+    <div class="container">
+        <!-- Begin Page Fully Loaded With Errors -->
+        <div id="pageShow" class="collapse" ng-if="pageFullyLoaded && error.error">
+            <div ng-controller="ErrorController" ng-init="init(error.title, error.status, error.message)">
+                <div ng-include="'/modules/core/client/views/error.client.view.html'"></div>
+            </div>
+        </div>
+        <!-- End Page Fully Loaded With Errors -->
+        <!-- Begin Page Fully Loaded With No Errors -->
+        <div id="pageShow" class="animated animation-delay--md fadeIn collapse" ng-if="pageFullyLoaded && !error.error">
+            <!-- Begin Page Title -->
+            <h2 class="font-weight-bold text-uppercase mb-0"><span ng-bind-html="dashboard.title | trustHTML"></span></h2>
+            <!-- End Page Title -->
+            <!-- Begin Analytics -->
+            <div class="animated fadeInUp" ng-style="dashboardAnimations[0]">
+                <div class="card card--transparent card-body">
+                    <h4 class="text-capitalize">Analytics</h4>
+                    <div class="row pl-3 pr-3">
+                        <!-- Begin Requests Selection -->
+                        <div class="col-md-4">
+                            <h6 class="">Select Request</h6>
+                            <select ng-model="requestOptions.selected" ng-change="updateGraph()">
+                                <option ng-repeat="option in requestOptions.options">{{option}}</option>
+                            </select>
+                        </div>
+                        <!-- End Requests Selection -->
+                        <!-- Begin Months Past Selection -->
+                        <div class="col-md-4">
+                            <h6>Select Term</h6>
+                            <select ng-model="monthOptions.selected" ng-change="updateGraph()">
+                                <option ng-repeat="option in monthOptions.options">{{option}}</option>
+                            </select>
+                        </div>
+                        <!-- End Months Past Selection -->
+                    </div>
+                    <!-- Begin Graph -->
+                    <div class="col-auto mt-5">
+                        <h4 class="text-center">Request Analytics</h4>
+                        <!--
+                        <canvas class="chart chart-bar"
+                                chart-data="requestAnalyticsData" 
+                                chart-labels="requestAnalyticsLabels" 
+                                chart-options="requestAnalyticsOptions">
+                        </canvas>
+                        
+                        <canvas id="requestAnalyticsCanvas" class="chart chart-line" chart-data="requestAnalyticsDataFull"></canvas>
+                        -->
+                        <canvas id="requestAnalyticsCanvas" class="chart chart-bar" 
+                                chart-data="requestAnalyticsData" 
+                                chart-labels="requestAnalyticsLabels" 
+                                chart-series="requestAnalyticsSeries"
+                                chart-options="requestAnalyticsOptions"></canvas>
+                    </div>
+                    <!-- End Graph -->
+                </div>
+            </div>
+            <!-- End Analytics -->
+        </div>
+        <!-- End Page Fully Loaded With No Errors -->
+    </div>
+    <!-- End Container -->
+</section>
+<!-- End Dashboard Page -->

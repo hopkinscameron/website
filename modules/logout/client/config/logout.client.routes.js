@@ -7,7 +7,7 @@ var logoutRoutesModule = angular.module('logout.routes');
 logoutRoutesModule.config(['$routeProvider', function($routeProvider) {
     // set up the routes
     $routeProvider
-        .when('/logout', {
+        .when('/admin/logout', {
             templateUrl: '/modules/logout/client/views/logout.client.view.html'
         })
 }]);

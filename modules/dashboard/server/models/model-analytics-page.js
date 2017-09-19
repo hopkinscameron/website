@@ -19,7 +19,7 @@ var // generate UUID's
     // the database
     db = require('./db/analytics'),
     // the db full path
-    dbPath = 'modules/core/server/models/db/analytics.json';
+    dbPath = 'modules/dashboard/server/models/db/analytics.json';
 
 /**
  * Analytics Schema
@@ -122,6 +122,28 @@ var defaultSchemaProperties = helpers.getDefaultProperties(AnalyticsSchema);
 
 // the searchable properties
 var searchableSchemaProperties = helpers.getSearchableProperties(AnalyticsSchema);
+
+/**
+ * Converts to object
+ */
+exports.toObject = function(obj, options) {
+    // return the obj
+    return _.cloneDeep(helpers.toObject(obj, options));
+};
+
+/**
+ * Find
+ */
+exports.find = function(query, callback) {
+    // find
+    helpers.find(db, query, searchableSchemaProperties, function(err, objs) {
+        // if a callback
+        if(callback) {
+            // hit the callback
+            callback(err, _.cloneDeep(objs));
+        }
+    });
+};
 
 /**
  * Find One

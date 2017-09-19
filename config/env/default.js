@@ -13,9 +13,7 @@ module.exports = {
     },
     db: {
         promise: global.Promise,
-        options: {
-            useMongoClient: true
-        }
+        options: { }
     },
     port: process.env.PORT || 3000,
     host: process.env.HOST || '0.0.0.0',
@@ -25,8 +23,8 @@ module.exports = {
     // session options
     sessionOptions: {
         type: 'tingodb',
-        dbPath: 'modules/core/server/models/db/sessions',
-        ttl: 60, // 86400 24 hours (in seconds) // 60 -> 1 minute
+        dbPath: 'modules/login/server/models/db/sessions',
+        ttl: 86400, // 86400 24 hours (in seconds) // 60 -> 1 minute
         timeout: 10000, 
         collectionName: 'sessions',
         secret: process.env.SESSION_SECRET || 'TEST',
@@ -36,8 +34,8 @@ module.exports = {
     // session Cookie settings
     sessionCookie: {
         // session expiration is set by default to 24 hours (in milliseconds)
-        maxAge: 30000, //24 * (60 * 60 * 1000), // 60000 -> 1 minute
-        expires: 30000,
+        maxAge: 24 * (60 * 60 * 1000), //24 * (60 * 60 * 1000), // 60000 -> 1 minute
+        expires: 24 * (60 * 60 * 1000),
         // httpOnly flag makes sure the cookie is only accessed
         // through the HTTP protocol and not JS/browser
         httpOnly: true,

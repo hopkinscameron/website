@@ -10,7 +10,7 @@ blogRoutesModule.config(['$routeProvider', function($routeProvider, $routeParams
         .when('/blog', {
             templateUrl: '/modules/blog/client/views/blog-list.client.view.html'
         })
-        .when('/blog/new', {
+        .when('/admin/blog/new', {
             templateUrl: '/modules/blog/client/views/admin/blog-post-new.client.view.html',
             reloadOnSearch: false,
             authenticated: true
@@ -18,7 +18,7 @@ blogRoutesModule.config(['$routeProvider', function($routeProvider, $routeParams
         .when('/blog/post/:blogPostId', {
             templateUrl: '/modules/blog/client/views/blog-post.client.view.html'
         })
-        .when('/blog/post/:blogPostId/edit', {
+        .when('/admin/blog/post/:blogPostId/edit', {
             templateUrl: '/modules/blog/client/views/admin/blog-post-edit.client.view.html',
             authenticated: true
         })

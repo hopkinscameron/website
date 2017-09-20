@@ -37,7 +37,7 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
     // the number of months to show history on
     $scope.monthOptions = {
         'selected': initialText,
-        'options': [initialText, '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+        'options': [initialText, '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
     };
 
     // set the first option
@@ -200,9 +200,15 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
             // destroy chart before building a new one
             clearChart('requestAnalyticsCanvas');
 
+            // get the beginning of current month and the furthest date back
+            var date = new Date();
+            var today = new Date(date.getFullYear(), date.getMonth(), 1);
+            var furthestDateBack = new Date(date.getFullYear(), date.getMonth(), 1);
+            furthestDateBack.setMonth(furthestDateBack.getMonth() - parseInt($scope.monthOptions.selected));
+
             // set the new data
-            $scope.requestAnalyticsData = setUpData();
-            $scope.requestAnalyticsLabels = setUpLabels();
+            $scope.requestAnalyticsData = setUpData(furthestDateBack, today);
+            $scope.requestAnalyticsLabels = setUpLabels(furthestDateBack, today);
             $scope.requestAnalyticsOptions = setUpOptions($scope.requestAnalyticsData);
             $scope.requestAnalyticsSeries = ['Request Analytics'];
         }
@@ -247,7 +253,7 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
     };
 
     // sets up the data for the graph
-    function setUpData() {
+    function setUpData(furthestDateBack, today) {
         // initialize the data
         var requestAnalyticsData = [];
 
@@ -257,8 +263,14 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
             if(request.request == $scope.requestOptions.selected) {
                 // go through all months and push the count
                 _.forEach(_.keys(request.byMonth), function(monthYear) {
-                    var count = request.byMonth[monthYear].length;
-                    requestAnalyticsData.push(count);
+                    // get this objects date
+                    var thisDate = new Date(monthYear);
+
+                    // if this month is within range
+                    if(thisDate >= furthestDateBack && thisDate <= today) {
+                        var count = request.byMonth[monthYear].length;
+                        requestAnalyticsData.push(count);
+                    }
                 });
             }
         });
@@ -267,7 +279,7 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
     };
 
     // sets up the labels for the graph
-    function setUpLabels() {
+    function setUpLabels(furthestDateBack, today) {
         // initialize the labels
         var requestAnalyticsLabels = [];
 
@@ -277,7 +289,13 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
             if(request.request == $scope.requestOptions.selected) {
                 // go through all months and push the count
                 _.forEach(_.keys(request.byMonth), function(monthYear) {
-                    requestAnalyticsLabels.push(monthYear);
+                    // get this objects date
+                    var thisDate = new Date(monthYear);
+
+                    // if this month is within range
+                    if(thisDate >= furthestDateBack && thisDate <= today) {
+                        requestAnalyticsLabels.push(monthYear);
+                    }
                 });
             }
         });

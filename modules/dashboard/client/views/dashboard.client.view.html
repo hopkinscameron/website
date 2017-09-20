@@ -29,7 +29,7 @@
                         <!-- End Requests Selection -->
                         <!-- Begin Months Past Selection -->
                         <div class="col-md-4">
-                            <h6>Select Term</h6>
+                            <h6>Select Months Back</h6>
                             <select ng-model="monthOptions.selected" ng-change="updateGraph()">
                                 <option ng-repeat="option in monthOptions.options">{{option}}</option>
                             </select>
@@ -39,15 +39,6 @@
                     <!-- Begin Graph -->
                     <div class="col-auto mt-5">
                         <h4 class="text-center">Request Analytics</h4>
-                        <!--
-                        <canvas class="chart chart-bar"
-                                chart-data="requestAnalyticsData" 
-                                chart-labels="requestAnalyticsLabels" 
-                                chart-options="requestAnalyticsOptions">
-                        </canvas>
-                        
-                        <canvas id="requestAnalyticsCanvas" class="chart chart-line" chart-data="requestAnalyticsDataFull"></canvas>
-                        -->
                         <canvas id="requestAnalyticsCanvas" class="chart chart-bar" 
                                 chart-data="requestAnalyticsData" 
                                 chart-labels="requestAnalyticsLabels" 

@@ -10,7 +10,9 @@ Done
 
 
 Pending
-
+- scenario testing for dashboard
+ -- if current month doesnt have data (should show zero)
+ -- if some month in between dates doesn't have data (Jan - Jun has data, Jul doesnt, Aug-Sep has data)
 - after sign up, send a status back rather than an html
 
 Next

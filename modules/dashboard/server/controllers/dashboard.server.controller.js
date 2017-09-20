@@ -76,7 +76,7 @@ function orderByYear(arr) {
 // orders the data by month
 function orderByMonth(arr) {
     // gets the array sorted
-    var sortArr = _.orderBy(arr, ['accessedBy'], ['desc']);
+    var sortArr = _.orderBy(arr, ['accessedTime'], ['asc']);
 
     // the month object to return
     var monthObj = {};

@@ -52,11 +52,14 @@ function sortPagesByDate(pages) {
         // the temporary object to add
         var obj = _.cloneDeep(value);
 
+        // gets the array sorted
+        var sortArr = _.orderBy(obj.accessedBy, ['accessedTime'], ['asc']);
+
         // initialize the data by different filters
-        obj.byYear = orderByYear(obj.accessedBy);
-        obj.byMonth = orderByMonth(obj.accessedBy);
-        obj.byWeek = orderByWeek(obj.accessedBy);
-        obj.byDay = orderByDay(obj.accessedBy);
+        obj.byYear = orderByYear(sortArr);
+        obj.byMonth = orderByMonth(sortArr);
+        obj.byWeek = orderByWeek(sortArr);
+        obj.byDay = orderByDay(sortArr);
 
         // remove unnecessary data
         delete obj['accessedBy'];
@@ -69,15 +72,39 @@ function sortPagesByDate(pages) {
 };
 
 // orders the data by years
-function orderByYear(arr) {
-    return {};
+function orderByYear(sortArr) {
+    // the year object to return
+    var yearObj = {};
+    
+    // distinct by years
+    _.forEach(sortArr, function(value) {
+        // get the month and year from the date
+        var date = new Date(value.accessedTime);
+        var firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+        var month = firstDayOfYear.toLocaleString('en-us', { month: 'short' });
+        var monthYear = month.concat(' ', date.getFullYear());
+
+        // remove unnecessary data
+        delete value['userPublicIP'];
+        delete value['userLocalIP'];
+        delete value['user'];
+
+        // if the month is already exists
+        if(_.includes(_.keys(yearObj), monthYear)){
+            // add this object
+            yearObj[monthYear].push(value);
+        }
+        else {
+            // create new key
+            yearObj[monthYear] = [value];
+        }
+    });
+
+    return yearObj;
 };
 
 // orders the data by month
-function orderByMonth(arr) {
-    // gets the array sorted
-    var sortArr = _.orderBy(arr, ['accessedTime'], ['asc']);
-
+function orderByMonth(sortArr) {
     // the month object to return
     var monthObj = {};
     
@@ -86,7 +113,7 @@ function orderByMonth(arr) {
         // get the month and year from the date
         var date = new Date(value.accessedTime);
         var firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-        var month = firstDayOfMonth.toLocaleString('en-us', { month: "long" });
+        var month = firstDayOfMonth.toLocaleString('en-us', { month: 'short' });
         var monthYear = month.concat(' ', date.getFullYear());
 
         // remove unnecessary data
@@ -109,11 +136,38 @@ function orderByMonth(arr) {
 };
 
 // orders the data by week
-function orderByWeek(arr) {
-    return {};
+function orderByWeek(sortArr) {
+    // the week object to return
+    var weekObj = {};
+    
+    // distinct by weekss
+    _.forEach(sortArr, function(value) {
+        // get the month and year from the date
+        var date = new Date(value.accessedTime);
+        var firstDayOfWeek = new Date(date.getFullYear(), date.getMonth(), date.getDate() + (date.getDay() == 0 ? -6 : 1) - date.getDay());
+        var weekday = firstDayOfWeek.toLocaleString('en-us', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+        weekday = weekday.replace(/,/g , '');
+
+        // remove unnecessary data
+        delete value['userPublicIP'];
+        delete value['userLocalIP'];
+        delete value['user'];
+
+        // if the month is already exists
+        if(_.includes(_.keys(weekObj), weekday)){
+            // add this object
+            weekObj[weekday].push(value);
+        }
+        else {
+            // create new key
+            weekObj[weekday] = [value];
+        }
+    });
+
+    return weekObj;
 };
 
 // orders the data by day
-function orderByDay(arr) {
+function orderByDay(sortArr) {
     return {};
 };

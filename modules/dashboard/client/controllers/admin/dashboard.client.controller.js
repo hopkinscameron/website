@@ -23,25 +23,52 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
     };
 
     // the initial text of a dropdown
-    var initialText = 'Select One';
+    $scope.initialText = 'Select One';
 
     // the request options
     $scope.requestOptions = {
-        'selected': initialText,
-        'options': [initialText]
+        'selected': $scope.initialText,
+        'options': [$scope.initialText]
     };
 
     // set the first option
     $scope.requestOptions.selected = $scope.requestOptions.options[0];    
 
-    // the number of months to show history on
-    $scope.monthOptions = {
-        'selected': initialText,
-        'options': [initialText, '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+    // the view to show history on
+    $scope.viewOptions = {
+        'selected': $scope.initialText,
+        'options': [$scope.initialText, 'Years', 'Months', 'Weeks', 'Days']
     };
 
     // set the first option
-    $scope.monthOptions.selected = $scope.monthOptions.options[0];
+    $scope.viewOptions.selected = $scope.viewOptions.options[0];
+
+    // the number of past options to show history on
+    $scope.pastOptions = {};
+
+    // the number of years to show history on
+    var yearsOptions = {
+        'selected': $scope.initialText,
+        'options': [$scope.initialText, '0', '1', '2', '3']
+    };
+
+    // the number of months to show history on
+    var monthsOptions = {
+        'selected': $scope.initialText,
+        'options': [$scope.initialText, '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+    };
+
+    // the number of weeks to show history on
+    var weeksOptions = {
+        'selected': $scope.initialText,
+        'options': [$scope.initialText, '0', '1', '2', '3', '4']
+    };
+
+    // the number of days to show history on
+    var daysOptions = {
+        'selected': $scope.initialText,
+        'options': [$scope.initialText, '0', '1', '2', '3', '4', '5', '6', '7']
+    };
 
     // determines if the page is fully loaded
     $scope.pageFullyLoaded = false;
@@ -87,8 +114,68 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
 
     // update the graph based on new data
     $scope.updateGraph = function () {
-        // update the graph
-        updateAnalyticsGraph();
+        // if the years option was selected
+        if($scope.requestOptions.selected != $scope.initialText && $scope.viewOptions.selected == 'Years') {
+            // if option was already selected
+            if($scope.pastOptions == yearsOptions) {
+                // update based on years
+                updateAnalyticsGraphBasedOnYears();
+            }
+            else {
+                // set the new selected
+                $scope.pastOptions = yearsOptions;
+                $scope.pastOptions.selected = $scope.pastOptions.options[0];
+            }
+        }
+        // if the months option was selected
+        else if($scope.requestOptions.selected != $scope.initialText && $scope.viewOptions.selected == 'Months') {
+            // if option was already selected
+            if($scope.pastOptions == monthsOptions) {
+                // update based on months
+                updateAnalyticsGraphBasedOnMonths();
+            }
+            else {
+                // set the new selected
+                $scope.pastOptions = monthsOptions;
+                $scope.pastOptions.selected = $scope.pastOptions.options[0];
+            }
+        }
+        // if the weeks option was selected
+        else if($scope.requestOptions.selected != $scope.initialText && $scope.viewOptions.selected == 'Weeks') {
+            // if option was already selected
+            if($scope.pastOptions == weeksOptions) {
+                // update based on weeks
+                updateAnalyticsGraphBasedOnWeeks();
+            }
+            else {
+                // set the new selected
+                $scope.pastOptions = weeksOptions;
+                $scope.pastOptions.selected = $scope.pastOptions.options[0];
+            }
+        }
+        // if the days option was selected
+        else if($scope.requestOptions.selected != $scope.initialText && $scope.viewOptions.selected == 'Days') {
+            // if option was already selected
+            if($scope.pastOptions == daysOptions) {
+                // update based on days
+                updateAnalyticsGraphBasedOnDays();
+            }
+            else {
+                // set the new selected
+                $scope.pastOptions = daysOptions;
+                $scope.pastOptions.selected = $scope.pastOptions.options[0];
+            }
+        }
+        else {
+            // clear the graph
+            clearChart('requestAnalyticsCanvas');
+            $scope.viewOptions.selected = $scope.viewOptions.options[0];
+            $scope.pastOptions = {};
+            $scope.requestAnalyticsOptions = [];
+            $scope.requestAnalyticsData = [];
+            $scope.requestAnalyticsLabels = [];
+            $scope.requestAnalyticsSeries = [];
+        }
     };
 
     // initialize page
@@ -193,28 +280,122 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
         }
     };
 
-    // updates the graph based on selection
-    function updateAnalyticsGraph() {
-        // check if both selected
-        if($scope.requestOptions.selected != initialText && $scope.monthOptions.selected != initialText) {
+    // updates the graph based on years
+    function updateAnalyticsGraphBasedOnYears() {
+        // check if all is selected
+        if($scope.requestOptions.selected != $scope.initialText && $scope.viewOptions.selected != $scope.initialText && $scope.pastOptions.selected != $scope.initialText) {
             // destroy chart before building a new one
             clearChart('requestAnalyticsCanvas');
 
-            // get the beginning of current month and the furthest date back
+            // get the beginning of current year and the furthest date back
             var date = new Date();
-            var today = new Date(date.getFullYear(), date.getMonth(), 1);
-            var furthestDateBack = new Date(date.getFullYear(), date.getMonth(), 1);
-            furthestDateBack.setMonth(furthestDateBack.getMonth() - parseInt($scope.monthOptions.selected));
+            var endingOfYear = new Date(date.getFullYear(), 11, 31);
+            var beginningOfYear = new Date(date.getFullYear(), 0, 1);
+            var furthestDateBack = new Date(beginningOfYear);
+            furthestDateBack.setFullYear(furthestDateBack.getFullYear() - parseInt($scope.pastOptions.selected));
 
             // set the new data
-            $scope.requestAnalyticsData = setUpData(furthestDateBack, today);
-            $scope.requestAnalyticsLabels = setUpLabels(furthestDateBack, today);
+            $scope.requestAnalyticsData = setUpDataBasedOnYears(furthestDateBack, endingOfYear);
+            $scope.requestAnalyticsLabels = setUpLabelsBasedOnYears(furthestDateBack, endingOfYear);
             $scope.requestAnalyticsOptions = setUpOptions($scope.requestAnalyticsData);
             $scope.requestAnalyticsSeries = ['Request Analytics'];
         }
         else {
             // clear the graph
             clearChart('requestAnalyticsCanvas');
+            $scope.viewOptions.selected = $scope.viewOptions.options[0];
+            $scope.pastOptions = {};
+            $scope.requestAnalyticsOptions = [];
+            $scope.requestAnalyticsData = [];
+            $scope.requestAnalyticsLabels = [];
+            $scope.requestAnalyticsSeries = [];
+        }
+    };
+
+    // updates the graph based on months
+    function updateAnalyticsGraphBasedOnMonths() {
+        // check if all is selected
+        if($scope.requestOptions.selected != $scope.initialText && $scope.viewOptions.selected != $scope.initialText && $scope.pastOptions.selected != $scope.initialText) {
+            // destroy chart before building a new one
+            clearChart('requestAnalyticsCanvas');
+
+            // get the beginning of current month and the furthest date back
+            var date = new Date();
+            var beginningOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+            var furthestDateBack = new Date(beginningOfMonth);
+            furthestDateBack.setMonth(furthestDateBack.getMonth() - parseInt($scope.pastOptions.selected));
+
+            // set the new data
+            $scope.requestAnalyticsData = setUpDataBasedOnMonths(furthestDateBack, beginningOfMonth);
+            $scope.requestAnalyticsLabels = setUpLabelsBasedOnMonths(furthestDateBack, beginningOfMonth);
+            $scope.requestAnalyticsOptions = setUpOptions($scope.requestAnalyticsData);
+            $scope.requestAnalyticsSeries = ['Request Analytics'];
+        }
+        else {
+            // clear the graph
+            clearChart('requestAnalyticsCanvas');
+            $scope.viewOptions.selected = $scope.viewOptions.options[0];
+            $scope.pastOptions = {};
+            $scope.requestAnalyticsOptions = [];
+            $scope.requestAnalyticsData = [];
+            $scope.requestAnalyticsLabels = [];
+            $scope.requestAnalyticsSeries = [];
+        }
+    };
+
+    // updates the graph based on weeks
+    function updateAnalyticsGraphBasedOnWeeks() {
+        // check if all is selected
+        if($scope.requestOptions.selected != $scope.initialText && $scope.viewOptions.selected != $scope.initialText && $scope.pastOptions.selected != $scope.initialText) {
+            // destroy chart before building a new one
+            clearChart('requestAnalyticsCanvas');
+
+            // get the furthest date back by weeks
+            var today = new Date();
+            var furthestDateBack = new Date(today);
+            furthestDateBack.setDate(furthestDateBack.getDate() - (parseInt($scope.pastOptions.selected) * 7));
+
+            // set the new data
+            $scope.requestAnalyticsData = setUpDataBasedOnWeeks(furthestDateBack, today);
+            $scope.requestAnalyticsLabels = setUpLabelsBasedOnWeeks(furthestDateBack, today);
+            $scope.requestAnalyticsOptions = setUpOptions($scope.requestAnalyticsData);
+            $scope.requestAnalyticsSeries = ['Request Analytics'];
+        }
+        else {
+            // clear the graph
+            clearChart('requestAnalyticsCanvas');
+            $scope.viewOptions.selected = $scope.viewOptions.options[0];
+            $scope.pastOptions = {};
+            $scope.requestAnalyticsOptions = [];
+            $scope.requestAnalyticsData = [];
+            $scope.requestAnalyticsLabels = [];
+            $scope.requestAnalyticsSeries = [];
+        }
+    };
+
+    // updates the graph based on days
+    function updateAnalyticsGraphBasedOnDays() {
+        // check if all is selected
+        if($scope.requestOptions.selected != $scope.initialText && $scope.viewOptions.selected != $scope.initialText && $scope.pastOptions.selected != $scope.initialText) {
+            // destroy chart before building a new one
+            clearChart('requestAnalyticsCanvas');
+
+            // get the furthest date back by days
+            var today = new Date();
+            var furthestDateBack = new Date(today);
+            furthestDateBack.setDate(furthestDateBack.getDate() - parseInt($scope.pastOptions.selected));
+
+            // set the new data
+            $scope.requestAnalyticsData = setUpDataBasedOnDays(furthestDateBack, today);
+            $scope.requestAnalyticsLabels = setUpLabelsBasedOnDays(furthestDateBack, today);
+            $scope.requestAnalyticsOptions = setUpOptions($scope.requestAnalyticsData);
+            $scope.requestAnalyticsSeries = ['Request Analytics'];
+        }
+        else {
+            // clear the graph
+            clearChart('requestAnalyticsCanvas');
+            $scope.viewOptions.selected = $scope.viewOptions.options[0];
+            $scope.pastOptions = {};
             $scope.requestAnalyticsOptions = [];
             $scope.requestAnalyticsData = [];
             $scope.requestAnalyticsLabels = [];
@@ -252,24 +433,39 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
         }
     };
 
-    // sets up the data for the graph
-    function setUpData(furthestDateBack, today) {
+    // sets up the data for the graph based on years
+    function setUpDataBasedOnYears(furthestDateBack, today) {
         // initialize the data
         var requestAnalyticsData = [];
+
+        // the inital start data from the data
+        var initialStartDate = new Date(furthestDateBack);
 
         // add all requests
         _.forEach($scope.dashboard.requests, function(request) {
             // if request matches
             if(request.request == $scope.requestOptions.selected) {
-                // go through all months and push the count
-                _.forEach(_.keys(request.byMonth), function(monthYear) {
+                // go through all years and push the count
+                _.forEach(_.keys(request.byYear), function(year) {
                     // get this objects date
-                    var thisDate = new Date(monthYear);
+                    var thisDate = new Date(year);
 
-                    // if this month is within range
+                    // if this year is within range
                     if(thisDate >= furthestDateBack && thisDate <= today) {
-                        var count = request.byMonth[monthYear].length;
-                        requestAnalyticsData.push(count);
+                        // if the dates don't match
+                        while(initialStartDate < thisDate) {
+                            // add this year (with a zero input)
+                            requestAnalyticsData.push(0);
+
+                            // set expected next year
+                            initialStartDate.setFullYear(initialStartDate.getFullYear() + 1);
+                        }
+
+                        // add the count
+                        requestAnalyticsData.push(request.byYear[year].length);
+
+                        // set expected next year
+                        initialStartDate.setFullYear(initialStartDate.getFullYear() + 1);
                     }
                 });
             }
@@ -278,10 +474,13 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
         return requestAnalyticsData;
     };
 
-    // sets up the labels for the graph
-    function setUpLabels(furthestDateBack, today) {
-        // initialize the labels
-        var requestAnalyticsLabels = [];
+    // sets up the data for the graph based on months
+    function setUpDataBasedOnMonths(furthestDateBack, today) {
+        // initialize the data
+        var requestAnalyticsData = [];
+
+        // the inital start data from the data
+        var initialStartDate = new Date(furthestDateBack);
 
         // add all requests
         _.forEach($scope.dashboard.requests, function(request) {
@@ -294,7 +493,272 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
 
                     // if this month is within range
                     if(thisDate >= furthestDateBack && thisDate <= today) {
+                        // if the dates don't match
+                        while(initialStartDate < thisDate) {
+                            // add this month (with a zero input)
+                            requestAnalyticsData.push(0);
+
+                            // set expected next month
+                            initialStartDate.setMonth(initialStartDate.getMonth() + 1);
+                        }
+
+                        // add the count
+                        requestAnalyticsData.push(request.byMonth[monthYear].length);
+
+                        // set expected next month
+                        initialStartDate.setMonth(initialStartDate.getMonth() + 1);
+                    }
+                });
+            }
+        });
+
+        return requestAnalyticsData;
+    };
+
+    // sets up the data for the graph based on weeks
+    function setUpDataBasedOnWeeks(furthestDateBack, today) {
+        // initialize the data
+        var requestAnalyticsData = [];
+
+        // the inital start data from the data
+        var initialStartDate = new Date(furthestDateBack);
+
+        // add all requests
+        _.forEach($scope.dashboard.requests, function(request) {
+            // if request matches
+            if(request.request == $scope.requestOptions.selected) {
+                // go through all weeks and push the count
+                _.forEach(_.keys(request.byWeek), function(week) {
+                    // get this objects date
+                    var thisDate = new Date(week);
+
+                    // if this week is within range
+                    if(thisDate >= furthestDateBack && thisDate <= today) {
+                        // if the dates don't match
+                        while(initialStartDate < thisDate) {
+                            // add this week (with a zero input)
+                            requestAnalyticsData.push(0);
+
+                            // set expected next week
+                            initialStartDate.setDate(initialStartDate.getDate() + 7);
+                        }
+
+                        // add the count
+                        requestAnalyticsData.push(request.byWeek[week].length);
+
+                        // set expected next week
+                        initialStartDate.setDate(initialStartDate.getDate() + 7);
+                    }
+                });
+            }
+        });
+
+        return requestAnalyticsData;
+    };
+
+    // sets up the data for the graph based on days
+    function setUpDataBasedOnDays(furthestDateBack, today) {
+        // initialize the data
+        var requestAnalyticsData = [];
+
+        // the inital start data from the data
+        var initialStartDate = new Date(furthestDateBack);
+
+        // add all requests
+        _.forEach($scope.dashboard.requests, function(request) {
+            // if request matches
+            if(request.request == $scope.requestOptions.selected) {
+                // go through all days and push the count
+                _.forEach(_.keys(request.byDay), function(day) {
+                    // get this objects date
+                    var thisDate = new Date(day);
+
+                    // if this day is within range
+                    if(thisDate >= furthestDateBack && thisDate <= today) {
+                        // if the dates don't match
+                        while(initialStartDate < thisDate) {
+                            // add this day (with a zero input)
+                            requestAnalyticsData.push(0);
+
+                            // set expected next day
+                            initialStartDate.setDate(initialStartDate.getDate() + 1);
+                        }
+
+                        // add the count
+                        requestAnalyticsData.push(request.byDay[day].length);
+
+                        // set expected next day
+                        initialStartDate.setDate(initialStartDate.getDate() + 1);
+                    }
+                });
+            }
+        });
+
+        return requestAnalyticsData;
+    };
+
+    // sets up the labels for the graph based on years
+    function setUpLabelsBasedOnYears(furthestDateBack, today) {
+        // initialize the labels
+        var requestAnalyticsLabels = [];
+
+        // the inital start data from the data
+        var initialStartDate = new Date(furthestDateBack);
+
+        // add all requests
+        _.forEach($scope.dashboard.requests, function(request) {
+            // if request matches
+            if(request.request == $scope.requestOptions.selected) {
+                // go through all years and push the count
+                _.forEach(_.keys(request.byYear), function(year) {
+                    // get this objects date
+                    var thisDate = new Date(year);
+
+                    // if this year is within range
+                    if(thisDate >= furthestDateBack && thisDate <= today) {
+                        // if the dates don't match
+                        while(initialStartDate < thisDate) {
+                            // add this year
+                            requestAnalyticsLabels.push(initialStartDate.getFullYear());
+
+                            // set expected next year
+                            initialStartDate.setFullYear(initialStartDate.getFullYear() + 1);
+                        }
+
+                        // add the year
+                        requestAnalyticsLabels.push(year.substring(4));
+
+                        // set expected next year
+                        initialStartDate.setFullYear(initialStartDate.getFullYear() + 1);
+                    }
+                });
+            }
+        });
+
+        return requestAnalyticsLabels;
+    };
+
+    // sets up the labels for the graph based on months
+    function setUpLabelsBasedOnMonths(furthestDateBack, today) {
+        // initialize the labels
+        var requestAnalyticsLabels = [];
+
+        // the inital start data from the data
+        var initialStartDate = new Date(furthestDateBack);
+
+        // add all requests
+        _.forEach($scope.dashboard.requests, function(request) {
+            // if request matches
+            if(request.request == $scope.requestOptions.selected) {
+                // go through all months and push the count
+                _.forEach(_.keys(request.byMonth), function(monthYear) {
+                    // get this objects date
+                    var thisDate = new Date(monthYear);
+
+                    // if this month is within range
+                    if(thisDate >= furthestDateBack && thisDate <= today) {
+                        // if the dates don't match
+                        while(initialStartDate < thisDate) {
+                            // add this month
+                            var nextMonth = initialStartDate.toLocaleString('en-us', { month: 'short' });
+                            var nextMonthYear = nextMonth.concat(' ', initialStartDate.getFullYear());
+                            requestAnalyticsLabels.push(nextMonthYear);
+
+                            // set expected next month
+                            initialStartDate.setMonth(initialStartDate.getMonth() + 1);
+                        }
+
+                        // add the month and year
                         requestAnalyticsLabels.push(monthYear);
+
+                        // set expected next month
+                        initialStartDate.setMonth(initialStartDate.getMonth() + 1);
+                    }
+                });
+            }
+        });
+
+        return requestAnalyticsLabels;
+    };
+
+    // sets up the labels for the graph based on weeks
+    function setUpLabelsBasedOnWeeks(furthestDateBack, today) {
+        // initialize the labels
+        var requestAnalyticsLabels = [];
+
+        // the inital start data from the data
+        var initialStartDate = new Date(furthestDateBack);
+
+        // add all requests
+        _.forEach($scope.dashboard.requests, function(request) {
+            // if request matches
+            if(request.request == $scope.requestOptions.selected) {
+                // go through all months and push the count
+                _.forEach(_.keys(request.byMonth), function(monthYear) {
+                    // get this objects date
+                    var thisDate = new Date(monthYear);
+
+                    // if this month is within range
+                    if(thisDate >= furthestDateBack && thisDate <= today) {
+                        // if the dates don't match
+                        while(initialStartDate < thisDate) {
+                            // add this month
+                            var nextMonth = initialStartDate.toLocaleString('en-us', { month: 'short' });
+                            var nextMonthYear = nextMonth.concat(' ', initialStartDate.getFullYear());
+                            requestAnalyticsLabels.push(nextMonthYear);
+
+                            // set expected next month
+                            initialStartDate.setMonth(initialStartDate.getMonth() + 1);
+                        }
+
+                        // add the month and year
+                        requestAnalyticsLabels.push(monthYear);
+
+                        // set expected next month
+                        initialStartDate.setMonth(initialStartDate.getMonth() + 1);
+                    }
+                });
+            }
+        });
+
+        return requestAnalyticsLabels;
+    };
+
+    // sets up the labels for the graph based on days
+    function setUpLabelsBasedOnDays(furthestDateBack, today) {
+        // initialize the labels
+        var requestAnalyticsLabels = [];
+
+        // the inital start data from the data
+        var initialStartDate = new Date(furthestDateBack);
+
+        // add all requests
+        _.forEach($scope.dashboard.requests, function(request) {
+            // if request matches
+            if(request.request == $scope.requestOptions.selected) {
+                // go through all months and push the count
+                _.forEach(_.keys(request.byMonth), function(monthYear) {
+                    // get this objects date
+                    var thisDate = new Date(monthYear);
+
+                    // if this month is within range
+                    if(thisDate >= furthestDateBack && thisDate <= today) {
+                        // if the dates don't match
+                        while(initialStartDate < thisDate) {
+                            // add this month
+                            var nextMonth = initialStartDate.toLocaleString('en-us', { month: 'short' });
+                            var nextMonthYear = nextMonth.concat(' ', initialStartDate.getFullYear());
+                            requestAnalyticsLabels.push(nextMonthYear);
+
+                            // set expected next month
+                            initialStartDate.setMonth(initialStartDate.getMonth() + 1);
+                        }
+
+                        // add the month and year
+                        requestAnalyticsLabels.push(monthYear);
+
+                        // set expected next month
+                        initialStartDate.setMonth(initialStartDate.getMonth() + 1);
                     }
                 });
             }

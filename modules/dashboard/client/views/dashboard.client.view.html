@@ -27,14 +27,22 @@
                             </select>
                         </div>
                         <!-- End Requests Selection -->
-                        <!-- Begin Months Past Selection -->
-                        <div class="col-md-4">
-                            <h6>Select Months Back</h6>
-                            <select ng-model="monthOptions.selected" ng-change="updateGraph()">
-                                <option ng-repeat="option in monthOptions.options">{{option}}</option>
+                        <!-- Begin Past Type Selection -->
+                        <div class="col-md-4" ng-if="requestOptions.selected != initialText">
+                            <h6>Select View Type</h6>
+                            <select ng-model="viewOptions.selected" ng-change="updateGraph()">
+                                <option ng-repeat="option in viewOptions.options">{{option}}</option>
                             </select>
                         </div>
-                        <!-- End Months Past Selection -->
+                        <!-- End Past Type Selection -->
+                        <!-- Begin Years/Months/Weeks/Days Past Selection -->
+                        <div class="col-md-4" ng-if="requestOptions.selected != initialText && viewOptions.selected != initialText">
+                            <h6>Select {{viewOptions.selected}} Back</h6>
+                            <select ng-model="pastOptions.selected" ng-change="updateGraph()">
+                                <option ng-repeat="option in pastOptions.options">{{option}}</option>
+                            </select>
+                        </div>
+                        <!-- End Years/Months/Weeks/Days Past Selection -->
                     </div>
                     <!-- Begin Graph -->
                     <div class="col-auto mt-5">
@@ -43,7 +51,9 @@
                                 chart-data="requestAnalyticsData" 
                                 chart-labels="requestAnalyticsLabels" 
                                 chart-series="requestAnalyticsSeries"
-                                chart-options="requestAnalyticsOptions"></canvas>
+                                chart-options="requestAnalyticsOptions" ng-if="requestAnalyticsData.length > 0"></canvas>
+                        <h5 class="text-center" ng-if="(!requestAnalyticsData || requestAnalyticsData.length == 0) && (requestOptions.selected == initialText || viewOptions.selected == initialText || pastOptions.selected == initialText)">Select a request, view and a time frame to view data.</h5>
+                        <h5 class="text-center" ng-if="(!requestAnalyticsData || requestAnalyticsData.length == 0) && requestOptions.selected != initialText && viewOptions.selected != initialText && pastOptions.selected != initialText">Sorry, but there is no data for '{{pastOptions.selected}}'.</h5>
                     </div>
                     <!-- End Graph -->
                 </div>

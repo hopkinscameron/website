@@ -7,3 +7,6 @@
 {"k":"0000000111","o":"0000000334","v":"001"}
 {"_id":"hWmCHkHZHNUqKVOtoeuorZwbfPvE5E3P","_uid":1,"_dt":1505821553496,"_s":"0c799c6bee5a9f6f04e761755ad931d9"}
 {"cookie":{"originalMaxAge":86400000,"expires":{"$wrap":"$date","v":1505907953449,"h":"2017-09-20T11:45:53.449Z"},"secure":false,"httpOnly":true,"path":"/"},"passport":{"user":"fb12f6f0-9d2e-11e7-b60e-73bfb55b49ec"},"expires":{"$wrap":"$date","v":1505907953449,"h":"2017-09-20T11:45:53.449Z"},"_id":"hWmCHkHZHNUqKVOtoeuorZwbfPvE5E3P"}
+{"k":"0000000111","o":"0000000337","v":"001"}
+{"_id":"-es7Kq4-ksjq9vQLbyz7MEBYDwH-yZDP","_uid":1,"_dt":1506090214417,"_s":"a16b94ff81b4ab52dee6dc9d17825802"}
+{"cookie":{"originalMaxAge":86400000,"expires":{"$wrap":"$date","v":1506176614345,"h":"2017-09-23T14:23:34.345Z"},"secure":false,"httpOnly":true,"path":"/"},"flash":{"signupMessage":["That username is already taken."]},"expires":{"$wrap":"$date","v":1506176614345,"h":"2017-09-23T14:23:34.345Z"},"_id":"-es7Kq4-ksjq9vQLbyz7MEBYDwH-yZDP"}

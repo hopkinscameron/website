@@ -169,8 +169,8 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
         else {
             // clear the graph
             clearChart('requestAnalyticsCanvas');
-            $scope.viewOptions.selected = $scope.viewOptions.options[0];
-            $scope.pastOptions = {};
+            $scope.viewOptions.selected = ($scope.requestOptions.selected != $scope.initialText && $scope.viewOptions.selected != $scope.initialText) ? $scope.viewOptions.selected : $scope.initialText;
+            $scope.pastOptions = $scope.viewOptions.selected != $scope.initialText ? $scope.pastOptions : {};
             $scope.requestAnalyticsOptions = [];
             $scope.requestAnalyticsData = [];
             $scope.requestAnalyticsLabels = [];
@@ -303,8 +303,8 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
         else {
             // clear the graph
             clearChart('requestAnalyticsCanvas');
-            $scope.viewOptions.selected = $scope.viewOptions.options[0];
-            $scope.pastOptions = {};
+            $scope.viewOptions.selected = ($scope.requestOptions.selected != $scope.initialText && $scope.viewOptions.selected != $scope.initialText) ? $scope.viewOptions.selected : $scope.initialText;
+            $scope.pastOptions = $scope.viewOptions.selected != $scope.initialText ? $scope.pastOptions : {};
             $scope.requestAnalyticsOptions = [];
             $scope.requestAnalyticsData = [];
             $scope.requestAnalyticsLabels = [];
@@ -334,8 +334,8 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
         else {
             // clear the graph
             clearChart('requestAnalyticsCanvas');
-            $scope.viewOptions.selected = $scope.viewOptions.options[0];
-            $scope.pastOptions = {};
+            $scope.viewOptions.selected = ($scope.requestOptions.selected != $scope.initialText && $scope.viewOptions.selected != $scope.initialText) ? $scope.viewOptions.selected : $scope.initialText;
+            $scope.pastOptions = $scope.viewOptions.selected != $scope.initialText ? $scope.pastOptions : {};
             $scope.requestAnalyticsOptions = [];
             $scope.requestAnalyticsData = [];
             $scope.requestAnalyticsLabels = [];
@@ -352,8 +352,8 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
 
             // get the furthest date back by weeks
             var today = new Date();
-            var furthestDateBack = new Date(today);
-            furthestDateBack.setDate(furthestDateBack.getDate() - (parseInt($scope.pastOptions.selected) * 7));
+            var furthestDateBack = new Date(today.getFullYear(), today.getMonth(), today.getDate() + (today.getDay() == 0 ? -6 : 1) - today.getDay());
+            furthestDateBack.setDate(furthestDateBack.getDate() - (7 * parseInt($scope.pastOptions.selected)));
 
             // set the new data
             $scope.requestAnalyticsData = setUpDataBasedOnWeeks(furthestDateBack, today);
@@ -364,8 +364,8 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
         else {
             // clear the graph
             clearChart('requestAnalyticsCanvas');
-            $scope.viewOptions.selected = $scope.viewOptions.options[0];
-            $scope.pastOptions = {};
+            $scope.viewOptions.selected = ($scope.requestOptions.selected != $scope.initialText && $scope.viewOptions.selected != $scope.initialText) ? $scope.viewOptions.selected : $scope.initialText;
+            $scope.pastOptions = $scope.viewOptions.selected != $scope.initialText ? $scope.pastOptions : {};
             $scope.requestAnalyticsOptions = [];
             $scope.requestAnalyticsData = [];
             $scope.requestAnalyticsLabels = [];
@@ -383,6 +383,7 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
             // get the furthest date back by days
             var today = new Date();
             var furthestDateBack = new Date(today);
+            furthestDateBack.setHours(0, 0, 0, 0);
             furthestDateBack.setDate(furthestDateBack.getDate() - parseInt($scope.pastOptions.selected));
 
             // set the new data
@@ -394,8 +395,8 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
         else {
             // clear the graph
             clearChart('requestAnalyticsCanvas');
-            $scope.viewOptions.selected = $scope.viewOptions.options[0];
-            $scope.pastOptions = {};
+            $scope.viewOptions.selected = ($scope.requestOptions.selected != $scope.initialText && $scope.viewOptions.selected != $scope.initialText) ? $scope.viewOptions.selected : $scope.initialText;
+            $scope.pastOptions = $scope.viewOptions.selected != $scope.initialText ? $scope.pastOptions : {};
             $scope.requestAnalyticsOptions = [];
             $scope.requestAnalyticsData = [];
             $scope.requestAnalyticsLabels = [];
@@ -446,9 +447,9 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
             // if request matches
             if(request.request == $scope.requestOptions.selected) {
                 // go through all years and push the count
-                _.forEach(_.keys(request.byYear), function(year) {
+                _.forEach(request.byYear, function(year) {
                     // get this objects date
-                    var thisDate = new Date(year);
+                    var thisDate = new Date(year.monthYear);
 
                     // if this year is within range
                     if(thisDate >= furthestDateBack && thisDate <= today) {
@@ -462,7 +463,7 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
                         }
 
                         // add the count
-                        requestAnalyticsData.push(request.byYear[year].length);
+                        requestAnalyticsData.push(year.count.length);
 
                         // set expected next year
                         initialStartDate.setFullYear(initialStartDate.getFullYear() + 1);
@@ -487,9 +488,9 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
             // if request matches
             if(request.request == $scope.requestOptions.selected) {
                 // go through all months and push the count
-                _.forEach(_.keys(request.byMonth), function(monthYear) {
+                _.forEach(request.byMonth, function(monthYear) {
                     // get this objects date
-                    var thisDate = new Date(monthYear);
+                    var thisDate = new Date(monthYear.monthYear);
 
                     // if this month is within range
                     if(thisDate >= furthestDateBack && thisDate <= today) {
@@ -503,7 +504,7 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
                         }
 
                         // add the count
-                        requestAnalyticsData.push(request.byMonth[monthYear].length);
+                        requestAnalyticsData.push(monthYear.count.length);
 
                         // set expected next month
                         initialStartDate.setMonth(initialStartDate.getMonth() + 1);
@@ -528,9 +529,9 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
             // if request matches
             if(request.request == $scope.requestOptions.selected) {
                 // go through all weeks and push the count
-                _.forEach(_.keys(request.byWeek), function(week) {
+                _.forEach(request.byWeek, function(week) {
                     // get this objects date
-                    var thisDate = new Date(week);
+                    var thisDate = new Date(week.weekday);
 
                     // if this week is within range
                     if(thisDate >= furthestDateBack && thisDate <= today) {
@@ -544,7 +545,7 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
                         }
 
                         // add the count
-                        requestAnalyticsData.push(request.byWeek[week].length);
+                        requestAnalyticsData.push(week.count.length);
 
                         // set expected next week
                         initialStartDate.setDate(initialStartDate.getDate() + 7);
@@ -569,9 +570,9 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
             // if request matches
             if(request.request == $scope.requestOptions.selected) {
                 // go through all days and push the count
-                _.forEach(_.keys(request.byDay), function(day) {
+                _.forEach(request.byDay, function(day) {
                     // get this objects date
-                    var thisDate = new Date(day);
+                    var thisDate = new Date(day.day);
 
                     // if this day is within range
                     if(thisDate >= furthestDateBack && thisDate <= today) {
@@ -585,7 +586,7 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
                         }
 
                         // add the count
-                        requestAnalyticsData.push(request.byDay[day].length);
+                        requestAnalyticsData.push(day.count.length);
 
                         // set expected next day
                         initialStartDate.setDate(initialStartDate.getDate() + 1);
@@ -610,23 +611,23 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
             // if request matches
             if(request.request == $scope.requestOptions.selected) {
                 // go through all years and push the count
-                _.forEach(_.keys(request.byYear), function(year) {
+                _.forEach(request.byYear, function(year) {
                     // get this objects date
-                    var thisDate = new Date(year);
+                    var thisDate = new Date(year.monthYear);
 
                     // if this year is within range
                     if(thisDate >= furthestDateBack && thisDate <= today) {
                         // if the dates don't match
                         while(initialStartDate < thisDate) {
                             // add this year
-                            requestAnalyticsLabels.push(initialStartDate.getFullYear());
+                            requestAnalyticsLabels.push(initialStartDate.getFullYear().toString());
 
                             // set expected next year
                             initialStartDate.setFullYear(initialStartDate.getFullYear() + 1);
                         }
 
                         // add the year
-                        requestAnalyticsLabels.push(year.substring(4));
+                        requestAnalyticsLabels.push(year.monthYear.substring(4));
 
                         // set expected next year
                         initialStartDate.setFullYear(initialStartDate.getFullYear() + 1);
@@ -651,9 +652,9 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
             // if request matches
             if(request.request == $scope.requestOptions.selected) {
                 // go through all months and push the count
-                _.forEach(_.keys(request.byMonth), function(monthYear) {
+                _.forEach(request.byMonth, function(monthYear) {
                     // get this objects date
-                    var thisDate = new Date(monthYear);
+                    var thisDate = new Date(monthYear.monthYear);
 
                     // if this month is within range
                     if(thisDate >= furthestDateBack && thisDate <= today) {
@@ -669,7 +670,7 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
                         }
 
                         // add the month and year
-                        requestAnalyticsLabels.push(monthYear);
+                        requestAnalyticsLabels.push(monthYear.monthYear);
 
                         // set expected next month
                         initialStartDate.setMonth(initialStartDate.getMonth() + 1);
@@ -693,29 +694,30 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
         _.forEach($scope.dashboard.requests, function(request) {
             // if request matches
             if(request.request == $scope.requestOptions.selected) {
-                // go through all months and push the count
-                _.forEach(_.keys(request.byMonth), function(monthYear) {
+                // go through all weeks and push the count
+                _.forEach(request.byWeek, function(week) {
                     // get this objects date
-                    var thisDate = new Date(monthYear);
+                    var thisDate = new Date(week.weekday);
 
-                    // if this month is within range
+                    // if this week is within range
                     if(thisDate >= furthestDateBack && thisDate <= today) {
                         // if the dates don't match
                         while(initialStartDate < thisDate) {
-                            // add this month
-                            var nextMonth = initialStartDate.toLocaleString('en-us', { month: 'short' });
-                            var nextMonthYear = nextMonth.concat(' ', initialStartDate.getFullYear());
-                            requestAnalyticsLabels.push(nextMonthYear);
+                            // add this week
+                            var firstDayOfWeek = new Date(initialStartDate);
+                            var weekday = firstDayOfWeek.toLocaleString('en-us', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+                            weekday = weekday.replace(/,/g , '');
+                            requestAnalyticsLabels.push(weekday);
 
-                            // set expected next month
-                            initialStartDate.setMonth(initialStartDate.getMonth() + 1);
+                            // set expected next week
+                            initialStartDate.setDate(initialStartDate.getDate() + 7);
                         }
 
-                        // add the month and year
-                        requestAnalyticsLabels.push(monthYear);
+                        // add the week
+                        requestAnalyticsLabels.push(week.weekday);
 
                         // set expected next month
-                        initialStartDate.setMonth(initialStartDate.getMonth() + 1);
+                        initialStartDate.setMonth(initialStartDate.getDate() + 7);
                     }
                 });
             }
@@ -736,29 +738,31 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
         _.forEach($scope.dashboard.requests, function(request) {
             // if request matches
             if(request.request == $scope.requestOptions.selected) {
-                // go through all months and push the count
-                _.forEach(_.keys(request.byMonth), function(monthYear) {
+                // go through all days and push the count
+                _.forEach(request.byDay, function(day) {
                     // get this objects date
-                    var thisDate = new Date(monthYear);
+                    var thisDate = new Date(day.day);
 
-                    // if this month is within range
+                    // if this day is within range
                     if(thisDate >= furthestDateBack && thisDate <= today) {
                         // if the dates don't match
                         while(initialStartDate < thisDate) {
-                            // add this month
-                            var nextMonth = initialStartDate.toLocaleString('en-us', { month: 'short' });
-                            var nextMonthYear = nextMonth.concat(' ', initialStartDate.getFullYear());
-                            requestAnalyticsLabels.push(nextMonthYear);
+                            // add this day
+                            var midnightDate = new Date(initialStartDate);
+                            midnightDate.setHours(0, 0, 0, 0);
+                            var dateDay = midnightDate.toLocaleString('en-us', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+                            dateDay = dateDay.replace(/,/g , '');
+                            requestAnalyticsLabels.push(dateDay);
 
-                            // set expected next month
-                            initialStartDate.setMonth(initialStartDate.getMonth() + 1);
+                            // set expected next day
+                            initialStartDate.setDate(initialStartDate.getDate() + 1);
                         }
 
-                        // add the month and year
-                        requestAnalyticsLabels.push(monthYear);
+                        // add the day
+                        requestAnalyticsLabels.push(day.day);
 
-                        // set expected next month
-                        initialStartDate.setMonth(initialStartDate.getMonth() + 1);
+                        // set expected next day
+                        initialStartDate.setDate(initialStartDate.getDate() + 1);
                     }
                 });
             }

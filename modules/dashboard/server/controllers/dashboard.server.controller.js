@@ -61,8 +61,8 @@ function sortPagesByDate(pages) {
         obj.byWeek = orderByWeek(sortArr);
         obj.byDay = orderByDay(sortArr);
 
-        // remove unnecessary data
-        delete obj['accessedBy'];
+        // make an obj
+        obj = AnalyticsPage.toObject(obj, { 'hide': 'created count accessedBy' });
 
         // add to the array
         sorted.push(obj);
@@ -73,9 +73,9 @@ function sortPagesByDate(pages) {
 
 // orders the data by years
 function orderByYear(sortArr) {
-    // the year object to return
-    var yearObj = {};
-    
+    // the year array to return
+    var yearArr = [];
+
     // distinct by years
     _.forEach(sortArr, function(value) {
         // get the month and year from the date
@@ -89,25 +89,34 @@ function orderByYear(sortArr) {
         delete value['userLocalIP'];
         delete value['user'];
 
-        // if the month is already exists
-        if(_.includes(_.keys(yearObj), monthYear)){
+        // the year obj
+        var yearObj = {
+            'monthYear': monthYear
+        };
+
+        // index of key
+        var index = _.findIndex(yearArr, yearObj);
+
+        // if the year is already exists
+        if(index != -1){
             // add this object
-            yearObj[monthYear].push(value);
+            yearArr[index].count.push(value);
         }
         else {
-            // create new key
-            yearObj[monthYear] = [value];
+            // push new obj
+            yearObj.count = [value];
+            yearArr.push(yearObj);
         }
     });
 
-    return yearObj;
+    return yearArr;
 };
 
 // orders the data by month
 function orderByMonth(sortArr) {
-    // the month object to return
-    var monthObj = {};
-    
+    // the month array to return
+    var monthArr = [];
+
     // distinct by months
     _.forEach(sortArr, function(value) {
         // get the month and year from the date
@@ -121,28 +130,37 @@ function orderByMonth(sortArr) {
         delete value['userLocalIP'];
         delete value['user'];
 
+        // the month obj
+        var monthObj = {
+            'monthYear': monthYear
+        };
+
+        // index of key
+        var index = _.findIndex(monthArr, monthObj);
+
         // if the month is already exists
-        if(_.includes(_.keys(monthObj), monthYear)){
+        if(index != -1){
             // add this object
-            monthObj[monthYear].push(value);
+            monthArr[index].count.push(value);
         }
         else {
-            // create new key
-            monthObj[monthYear] = [value];
+            // push new obj
+            monthObj.count = [value];
+            monthArr.push(monthObj);
         }
     });
 
-    return monthObj;
+    return monthArr;
 };
 
 // orders the data by week
 function orderByWeek(sortArr) {
-    // the week object to return
-    var weekObj = {};
-    
+    // the week array to return
+    var weekArr = [];
+
     // distinct by weekss
     _.forEach(sortArr, function(value) {
-        // get the month and year from the date
+        // get the first day of the week from the date
         var date = new Date(value.accessedTime);
         var firstDayOfWeek = new Date(date.getFullYear(), date.getMonth(), date.getDate() + (date.getDay() == 0 ? -6 : 1) - date.getDay());
         var weekday = firstDayOfWeek.toLocaleString('en-us', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
@@ -153,21 +171,66 @@ function orderByWeek(sortArr) {
         delete value['userLocalIP'];
         delete value['user'];
 
-        // if the month is already exists
-        if(_.includes(_.keys(weekObj), weekday)){
+        // the week obj
+        var weekObj = {
+            'weekday': weekday
+        };
+
+        // index of key
+        var index = _.findIndex(weekArr, weekObj);
+
+        // if the week is already exists
+        if(index != -1){
             // add this object
-            weekObj[weekday].push(value);
+            weekArr[index].count.push(value);
         }
         else {
-            // create new key
-            weekObj[weekday] = [value];
+            // push new obj
+            weekObj.count = [value];
+            weekArr.push(weekObj);
         }
     });
 
-    return weekObj;
+    return weekArr;
 };
 
 // orders the data by day
 function orderByDay(sortArr) {
-    return {};
+    // the day array to return
+    var dayArr = [];
+
+    // distinct by weekss
+    _.forEach(sortArr, function(value) {
+        // get midnight date from the date
+        var midnightToday = new Date(value.accessedTime);
+        midnightToday.setHours(0, 0, 0, 0);
+        var day = midnightToday.toLocaleString('en-us', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+        day = day.replace(/,/g , '');
+
+        // remove unnecessary data
+        delete value['userPublicIP'];
+        delete value['userLocalIP'];
+        delete value['user'];
+
+        // the day obj
+        var dayObj = {
+            'day': day
+        };
+
+        // index of key
+        var index = _.findIndex(dayArr, dayObj);
+
+        // if the week is already exists
+        if(index != -1){
+            // add this object
+            dayArr[index].count.push(value);
+        }
+        else {
+            // push new obj
+            dayObj.count = [value];
+            dayArr.push(dayObj);
+        }
+    });
+
+    return dayArr;
 };

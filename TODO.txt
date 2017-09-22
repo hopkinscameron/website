@@ -9,8 +9,6 @@ All
 Done
 
 Pending
-- make sure the weeks back are in sorted order (for some reason the keys of the weekObj aren't in order)
-- after sign up, send a status back rather than an html
 
 Next
 - see if I can use lodash to speed up some stuff I might be doing in server stuff

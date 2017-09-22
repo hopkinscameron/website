@@ -9,7 +9,7 @@ var // the path
     errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
- * Check if Blog policy allows
+ * Check if Dashboard policy allows
  */
 exports.isAllowed = function (req, res, next) {
     // if user is authenticated in the session, carry on 

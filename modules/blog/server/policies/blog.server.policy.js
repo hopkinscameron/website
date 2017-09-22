@@ -12,8 +12,6 @@ var // the path
  * Check if Blog policy allows
  */
 exports.isAllowed = function (req, res, next) {
-    return next();
-    /*
     // if user is authenticated in the session, carry on 
 	if (req.isAuthenticated()) {
         return next();
@@ -21,5 +19,5 @@ exports.isAllowed = function (req, res, next) {
 	else {
         // create unauthorized error
         return res.status(401).send({ title: errorHandler.getErrorTitle({ code: 401 }), message: errorHandler.getGenericErrorMessage({ code: 401 }) });
-    }*/
+    }
 };

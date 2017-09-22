@@ -19,7 +19,7 @@
                 <div class="row" ng-class="{'justify-content-end': !$root.isLoggedIn}">
                     <!-- Begin New Blog -->
                     <div class="col text-left" ng-if="$root.isLoggedIn">
-                        <a href="/blog/new" class="btn btn-theme-primary decoration--never">New Blog</a>
+                        <a href="/admin/blog/new" class="btn btn-theme-primary decoration--never">New Blog</a>
                     </div>
                     <!-- End New Blog -->
                     <!-- Begin Filters -->
@@ -87,7 +87,7 @@
                                 <!-- End View Full Post -->
                                 <!-- Begin Edit Post -->
                                 <div class="col text-right" ng-if="$root.isLoggedIn">
-                                    <a class="decoration--never card-link mt-3" ng-href="/blog/post/{{post.url}}/edit">Edit post <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                                    <a class="decoration--never card-link mt-3" ng-href="/admin/blog/post/{{post.url}}/edit">Edit post <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
                                 </div>
                                 <!-- End Edit Post -->
                             </div>

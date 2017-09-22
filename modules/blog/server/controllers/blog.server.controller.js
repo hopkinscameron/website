@@ -15,7 +15,7 @@ var // the path
     BlogPost = require(path.resolve('./modules/blog/server/models/model-blog-post')),
     // the Saved Blog Post model
     SavedBlogPost = require(path.resolve('./modules/blog/server/models/model-saved-blog-post')),
-    // the Blog Post model
+    // the Analytics Blog Search model
     AnalyticsBlogSearch = require(path.resolve('./modules/blog/server/models/model-analytics-blog-search'));
 
 /**

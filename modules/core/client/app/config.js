@@ -12,14 +12,19 @@ var applicationName = 'Cameron Hopkins';
 // FIXME: had this as "const" is there a way to keep this during minification
 var applicationBase = '/';
 
+// the application theme one
+// FIXME: had this as "const" is there a way to keep this during minification
+var applicationThemeOne = '#29a8d6';
+
 // the service for the application
 var service = {
     applicationBase: applicationBase,
     applicationName: applicationName,
     applicationEnvironment: window.env,
     applicationModuleName: applicationModuleName,
-    applicationModuleVendorDependencies: ['ngRoute', 'ngSanitize', 'ngAnimate', 'angular-loading-bar', 'ngDialog',  'ui.tinymce'],
-    registerModule: registerModule
+    applicationModuleVendorDependencies: ['ngRoute', 'ngSanitize', 'ngAnimate', 'angular-loading-bar', 'ngDialog', 'ui.tinymce', 'chart.js'],
+    registerModule: registerModule,
+    applicationThemeOne: applicationThemeOne
 };
 
 // set the application configuration

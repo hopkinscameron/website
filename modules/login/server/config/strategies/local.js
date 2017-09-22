@@ -38,7 +38,7 @@ module.exports = function () {
 
                 // check to see if theres already a user with that username
                 if (user) {
-                    return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
+                    return done(null, null, req.flash('signupMessage', 'That username is already taken.'));
                 } 
                 else {
                     // create the user and set the user's local credentials
@@ -107,7 +107,7 @@ module.exports = function () {
 
                 // set updated values 
                 var updatedValues = {
-                    "lastLogin": new Date()
+                    'lastLogin': new Date()
                 };
 
                 // update user

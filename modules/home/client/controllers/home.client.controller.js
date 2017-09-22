@@ -190,7 +190,7 @@ homeModule.controller('HomeController', ['$scope', '$rootScope', '$compile', '$l
         // if not an error
         if(!$scope.error.error) {
             // show next item
-            $timeout(function() { showNextItem($scope.initialText, 'animated animation-delay--sm fadeIn', false) }, 500);
+            $timeout(function() { showNextItem($scope.initialText, 'animated animation-delay--sm fadeIn') }, 500);
         }
     };
 

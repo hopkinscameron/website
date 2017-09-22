@@ -32,7 +32,10 @@ module.exports = {
                 'public/lib/angular-ui-tinymce/src/tinymce.js',
                 'public/lib/bootstrap/bootstrap.js',
                 'public/lib/mark/mark.min.js',
-                'public/lib/ng-dialog/ngDialog.js'
+                'public/lib/ng-dialog/ngDialog.js',
+                'public/lib/chart.js/Chart.js',
+                'public/lib/angular-chart/angular-chart.js',
+                'public/lib/lodash/lodash.js'
                 // endbower
             ],
             tests: ['public/lib/angular/angular-mocks.js']

@@ -9,6 +9,8 @@ All
 Done
 
 Pending
+- when logging out, return back to about page and not current page
+- remove the multiple animations on pages and instead set waypoints
 
 Next
 - see if I can use lodash to speed up some stuff I might be doing in server stuff

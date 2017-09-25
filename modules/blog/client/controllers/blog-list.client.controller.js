@@ -210,14 +210,8 @@ blogModule.controller('BlogListController', ['$scope', '$rootScope', '$compile',
                 $scope.blog.title = 'Blogs';
                 $scope.blog.totalPages = new Array($scope.blog.totalPages);
 
-                // the initial delayed start time of any animation
-                var startTime = 1.5;
-
-                // the incremental start time of every animation (every animation in the array has a value greater than the last by this much)
-                var incrementTime = 1;
-
-                // holds the animation times 
-                $scope.blogAnimations = $rootScope.$root.getAnimationDelays(startTime, incrementTime, $scope.blog.posts.length);
+                // holds the animation time
+                $scope.animationStyle = $rootScope.$root.getAnimationDelay();
 
                 // holds the page title
                 $scope.pageTitle = 'Blog | ' + ApplicationConfiguration.applicationName;
@@ -281,6 +275,9 @@ blogModule.controller('BlogListController', ['$scope', '$rootScope', '$compile',
             // show the page
             angular.element('#pageShow').collapse('show');
 
+            // setup all waypoints
+            setUpWaypoints();
+
             // when shown
             angular.element('#pageShow').on('shown.bs.collapse', function () {
                 // the class and instance to which the mark will apply
@@ -309,5 +306,55 @@ blogModule.controller('BlogListController', ['$scope', '$rootScope', '$compile',
                 }
             });
         }
+    };
+
+    // sets up all waypoints
+    function setUpWaypoints() {
+        // get the starting offset
+        var startOffset = $rootScope.$root.getWaypointStart();
+
+        // initialize the waypoint list
+        var waypointList = [
+            { id: 'blog-list-filters' + index, offset: startOffset, class: 'animated fadeInUp' },
+            { id: 'blog-list-paging' + index, offset: startOffset, class: 'animated fadeInUp' },
+            { id: 'blog-list-no-blogs' + index, offset: startOffset, class: 'animated fadeInUp' }
+        ];
+
+        // the index of the item
+        var index = 0;
+
+        // go through each item
+        _.forEach($scope.blog.posts, function(value) {
+            var tmpWP = { id: 'blogId' + index, offset: startOffset, class: 'animated fadeInUp' };
+            waypointList.push(tmpWP);
+            index++;
+        });
+
+        // go through all waypoints
+        _.forEach(waypointList, function(value) {
+            // get the element
+            var documentElement = document.getElementById(value.id);
+
+            // see if element exists
+            if(documentElement) {
+                value.waypoint = new Waypoint({
+                    element: documentElement,
+                    handler: function(direction) {
+                        // if direction is down
+                        if(direction == 'down') {
+                            // get the element
+                            var ele = angular.element('#' + this.element.id);
+
+                            // if the element exists
+                            if(ele && ele['0']) {
+                                ele.addClass(value.class);
+                                ele['0'].style.visibility = 'visible';
+                            }
+                        }
+                    },
+                    offset: value.offset
+                });
+            }
+        });
     };
 }]);

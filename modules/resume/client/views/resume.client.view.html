@@ -15,7 +15,7 @@
             <h2 class="font-weight-bold text-uppercase mb-0"><span ng-bind-html="resume.title | trustHTML"></span></h2>
             <!-- End Page Title -->
             <!-- Begin Resume Image -->
-            <div class="animated fadeInUp" ng-style="resumeAnimations[0]">
+            <div id="resume-image" ng-style="animationStyle" style="visibility: hidden;">
                 <div class="card card--transparent card-body">
                     <div class="w-100 text-center">
                         <img class="img-fluid img-thumbnail" width="700" height="450" ng-src="{{resume.resumePictureLink}}" title="R&eacute;sum&eacute;" alt="R&eacute;sum&eacute;" spinner-load />
@@ -24,7 +24,7 @@
             </div>
             <!-- End Resume Image -->
             <!-- Begin Resume/Curriculum Vitae Downloads -->
-            <div class="animated fadeInUp" ng-style="resumeAnimations[1]">
+            <div id="resume-resume-cv" ng-style="animationStyle" style="visibility: hidden;">
                 <!-- Begin Content Break -->
                 <hr class="body-bar" />
                 <!-- End Content Break -->

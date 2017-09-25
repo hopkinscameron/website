@@ -35,7 +35,9 @@ module.exports = {
                 'public/lib/ng-dialog/ngDialog.min.js',
                 'public/lib/chart.js/Chart.bundle.min.js',
                 'public/lib/angular-chart/angular-chart.min.js',
-                'public/lib/lodash/lodash.min.js'
+                'public/lib/lodash/lodash.min.js',
+                'public/lib/waypoints/jquery.waypoints.min.js'
+                //, 'public/lib/waypoints/noframework.waypoints.min.js'
                 // endbower
             ]
         },

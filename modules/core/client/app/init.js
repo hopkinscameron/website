@@ -43,13 +43,14 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$routePr
 }]);
 
 // configure the route
-angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', '$location', 'LoginFactory', function($rootScope, $location, LoginFactory) {
+angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', '$location', '$route', 'LoginFactory', function($rootScope, $location, $route, LoginFactory) {
     // on a route change (the start of a route change)
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
         // check to see if user is logged in
         LoginFactory.isUserLoggedIn().then(function(response) {
             // determines if user is logged in
             $rootScope.$root.isLoggedIn = response.isLoggedIn;
+            $rootScope.$root.prevRouteNeedsAuth = $route.current.$$route.authenticated;
 
             // if the next route needs authentication
             if (next.$$route && next.$$route.authenticated) {

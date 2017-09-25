@@ -46,8 +46,8 @@ exports.blogList = function (req, res) {
             console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
         }
         else {
-            // set page size to 1
-            var pageSize = 2;
+            // set page size to 5
+            var pageSize = 5;
 
             // parse the page number
             pageNumber = parseInt(pageNumber);

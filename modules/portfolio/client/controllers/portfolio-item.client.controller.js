@@ -228,56 +228,8 @@ portfolioModule.controller('PortfolioItemController', ['$scope', '$rootScope', '
                     hasUpdates = true;
                 }
 
-                // holds the animation times
-                $scope.portfolioItemAnimations = new Array(6);
-
-                // the initial delayed start time of any animation
-                var startTime = 1.5;
-
-                // the incremental start time of every animation (every animation in the array has a value greater than the last by this much)
-                var incrementTime = 1;
-
-                // holds the positional value in which the last real delay value was set
-                var previousActualX = 0;
-
-                // loop through all animation timing and set the times
-                for(var x = 0; x < $scope.portfolioItemAnimations.length; x++) {
-                    // if download links
-                    if(hasDownloads && x == 3) {
-                        $scope.portfolioItemAnimations[x] = {
-                            'animation-delay': startTime + (previousActualX * incrementTime) + 's',
-                            '-webkit-animation-delay': startTime + (previousActualX * incrementTime) + 's',
-                            '-moz-animation-delay': startTime + (previousActualX * incrementTime) + 's'
-                        };
-                        previousActualX++;
-                    }
-                    // if trailer
-                    else if(hasTrailer && x == 4) {
-                        $scope.portfolioItemAnimations[x] = {
-                            'animation-delay': startTime + (previousActualX * incrementTime) + 's',
-                            '-webkit-animation-delay': startTime + (previousActualX * incrementTime) + 's',
-                            '-moz-animation-delay': startTime + (previousActualX * incrementTime) + 's'
-                        };
-                        previousActualX++;
-                    }
-                    // if updates
-                    else if(hasUpdates && x == 5) {
-                        $scope.portfolioItemAnimations[x] = {
-                            'animation-delay': startTime + (previousActualX * incrementTime) + 's',
-                            '-webkit-animation-delay': startTime + (previousActualX * incrementTime) + 's',
-                            '-moz-animation-delay': startTime + (previousActualX * incrementTime) + 's'
-                        };
-                        previousActualX++;
-                    }
-                    else if(x < 3) {
-                        previousActualX++;
-                        $scope.portfolioItemAnimations[x] = {
-                            'animation-delay': startTime + (x * incrementTime) + 's',
-                            '-webkit-animation-delay': startTime + (x * incrementTime) + 's',
-                            '-moz-animation-delay': startTime + (x * incrementTime) + 's'
-                        };
-                    }
-                }
+                // holds the animation time
+                $scope.animationStyle = $rootScope.$root.getAnimationDelay();
 
                 // set new page title
                 $scope.pageTitle = responsePI.title + ' | ' + ApplicationConfiguration.applicationName;
@@ -331,6 +283,52 @@ portfolioModule.controller('PortfolioItemController', ['$scope', '$rootScope', '
         if(!angular.element('#pageShow').hasClass('collapsing')) {
             // show the page
             angular.element('#pageShow').collapse('show');
+
+            // setup all waypoints
+            setUpWaypoints();
         }
+    };
+
+    // sets up all waypoints
+    function setUpWaypoints() {
+        // get the starting offset
+        var startOffset = $rootScope.$root.getWaypointStart();
+
+        // initialize the waypoint list
+        var waypointList = [
+            { id: 'portfolio-item-highlights', offset: startOffset, class: 'animated fadeIn' }, 
+            { id: 'portfolio-item-overview', offset: startOffset, class: 'animated fadeIn' }, 
+            { id: 'portfolio-item-details', offset: startOffset, class: 'animated fadeIn' }, 
+            { id: 'portfolio-item-downloads', offset: startOffset, class: 'animated fadeIn' }, 
+            { id: 'portfolio-item-trailer', offset: startOffset, class: 'animated fadeIn' }, 
+            { id: 'portfolio-item-updates', offset: startOffset, class: 'animated fadeIn' }
+        ];
+
+        // go through all waypoints
+        _.forEach(waypointList, function(value) {
+            // get the element
+            var documentElement = document.getElementById(value.id);
+
+            // see if element exists
+            if(documentElement) {
+                value.waypoint = new Waypoint({
+                    element: documentElement,
+                    handler: function(direction) {
+                        // if direction is down
+                        if(direction == 'down') {
+                            // get the element
+                            var ele = angular.element('#' + this.element.id);
+
+                            // if the element exists
+                            if(ele && ele['0']) {
+                                ele.addClass(value.class);
+                                ele['0'].style.visibility = 'visible';
+                            }
+                        }
+                    },
+                    offset: value.offset
+                });
+            }
+        });
     };
 }]);

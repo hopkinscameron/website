@@ -18,7 +18,7 @@
             <div class="card card--transparent card-body">
                 <div class="row">
                     <!-- Begin Laptop/Large Tablet View -->
-                    <div class="col-md-6 mb-5 animated" ng-class="{'zoomInLeft': $index % 2 == 0, 'zoomInRight': $index % 2 == 1}" ng-style="portfolioAnimations[$index]" ng-repeat="portfolioItem in portfolio.portfolioItems" ng-if="$root.isDeviceWidthLargerThan(767)">
+                    <div id="porfolioId{{$index}}" class="col-md-6 mb-5" ng-style="animationStyle" style="visibility: hidden;" ng-repeat="portfolioItem in portfolio.portfolioItems" ng-if="$root.isDeviceWidthLargerThan(767)">
                         <div class="card card--dark card-body box-shadow--sm">
                             <!-- Begin Portfolio Item Title -->
                             <h3 class="text-center text-capitalize font-weight-bold">{{portfolioItem.title}}</h3>
@@ -43,7 +43,7 @@
                     </div>
                     <!-- End Laptop/Large Tablet View -->
                     <!-- Begin Phone View -->
-                    <div class="col animated zoomInUp" ng-class="{'mb-5': $index < portfolio.portfolioItems.length - 1}" ng-style="portfolioAnimations[$index]" ng-repeat="portfolioItem in portfolio.portfolioItems" ng-if="$root.isDeviceWidthSmallerThan(768)">
+                    <div id="porfolioId{{$index}}" class="col" ng-class="{'mb-5': $index < portfolio.portfolioItems.length - 1}" ng-style="animationStyle" style="visibility: hidden;" ng-repeat="portfolioItem in portfolio.portfolioItems" ng-if="$root.isDeviceWidthSmallerThan(768)">
                         <div class="card card--dark card-body box-shadow--sm">
                             <!-- Begin Portfolio Item Title -->
                             <h3 class="text-center text-capitalize font-weight-bold">{{portfolioItem.title}}</h3>

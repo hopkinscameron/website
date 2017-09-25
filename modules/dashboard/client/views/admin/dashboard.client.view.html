@@ -15,7 +15,7 @@
             <h2 class="font-weight-bold text-uppercase mb-0"><span ng-bind-html="dashboard.title | trustHTML"></span></h2>
             <!-- End Page Title -->
             <!-- Begin Analytics -->
-            <div class="animated fadeInUp" ng-style="dashboardAnimations[0]">
+            <div id="dashboard-analytics-graph" class="animated fadeInUp" ng-style="animationStyle" style="visibility: hidden;">
                 <div class="card card--transparent card-body">
                     <h4 class="text-capitalize">Analytics</h4>
                     <div class="row pl-3 pr-3">

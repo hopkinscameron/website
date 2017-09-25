@@ -116,14 +116,8 @@ aboutModule.controller('AboutController', ['$scope', '$rootScope', '$compile', '
                     $scope.favoriteGamesColumnsPerRowArray = new Array($scope.favoriteGamesColumnsPerRow);
                 }
 
-                // the initial delayed start time of any animation
-                var startTime = 1.5;
-
-                // the incremental start time of every animation (every animation in the array has a value greater than the last by this much)
-                var incrementTime = 1;
-
-                // holds the animation times
-                $scope.aboutAnimations = $rootScope.$root.getAnimationDelays(startTime, incrementTime, 3);
+                // holds the animation time
+                $scope.animationStyle = $rootScope.$root.getAnimationDelay();
 
                 // holds the page title
                 $scope.pageTitle = 'About Me | ' + ApplicationConfiguration.applicationName;
@@ -177,6 +171,49 @@ aboutModule.controller('AboutController', ['$scope', '$rootScope', '$compile', '
         if(!angular.element('#pageShow').hasClass('collapsing')) {
             // show the page
             angular.element('#pageShow').collapse('show');
+
+            // setup all waypoints
+            setUpWaypoints();
         }
+    };
+
+    // sets up all waypoints
+    function setUpWaypoints() {
+        // get the starting offset
+        var startOffset = $rootScope.$root.getWaypointStart();
+
+        // initialize the waypoint list
+        var waypointList = [
+            { id: 'about-bio', offset: startOffset, class: 'animated fadeIn' }, 
+            { id: 'about-hobbies', offset: startOffset, class: 'animated fadeIn' }, 
+            { id: 'about-favorites', offset: startOffset, class: 'animated fadeIn' }
+        ];
+
+        // go through all waypoints
+        _.forEach(waypointList, function(value) {
+            // get the element
+            var documentElement = document.getElementById(value.id);
+
+            // see if element exists
+            if(documentElement) {
+                value.waypoint = new Waypoint({
+                    element: documentElement,
+                    handler: function(direction) {
+                        // if direction is down
+                        if(direction == 'down') {
+                            // get the element
+                            var ele = angular.element('#' + this.element.id);
+
+                            // if the element exists
+                            if(ele && ele['0']) {
+                                ele.addClass(value.class);
+                                ele['0'].style.visibility = 'visible';
+                            }
+                        }
+                    },
+                    offset: value.offset
+                });
+            }
+        });
     };
 }]);

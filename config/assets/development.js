@@ -35,7 +35,9 @@ module.exports = {
                 'public/lib/ng-dialog/ngDialog.js',
                 'public/lib/chart.js/Chart.js',
                 'public/lib/angular-chart/angular-chart.js',
-                'public/lib/lodash/lodash.js'
+                'public/lib/lodash/lodash.js',
+                'public/lib/waypoints/jquery.waypoints.js'
+                //, 'public/lib/waypoints/noframework.waypoints.js'
                 // endbower
             ],
             tests: ['public/lib/angular/angular-mocks.js']

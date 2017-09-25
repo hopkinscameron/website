@@ -15,12 +15,12 @@
             <h2 class="font-weight-bold text-uppercase mb-0"><span ng-bind-html="portfolioItem.title | trustHTML"></span></h2>
             <!-- End Page Title -->
             <!-- Begin Project Highlights -->
-            <div class="animated fadeIn" ng-style="portfolioItemAnimations[0]">
+            <div id="portfolio-item-highlights" ng-style="animationStyle" style="visibility: hidden;">
                 <div class="card card--transparent card-body">
                     <h4 class="text-capitalize">Project Highlights</h4>
                     <div class="row">
                         <!-- Begin Image Selection -->
-                        <div class="col-md-4 animated fadeIn" ng-class="{'mb-4': $root.isDeviceWidthSmallerThan(768)}" ng-style="portfolioItemAnimations[0]">
+                        <div class="col-md-4 animated fadeIn" ng-class="{'mb-4': $root.isDeviceWidthSmallerThan(768)}" ng-style="animationStyle">
                             <div class="row portfolio-item-img-container-max-height scrollbar--1">
                                 <div class="col-md-6" ng-class="{'mb-3': !isLastRowOfImages($index) || ($index < portfolioItem.images.length - 1 && $root.isDeviceWidthSmallerThan(768))}" ng-repeat="image in portfolioItem.images">
                                     <!-- <img role="button" class="d-block img-fluid mx-auto portfolio-item-img" ng-class="{'active': isActive('highlights', $index)}" ng-src="{{image.url}}" ng-click="changeProjectHighlightImage($index)" spinner-load> -->
@@ -30,7 +30,7 @@
                         </div>
                         <!-- End Image Selection -->
                         <!-- Begin Full Image Selected -->
-                        <div class="col animated fadeIn" ng-style="portfolioItemAnimations[0]">
+                        <div class="col animated fadeIn" ng-style="animationStyle">
                             <!-- <img class="d-block img-fluid mx-auto portfolio-item-img-max-height" ng-src="{{currentProjectImage}}" spinner-load> -->
                             <div class="img-thumb portfolio-item-img-max-height mx-auto" ng-style="{'background-image': 'url(' + currentProjectImage + ')'}"></div>
                         </div>
@@ -40,7 +40,7 @@
             </div>
             <!-- Begin Project Highlights -->
             <!-- Begin Overview -->
-            <div class="animated fadeInUp" ng-style="portfolioItemAnimations[1]">
+            <div id="portfolio-item-overview" ng-style="animationStyle" style="visibility: hidden;">
                 <!-- Begin Content Break -->
                 <hr class="body-bar" />
                 <!-- End Content Break -->
@@ -59,7 +59,7 @@
             </div>
             <!-- End Overview -->
             <!-- Begin Development Details -->
-            <div class="animated fadeInUp" ng-style="portfolioItemAnimations[2]">
+            <div id="portfolio-item-details" ng-style="animationStyle" style="visibility: hidden;">
                 <!-- Begin Content Break -->
                 <hr class="body-bar" />
                 <!-- End Content Break -->
@@ -93,7 +93,7 @@
             </div>
             <!-- End Development Details -->
             <!-- Begin Download Links -->
-            <div class="animated fadeInUp" ng-style="portfolioItemAnimations[3]" ng-if="portfolioItem.overviewContent.downloadLinks.length > 0">
+            <div id="portfolio-item-downloads" ng-style="animationStyle" style="visibility: hidden;" ng-if="portfolioItem.overviewContent.downloadLinks.length > 0">
                 <!-- Begin Content Break -->
                 <hr class="body-bar" />
                 <!-- End Content Break -->
@@ -108,7 +108,7 @@
             </div>
             <!-- End Download Links -->
             <!-- Begin Game Trailer -->
-            <div class="animated fadeInUp" ng-style="portfolioItemAnimations[4]" ng-if="portfolioItem.trailerLink">
+            <div id="portfolio-item-trailer" ng-style="animationStyle" style="visibility: hidden;" ng-if="portfolioItem.trailerLink">
                 <!-- Begin Content Break -->
                 <hr class="body-bar" />
                 <!-- End Content Break -->
@@ -123,7 +123,7 @@
             </div>
             <!-- End Game Trailer -->
             <!-- Begin Game Update Videos -->
-            <div class="animated fadeIn" ng-style="portfolioItemAnimations[5]" ng-if="portfolioItem.videoUpdates.length > 0">
+            <div id="portfolio-item-updates" ng-style="animationStyle" style="visibility: hidden;" ng-if="portfolioItem.videoUpdates.length > 0">
                 <!-- Begin Content Break -->
                 <hr class="body-bar" />
                 <!-- End Content Break -->
@@ -132,7 +132,7 @@
                     <div class="pl-3 pr-3">
                         <div class="row">
                             <!-- Begin Video Selection -->
-                            <div class="col-md-4 float-left animated fadeInLeft" ng-style="portfolioItemAnimations[5]">
+                            <div class="col-md-4 float-left animated fadeInLeft" ng-style="animationStyle">
                                 <div class="row portfolio-item-img-container-max-height scrollbar--1">
                                     <div class="col-md-6 float-left mb-3" ng-repeat="videos in portfolioItem.videoUpdates">
                                         <!-- <img role="button" class="d-block img-fluid portfolio-item-img" ng-class="{'active': isActive('updates', $index)}" ng-src="{{videos.thumbnail}}" ng-click="changeUpdateVideo($index)" spinner-load> -->
@@ -142,7 +142,7 @@
                             </div>
                             <!-- End Video Selection -->
                             <!-- Begin Video -->
-                            <div class="col float-left animated fadeInRight" ng-style="portfolioItemAnimations[5]">
+                            <div class="col float-left animated fadeInRight" ng-style="animationStyle">
                                 <div class="embed-responsive embed-responsive-16by9">
                                     <iframe id="portfolioItem-updates-iframe" class="embed-responsive-item" ng-src="{{currentUpdateVideo.source}}" ng-if="currentUpdateVideo.source"></iframe>
                                 </div>

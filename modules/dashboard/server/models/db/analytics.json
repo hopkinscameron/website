@@ -1,1 +1,1 @@
-[{"request":"POST:/api/signup","url":"/api/signup","method":"POST","accessedBy":[{"userPublicIP":"Couldn't get user's ip address: Error: connect ECONNREFUSED 127.0.0.1:3128","userLocalIP":"127.0.0.1","accessedTime":"2017-09-22T14:23:04.621Z"}],"count":1,"_id":"9e5f82a0-9fa1-11e7-b01e-b74da3fa7071","created":"2017-09-22T14:23:35.371Z"}]
+[]

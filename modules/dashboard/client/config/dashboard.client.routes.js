@@ -8,7 +8,7 @@ dashboardRoutesModule.config(['$routeProvider', function($routeProvider) {
     // set up the routes
     $routeProvider
         .when('/admin/dashboard', {
-            templateUrl: '/modules/dashboard/client/views/dashboard.client.view.html',
+            templateUrl: '/modules/dashboard/client/views/admin/dashboard.client.view.html',
             authenticated: true
         })
 }]);

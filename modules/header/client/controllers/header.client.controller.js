@@ -120,6 +120,20 @@ headerModule.controller('HeaderController', ['$scope', '$rootScope', '$location'
     };
 
     // get animation delays
+    $rootScope.$root.getAnimationDelay = function() {
+        // set the delay
+        var delay = {
+            '-webkit-animation-delay': '0.5s',
+            '-moz-animation-delay': '0.5s',
+            '-ms-animation-delay': '0.5s',
+            '-o-animation-delay': '0.5s',
+            'animation-delay': '0.5s'
+        };
+
+        return delay;
+    };
+
+    // get animation delays
     $rootScope.$root.getAnimationDelays = function(startTime, incrementTime, length) {
         // initialize the array
         var delays = new Array(length);
@@ -136,6 +150,15 @@ headerModule.controller('HeaderController', ['$scope', '$rootScope', '$location'
         }
 
         return delays;
+    };
+
+    // get waypoint starting offset
+    $rootScope.$root.getWaypointStart = function() {
+        // set the viewport and navbar height
+        var vph = angular.element(window).height();
+        var navbarHeight = 76;
+
+        return vph - navbarHeight;
     };
 
     // determines if screen is larger than (not equal)

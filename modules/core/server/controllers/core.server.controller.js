@@ -139,7 +139,7 @@ exports.sendEmail = function (req, res) {
             // setup email data with unicode symbols
             let mailOptions = {
                 from: fromString, // sender address
-                to: config.mailer.options.auth.user, // list of receivers
+                to: config.mailer.to, // list of receivers
                 subject: req.body.subject, // Subject line
                 text: req.body.message, // plain text body
                 html: '<p>' + req.body.message + '</p>' // html body

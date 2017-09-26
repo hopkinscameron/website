@@ -22,6 +22,7 @@ module.exports = {
     },
     mailer: {
         from: process.env.MAILER_FROM || 'MAILER_FROM',
+        to: process.env.MAILER_CONTACT_TO || 'MAILER_TO',
         options: {
             host: process.env.MAILER_HOST || 'MAILER_HOST',
             service: process.env.MAILER_SERVICE_PROVIDER || 'MAILER_SERVICE_PROVIDER',

@@ -16,16 +16,29 @@ var // the path
     validator = require('validator');
 
 // create reusable transporter object using the default SMTP transport
+// secure:true for port 465, secure:false for port 587
 let transporter = nodemailer.createTransport({
     host: config.mailer.options.host,
     port: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'developmentp' ? 465 : 587,
-    secure: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'developmentp' ? true : false, // secure:true for port 465, secure:false for port 587
+    secure: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'developmentp' ? true : false,
     auth: {
         user: config.mailer.options.auth.user,
         pass: config.mailer.options.auth.pass
     },
 	//proxy: 'http://localhost:3128',
-	service: config.mailer.options.service
+    //service: config.mailer.options.service
+});
+
+// verify connection configuration
+transporter.verify(function(err, success) {
+    // if error occurred
+    if (err) {
+        // log internal error
+        console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
+    } 
+    else {
+        console.log(clc.success('Transporter server is ready to take our messages'));
+    }
 });
 
 /**

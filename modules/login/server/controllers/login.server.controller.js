@@ -42,6 +42,11 @@ exports.checkLoggedIn = function (req, res) {
  * Signs user up
  */
 exports.signUp = function (req, res, next) {
+    // used to not allow any additiona signups
+    // send not found
+    res.status(404).send({ title: errorHandler.getErrorTitle({ code: 404 }), message: 'There\'s nothing to see here.' });
+
+    /*
     // validate existence
     req.checkBody('username', 'Username is required.').notEmpty();
     req.checkBody('password', 'Password is required.').notEmpty();
@@ -88,6 +93,7 @@ exports.signUp = function (req, res, next) {
             })(req, res, next);
         }
     });
+    */
 };
 
 /**

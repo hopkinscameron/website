@@ -34,11 +34,11 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink{{$index}}" ng-if="navigation.dropdown !== undefined">
                         <!-- Begin Initial Dropdown Item (usually the dropdown home) -->
-                        <a class="dropdown-item decoration--never" ng-class="{'active': isActive(navigation.pageLink)}" ng-href="/{{navigation.pageLink}}" ng-repeat="dropdown in navigation.dropdown" ng-if="$index == 0"><span ng-bind-html="dropdown.title | trustHTML"></span></a>
+                        <a class="dropdown-item decoration--never" ng-class="{'active': isActive(navigation.pageLink)}" ng-href="/{{navigation.pageLink}}" ng-repeat="dropdown in navigation.dropdown" ng-if="dropdown.home"><span ng-bind-html="dropdown.title | trustHTML"></span></a>
                         <!-- End Initial Dropdown Item -->
-                        <!-- Begin All Other Dropdown Items -->
-                        <a class="dropdown-item decoration--never" ng-class="{'active': isActive(navigation.pageLink + '/' + dropdown.pageLink)}" ng-href="/{{navigation.pageLink}}/{{dropdown.pageLink}}" ng-repeat="dropdown in navigation.dropdown" ng-if="$index > 0"><span ng-bind-html="dropdown.title | trustHTML"></span></a>
-                        <!-- End All Other Dropdown Items -->
+                        <!-- Begin All Dropdown Items -->
+                        <a class="dropdown-item decoration--never" ng-class="{'active': isActive(navigation.pageLink + '/' + dropdown.pageLink)}" ng-href="/{{navigation.pageLink}}/{{dropdown.pageLink}}" ng-repeat="dropdown in navigation.dropdown" ng-if="!dropdown.home"><span ng-bind-html="dropdown.title | trustHTML"></span></a>
+                        <!-- End All Dropdown Items -->
                     </div>
                     <!-- End Dropdown -->
                 </div>

@@ -23,8 +23,8 @@ logoutModule.controller('LogoutController', ['$scope', '$rootScope', '$compile',
     LogoutFactory.logout().then(function (responseL) {
         // if no error
         if(!responseL.error) {
-            // if was on a previous route
-            if(previousPath && previousPath.length > 0) {
+            // if was on a previous route and doesn't need authentication
+            if(previousPath && previousPath.length > 0 && $rootScope.$root.prevRouteNeedsAuth) {
                 // redirect to previous page and reload page to refresh user object
                 $window.location.href = previousPath;
             }

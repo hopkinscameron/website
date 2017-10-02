@@ -5,6 +5,8 @@
  */
 var // the application configuration
     config = require('../config'),
+    // the path
+    path = require('path'),
     // the server
     express = require('express'),
     // the http request validator
@@ -19,8 +21,8 @@ var // the application configuration
     bodyParser = require('body-parser'),
     // express session used for storing logged in sessions
     session = require('express-session'),
-    // mongo session
-    MongoStore = require('connect-mongo')(session),
+    // session store for multiple databases
+    sessionstore = require('sessionstore'),
     // fav icon serve
     favicon = require('serve-favicon'),
     // file compression
@@ -105,9 +107,11 @@ module.exports.initMiddleware = function (app) {
         app.set('view cache', false);
     } 
     else if (process.env.NODE_ENV === 'production') {
+        // set cache to memory
         app.locals.cache = 'memory';
     }
     else if (process.env.NODE_ENV === 'developmentp') {
+        // set cache to memory
         app.locals.cache = 'memory';
     }
     else {
@@ -149,7 +153,7 @@ module.exports.initSession = function (app, db) {
     app.use(session({
         saveUninitialized: false,
         resave: false,
-        secret: config.sessionSecret,
+        secret: config.sessionOptions.secret,
         cookie: {
             maxAge: config.sessionCookie.maxAge,
             httpOnly: config.sessionCookie.httpOnly,
@@ -157,11 +161,7 @@ module.exports.initSession = function (app, db) {
         },
         name: config.sessionKey,
         unset: 'destroy',
-        store: new MongoStore({
-            mongooseConnection: config.db.options.useMongoClient ? db : db.connection,
-            collection: config.sessionCollection,
-            clear_interval: config.clearInterval
-        })
+        store: sessionstore.createSessionStore(config.sessionOptions)
     }));
 
     // add Lusca CSRF Middleware
@@ -252,9 +252,9 @@ module.exports.initErrorRoutes = function (app) {
 /**
  * Configure Socket.io
  */
-module.exports.configureSocketIO = function (app, db) {
+module.exports.configureSocketIO = function (app) {
     // load the Socket.io configuration
-    var server = require('./socket.io')(app, db);
+    var server = require('./socket.io')(app);
 
     // return server object
     return server;
@@ -263,7 +263,7 @@ module.exports.configureSocketIO = function (app, db) {
 /**
  * Initialize the Express application
  */
-module.exports.init = function (db) {
+module.exports.init = function () {
     // initialize express app
     var app = express();
 
@@ -283,7 +283,7 @@ module.exports.init = function (db) {
     this.initModulesClientRoutes(app);
 
     // initialize Express session
-    this.initSession(app, db);
+    this.initSession(app);
 
     // initialize Modules configuration
     this.initModulesConfiguration(app);
@@ -298,7 +298,7 @@ module.exports.init = function (db) {
     //this.initErrorRoutes(app);
 
     // configure Socket.io
-    app = this.configureSocketIO(app, db);
+    app = this.configureSocketIO(app);
 
     return app;
 };

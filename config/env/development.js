@@ -8,18 +8,6 @@ var // the default environment configuration
 
 module.exports = {
     livereload: false,
-    db: {
-        uri: process.env.MONGODB || 'mongodb://localhost:27017/personalwebsitedevelopment',
-        options: {
-            db: { 
-                native_parser: true 
-            },
-            poolSize: 5,
-            useMongoClient: true
-        },
-        // enable mongoose debug mode
-        debug: process.env.MONGODB_DEBUG || false
-    },
     log: {
         // logging with Morgan - https://github.com/expressjs/morgan
         // can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
@@ -34,6 +22,7 @@ module.exports = {
     },
     mailer: {
         from: process.env.MAILER_FROM || 'MAILER_FROM',
+        to: process.env.MAILER_CONTACT_TO || 'MAILER_TO',
         options: {
             host: process.env.MAILER_HOST || 'MAILER_HOST',
             service: process.env.MAILER_SERVICE_PROVIDER || 'MAILER_SERVICE_PROVIDER',

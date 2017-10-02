@@ -15,7 +15,7 @@
             <h2 class="font-weight-bold text-uppercase mb-0"><span ng-bind-html="contact.title | trustHTML"></span></h2>
             <!-- End Page Title -->
             <!-- Begin Email -->
-            <div class="animated fadeInUp" ng-style="contactAnimations[0]">
+            <div id="contact-email" ng-style="animationStyle" style="visibility: hidden;">
                 <div class="card card--transparent card-body">
                     <h4 class="text-capitalize">Email</h4>
                     <div class="pl-3 pr-3">
@@ -25,7 +25,7 @@
             </div>
             <!-- End Email -->
             <!-- Begin Positive Note -->
-            <div class="animated fadeInUp" ng-style="contactAnimations[1]">
+            <div id="contact-positive-note" ng-style="animationStyle" style="visibility: hidden;">
                 <!-- Begin Content Break -->
                 <hr class="body-bar" />
                 <!-- End Content Break -->
@@ -37,7 +37,7 @@
             <!-- End Positive Note -->
             <!-- Begin Contact Form -->
             <div id="contact-form" class="collapse show">
-                <div class="animated fadeInUp" ng-style="contactAnimations[2]">
+                <div id="contact-form-form" ng-style="animationStyle" style="visibility: hidden;">
                     <!-- Begin Content Break -->
                     <hr class="body-bar" />
                     <!-- End Content Break -->
@@ -115,7 +115,7 @@
                 <div class="card card--transparent card-body ">
                     <div class="col-md-6 offset-md-3">
                         <h4 class="text-capitalize font-weight-bold">Thank you, <span class="font-italic">{{contactForm.inputs.firstName}}</span></h4>
-                        <p class="">I really appreciate your comment! I'll get back to you as soon as I can!</p>
+                        <p>I really appreciate your comment! I'll get back to you as soon as I can!</p>
                     </div>
                 </div>
             </div>

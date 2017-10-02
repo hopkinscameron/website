@@ -16,16 +16,29 @@ var // the path
     validator = require('validator');
 
 // create reusable transporter object using the default SMTP transport
+// secure:true for port 465, secure:false for port 587
 let transporter = nodemailer.createTransport({
     host: config.mailer.options.host,
     port: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'developmentp' ? 465 : 587,
-    secure: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'developmentp' ? true : false, // secure:true for port 465, secure:false for port 587
+    secure: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'developmentp' ? true : false,
     auth: {
         user: config.mailer.options.auth.user,
         pass: config.mailer.options.auth.pass
     },
 	//proxy: 'http://localhost:3128',
-	service: config.mailer.options.service
+    //service: config.mailer.options.service
+});
+
+// verify connection configuration
+transporter.verify(function(err, success) {
+    // if error occurred
+    if (err) {
+        // log internal error
+        console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
+    } 
+    else {
+        console.log(clc.success('Transporter server is ready to take our messages'));
+    }
 });
 
 /**
@@ -98,59 +111,60 @@ exports.sendEmail = function (req, res) {
     req.checkBody('email', 'Email is required').notEmpty();
     req.checkBody('subject', 'Subject is required').notEmpty();
     req.checkBody('message', 'Message is required').notEmpty();
-    
+
     // validate errors
-    var errors = req.validationErrors();
+    req.getValidationResult().then(function(errors) {
+        // if any errors exists
+        if(!errors.isEmpty()) {
+            // holds all the errors in one text
+            var errorText = "";
 
-    // if errors exist
-    if (errors) {
-        // setup the 400 error
-        var err = {
-            code: 400
-        };
+            // add all the errors
+            for(var x = 0; x < errors.array().length; x++) {
+                // if not the last error
+                if(x < errors.array().length - 1) {
+                    errorText += errors.array()[x].msg + '\r\n';
+                }
+                else {
+                    errorText += errors.array()[x].msg;
+                }
+            }
 
-        // holds all the errors in one text
-        var errorText = "";
-
-        // add all the errors
-        for(var x = 0; x < errors.length; x++) {
-            errorText += errors[x].msg + "\r\n";
+            // send bad request
+            res.status(400).send({ title: errorHandler.getErrorTitle({ code: 400 }), message: errorText });
         }
+        else {
+            var fromString = req.body.firstName + " " + req.body.lastName + "<" + req.body.email + ">";
+            
+            // setup email data with unicode symbols
+            let mailOptions = {
+                from: fromString, // sender address
+                to: config.mailer.to, // list of receivers
+                subject: req.body.subject, // Subject line
+                text: req.body.message, // plain text body
+                html: '<p>' + req.body.message + '</p>' // html body
+            };
 
-        // send bad request
-        res.status(400).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) + errorText });
-    }
-    else {
-        var fromString = req.body.firstName + " " + req.body.lastName + "<" + req.body.email + ">";
-        
-        // setup email data with unicode symbols
-        let mailOptions = {
-            from: fromString, // sender address
-            to: config.mailer.options.auth.user, // list of receivers
-            subject: req.body.subject, // Subject line
-            text: req.body.message, // plain text body
-            html: '<p>' + req.body.message + '</p>' // html body
-        };
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, (err, info) => {
+                // if error occurred
+                if (err) {
+                    // send internal error
+                    res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
+                    console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
+                }
+                else {
+                    // setup success
+                    var err = {
+                        code: 200
+                    };
 
-        // send mail with defined transport object
-        transporter.sendMail(mailOptions, (err, info) => {
-            // if error occurred
-            if (err) {
-                // send internal error
-                res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) });
-                console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
-            }
-            else {
-                // setup success
-                var err = {
-                    code: 200
-                };
-
-                // return success
-                res.status(200).send({ 'd': { title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) + " Your email has been sent!" } });
-            }
-        });		
-    }
+                    // return success
+                    res.status(200).send({ 'd': { title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) + " Your email has been sent!" } });
+                }
+            });		
+        }
+    });
 };
 
 /**
@@ -161,57 +175,58 @@ exports.shortenUrl = function (req, res) {
     req.checkBody('longUrl', 'Long url is required').notEmpty();
 
     // validate errors
-    var errors = req.validationErrors();
+    req.getValidationResult().then(function(errors) {
+        // if any errors exists
+        if(!errors.isEmpty()) {
+            // holds all the errors in one text
+            var errorText = "";
 
-    // if errors exist
-    if (errors) {
-        // setup the 400 error
-        var err = {
-            code: 400
-        };
+            // add all the errors
+            for(var x = 0; x < errors.array().length; x++) {
+                // if not the last error
+                if(x < errors.array().length - 1) {
+                    errorText += errors.array()[x].msg + '\r\n';
+                }
+                else {
+                    errorText += errors.array()[x].msg;
+                }
+            }
 
-        // holds all the errors in one text
-        var errorText = "";
-
-        // add all the errors
-        for(var x = 0; x < errors.length; x++) {
-            errorText += errors[x].msg + "\r\n";
+            // send bad request
+            res.status(400).send({ title: errorHandler.getErrorTitle({ code: 400 }), message: errorText });
         }
+        else {
+            // create request
+            var options = {
+                method: 'POST',
+                uri: "https://www.googleapis.com/urlshortener/v1/url?key=" + config.googleShortenUrl.clientSecret,
+                headers: {
+                    'Content-Type': 'application/json; odata=verbose',
+                    'Accept': 'application/json; odata=verbose'
+                },
+                body: {
+                    "longUrl": req.body.longUrl
+                },
+                json: true
+            };
 
-        // send bad request
-        res.status(400).send({ title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err) + errorText });
-    }
-    else {
-        // create request
-        var options = {
-            method: 'POST',
-            uri: "https://www.googleapis.com/urlshortener/v1/url?key=" + config.googleShortenUrl.clientSecret,
-            headers: {
-                'Content-Type': 'application/json; odata=verbose',
-                'Accept': 'application/json; odata=verbose'
-            },
-            body: {
-                "longUrl": req.body.longUrl
-            },
-            json: true
-        };
+            // submit request
+            requestPromise(options).then(function (responseSU) {
+                // create return response
+                var returnReq = JSON.stringify({
+                    "shortUrl": responseSU.id,
+                    "longUrl": responseSU.longUrl
+                });
 
-        // submit request
-        requestPromise(options).then(function (responseSU) {
-            // create return response
-            var returnReq = JSON.stringify({
-                "shortUrl": responseSU.id,
-                "longUrl": responseSU.longUrl
+                // send data
+                res.json({ 'd': returnReq });
+            }).catch(function (responseSU) {
+                // send internal error
+                res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err)  });
+                console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
             });
-
-            // send data
-            res.json({ 'd': returnReq });
-        }).catch(function (responseSU) {
-            // send internal error
-            res.status(500).send({ error: true, title: errorHandler.getErrorTitle(err), message: errorHandler.getGenericErrorMessage(err)  });
-            console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
-        });
-    }
+        }
+    });
 };
 
 /**

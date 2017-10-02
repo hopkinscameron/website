@@ -7,8 +7,10 @@ var // passport for authentication
     passport = require('passport'),
     // the local strategy
     LocalStrategy = require('passport-local').Strategy,
+    // the path
+    path = require('path'),
     // the User model
-    User = require('mongoose').model('User');
+    User = require(path.resolve('./modules/login/server/models/model-user'));
 
 module.exports = function () {
     // =========================================================================
@@ -18,9 +20,9 @@ module.exports = function () {
     // by default, if there was no name, it would just be called 'local'
     passport.use('local-signup', new LocalStrategy({
         // by default, local strategy uses username and password
-        usernameField : 'username',
-        passwordField : 'password',
-        passReqToCallback : true // allows us to pass back the entire request to the callback
+        usernameField: 'username',
+        passwordField: 'password',
+        passReqToCallback: true // allows us to pass back the entire request to the callback
     },
     function(req, username, password, done) {
         // asynchronous
@@ -28,32 +30,37 @@ module.exports = function () {
         process.nextTick(function() {
             // find a user whose username is the same as the forms username
             // we are checking to see if the user trying to login already exists
-            User.findOne({ username : username }, function(err, user) {
+            User.findOne({ 'username': username }, function(err, user) {
                 // if there are any errors, return the error
-                if (err)
+                if (err) {
                     return done(err);
+                }
 
                 // check to see if theres already a user with that username
                 if (user) {
-                    return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
+                    return done(null, null, req.flash('signupMessage', 'That username is already taken.'));
                 } 
                 else {
-                    // if there is no user with that username
-                    // create the user
-                    var newUser = new User();
-
-                    // set the user's local credentials
-                    newUser.username = username;
-                    newUser.password = password;
-                    newUser.passwordUpdatedLast = new Date();
+                    // create the user and set the user's local credentials
+                    var newUser = {
+                        username: username,
+                        password: password
+                    };
 
                     // save the user
-                    newUser.save(function(err) {
+                    User.save(newUser, function(err) {
                         // if error occurred
                         if (err) {
                             throw err;
                         }
-                            
+
+                        // save the id since it will be lost when going to object
+                        // hide the password for security purposes
+                        var id = newUser._id;
+                        newUser = User.toObject(newUser, { 'hide': 'password internalName created' });
+                        newUser._id = id;
+
+                        // hide the password
                         return done(null, newUser);
                     });
                 }
@@ -68,9 +75,9 @@ module.exports = function () {
     // by default, if there was no name, it would just be called 'local'
     passport.use('local-login', new LocalStrategy({
         // by default, local strategy uses username and password
-        usernameField : 'username',
-        passwordField : 'password',
-        passReqToCallback : true // allows us to pass back the entire request to the callback
+        usernameField: 'username',
+        passwordField: 'password',
+        passReqToCallback: true // allows us to pass back the entire request to the callback
     },
     function (req, username, password, done) {
         // convert to lowercase
@@ -78,7 +85,7 @@ module.exports = function () {
 
         // find a user whose username is the same as the forms username
         // we are checking to see if the user trying to login already exists
-        User.findOne({ 'username' : username }, function (err, user) {
+        User.findOne({ 'username': username }, function (err, user) {
             // if error occurred
             if (err) {
                 return done(err);
@@ -91,30 +98,49 @@ module.exports = function () {
             }
 
             // compare equality
-            user.comparePassword(password, function(err, isMatch) {
+            User.comparePassword(user, password, function(err, isMatch) {
                 // if the user is found but the password is wrong or an error occurred
 				if (err || !isMatch) {
-                    // create the loginMessage and save it to session as flashdata
+                    // create the login message and save it to session as flashdata
                     return done(null, false);
 				}
 
                 // set updated values 
                 var updatedValues = {
-                    "lastLogin": new Date()
+                    'lastLogin': new Date()
                 };
 
                 // update user
-                user.update(updatedValues).exec(function(err) {
+                User.update(user, updatedValues, function(err, updatedUser) {
                     // if error occurred
                     if (err) {
                         return done(err);
                     }
-                    else {
-                        // set all updated values
-                        user.lastLogin = updatedValues.lastLogin;
+                    else if(updatedUser) {
+                        // save the id since it will be lost when going to object
+                        // hide the password for security purposes
+                        var id = updatedUser._id;
+                        updatedUser = User.toObject(updatedUser, { 'hide': 'password internalName created' });
+                        updatedUser._id = id;
 
-                        // get object value
-                        user = user.toObject({ hide: 'password', transform: true });
+                        // login
+                        req.login(updatedUser, function (err) {
+                            // if error occurred
+                            if (err) {
+                                return done(err);
+                            } 
+                            else {
+                                // all is well, return successful user
+                                return done(null, updatedUser);
+                            }
+                        });
+                    }
+                    else {
+                        // save the id since it will be lost when going to object
+                        // hide the password for security purposes
+                        var id = user._id;
+                        user = User.toObject(user, { 'hide': 'password internalName created' });
+                        user._id = id;
 
                         // login
                         req.login(user, function (err) {

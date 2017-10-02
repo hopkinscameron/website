@@ -120,6 +120,20 @@ headerModule.controller('HeaderController', ['$scope', '$rootScope', '$location'
     };
 
     // get animation delays
+    $rootScope.$root.getAnimationDelay = function() {
+        // set the delay
+        var delay = {
+            '-webkit-animation-delay': '0.5s',
+            '-moz-animation-delay': '0.5s',
+            '-ms-animation-delay': '0.5s',
+            '-o-animation-delay': '0.5s',
+            'animation-delay': '0.5s'
+        };
+
+        return delay;
+    };
+
+    // get animation delays
     $rootScope.$root.getAnimationDelays = function(startTime, incrementTime, length) {
         // initialize the array
         var delays = new Array(length);
@@ -138,6 +152,15 @@ headerModule.controller('HeaderController', ['$scope', '$rootScope', '$location'
         return delays;
     };
 
+    // get waypoint starting offset
+    $rootScope.$root.getWaypointStart = function() {
+        // set the viewport and navbar height
+        var vph = angular.element(window).height();
+        var navbarHeight = 76;
+
+        return vph - navbarHeight;
+    };
+
     // determines if screen is larger than (not equal)
     $rootScope.$root.isDeviceWidthLargerThan = function(minWidth) {
         return angular.element($window).width() > minWidth;
@@ -150,18 +173,12 @@ headerModule.controller('HeaderController', ['$scope', '$rootScope', '$location'
 
     // checks if the page is active
     $scope.isActive = function (page) {
-        var windowSplit = $window.location.href.split('/');
-        var pageSplit = page.split('/');
-        var last = windowSplit[windowSplit.length - 1];
-        var queryIndex = last.indexOf('?');
-
-        // if query
-        if(queryIndex != -1) {
-            last = last.substring(0, queryIndex);
-        }
-
+        // get the third index of forward slash
+        var index = nthIndexOf($window.location.href, '/', 3);
+        var link = $window.location.href.substring(index + 1);
+        
         // check if on page
-        if (last == pageSplit[pageSplit.length - 1]) {
+        if (link == page) {
             // set the class as active
             return true;
         }
@@ -178,13 +195,16 @@ headerModule.controller('HeaderController', ['$scope', '$rootScope', '$location'
         $rootScope.$root.animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
 
         // set obtaining page data timeout (used for a slight animation)
-        $rootScope.$root.getPageDataTimeout = 1500;
+        $rootScope.$root.getPageDataTimeout = 0;
 
         // set show page timeout (timeout before a page shows (used for collapsing body))
         $rootScope.$root.showPageTimeout = 500;
         
         // initialize show header
         $rootScope.$root.showHeader = false;
+
+        // general status error when something goes wrong
+        $rootScope.$root.generalStatusError = 'Sorry, something went wrong on our end.';
 
         // parses date/time
         $rootScope.$root.parseDateTime = function (dateTime) {
@@ -256,6 +276,11 @@ headerModule.controller('HeaderController', ['$scope', '$rootScope', '$location'
             $rootScope.$emit('headerRefreshed', {'error': true, 'message': responseHeader.message});
         });
     };
+
+    // gets the nth index of substring
+    function nthIndexOf(string, subString, index) {
+        return string.split(subString, index).join(subString).length;
+    }
 
     // add document event listener on key down
     document.addEventListener('keydown', function(event) {

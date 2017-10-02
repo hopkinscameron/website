@@ -15,7 +15,7 @@
             <h2 class="font-weight-bold text-uppercase mb-0"><span ng-bind-html="about.title | trustHTML"></span></h2>
             <!-- End Page Title -->
             <!-- Begin Bio -->
-            <div class="animated fadeInUp" ng-style="aboutAnimations[0]">
+            <div id="about-bio" ng-style="animationStyle" style="visibility: hidden;">
                 <div class="card card--transparent card-body">
                     <h4 class="text-capitalize">Bio</h4>
                     <span class="pl-3 pr-3" ng-bind-html="about.bio | trustHTML"></span>
@@ -23,7 +23,7 @@
             </div>
             <!-- End Bio -->
             <!-- Begin Hobbies -->
-            <div class="animated fadeInUp" ng-style="aboutAnimations[1]">
+            <div id="about-hobbies" ng-style="animationStyle" style="visibility: hidden;">
                 <!-- Begin Content Break -->
                 <hr class="body-bar" />
                 <!-- End Content Break -->
@@ -47,7 +47,7 @@
             </div>
             <!-- End Hobbies -->
             <!-- Begin Favorite Games -->
-            <div class="animated fadeInUp" ng-style="aboutAnimations[2]">
+            <div id="about-favorites" ng-style="animationStyle" style="visibility: hidden;">
                 <!-- Begin Content Break -->
                 <hr class="body-bar" />
                 <!-- End Content Break -->

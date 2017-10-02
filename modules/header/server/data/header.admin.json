@@ -20,7 +20,7 @@
 			"dropdown": [
                 {
 					"title": "Home",
-					"pageLink": ""
+					"home": true
 				},
 				{
 					"title": "Over Drive",
@@ -61,8 +61,26 @@
 			"pageLink": "contact"
 		},
 		{
-			"title": "Logout",
-			"pageLink": "logout"
+			"title": "Admin",
+			"pageLink": "admin",
+			"dropdown": [
+                {
+					"title": "Dashboard",
+					"pageLink": "dashboard"
+				},
+				{
+					"title": "New Blog",
+					"pageLink": "blog/new"
+				},
+				{
+					"title": "New Portfolio",
+					"pageLink": "portfolio/new"
+				},
+				{
+					"title": "Logout",
+					"pageLink": "logout"
+				}
+			]
 		}
 	]
 }

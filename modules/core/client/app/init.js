@@ -4,7 +4,7 @@
 angular.module(ApplicationConfiguration.applicationModuleName, ApplicationConfiguration.applicationModuleVendorDependencies);
 
 // configure the module
-angular.module(ApplicationConfiguration.applicationModuleName).config(['$routeProvider', '$locationProvider', '$httpProvider', '$compileProvider', '$logProvider', 'cfpLoadingBarProvider', function ($routeProvider, $locationProvider, $httpProvider, $compileProvider, $logProvider, cfpLoadingBarProvider, $routeParams) {
+angular.module(ApplicationConfiguration.applicationModuleName).config(['$routeProvider', '$locationProvider', '$httpProvider', '$compileProvider', '$logProvider', 'cfpLoadingBarProvider', 'ChartJsProvider', function ($routeProvider, $locationProvider, $httpProvider, $compileProvider, $logProvider, cfpLoadingBarProvider, ChartJsProvider, $routeParams) {
     // check browser support to enable html 5
     if (window.history && window.history.pushState) {
         $locationProvider.html5Mode({
@@ -37,16 +37,20 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$routePr
 
     // set parent element to attached to
     cfpLoadingBarProvider.parentSelector = '#main';
+
+    // set the default colors
+    ChartJsProvider.setOptions({ colors : [ApplicationConfiguration.applicationThemeOne, '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
 }]);
 
 // configure the route
-angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', '$location', 'LoginFactory', function($rootScope, $location, LoginFactory) {
+angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', '$location', '$route', 'LoginFactory', function($rootScope, $location, $route, LoginFactory) {
     // on a route change (the start of a route change)
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
         // check to see if user is logged in
         LoginFactory.isUserLoggedIn().then(function(response) {
             // determines if user is logged in
             $rootScope.$root.isLoggedIn = response.isLoggedIn;
+            $rootScope.$root.prevRouteNeedsAuth = $route.current.$$route.authenticated;
 
             // if the next route needs authentication
             if (next.$$route && next.$$route.authenticated) {

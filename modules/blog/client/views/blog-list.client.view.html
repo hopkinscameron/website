@@ -15,11 +15,11 @@
             <h2 class="font-weight-bold text-uppercase mb-3"><span ng-bind-html="blog.title | trustHTML"></span></h2>
             <!-- End Page Title -->           
             <!-- Begin Filters/New Blog Button -->
-            <div class="card card--dark card-body mb-3">
+            <div id="blog-list-filters" class="card card--dark card-body mb-3">
                 <div class="row" ng-class="{'justify-content-end': !$root.isLoggedIn}">
                     <!-- Begin New Blog -->
                     <div class="col text-left" ng-if="$root.isLoggedIn">
-                        <a href="/blog/new" class="btn btn-theme-primary decoration--never">New Blog</a>
+                        <a href="/admin/blog/new" class="btn btn-theme-primary decoration--never">New Blog</a>
                     </div>
                     <!-- End New Blog -->
                     <!-- Begin Filters -->
@@ -50,7 +50,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <!-- Begin Posts -->
-                    <div class="animated fadeInUp" ng-class="{'mb-5': $index < blog.posts.length - 1}" ng-style="blogAnimations[$index]" ng-repeat="post in blog.posts">
+                    <div id="blogId{{$index}}" ng-class="{'mb-5': $index < blog.posts.length - 1}" ng-style="animationStyle"  style="visibility: hidden;" ng-repeat="post in blog.posts">
                         <div class="card card--dark card-body box-shadow--sm">
                             <!-- Begin Image -->
                             <a class="decoration--never highlight--never" ng-href="/blog/post/{{post.url}}">
@@ -87,7 +87,7 @@
                                 <!-- End View Full Post -->
                                 <!-- Begin Edit Post -->
                                 <div class="col text-right" ng-if="$root.isLoggedIn">
-                                    <a class="decoration--never card-link mt-3" ng-href="/blog/post/{{post.url}}/edit">Edit post <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                                    <a class="decoration--never card-link mt-3" ng-href="/admin/blog/post/{{post.url}}/edit">Edit post <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
                                 </div>
                                 <!-- End Edit Post -->
                             </div>
@@ -96,7 +96,7 @@
                     </div>
                     <!-- End Posts -->
                     <!-- Begin Paging -->
-                    <nav aria-label="..." class="row pl-3 pr-3 mt-4" ng-class="{'justify-content-center': $root.isDeviceWidthSmallerThan(768)}" ng-if="blog.posts.length > 0">
+                    <nav id="blog-list-paging" id="blog-list-filters" aria-label="..." class="row pl-3 pr-3 mt-4" ng-class="{'justify-content-center': $root.isDeviceWidthSmallerThan(768)}" ng-if="blog.posts.length > 0">
                         <ul class="pagination">
                             <li class="page-item" ng-class="{'disabled': blog.currentPage == 1 || blog.totalPages.length == 1}">
                                 <a class="decoration--never page-link page-link--dark" ng-href="{{getRouteValue(blog.currentPage - 1)}}" tabindex="-1">
@@ -115,7 +115,7 @@
                     </nav>
                     <!-- End Paging -->
                     <!-- Begin No Posts -->
-                    <div class="" ng-if="blog.posts.length == 0">
+                    <div id="blog-list-no-blogs" ng-if="blog.posts.length == 0">
                         <p>Sorry, there are no posts available.</p>
                     </div>
                     <!-- End No Posts -->

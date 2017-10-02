@@ -4,7 +4,7 @@
 var contactModule = angular.module('contact');
 
 // create the controller
-contactModule.controller('ContactController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'ngDialog', 'Service', 'ContactFactory', function ($scope, $rootScope, $compile, $location, $timeout, ngDialog, Service, ContactFactory) {
+contactModule.controller('ContactController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'Service', 'ContactFactory', function ($scope, $rootScope, $compile, $location, $timeout, Service, ContactFactory) {
     // determines if a page has already sent a request for load
     var pageRequested = false;
     
@@ -61,17 +61,6 @@ contactModule.controller('ContactController', ['$scope', '$rootScope', '$compile
 
     // determines if the page is fully loaded
     $scope.pageFullyLoaded = false;
-
-    // show loading dialog
-    var loadingDialog = ngDialog.open({
-        template: '/modules/dialog/client/views/dialog-loading.client.view.html',
-        controller: 'DialogLoadingController',
-        className: 'ngdialog-theme-default ngdialog-theme-dark custom-width',
-        showClose: false,
-        closeByEscape: false,
-        closeByDocument: false,
-        data: undefined
-    });
 
     // check if header/footer was initialized
     if($rootScope.$root.showHeader === undefined || $rootScope.$root.showFooter === undefined) {
@@ -311,14 +300,8 @@ contactModule.controller('ContactController', ['$scope', '$rootScope', '$compile
                 $scope.contact = responseC;
                 $scope.contact.title = 'Contact';
                 
-                // the initial delayed start time of any animation
-                var startTime = 1.5;
-
-                // the incremental start time of every animation (every animation in the array has a value greater than the last by this much)
-                var incrementTime = 1;
-
-                // holds the animation times
-                $scope.contactAnimations = $rootScope.$root.getAnimationDelays(startTime, incrementTime, 3);
+                // holds the animation time
+                $scope.animationStyle = $rootScope.$root.getAnimationDelay();
 
                 // holds the page title
                 $scope.pageTitle = 'Contact | ' + ApplicationConfiguration.applicationName;
@@ -359,17 +342,11 @@ contactModule.controller('ContactController', ['$scope', '$rootScope', '$compile
         titleDOM.setAttribute('ng-bind-html', title);
         $compile(titleDOM)($scope);
 
-        // close the loading dialog
-        loadingDialog.close();
-        
-        // on completion of close
-        loadingDialog.closePromise.then(function (data) {
-            // set page fully loaded
-            $scope.pageFullyLoaded = true;
+        // set page fully loaded
+        $scope.pageFullyLoaded = true;
 
-            // show the page after a timeout
-            $timeout(showPage, $rootScope.$root.showPageTimeout);
-        });
+        // show the page after a timeout
+        $timeout(showPage, $rootScope.$root.showPageTimeout);
     };
 
     // shows the page
@@ -378,7 +355,50 @@ contactModule.controller('ContactController', ['$scope', '$rootScope', '$compile
         if(!angular.element('#pageShow').hasClass('collapsing')) {
             // show the page
             angular.element('#pageShow').collapse('show');
+
+            // setup all waypoints
+            setUpWaypoints();
         }
+    };
+
+    // sets up all waypoints
+    function setUpWaypoints() {
+        // get the starting offset
+        var startOffset = $rootScope.$root.getWaypointStart();
+
+        // initialize the waypoint list
+        var waypointList = [
+            { id: 'contact-email', offset: startOffset, class: 'animated fadeIn' }, 
+            { id: 'contact-positive-note', offset: startOffset, class: 'animated fadeIn' }, 
+            { id: 'contact-form-form', offset: startOffset, class: 'animated fadeIn' }
+        ];
+
+        // go through all waypoints
+        _.forEach(waypointList, function(value) {
+            // get the element
+            var documentElement = document.getElementById(value.id);
+
+            // see if element exists
+            if(documentElement) {
+                value.waypoint = new Waypoint({
+                    element: documentElement,
+                    handler: function(direction) {
+                        // if direction is down
+                        if(direction == 'down') {
+                            // get the element
+                            var ele = angular.element('#' + this.element.id);
+
+                            // if the element exists
+                            if(ele && ele['0']) {
+                                ele.addClass(value.class);
+                                ele['0'].style.visibility = 'visible';
+                            }
+                        }
+                    },
+                    offset: value.offset
+                });
+            }
+        });
     };
     
     // checks for any empty values

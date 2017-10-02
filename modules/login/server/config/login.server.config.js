@@ -5,12 +5,12 @@
  */
 var // passport for authentication
     passport = require('passport'),
-    // the User model
-    User = require('mongoose').model('User'),
     // path
     path = require('path'),
     // the application configuration
-    config = require(path.resolve('./config/config'));
+    config = require(path.resolve('./config/config')),
+    // the User model
+    User = require(path.resolve('./modules/login/server/models/model-user'));
 
 /**
  * Module init function
@@ -37,8 +37,11 @@ module.exports = function (app, db) {
                 console.log(clc.error(errorHandler.getDetailedErrorMessage(err)));
             }
             else if(user) {
-                // get object value
-                user = user.toObject({ hide: 'password', transform: true });
+                // save the id since it will be lost when going to object
+                // hide the password for security purposes
+                var id = user._id;
+                user = User.toObject(user, { 'hide': 'password internalName created' });
+                user._id = id;
                 done(err, user);
             }
             else {

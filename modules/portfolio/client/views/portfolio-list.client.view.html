@@ -1,0 +1,78 @@
+﻿<!-- Begin Portfolio List Page -->
+<section ng-controller="PortfolioListController">
+    <!-- Begin Container -->
+    <div class="container">
+        <!-- Begin Page Fully Loaded With Errors -->
+        <div id="pageShow" class="collapse" ng-if="pageFullyLoaded && error.error">
+            <div ng-controller="ErrorController" ng-init="init(error.title, error.status, error.message)">
+                <div ng-include="'/modules/core/client/views/error.client.view.html'"></div>
+            </div>
+        </div>
+        <!-- End Page Fully Loaded With Errors -->
+        <!-- Begin Page Fully Loaded With No Errors -->
+        <div id="pageShow" class="animated animation-delay--md fadeIn collapse" ng-if="pageFullyLoaded && !error.error">
+            <!-- Begin Page Title -->
+            <h2 class="font-weight-bold text-uppercase mb-0"><span ng-bind-html="portfolio.title | trustHTML"></span></h2>
+            <!-- End Page Title -->
+            <!-- Begin Portfolio Items -->
+            <div class="card card--transparent card-body">
+                <div class="row">
+                    <!-- Begin Laptop/Large Tablet View -->
+                    <div id="porfolioId{{$index}}" class="col-md-6 mb-5" ng-style="animationStyle" style="visibility: hidden;" ng-repeat="portfolioItem in portfolio.portfolioItems" ng-if="$root.isDeviceWidthLargerThan(767)">
+                        <div class="card card--dark card-body box-shadow--sm">
+                            <!-- Begin Portfolio Item Title -->
+                            <h3 class="text-center text-capitalize font-weight-bold">{{portfolioItem.title}}</h3>
+                            <!-- End Portfolio Item Title -->
+                            <!-- Begin Portfolio Item Image -->
+                            <a class="decoration--never highlight--never card-link" ng-href="{{currentPath}}/{{portfolioItem.subPageLink}}">
+                                <div style="overflow: hidden;">
+                                    <div class="img-thumb img--md img-zoom--sm" ng-style="{'background-image': 'url(' + portfolioItem.pictureLink + ')'}" ng-if="portfolioItem.pictureLink.length > 0"></div>
+                                    <div class="img-thumb img--md img-zoom--sm d-table w-100" ng-if="portfolioItem.pictureLink.length == 0">
+                                        <div class="h3 text-center w-100 d-table-cell align-middle" style="cursor: default;">{{post.title}}</div>
+                                    </div>
+                                </div>
+                            </a>
+                            <!-- End Portfolio Item Image -->
+                            <!-- Begin View More Details -->
+                            <p class="text-center pl-3 pr-3 mb-2 mt-2"><a class="decoration--never card-link" ng-href="{{currentPath}}/{{portfolioItem.subPageLink}}">View more details <i class="fa fa-arrow-right" aria-hidden="true"></i></a></p>
+                            <!-- End View More Details -->
+                            <!-- Begin Portfolio Item Short Description -->
+                            <span class="pl-3 pr-3" ng-bind-html="portfolioItem.shortDescription | trustHTML"></span>
+                            <!-- End Portfolio Item Short Description -->
+                        </div>
+                    </div>
+                    <!-- End Laptop/Large Tablet View -->
+                    <!-- Begin Phone View -->
+                    <div id="porfolioId{{$index}}" class="col" ng-class="{'mb-5': $index < portfolio.portfolioItems.length - 1}" ng-style="animationStyle" style="visibility: hidden;" ng-repeat="portfolioItem in portfolio.portfolioItems" ng-if="$root.isDeviceWidthSmallerThan(768)">
+                        <div class="card card--dark card-body box-shadow--sm">
+                            <!-- Begin Portfolio Item Title -->
+                            <h3 class="text-center text-capitalize font-weight-bold">{{portfolioItem.title}}</h3>
+                            <!-- End Portfolio Item Title -->
+                            <!-- Begin Portfolio Item Image -->
+                            <a class="decoration--never highlight--never card-link" ng-href="{{currentPath}}/{{portfolioItem.subPageLink}}">
+                                <div style="overflow: hidden;">
+                                    <div class="img-thumb img--md img-zoom--sm" ng-style="{'background-image': 'url(' + portfolioItem.pictureLink + ')'}" ng-if="portfolioItem.pictureLink.length > 0"></div>
+                                    <div class="img-thumb img--md img-zoom--sm d-table w-100" ng-if="portfolioItem.pictureLink.length == 0">
+                                        <div class="h3 text-center w-100 d-table-cell align-middle" style="cursor: default;">{{post.title}}</div>
+                                    </div>
+                                </div>
+                            </a>
+                            <!-- End Portfolio Item Image -->
+                            <!-- Begin View More Details -->
+                            <p class="text-center pl-3 pr-3 mb-2 mt-2"><a class="decoration--never card-link" ng-href="{{currentPath}}/{{portfolioItem.subPageLink}}">View more details <i class="fa fa-arrow-right" aria-hidden="true"></i></a></p>
+                            <!-- End View More Details -->
+                            <!-- Begin Portfolio Item Short Description -->
+                            <span class="pl-3 pr-3" ng-bind-html="portfolioItem.shortDescription | trustHTML"></span>
+                            <!-- End Portfolio Item Short Description -->
+                        </div>
+                    </div>
+                    <!-- End Phone View -->
+                </div>
+            </div>
+            <!-- End Portfolio Items -->
+        </div>
+        <!-- End Page Fully Loaded With No Errors -->
+    </div>
+    <!-- End Container -->
+</section>
+<!-- End Portfolio Page -->

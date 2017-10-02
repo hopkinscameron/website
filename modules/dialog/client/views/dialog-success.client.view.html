@@ -1,0 +1,39 @@
+﻿<!-- Begin Success Dialog -->
+<section>
+    <!-- Begin Title Container -->
+    <div class="container">
+        <!-- Begin Title -->
+        <h3 class="">{{ngDialogData.successHeader}}</h3>
+        <!-- End Title -->
+    </div>
+    <!-- End Title Container -->
+    <!-- Begin Body Container -->
+    <div class="container">
+        <!-- Begin Body Text -->
+        <p>{{ngDialogData.successBody}}</p>
+        <!-- End Body Text -->
+        <!-- Begin Success Controller -->
+        <div class="row align-items-center text-center" ng-if="DialogSuccessController">
+            <!-- Begin Okay Button -->
+            <div class="col text-center">
+                <button type="button" class="btn btn-theme-primary" ng-click="okay()">Okay</button>
+            </div>
+            <!-- Begin Okay Button -->
+        </div>
+        <!-- End Success Controller -->
+        <!-- Begin Successful Post Controller -->
+        <div class="row align-items-center text-center" ng-if="DialogSuccessfulPostController">
+            <!-- Begin Okay/GoToBlog Buttons -->
+            <div class="col text-left">
+                <button type="button" class="btn btn-theme-primary" ng-click="okay()">Okay</button>
+            </div>
+            <div class="col text-right">
+                <p role="button" class="mb-0" ng-click="goToBlog()">Take me to view post <i class="fa fa-arrow-right" aria-hidden="true"></i></p>
+            </div>
+            <!-- Begin Okay/GoToBlog Buttons -->
+        </div>
+        <!-- End Successful Post Controller -->
+    </div>
+    <!-- End Body Container -->
+</section>
+<!-- End Success Dialog -->

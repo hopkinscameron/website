@@ -1,0 +1,35 @@
+{
+    "footerNote": "Copyright &copy; 2016 - 2017 Cameron Hopkins",
+    "socialMediaLinks": [
+        {
+            "type": "LinkedIn",
+            "img": "/dist/img/linkedin-white.svg",
+            "title": "Cameron Hopkins LinkedIn",
+            "link": "https://www.linkedin.com/in/cameron-hopkins-7a67a5a4"
+        },
+        {
+            "type": "Facebook",
+            "img": "/dist/img/facebook-white.svg",
+            "title": "Cameron Hopkins Facebook",
+            "link": "https://www.facebook.com/cameron.hopkins.90"
+        },
+        {
+            "type": "Instagram",
+            "img": "/dist/img/instagram-white.svg",
+            "title": "Cameron Hopkins Instagram",
+            "link": "https://www.instagram.com/camthedragon"
+        },
+        {
+            "type": "Twitter",
+            "img": "/dist/img/twitter-white.svg",
+            "title": "Cameron Hopkins Twitter",
+            "link": "https://twitter.com/camthedragon"
+        },
+        {
+            "type": "YouTube",
+            "img": "/dist/img/youtube-play-white.svg",
+            "title": "Cameron Hopkins YouTube",
+            "link":  "https://www.youtube.com/channel/UCtQ-7FNTiTIRBElvzVJyrLg"
+        }
+    ] 
+}

@@ -1,0 +1,18 @@
+/* Begin Custom Buttons */
+.btn-theme-primary {
+    color: $brand-theme-secondary;
+    background-color: $brand-theme-main;
+    border-color: $brand-theme-main;
+
+    &:active {
+        background-color: darken( $brand-theme-main, 10% );
+        border-color: darken( $brand-theme-main, 10% );
+        color: $brand-theme-secondary;
+    }
+    &:focus, &:hover {
+        background-color: darken( $brand-theme-main, 10% );
+        background-position: 0 -15px;
+        color: $brand-theme-secondary;
+    }
+}
+/* End Custom Buttons */

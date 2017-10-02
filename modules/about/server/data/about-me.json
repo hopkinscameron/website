@@ -1,0 +1,50 @@
+{
+    "bio": "<p>I developed a passion for game design at a very young age when I started playing video games in elementary school. My admiration for video games was much greater than it was for playing sports. Rather than spending my free time on a field or court, I stayed inside analyzing game mechanics. I had a strong desire to understand what it took to make video games. Throughout elementary and middle school, I often found myself drawing new characters for various video games and cartoons. This is how I gained an interest in drawing.</p><p>In high school, I did eventually get into sports. I played varsity tennis all 4 years and even won numerous accolades including all-state. In parallel with tennis, I joined the robotics club where we designed and programmed a robotic vehicle that would later compete in a soccer competition. Keeping game design in the forefront, I made regular visits to my guidance counselor to see what would be my first step to pursue my passion after high school. He told me that going into Computer Science would be a good start. I took his advice and began researching different colleges. During my research I came across one of the best engineering programs at The Ohio State University. In 2010, I started my journey of becoming a Buckeye.</p><p>During my time at Ohio State I held numerous positions across multiple organizations, which included National Society of Black Engineers as well as Phi Beta Sigma Fraternity, Inc. To ensure I got experience with game development, I often met with my academic advisor to discuss a path that would help me gain the necessary skills. With that, I took my Senior Capstone course in game development, as well as multiple advanced level graduate courses. I wanted to touch up and enhance my artistic abilities so I focused my minor in art. In May of 2015, I obtained my Bachelors of Science in Computer Science and Engineering with a minor in Studio Art from The Ohio State University.</p><p>After graduation I moved to Flint, MI where I began my career as a Controls Engineer at General Motors. With the leadership positions I held in college, this helped me succeed at GM as I was managing and verifying the installation of new tooling and conveyor systems within the plant. Though I wasn&rsquo;t programming, I was building project management skills. To maintain my programming skills, I began developing iOS applications in my free time. One year later, I decided to shift my career and get back into programming full time. Being able to return home, I accepted a full time offer with Nationwide Mutual Insurance Company in June of 2016. Currently, I am a Senior Application Developer at Nationwide in the downtown area of Columbus, OH. I work on existing and develop new internal software applications for Nationwide. In addition to my full time role at Nationwide, I am also a programmer for Installation 01. Installation 01 is a fan-made Halo game being developed by engineers and artist across the world. At Installation 01, we maintain contact with Microsoft Studio and 343 Industries, the developers of the Halo series.</p>",
+    "hobbies": [
+        "Programming",
+        "Designing Games",
+        "Playing Video Games",
+        "Watching Anime",
+        "Going to the Movies",
+        "Playing Tennis",
+        "Watching TV",
+        "TV Genres: Dramas, Comedy, Crime and Thriller"
+    ],
+    "favoriteGames": [
+        {
+            "type": "FPS",
+            "content": [
+                "GoldenEye 007",
+                "Call of Duty",
+                "Gears of War"
+            ]
+        },
+        {
+            "type": "Anime",
+            "content": [
+                "Pok&eacute;mon",
+                "Dragon Ball Z",
+                "Yu-Gi-Oh"
+            ]
+        },
+        {
+            "type": "Sports",
+            "content": [
+                "NBA 2K",
+                "NFL Madden",
+                "WWE 2K",
+                "Tony Hawk Pro Skater"
+            ]
+        },
+        {
+            "type": "Other",
+            "content": [
+                "Crash Bandicoot",
+                "Need for Speed",
+                "Guitar Hero",
+                "Mortal Kombat",
+                "Grand Theft Auto"
+            ]
+        }
+    ]
+}

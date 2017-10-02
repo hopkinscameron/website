@@ -1,0 +1,21 @@
+/* Begin Custom List Groups */
+.list-group-item--dark {
+    background-color: $dark;
+    border: $border-size-normal solid lighten($dark, 5%);
+    
+    &:hover {
+        background-color: darken($dark, 10%);
+    }
+    &.active {
+        background-color: $brand-theme-main;
+        border-color: darken($brand-theme-main, 5%);
+        background-image: linear-gradient(to bottom,$brand-theme-main 0, darken($brand-theme-main, 5%) 100%);
+
+        &:hover {
+            background-color: $brand-theme-main;
+            border-color: darken($brand-theme-main, 5%);
+            background-image: linear-gradient(to bottom,$brand-theme-main 0, darken($brand-theme-main, 5%) 100%);
+        }
+    }
+}
+/* End Custom List Groups */

@@ -1,0 +1,86 @@
+{
+    "title": "Over Drive",
+    "images": [
+        { "url": "/dist/img/overdrive-logo.png" },
+        { "url": "/dist/img/aimdownsight.png" },
+        { "url": "/dist/img/bootcamp.png" },
+        { "url": "/dist/img/leaderboards.png" },
+        { "url": "/dist/img/loading.png" },
+        { "url": "/dist/img/menu.png" },
+        { "url": "/dist/img/pause.png" }
+    ],
+    "overviewContent": {
+        "overview": "<i>Over Drive</i> is a first person shooter that I was developing for PC. <i>Over Drive</i> is a side project that I was working on in my spare time. With my love for first person shooters, I decided I wanted to take a stab at making my own fun FPS game. I have been working on <i>Over Drive</i> since the beginning of November 2015 and there is a lot I must tackle before this game is complete.<br /> <br />If continued, <i>Over Drive</i> will have multiple game modes the user can play such as Campaign, Survival, Boot Camp and possibly multiplayer. I would also be providing constant updates to the project and posting videos of my updates to show what's in stored for the game!",
+        "gameDesignDocument": {
+            "url": "",
+            "title": ""
+        },
+        "downloadLinks": [],
+        "gameData": [
+            {
+                "title": "Platform:",
+                "data": [
+                    { "text": "Windows PC" },
+                    { "text": "Mac OSX" },
+                    { "text": "Web" }
+                ]
+            },
+            {
+                "title": "Tools Used:",
+                "data": [
+                    { "text": "Unity3D" },
+                    { "text": "Autodesk Maya" },
+                    { "text": "Adobe Photoshop" }
+                ]
+            },
+            {
+                "title": "Languages:",
+                "data": [
+                    { "text": "C#" },
+                    { "text": "JavaScript" }
+                ]
+            },
+            {
+                "title": "Duration:",
+                "data": [
+                    { "text": "1 Month" }
+                ]
+            },
+            {
+                "title": "Completion:",
+                "data": [
+                    { "text": "Not in progress" }
+                ]
+            },
+            {
+                "title": "Team Size:",
+                "data": [
+                    { "text": "1" }
+                ]
+            },
+            {
+                "title": "Role:",
+                "data": [
+                    { "text": "Programming" },
+                    { "text": "AI" },
+                    { "text": "UI Design" },
+                    { "text": "User Controls" },
+                    { "text": "Level Design" },
+                    { "text": "Animation" },
+                    { "text": "Model Design" }
+                ]
+            }
+        ]
+    },
+    "videoUpdates": [
+        {
+            "thumbnail": "http://img.youtube.com/vi/LqKNf04Uhpc/2.jpg",
+            "url": "https://www.youtube.com/embed/LqKNf04Uhpc?controls=1"
+        },
+        {
+            "thumbnail": "http://img.youtube.com/vi/oZehf54mUys/2.jpg",
+            "url": "https://www.youtube.com/embed/oZehf54mUys?controls=1"
+        }
+    ],
+    "trailerLink": ""
+}

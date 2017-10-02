@@ -1,0 +1,65 @@
+{
+    "headliner": "Cameron Hopkins",
+    "subHeadliners": [
+        "Software Engineer",
+        "Game Designer"
+    ],
+    "headlinerLink": "/",
+    "navigation": 
+    [
+        {
+            "title": "About",
+            "pageLink": "about"
+        },
+        {
+            "title": "R&eacute;sum&eacute;",
+            "pageLink": "resume"
+        },
+        {
+            "title": "Portfolio",
+            "pageLink": "portfolio",
+            "dropdown": [
+                {
+                    "title": "Home",
+					"home": true
+                },
+                {
+                    "title": "Over Drive",
+                    "pageLink": "over-drive"
+                },
+                {
+                    "title": "Road Rager",
+                    "pageLink": "road-rager"
+                },
+                {
+                    "title": "Forsaken",
+                    "pageLink": "forsaken"
+                },
+                {
+                    "title": "Memoryless",
+                    "pageLink": "memoryless"
+                },
+                {
+                    "title": "Squirvival",
+                    "pageLink": "squirvival"
+                },
+                {
+                    "title": "Rollaball-Mod",
+                    "pageLink": "rollaball-mod"
+                },
+                {
+                    "title": "Drive on Metz",
+                    "pageLink": "drive-on-metz"
+                }
+            ]
+        },
+        {
+            "title": "Blog",
+            "pageLink": "blog"
+        },
+        {
+            "title": "Contact",
+            "pageLink": "contact"
+        }
+    ]
+}

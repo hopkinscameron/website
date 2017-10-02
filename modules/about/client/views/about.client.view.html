@@ -1,0 +1,88 @@
+<!-- Begin About Me Page -->
+<section ng-controller="AboutController">
+    <!-- Begin Container -->
+    <div class="container">
+        <!-- Begin Page Fully Loaded With Errors -->
+        <div id="pageShow" class="collapse" ng-if="pageFullyLoaded && error.error">
+            <div ng-controller="ErrorController" ng-init="init(error.title, error.status, error.message)">
+                <div ng-include="'/modules/core/client/views/error.client.view.html'"></div>
+            </div>
+        </div>
+        <!-- End Page Fully Loaded With Errors -->
+        <!-- Begin Page Fully Loaded With No Errors -->
+        <div id="pageShow" class="animated animation-delay--md fadeIn collapse" ng-if="pageFullyLoaded && !error.error">
+            <!-- Begin Page Title -->
+            <h2 class="font-weight-bold text-uppercase mb-0"><span ng-bind-html="about.title | trustHTML"></span></h2>
+            <!-- End Page Title -->
+            <!-- Begin Bio -->
+            <div id="about-bio" ng-style="animationStyle" style="visibility: hidden;">
+                <div class="card card--transparent card-body">
+                    <h4 class="text-capitalize">Bio</h4>
+                    <span class="pl-3 pr-3" ng-bind-html="about.bio | trustHTML"></span>
+                </div>
+            </div>
+            <!-- End Bio -->
+            <!-- Begin Hobbies -->
+            <div id="about-hobbies" ng-style="animationStyle" style="visibility: hidden;">
+                <!-- Begin Content Break -->
+                <hr class="body-bar" />
+                <!-- End Content Break -->
+                <div class="card card--transparent card-body">
+                    <h4 class="text-capitalize">Hobbies</h4>
+                    <!-- Begin Laptop/Large Tablet View -->
+                    <div class="row pl-3 pr-3" ng-class="{'mb-4': $index < hobbiesMaxRowCountArray.length - 1}" ng-repeat="index in hobbiesMaxRowCountArray track by $index" ng-if="$root.isDeviceWidthLargerThan(767)">
+                        <div class="col-md-3" ng-repeat="index in hobbiesColumnsPerRowArray track by $index">
+                            <ul class="list-unstyled">
+                                <li ng-repeat="innerIndex in hobbiesPerColumnsArray track by $index">{{about.hobbies[$index + (hobbiesPerColumn * $parent.$index) + (hobbiesColumnsPerRow * hobbiesPerColumn * $parent.$parent.$index)]}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Laptop/Large Tablet View -->
+                    <!-- Begin Phone View -->
+                    <ul class="list-unstyled mb-0 pl-3 pr-3" ng-if="$root.isDeviceWidthSmallerThan(768)">
+                        <li ng-repeat="hobby in about.hobbies track by $index">{{hobby}}</li>
+                    </ul>
+                    <!-- End Phone View -->
+                </div>
+            </div>
+            <!-- End Hobbies -->
+            <!-- Begin Favorite Games -->
+            <div id="about-favorites" ng-style="animationStyle" style="visibility: hidden;">
+                <!-- Begin Content Break -->
+                <hr class="body-bar" />
+                <!-- End Content Break -->
+                <div class="card card--transparent card-body" >
+                    <h4 class="text-capitalize">Favorite Games</h4>
+                    <!-- Begin Laptop/Large Tablet View -->
+                    <div class="row pl-3 pr-3" ng-class="{'mb-4': $index < favoriteGamesMaxRowCountArray.length - 1}" ng-repeat="index in favoriteGamesMaxRowCountArray track by $index" ng-if="$root.isDeviceWidthLargerThan(767)">
+                        <div class="col-md-3" ng-repeat="innerIndex in favoriteGamesColumnsPerRowArray track by $index">
+                            <ul class="list-unstyled">
+                                <li class="h5">
+                                    <span class="font-italic">{{about.favoriteGames[$index + favoriteGamesColumnsPerRow * $parent.$index].type}}</span>
+                                </li>
+                                <li class="" ng-repeat="favoriteGame in about.favoriteGames[$index + favoriteGamesColumnsPerRow * $parent.$index].content">
+                                    <span ng-bind-html="favoriteGame | trustHTML"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Laptop/Large Tablet View -->
+                    <!-- Begin Phone View -->
+                    <ul class="list-unstyled pl-3 pr-3" ng-class="{'mb-0': $index == about.favoriteGames.length - 1}" ng-repeat="gameGenre in about.favoriteGames" ng-if="$root.isDeviceWidthSmallerThan(768)">
+                        <li class="h5">
+                            <span class="font-italic">{{gameGenre.type}}</span>
+                        </li>
+                        <li class="" ng-repeat="favoriteGame in gameGenre.content">
+                            <span ng-bind-html="favoriteGame | trustHTML"></span>
+                        </li>
+                    </ul>
+                    <!-- End Phone View -->
+                </div>
+            </div>
+            <!-- End Favorite Games -->
+        </div>
+        <!-- End Page Fully Loaded With No Errors -->
+    </div>
+    <!-- End Container -->
+</section>
+<!-- End About Me Page -->

@@ -1,0 +1,21 @@
+{
+    "name": "cameronhopkins.us",
+    "description": "Personal Website. Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js.",
+    "homepage": "http://cameronhopkins.us/",
+    "license": "MIT",
+    "dependencies": {
+        
+    },
+    "overrides": {
+        "bootstrap": {
+            "main": [
+                "dist/css/bootstrap.css",
+                "dist/css/bootstrap-theme.css",
+                "less/bootstrap.less"
+            ]
+        },
+        "jquery": {
+            "main": []
+        }
+    }
+}

@@ -1,0 +1,161 @@
+﻿<!-- Begin Portfolio Item Page -->
+<section ng-controller="PortfolioItemController">
+    <!-- Begin Container -->
+    <div class="container">
+        <!-- Begin Page Fully Loaded With Errors -->
+        <div id="pageShow" class="collapse" ng-if="pageFullyLoaded && error.error">
+            <div ng-controller="ErrorController" ng-init="init(error.title, error.status, error.message)">
+                <div ng-include="'/modules/core/client/views/error.client.view.html'"></div>
+            </div>
+        </div>
+        <!-- End Page Fully Loaded With Errors -->
+        <!-- Begin Page Fully Loaded With No Errors -->
+        <div id="pageShow" class="animated animation-delay--md fadeIn collapse" ng-if="pageFullyLoaded && !error.error">
+            <!-- Begin Page Title -->
+            <h2 class="font-weight-bold text-uppercase mb-0"><span ng-bind-html="portfolioItem.title | trustHTML"></span></h2>
+            <!-- End Page Title -->
+            <!-- Begin Project Highlights -->
+            <div id="portfolio-item-highlights" ng-style="animationStyle" style="visibility: hidden;">
+                <div class="card card--transparent card-body">
+                    <h4 class="text-capitalize">Project Highlights</h4>
+                    <div class="row">
+                        <!-- Begin Image Selection -->
+                        <div class="col-md-4 animated fadeIn" ng-class="{'mb-4': $root.isDeviceWidthSmallerThan(768)}" ng-style="animationStyle">
+                            <div class="row portfolio-item-img-container-max-height scrollbar--1">
+                                <div class="col-md-6" ng-class="{'mb-3': !isLastRowOfImages($index) || ($index < portfolioItem.images.length - 1 && $root.isDeviceWidthSmallerThan(768))}" ng-repeat="image in portfolioItem.images">
+                                    <!-- <img role="button" class="d-block img-fluid mx-auto portfolio-item-img" ng-class="{'active': isActive('highlights', $index)}" ng-src="{{image.url}}" ng-click="changeProjectHighlightImage($index)" spinner-load> -->
+                                    <div role="button" class="img-thumb portfolio-item-img" ng-class="{'active': isActive('highlights', $index)}" ng-style="{'background-image': 'url(' + image.url + ')'}" ng-click="changeProjectHighlightImage($index)"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Image Selection -->
+                        <!-- Begin Full Image Selected -->
+                        <div class="col animated fadeIn" ng-style="animationStyle">
+                            <!-- <img class="d-block img-fluid mx-auto portfolio-item-img-max-height" ng-src="{{currentProjectImage}}" spinner-load> -->
+                            <div class="img-thumb portfolio-item-img-max-height mx-auto" ng-style="{'background-image': 'url(' + currentProjectImage + ')'}"></div>
+                        </div>
+                        <!-- Begin Full Image Selected -->
+                    </div>
+                </div>
+            </div>
+            <!-- Begin Project Highlights -->
+            <!-- Begin Overview -->
+            <div id="portfolio-item-overview" ng-style="animationStyle" style="visibility: hidden;">
+                <!-- Begin Content Break -->
+                <hr class="body-bar" />
+                <!-- End Content Break -->
+                <div class="card card--transparent card-body">
+                    <h4 class="text-capitalize">Overview</h4>
+                    <span class="pl-3 pr-3" ng-class="{'mb-3': portfolioItem.overviewContent.gameDesignDocument.url.length > 0}" ng-bind-html="portfolioItem.overviewContent.overview | trustHTML"></span>
+                    <!-- Begin Game Design Document -->
+                    <span class="pl-3 pr-3" ng-if="portfolioItem.overviewContent.gameDesignDocument.url.length > 0">
+                        Take a look at the game design document.
+                        <a class="decoration--never card-link" ng-href="{{portfolioItem.overviewContent.gameDesignDocument.url}}" target="_blank">
+                            <img class="" width="30" height="30" src="/dist/img/pdf-icon.png" alt="{{portfolioItem.overviewContent.gameDesignDocument.title}}" title="{{portfolioItem.overviewContent.gameDesignDocumentTitle}}" />
+                        </a>
+                    </span>
+                    <!-- End Game Design Document -->
+                </div>
+            </div>
+            <!-- End Overview -->
+            <!-- Begin Development Details -->
+            <div id="portfolio-item-details" ng-style="animationStyle" style="visibility: hidden;">
+                <!-- Begin Content Break -->
+                <hr class="body-bar" />
+                <!-- End Content Break -->
+                <div class="card card--transparent card-body">
+                    <h4 class="text-capitalize">Development Details</h4>
+                    <!-- Begin Laptop/Large Tablet View -->
+                    <div class="row pl-3 pr-3" ng-class="{'mb-5': $index < gameDataMaxRowCountArray.length - 1}" ng-repeat="index in gameDataMaxRowCountArray track by $index" ng-if="$root.isDeviceWidthLargerThan(767)">
+                        <div class="col-md-2" ng-repeat="innerIndex in gameDataColumnsPerRowArray track by $index">
+                            <ul class="list-unstyled mb-0">
+                                <li class="h5">
+                                    <span class="font-italic">{{portfolioItem.overviewContent.gameData[$index + gameDataColumnsPerRow * $parent.$index].title}}</span>
+                                </li>
+                                <li class="" ng-repeat="data in portfolioItem.overviewContent.gameData[$index + gameDataColumnsPerRow * $parent.$index].data">
+                                    <span>{{data.text}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Laptop/Large Tablet View -->
+                    <!-- Begin Phone View -->
+                    <ul class="list-unstyled pl-3 pr-3" ng-class="{'mb-0': $index == portfolioItem.overviewContent.gameData.length - 1}" ng-repeat="gameData in portfolioItem.overviewContent.gameData" ng-if="$root.isDeviceWidthSmallerThan(768)">
+                        <li class="h5">
+                            <span class="font-italic">{{gameData.title}}</span>
+                        </li>
+                        <li class="" ng-repeat="data in gameData.data">
+                            <span>{{data.text}}</span>
+                        </li>
+                    </ul>
+                    <!-- End Phone View -->
+                </div>
+            </div>
+            <!-- End Development Details -->
+            <!-- Begin Download Links -->
+            <div id="portfolio-item-downloads" ng-style="animationStyle" style="visibility: hidden;" ng-if="portfolioItem.overviewContent.downloadLinks.length > 0">
+                <!-- Begin Content Break -->
+                <hr class="body-bar" />
+                <!-- End Content Break -->
+                <div class="card card--transparent card-body">
+                    <h4 class="text-capitalize">Downloads</h4>
+                    <ul class="list-unstyled pl-3 pr-3 mb-0">
+                        <li ng-repeat="spDownloadData in portfolioItem.overviewContent.downloadLinks">
+                            {{spDownloadData.text}} <a class="decoration--never card-link" ng-href="{{spDownloadData.url}}"><i class="fa fa-download" aria-hidden="true"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- End Download Links -->
+            <!-- Begin Game Trailer -->
+            <div id="portfolio-item-trailer" ng-style="animationStyle" style="visibility: hidden;" ng-if="portfolioItem.trailerLink">
+                <!-- Begin Content Break -->
+                <hr class="body-bar" />
+                <!-- End Content Break -->
+                <div class="card card--transparent card-body">
+                    <h4 class="text-capitalize">{{portfolioItem.title}} Trailer</h4>
+                    <div class="pl-3 pr-3">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe id="portfolioItem-trailer-iframe" class="embed-responsive-item" ng-src="{{currentTrailerVideo.source}}" ng-if="currentTrailerVideo.source"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Game Trailer -->
+            <!-- Begin Game Update Videos -->
+            <div id="portfolio-item-updates" ng-style="animationStyle" style="visibility: hidden;" ng-if="portfolioItem.videoUpdates.length > 0">
+                <!-- Begin Content Break -->
+                <hr class="body-bar" />
+                <!-- End Content Break -->
+                <div class="card card--transparent card-body">
+                    <h4 class="text-capitalize">{{portfolioItem.title}} Updates</h4>
+                    <div class="pl-3 pr-3">
+                        <div class="row">
+                            <!-- Begin Video Selection -->
+                            <div class="col-md-4 float-left animated fadeInLeft" ng-style="animationStyle">
+                                <div class="row portfolio-item-img-container-max-height scrollbar--1">
+                                    <div class="col-md-6 float-left mb-3" ng-repeat="videos in portfolioItem.videoUpdates">
+                                        <!-- <img role="button" class="d-block img-fluid portfolio-item-img" ng-class="{'active': isActive('updates', $index)}" ng-src="{{videos.thumbnail}}" ng-click="changeUpdateVideo($index)" spinner-load> -->
+                                        <div role="button" class="img-thumb portfolio-item-img" ng-class="{'active': isActive('updates', $index)}" ng-style="{'background-image': 'url(' + videos.thumbnail + ')'}" ng-click="changeUpdateVideo($index)"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Video Selection -->
+                            <!-- Begin Video -->
+                            <div class="col float-left animated fadeInRight" ng-style="animationStyle">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe id="portfolioItem-updates-iframe" class="embed-responsive-item" ng-src="{{currentUpdateVideo.source}}" ng-if="currentUpdateVideo.source"></iframe>
+                                </div>
+                            </div>
+                            <!-- End Video -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Game Update Videos -->
+        </div>
+        <!-- End Page Fully Loaded With No Errors -->
+    </div>
+    <!-- End Container -->
+</section>
+<!-- End Sub Portfolio Page -->

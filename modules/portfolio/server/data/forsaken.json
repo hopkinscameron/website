@@ -1,0 +1,72 @@
+{
+    "title": "Forsaken",
+    "images": [
+        { "url": "/dist/img/forsaken-logo.png" },
+        { "url": "/dist/img/body-part.jpg" },
+        { "url": "/dist/img/level2.jpg" },
+        { "url": "/dist/img/mom.jpg" },
+        { "url": "/dist/img/wuchang.jpg" }
+    ],
+    "overviewContent": {
+        "overview": "<i>Forsaken</i> is a culture based game built using Unity3D. In this game, the player is a newly aborted child who still has soul connection to her mother. Her body parts are shattered in her mother’s womb, in which the player has to find. Black Wuchang and White Wuchang are from hell and they are hunting the player and trying to break her moral forms and immoral souls. If she does not want to silently disappear in the spiritual world, only escaping from the womb, can she really make some decisions for herself. <br /> <br />You woke up as a ghost in your mother’s womb; you must collect your torn body parts in order to connect to your mother’s thinking, that will soon reveal your identity. In the meanwhile, you need to escape from mother’s womb to find her and make decisions about your future.<br /> <br />Each piece of your broken body links to one of your mother’s moral forms. You will get information about yourself after obtaining your scattered body parts. If you can escape from the womb, you can find your family and play out the life that you want to live in the game.",
+        "gameDesignDocument": {
+            "url": "/dist/files/forsaken-game-design-document.pdf",
+            "title": "Forsaken Game Design Document"
+        },
+        "downloadLinks": [],
+        "gameData": [
+            {
+                "title": "Platform:",
+                "data": [
+                    { "text": "Windows PC" },
+                    { "text": "Mac OSX" },
+                    { "text": "Web" }
+                ]
+            },
+            {
+                "title": "Tools Used:",
+                "data": [
+                    { "text": "Unity 3D" },
+                    { "text": "Autodesk Maya" },
+                    { "text": "Adobe Photoshop" }
+                ]
+            },
+            {
+                "title": "Languages:",
+                "data": [
+                    { "text": "C#" },
+                    { "text": "JavaScript" }
+                ]
+            },
+            {
+                "title": "Duration:",
+                "data": [
+                    { "text": "4 Months" }
+                ]
+            },
+            {
+                "title": "Completion:",
+                "data": [
+                    { "text": "2015" }
+                ]
+            },
+            {
+                "title": "Team Size:",
+                "data": [
+                    { "text": "2" }
+                ]
+            },
+            {
+                "title": "Role:",
+                "data": [
+                    { "text": "Programming" },
+                    { "text": "AI" },
+                    { "text": "UI Design" },
+                    { "text": "User Controls" }
+                ]
+            }
+        ]
+    },
+    "videoUpdates": [],
+    "trailerLink": "https://www.youtube.com/embed/gPE8HlgE2xI?controls=1"
+}

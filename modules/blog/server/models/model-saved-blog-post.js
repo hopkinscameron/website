@@ -18,7 +18,7 @@ var // generate UUID's
     path = require('path'),
     // the helper functions
     helpers = require(path.resolve('./config/lib/global-model-helpers')),
-    // the database
+    // the db
     db = require('./db/blog-saved-posts'),
     // the db full path
     dbPath = 'modules/blog/server/models/db/blog-saved-posts.json';

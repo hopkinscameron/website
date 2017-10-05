@@ -16,7 +16,7 @@ var // generate UUID's
     path = require('path'),
     // the helper functions
     helpers = require(path.resolve('./config/lib/global-model-helpers')),
-    // the database
+    // the db
     db = require('./db/analytics'),
     // the db full path
     dbPath = 'modules/core/server/models/db/analytics.json';

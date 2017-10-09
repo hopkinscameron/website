@@ -281,7 +281,7 @@ exports.remove = function(obj, callback) {
                 // if a callback
                 if(callback) {
                     // hit the callback
-                    callback(e);
+                    callback(e, removedObjs);
                 }
             });
         }

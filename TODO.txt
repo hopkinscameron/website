@@ -1,6 +1,7 @@
 ﻿Future
 - Create an admin page to add a new project (sub Portfolio)
 - Ability to updload images for projects and blogs
+- Add validation (isNumber, isBoolean, isEmail) to server side code on req.checkBody()
 
 All 
 
@@ -10,9 +11,6 @@ Pending
 
 Next
 - see if I can use lodash to speed up some stuff I might be doing in server stuff
-- blog draft put and blog update (put) method takes a very long time
-- seperate out admin views/regular views
-- fix socket.io to not print so many error on disconnect
 
 
 - IE stuff not working

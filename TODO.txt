@@ -7,14 +7,6 @@
 All 
 
 Done
-- removed "loading" folder from core images
-- add validation (isBoolean, isEmail) to server side code on req.checkBody()
-- see if I can use lodash to speed up some stuff I might be doing in server stuff
-- fixed header so it closes on mobile view 
-- mobile view on portfolio page is off
-- add to dashboard to show overall views
-- hides graph when switching between view types
-- added i01 project
 
 Pending
 

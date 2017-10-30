@@ -224,11 +224,11 @@ $scale--lg: 1.25;
 */
 $text-color:              $light-light;
 
-$font-size-base:          18px;
-$font-size-small:         14px;
-$font-size-medium:        23px;
-$font-size-large:         29px;
-$font-size_xlarge:        47px;
+$font-size-base:    18px;
+$font-size-sm:      14px;
+$font-size-md:      23px;
+$font-size-lg:      29px;
+$font-size-xl:      47px;
 
 $line-height-base:        1.44; // Line height will change based on breakpoint.
 $font-path:               './fonts/';

@@ -548,12 +548,14 @@ blogModule.controller('BlogPostNewController', ['$scope', '$rootScope', '$compil
                 // check to see if currently on a query with blog id
                 var draftId = $location.search().draftId;
                 if(draftId) {
-                    for(var x = 0; x < responseSBD.savedPosts.length; x++) {
-                        if(draftId == responseSBD.savedPosts[x].url) {
-                            $scope.currentWorkingPost = responseSBD.savedPosts[x];
-                            break;
+                    // go through each and find the correct value
+                    _.forEach(responseSBD.savedPosts, function(value) {
+                        // if value matches
+                        if(draftId == value.url) {
+                            $scope.currentWorkingPost = value;
+                            return;
                         }
-                    }
+                    });
                 }
 
                 // setup page

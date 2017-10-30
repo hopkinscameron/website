@@ -1,6 +1,12 @@
 {
     "portfolioItems": [
         {
+            "title": "Installation -1",
+            "pictureLink": "/dist/img/installation-01-background.png",
+            "subPageLink": "installation-01",
+            "shortDescription": "<i>Installation 01</i>, a fan-made Halo game being developed by engineers and artist across the world. At Installation 01, we maintain contact with Microsoft Studio and 343 Industries, the developers of the Halo series."
+        },
+        {
             "title": "Over Drive",
             "pictureLink": "/dist/img/overdrive-logo.png",
             "subPageLink": "over-drive",

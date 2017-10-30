@@ -1,0 +1,72 @@
+{
+    "title": "Installation 01",
+    "images": [
+        { "url": "/dist/img/installation-01-background.png" }
+    ],
+    "overviewContent": {
+        "overview": "<p><q><i>Installation 01</i> is a fan-made Halo game being made by Halo lovers working from around the world. We aim to build an artistic tribute to Halo that recreates the multiplayer experience of the Bungie-era games. The game will be free to play on all PC platforms, including: Windows, macOS, and Linux.<br /><br />We operate very carefully under Microsoft's Game Content Usage Rules. All of <i>Installation 01's</i> assets are either created from scratch or obtained through the Unity Asset Store. We currently maintain a level of contact with Microsoft Studios and 343 Industries, which you can read about here.<br /><br />The game is a combination of what we believe to be the best parts of the classic Bungie-era Halo games. While we mostly focus on recreating the Halo 2/3 experience, there are also elements of Combat Evolved and Reach sprinkled in. Features from later 343 Industries Halo games can be enabled in Custom Games, but will not be a part of Matchmaking or official playlists.</q><br /><br /><a class='decoration--never' href='https://installation01.org/'>Check out Installation 01's Website<i class='fa fa-arrow-right ml-2' aria-hidden='true'></i></a></p>",
+        "gameDesignDocument": {
+            "url": "",
+            "title": ""
+        },
+        "downloadLinks": [],
+        "gameData": [
+            {
+                "title": "Platform:",
+                "data": [
+                    { "text": "Windows PC" },
+                    { "text": "Mac OSX" },
+                    { "text": "Linux" }
+                ]
+            },
+            {
+                "title": "Duration:",
+                "data": [
+                    { "text": "In progress" }
+                ]
+            },
+            {
+                "title": "Team Size:",
+                "data": [
+                    { "text": "Many" }
+                ]
+            },
+            {
+                "title": "Role:",
+                "data": [
+                    { "text": "Programming" },
+                    { "text": "Heat Maps" },
+                    { "text": "In Game Statistics" },
+                    { "text": "Game Types" }
+                ]
+            }
+        ]
+    },
+    "videoUpdates": [
+        {
+            "thumbnail": "http://img.youtube.com/vi/UV_LQDtfoOs/2.jpg",
+            "url": "https://www.youtube.com/embed/UV_LQDtfoOs?controls=1"
+        },
+        {
+            "thumbnail": "http://img.youtube.com/vi/2KpIqncbK5w/2.jpg",
+            "url": "https://www.youtube.com/embed/2KpIqncbK5w?controls=1"
+        },
+        {
+            "thumbnail": "http://img.youtube.com/vi/C6k19u_cqFA/2.jpg",
+            "url": "https://www.youtube.com/embed/C6k19u_cqFA?controls=1"
+        },
+        {
+            "thumbnail": "http://img.youtube.com/vi/iE9OahDYfY4/2.jpg",
+            "url": "https://www.youtube.com/embed/iE9OahDYfY4?controls=1"
+        },
+        {
+            "thumbnail": "http://img.youtube.com/vi/cJAqn4xkrcU/2.jpg",
+            "url": "https://www.youtube.com/embed/cJAqn4xkrcU?controls=1"
+        },
+        {
+            "thumbnail": "http://img.youtube.com/vi/_vE2vAiBMo8/2.jpg",
+            "url": "https://www.youtube.com/embed/_vE2vAiBMo8?controls=1"
+        }
+    ],
+    "trailerLink": "https://www.youtube.com/embed/RfE9Q3I3Q_g"
+}

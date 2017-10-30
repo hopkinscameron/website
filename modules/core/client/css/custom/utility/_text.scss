@@ -72,16 +72,40 @@
 /* If [device width] is less than or equal to 425px */
 @media (max-width: 425px) {
     .responsive-text {
+        &--xs {
+            font-size: 12px;
+        }
         &--sm {
-            font-size: 3vw;
+            font-size: $font-size-sm * 0.85;
+        }
+        &--md {
+            font-size: $font-size-md * 0.85;
+        }
+        &--lg {
+            font-size: $font-size-lg * 0.85;
+        }
+        &--xl {
+            font-size: $font-size-xl * 0.85;
         }
     }
 }
 /* If [device width] is less than or equal to 426px */
 @media (min-width: 426px) {
     .responsive-text {
+        &--xs {
+            font-size: $font-size-sm * 0.85;
+        }
         &--sm {
-            font-size: small;
+            font-size: $font-size-sm;
+        }
+        &--md {
+            font-size: $font-size-md;
+        }
+        &--lg {
+            font-size: $font-size-lg;
+        }
+        &--xl {
+            font-size: $font-size-xl;
         }
     }
 }

@@ -16,6 +16,8 @@ var // the path
     // the file details for this project
     forsakenDetails = require('../data/forsaken'),
     // the file details for this project
+    installation01Details = require('../data/installation01'),
+    // the file details for this project
     memorylessDetails = require('../data/memoryless'),
     // the file details for this project
     overDriveDetails = require('../data/over-drive'),
@@ -80,6 +82,9 @@ function getPortfolioItemFile(portfolioItemId) {
             break;
         case 'forsaken':
             project = forsakenDetails;
+            break;
+        case 'installation-01':
+            project = installation01Details;
             break;
         case 'memoryless':
             project = memorylessDetails;

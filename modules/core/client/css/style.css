@@ -49,6 +49,7 @@
 /* Begin Custom Styles */
 /* Begin Import All Custom Styles */
 /* Begin Custom Animation Delays */
+@import url("https://fonts.googleapis.com/css?family=Audiowide");
 .animation-delay--xxs {
   animation-delay: 0.125s !important;
   -webkit-animation-delay: 0.125s !important;
@@ -118,7 +119,7 @@ body {
   image-rendering: crisp-edges;
   image-rendering: optimizeSpeed;
   image-rendering: optimize-contrast;
-  background-image: url("/dist/img/black-concrete.jpg");
+  background-image: url("/dist/img/background.jpg");
   background-position: center top;
   background-attachment: fixed;
   -o-background-size: cover;
@@ -227,15 +228,17 @@ body::-webkit-scrollbar-thumb {
   src: url(./fonts//true-lies-webfont.eot?#iefix) format("embedded-opentype"), url(./fonts//true-lies-webfont.ttf) format("truetype"), url(./fonts//true-lies-webfont.woff) format("woff"), url(./fonts//true-lies-webfont.woff2) format("woff"); }
 
 @font-face {
-  font-family: wiked-grit;
-  src: url(./fonts//wiked-grit-webfont.eot);
-  src: url(./fonts//wiked-grit-webfont.eot?#iefix) format("embedded-opentype"), url(./fonts//wiked-grit-webfont.ttf) format("truetype"), url(./fonts//wiked-grit-webfont.woff) format("woff"), url(./fonts//wiked-grit-webfont.woff2) format("woff"); }
+  font-family: 'Audiowide Local';
+  src: url(./fonts//audiowide-regular.ttf); }
 
 .font-fancy--1 {
   font-family: no-more-lies; }
 
 .font-fancy--2 {
   font-family: true-lies; }
+
+.font-fancy--3 {
+  font-family: 'Audiowide Local', cursive; }
 
 /* End Custom Fonts */
 /* Begin Custom Footer Styles */
@@ -409,12 +412,6 @@ nav {
 
 /* Begin Media Queries */
 /* If [device width] is less than or equal to 376px */
-@media (max-width: 376px) {
-  .navbar-brand > h5 {
-    font-size: 0.90rem; }
-  .navbar-brand > span {
-    font-size: 0.90rem; } }
-
 /* If [device width] is less than or equal to 991px */
 @media (max-width: 991px) {
   .navbar-inverse .navbar-collapse {
@@ -446,11 +443,14 @@ nav {
   background: #2C3035;
   color: #F5F7F9; }
 
-.ngdialog.ngdialog-theme-dark .ngdialog-close:before {
-  color: #F5F7F9; }
-
-.ngdialog.ngdialog-theme-dark .ngdialog-close:hover:before, .ngdialog.ngdialog-theme-dark .ngdialog-close:active:before {
-  color: #a5b7c9; }
+.ngdialog.ngdialog-theme-dark .ngdialog-close {
+  -webkit-appearance: none;
+  background: none;
+  border: none; }
+  .ngdialog.ngdialog-theme-dark .ngdialog-close:before {
+    color: #F5F7F9; }
+  .ngdialog.ngdialog-theme-dark .ngdialog-close:hover:before, .ngdialog.ngdialog-theme-dark .ngdialog-close:active:before {
+    color: #a5b7c9; }
 
 .ngdialog.ngdialog-theme-default.custom-width .ngdialog-content, .ngdialog.ngdialog-theme-plain.custom-width .ngdialog-content, .ngdialog.ngdialog-theme-dark.custom-width .ngdialog-content {
   width: 600px; }
@@ -682,13 +682,29 @@ hr.blog-post-bar {
 /* Begin Media Queries */
 /* If [device width] is less than or equal to 425px */
 @media (max-width: 425px) {
+  .responsive-text--xs {
+    font-size: 12px; }
   .responsive-text--sm {
-    font-size: 3vw; } }
+    font-size: 11.9px; }
+  .responsive-text--md {
+    font-size: 19.55px; }
+  .responsive-text--lg {
+    font-size: 24.65px; }
+  .responsive-text--xl {
+    font-size: 39.95px; } }
 
 /* If [device width] is less than or equal to 426px */
 @media (min-width: 426px) {
+  .responsive-text--xs {
+    font-size: 11.9px; }
   .responsive-text--sm {
-    font-size: small; } }
+    font-size: 14px; }
+  .responsive-text--md {
+    font-size: 23px; }
+  .responsive-text--lg {
+    font-size: 29px; }
+  .responsive-text--xl {
+    font-size: 47px; } }
 
 /* End Media Queries */
 /* End Custom Text Utilities */

@@ -129,14 +129,6 @@ nav {
 /* Begin Media Queries */
 /* If [device width] is less than or equal to 376px */
 @media (max-width: 376px) {
-    .navbar-brand {
-        & > h5 {
-            font-size: 0.90rem;
-        }
-        & > span {
-            font-size: 0.90rem;
-        }
-    }
 }
 /* If [device width] is less than or equal to 991px */
 @media (max-width: 991px) {

@@ -1,4 +1,6 @@
 /* Begin Custom Fonts */
+@import url('https://fonts.googleapis.com/css?family=Audiowide');
+
 @font-face {
     font-family: no-more-lies;
     src: url(#{$font-path}/no-more-lies-webfont.eot);
@@ -16,12 +18,8 @@
          url(#{$font-path}/true-lies-webfont.woff2) format('woff');
 }
 @font-face {
-    font-family: wiked-grit;
-    src: url(#{$font-path}/wiked-grit-webfont.eot);
-    src: url(#{$font-path}/wiked-grit-webfont.eot?#iefix) format('embedded-opentype'),
-         url(#{$font-path}/wiked-grit-webfont.ttf) format('truetype'),
-         url(#{$font-path}/wiked-grit-webfont.woff) format('woff'),
-         url(#{$font-path}/wiked-grit-webfont.woff2) format('woff');
+    font-family: 'Audiowide Local';
+    src: url(#{$font-path}/audiowide-regular.ttf);
 }
 .font-fancy {
     &--1 {
@@ -29,6 +27,9 @@
     }
     &--2 {
         font-family: true-lies;
+    }
+    &--3 {
+        font-family: 'Audiowide Local', cursive;
     }
 }
 /* End Custom Fonts */

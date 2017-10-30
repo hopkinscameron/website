@@ -25,10 +25,13 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
     // the initial text of a dropdown
     $scope.initialText = 'Select One';
 
+    // the all text
+    $scope.allText = 'All';
+
     // the request options
     $scope.requestOptions = {
         'selected': $scope.initialText,
-        'options': [$scope.initialText]
+        'options': [$scope.initialText, $scope.allText]
     };
 
     // set the first option
@@ -125,6 +128,13 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
                 // set the new selected
                 $scope.pastOptions = yearsOptions;
                 $scope.pastOptions.selected = $scope.pastOptions.options[0];
+
+                // destroy chart before building a new one
+                clearChart('requestAnalyticsCanvas');
+                $scope.requestAnalyticsOptions = [];
+                $scope.requestAnalyticsData = [];
+                $scope.requestAnalyticsLabels = [];
+                $scope.requestAnalyticsSeries = [];
             }
         }
         // if the months option was selected
@@ -138,6 +148,13 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
                 // set the new selected
                 $scope.pastOptions = monthsOptions;
                 $scope.pastOptions.selected = $scope.pastOptions.options[0];
+
+                // destroy chart before building a new one
+                clearChart('requestAnalyticsCanvas');
+                $scope.requestAnalyticsOptions = [];
+                $scope.requestAnalyticsData = [];
+                $scope.requestAnalyticsLabels = [];
+                $scope.requestAnalyticsSeries = [];
             }
         }
         // if the weeks option was selected
@@ -151,6 +168,13 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
                 // set the new selected
                 $scope.pastOptions = weeksOptions;
                 $scope.pastOptions.selected = $scope.pastOptions.options[0];
+
+                // destroy chart before building a new one
+                clearChart('requestAnalyticsCanvas');
+                $scope.requestAnalyticsOptions = [];
+                $scope.requestAnalyticsData = [];
+                $scope.requestAnalyticsLabels = [];
+                $scope.requestAnalyticsSeries = [];
             }
         }
         // if the days option was selected
@@ -164,6 +188,13 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
                 // set the new selected
                 $scope.pastOptions = daysOptions;
                 $scope.pastOptions.selected = $scope.pastOptions.options[0];
+
+                // destroy chart before building a new one
+                clearChart('requestAnalyticsCanvas');
+                $scope.requestAnalyticsOptions = [];
+                $scope.requestAnalyticsData = [];
+                $scope.requestAnalyticsLabels = [];
+                $scope.requestAnalyticsSeries = [];
             }
         }
         else {
@@ -479,8 +510,8 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
 
         // add all requests
         _.forEach($scope.dashboard.requests, function(request) {
-            // if request matches
-            if(request.request == $scope.requestOptions.selected) {
+            // if request matches and it's not on the "all" text
+            if($scope.requestOptions.selected != $scope.allText && request.request == $scope.requestOptions.selected) {
                 // go through all years and push the count
                 _.forEach(request.byYear, function(year) {
                     // get this objects date
@@ -504,6 +535,70 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
                         initialStartDate.setFullYear(initialStartDate.getFullYear() + 1);
                     }
                 });
+
+                return;
+            }
+            else if($scope.requestOptions.selected == $scope.allText) {
+                // if no data has been added yet
+                if(requestAnalyticsData.length == 0) {
+                    // go through all years and push the count
+                    _.forEach(request.byYear, function(year) {
+                        // get this objects date
+                        var thisDate = new Date(year.monthYear);
+
+                        // if this year is within range
+                        if(thisDate >= furthestDateBack && thisDate <= today) {
+                            // if the dates don't match
+                            while(initialStartDate < thisDate) {
+                                // add this year (with a zero input)
+                                requestAnalyticsData.push(0);
+
+                                // set expected next year
+                                initialStartDate.setFullYear(initialStartDate.getFullYear() + 1);
+                            }
+
+                            // add the count
+                            requestAnalyticsData.push(year.count.length);
+
+                            // set expected next year
+                            initialStartDate.setFullYear(initialStartDate.getFullYear() + 1);
+                        }
+                    });
+                }
+                else {
+                    // reset the initial start date
+                    initialStartDate = new Date(furthestDateBack);
+
+                    // the position
+                    var pos = 0;
+
+                    // go through all years and push the count
+                    _.forEach(request.byYear, function(year) {
+                        // get this objects date
+                        var thisDate = new Date(year.monthYear);
+
+                        // if this year is within range
+                        if(thisDate >= furthestDateBack && thisDate <= today) {
+                            // if the dates don't match
+                            while(initialStartDate < thisDate) {
+                                // set expected next year
+                                initialStartDate.setFullYear(initialStartDate.getFullYear() + 1);
+
+                                // increase the position
+                                pos++;
+                            }
+
+                            // add the count
+                            requestAnalyticsData[pos] += year.count.length;
+
+                            // set expected next year
+                            initialStartDate.setFullYear(initialStartDate.getFullYear() + 1);
+
+                            // increase the position
+                            pos++;
+                        }
+                    });
+                }
             }
         });
 
@@ -520,8 +615,8 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
 
         // add all requests
         _.forEach($scope.dashboard.requests, function(request) {
-            // if request matches
-            if(request.request == $scope.requestOptions.selected) {
+            // if request matches and it's not on the "all" text
+            if($scope.requestOptions.selected != $scope.allText && request.request == $scope.requestOptions.selected) {
                 // go through all months and push the count
                 _.forEach(request.byMonth, function(monthYear) {
                     // get this objects date
@@ -545,6 +640,70 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
                         initialStartDate.setMonth(initialStartDate.getMonth() + 1);
                     }
                 });
+
+                return;
+            }
+            else if($scope.requestOptions.selected == $scope.allText) {
+                // if no data has been added yet
+                if(requestAnalyticsData.length == 0) {
+                    // go through all months and push the count
+                    _.forEach(request.byMonth, function(monthYear) {
+                        // get this objects date
+                        var thisDate = new Date(monthYear.monthYear);
+
+                        // if this month is within range
+                        if(thisDate >= furthestDateBack && thisDate <= today) {
+                            // if the dates don't match
+                            while(initialStartDate < thisDate) {
+                                // add this month (with a zero input)
+                                requestAnalyticsData.push(0);
+
+                                // set expected next month
+                                initialStartDate.setMonth(initialStartDate.getMonth() + 1);
+                            }
+
+                            // add the count
+                            requestAnalyticsData.push(monthYear.count.length);
+
+                            // set expected next month
+                            initialStartDate.setMonth(initialStartDate.getMonth() + 1);
+                        }
+                    });
+                }
+                else {
+                    // reset the initial start date
+                    initialStartDate = new Date(furthestDateBack);
+
+                    // the position
+                    var pos = 0;
+
+                    // go through all months and push the count
+                    _.forEach(request.byMonth, function(monthYear) {
+                        // get this objects date
+                        var thisDate = new Date(monthYear.monthYear);
+
+                        // if this month is within range
+                        if(thisDate >= furthestDateBack && thisDate <= today) {
+                            // if the dates don't match
+                            while(initialStartDate < thisDate) {
+                                // set expected next month
+                                initialStartDate.setMonth(initialStartDate.getMonth() + 1);
+
+                                // increase the position
+                                pos++;
+                            }
+
+                            // add the count
+                            requestAnalyticsData[pos] += monthYear.count.length;
+
+                            // set expected next month
+                            initialStartDate.setMonth(initialStartDate.getMonth() + 1);
+
+                            // increase the position
+                            pos++;
+                        }
+                    });
+                }
             }
         });
 
@@ -561,8 +720,8 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
 
         // add all requests
         _.forEach($scope.dashboard.requests, function(request) {
-            // if request matches
-            if(request.request == $scope.requestOptions.selected) {
+            // if request matches and it's not on the "all" text
+            if($scope.requestOptions.selected != $scope.allText && request.request == $scope.requestOptions.selected) {
                 // go through all weeks and push the count
                 _.forEach(request.byWeek, function(week) {
                     // get this objects date
@@ -586,6 +745,70 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
                         initialStartDate.setDate(initialStartDate.getDate() + 7);
                     }
                 });
+
+                return;
+            }
+            else if($scope.requestOptions.selected == $scope.allText) {
+                // if no data has been added yet
+                if(requestAnalyticsData.length == 0) {
+                    // go through all weeks and push the count
+                    _.forEach(request.byWeek, function(week) {
+                        // get this objects date
+                        var thisDate = new Date(week.weekday);
+
+                        // if this week is within range
+                        if(thisDate >= furthestDateBack && thisDate <= today) {
+                            // if the dates don't match
+                            while(initialStartDate < thisDate) {
+                                // add this week (with a zero input)
+                                requestAnalyticsData.push(0);
+
+                                // set expected next week
+                                initialStartDate.setDate(initialStartDate.getDate() + 7);
+                            }
+
+                            // add the count
+                            requestAnalyticsData.push(week.count.length);
+
+                            // set expected next week
+                            initialStartDate.setDate(initialStartDate.getDate() + 7);
+                        }
+                    });
+                }
+                else {
+                    // reset the initial start date
+                    initialStartDate = new Date(furthestDateBack);
+
+                    // the position
+                    var pos = 0;
+
+                    // go through all weeks and push the count
+                    _.forEach(request.byWeek, function(week) {
+                        // get this objects date
+                        var thisDate = new Date(week.weekday);
+
+                        // if this week is within range
+                        if(thisDate >= furthestDateBack && thisDate <= today) {
+                            // if the dates don't match
+                            while(initialStartDate < thisDate) {
+                                // set expected next week
+                                initialStartDate.setDate(initialStartDate.getDate() + 7);
+
+                                // increase the position
+                                pos++;
+                            }
+
+                            // add the count
+                            requestAnalyticsData[pos] += week.count.length;
+
+                            // set expected next week
+                            initialStartDate.setDate(initialStartDate.getDate() + 7);
+
+                            // increase the position
+                            pos++;
+                        }
+                    });
+                }
             }
         });
 
@@ -602,8 +825,8 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
 
         // add all requests
         _.forEach($scope.dashboard.requests, function(request) {
-            // if request matches
-            if(request.request == $scope.requestOptions.selected) {
+            // if request matches and it's not on the "all" text
+            if($scope.requestOptions.selected != $scope.allText && request.request == $scope.requestOptions.selected) {
                 // go through all days and push the count
                 _.forEach(request.byDay, function(day) {
                     // get this objects date
@@ -627,6 +850,70 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
                         initialStartDate.setDate(initialStartDate.getDate() + 1);
                     }
                 });
+
+                return;
+            }
+            else if($scope.requestOptions.selected == $scope.allText) {
+                // if no data has been added yet
+                if(requestAnalyticsData.length == 0) {
+                    // go through all days and push the count
+                    _.forEach(request.byDay, function(day) {
+                        // get this objects date
+                        var thisDate = new Date(day.day);
+
+                        // if this day is within range
+                        if(thisDate >= furthestDateBack && thisDate <= today) {
+                            // if the dates don't match
+                            while(initialStartDate < thisDate) {
+                                // add this day (with a zero input)
+                                requestAnalyticsData.push(0);
+
+                                // set expected next day
+                                initialStartDate.setDate(initialStartDate.getDate() + 1);
+                            }
+
+                            // add the count
+                            requestAnalyticsData.push(day.count.length);
+
+                            // set expected next day
+                            initialStartDate.setDate(initialStartDate.getDate() + 1);
+                        }
+                    });
+                }
+                else {
+                    // reset the initial start date
+                    initialStartDate = new Date(furthestDateBack);
+
+                    // the position
+                    var pos = 0;
+
+                     // go through all days and push the count
+                    _.forEach(request.byDay, function(day) {
+                        // get this objects date
+                        var thisDate = new Date(day.day);
+
+                        // if this day is within range
+                        if(thisDate >= furthestDateBack && thisDate <= today) {
+                            // if the dates don't match
+                            while(initialStartDate < thisDate) {
+                                // set expected next day
+                                initialStartDate.setDate(initialStartDate.getDate() + 1);
+
+                                // increase the position
+                                pos++;
+                            }
+
+                            // add the count
+                            requestAnalyticsData[pos] += day.count.length;
+
+                            // set expected next day
+                            initialStartDate.setDate(initialStartDate.getDate() + 1);
+
+                            // increase the position
+                            pos++;
+                        }
+                    });
+                }
             }
         });
 
@@ -643,8 +930,8 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
 
         // add all requests
         _.forEach($scope.dashboard.requests, function(request) {
-            // if request matches
-            if(request.request == $scope.requestOptions.selected) {
+            // if request matches and it's not on the "all" text
+            if($scope.requestOptions.selected != $scope.allText && request.request == $scope.requestOptions.selected) {
                 // go through all years and push the count
                 _.forEach(request.byYear, function(year) {
                     // get this objects date
@@ -668,6 +955,36 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
                         initialStartDate.setFullYear(initialStartDate.getFullYear() + 1);
                     }
                 });
+
+                return;
+            }
+            else if($scope.requestOptions.selected == $scope.allText) {
+                // if no data has been added yet
+                if(requestAnalyticsLabels.length == 0) {
+                    // go through all years and push the count
+                    _.forEach(request.byYear, function(year) {
+                        // get this objects date
+                        var thisDate = new Date(year.monthYear);
+
+                        // if this year is within range
+                        if(thisDate >= furthestDateBack && thisDate <= today) {
+                            // if the dates don't match
+                            while(initialStartDate < thisDate) {
+                                // add this year
+                                requestAnalyticsLabels.push(initialStartDate.getFullYear().toString());
+
+                                // set expected next year
+                                initialStartDate.setFullYear(initialStartDate.getFullYear() + 1);
+                            }
+
+                            // add the year
+                            requestAnalyticsLabels.push(year.monthYear.substring(4));
+
+                            // set expected next year
+                            initialStartDate.setFullYear(initialStartDate.getFullYear() + 1);
+                        }
+                    });
+                }
             }
         });
 
@@ -684,8 +1001,8 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
 
         // add all requests
         _.forEach($scope.dashboard.requests, function(request) {
-            // if request matches
-            if(request.request == $scope.requestOptions.selected) {
+            // if request matches and it's not on the "all" text
+            if($scope.requestOptions.selected != $scope.allText && request.request == $scope.requestOptions.selected) {
                 // go through all months and push the count
                 _.forEach(request.byMonth, function(monthYear) {
                     // get this objects date
@@ -711,6 +1028,38 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
                         initialStartDate.setMonth(initialStartDate.getMonth() + 1);
                     }
                 });
+
+                return;
+            }
+            else if($scope.requestOptions.selected == $scope.allText) {
+                // if no data has been added yet
+                if(requestAnalyticsLabels.length == 0) {
+                    // go through all months and push the count
+                    _.forEach(request.byMonth, function(monthYear) {
+                        // get this objects date
+                        var thisDate = new Date(monthYear.monthYear);
+
+                        // if this month is within range
+                        if(thisDate >= furthestDateBack && thisDate <= today) {
+                            // if the dates don't match
+                            while(initialStartDate < thisDate) {
+                                // add this month
+                                var nextMonth = initialStartDate.toLocaleString('en-us', { month: 'short' });
+                                var nextMonthYear = nextMonth.concat(' ', initialStartDate.getFullYear());
+                                requestAnalyticsLabels.push(nextMonthYear);
+
+                                // set expected next month
+                                initialStartDate.setMonth(initialStartDate.getMonth() + 1);
+                            }
+
+                            // add the month and year
+                            requestAnalyticsLabels.push(monthYear.monthYear);
+
+                            // set expected next month
+                            initialStartDate.setMonth(initialStartDate.getMonth() + 1);
+                        }
+                    });
+                }
             }
         });
 
@@ -727,8 +1076,8 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
 
         // add all requests
         _.forEach($scope.dashboard.requests, function(request) {
-            // if request matches
-            if(request.request == $scope.requestOptions.selected) {
+            // if request matches and it's not on the "all" text
+            if($scope.requestOptions.selected != $scope.allText && request.request == $scope.requestOptions.selected) {
                 // go through all weeks and push the count
                 _.forEach(request.byWeek, function(week) {
                     // get this objects date
@@ -751,10 +1100,45 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
                         // add the week
                         requestAnalyticsLabels.push(week.weekday);
 
-                        // set expected next month
-                        initialStartDate.setMonth(initialStartDate.getDate() + 7);
+                        // set expected next week
+                        initialStartDate.setDate(initialStartDate.getDate() + 7);
                     }
                 });
+
+                return;
+            }
+            else if($scope.requestOptions.selected == $scope.allText) {
+                // if no data has been added yet
+                if(requestAnalyticsLabels.length == 0) {
+                    // go through all weeks and push the count
+                    _.forEach(request.byWeek, function(week) {
+                        // get this objects date
+                        var thisDate = new Date(week.weekday);
+                        
+                        // if this week is within range
+                        if(thisDate >= furthestDateBack && thisDate <= today) {
+                            // if the dates don't match
+                            while(initialStartDate < thisDate) {
+                                // add this week
+                                var firstDayOfWeek = new Date(initialStartDate);
+                                var weekday = firstDayOfWeek.toLocaleString('en-us', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+                                weekday = weekday.replace(/,/g , '');
+
+                                // add the week
+                                requestAnalyticsLabels.push(weekday);
+
+                                // set expected next week
+                                initialStartDate.setDate(initialStartDate.getDate() + 7);
+                            }
+
+                            // add the week
+                            requestAnalyticsLabels.push(week.weekday);
+
+                            // set expected next week
+                            initialStartDate.setDate(initialStartDate.getDate() + 7);
+                        }
+                    });
+                }
             }
         });
 
@@ -771,8 +1155,8 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
 
         // add all requests
         _.forEach($scope.dashboard.requests, function(request) {
-            // if request matches
-            if(request.request == $scope.requestOptions.selected) {
+            // if request matches and it's not on the "all" text
+            if($scope.requestOptions.selected != $scope.allText && request.request == $scope.requestOptions.selected) {
                 // go through all days and push the count
                 _.forEach(request.byDay, function(day) {
                     // get this objects date
@@ -800,6 +1184,40 @@ dashboardModule.controller('DashboardController', ['$scope', '$rootScope', '$com
                         initialStartDate.setDate(initialStartDate.getDate() + 1);
                     }
                 });
+
+                return;
+            }
+            else if($scope.requestOptions.selected == $scope.allText) {
+                // if no data has been added yet
+                if(requestAnalyticsLabels.length == 0) {
+                    // go through all days and push the count
+                    _.forEach(request.byDay, function(day) {
+                        // get this objects date
+                        var thisDate = new Date(day.day);
+
+                        // if this day is within range
+                        if(thisDate >= furthestDateBack && thisDate <= today) {
+                            // if the dates don't match
+                            while(initialStartDate < thisDate) {
+                                // add this day
+                                var midnightDate = new Date(initialStartDate);
+                                midnightDate.setHours(0, 0, 0, 0);
+                                var dateDay = midnightDate.toLocaleString('en-us', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+                                dateDay = dateDay.replace(/,/g , '');
+                                requestAnalyticsLabels.push(dateDay);
+
+                                // set expected next day
+                                initialStartDate.setDate(initialStartDate.getDate() + 1);
+                            }
+
+                            // add the day
+                            requestAnalyticsLabels.push(day.day);
+
+                            // set expected next day
+                            initialStartDate.setDate(initialStartDate.getDate() + 1);
+                        }
+                    });
+                }
             }
         });
 

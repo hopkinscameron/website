@@ -20,7 +20,7 @@
                     <h4 class="text-capitalize">Project Highlights</h4>
                     <div class="row">
                         <!-- Begin Image Selection -->
-                        <div class="col-md-4 animated fadeIn" ng-class="{'mb-4': $root.isDeviceWidthSmallerThan(768)}" ng-style="animationStyle">
+                        <div class="col-md-4 animated fadeIn" ng-class="{'mb-4': $root.isDeviceWidthSmallerThan(768)}" ng-style="animationStyle" ng-if="portfolioItem.images.length > 1">
                             <div class="row portfolio-item-img-container-max-height scrollbar--1">
                                 <div class="col-md-6" ng-class="{'mb-3': !isLastRowOfImages($index) || ($index < portfolioItem.images.length - 1 && $root.isDeviceWidthSmallerThan(768))}" ng-repeat="image in portfolioItem.images">
                                     <!-- <img role="button" class="d-block img-fluid mx-auto portfolio-item-img" ng-class="{'active': isActive('highlights', $index)}" ng-src="{{image.url}}" ng-click="changeProjectHighlightImage($index)" spinner-load> -->

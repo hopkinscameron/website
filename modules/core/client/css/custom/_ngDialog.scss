@@ -5,6 +5,10 @@
         color: $text-color;
     }
     & .ngdialog-close {
+        -webkit-appearance: none;
+        background: none;
+        border: none;
+        
         &:before {
             color: $text-color;
         }

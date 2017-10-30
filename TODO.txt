@@ -11,12 +11,6 @@ Done
 Pending
 
 Next
-- see if I can use lodash to speed up some stuff I might be doing in server stuff
-- blog draft put and blog update (put) method takes a very long time
-- seperate out admin views/regular views
-- fix socket.io to not print so many error on disconnect
-- add functionality where trying to add a value that doesn't exist in the model removes it (if object is  { id, password } then if { id, pass } was passed in, it would remove pass)
-
 
 - IE stuff not working
     - fancy font's not showing (could be proxy)
@@ -28,25 +22,3 @@ Next
 MOBILE VIEW FIXES 
 Sub Portfolio
     - there are some empty "col-md-2" for innerIndex in gameDataColumnsPerRowArray track by $index -> come back to this.. this exist on about page as well
-
-Mongodb test stuff
-db.createUser({ user: "<username>", pwd: "<password>", roles: [ { role: "dbAdmin", db: "<db>" } ]})
-db.updateUser("<username>", { roles : [ { role: "dbOwner", db: "<db>" } ], pwd: "<password>"})
-./mongo --port 27017 -u "<username>" -p "<password>" --authenticationDatabase "<db>"
-db.changeUserPassword("<username>", "<newpassword>")
-db.updateUser("<username>", { roles : [ { role: "dbOwner", db: "<db>" } ], pwd: "<password>"})
-./mongod --auth --port 27017 --dbpath /data/db1
-./mongod --auth --port 27017
-
-
-in bower.json in dependencies
-        "angular": "~1.6.4",
-        "angular-animate": "~1.6.4",
-        "angular-bootstrap": "~1.2.1",
-        "angular-messages": "~1.6.4",
-        "angular-mocks": "~1.6.4",
-        "angular-resource": "~1.6.4",
-        "angular-ui-router": "~0.2.18",
-        "bootstrap": "^4.0",
-        "ng-file-upload": "~12.1.0",
-        "owasp-password-strength-test": "~1.3.0"

@@ -24,6 +24,10 @@
 					"home": true
                 },
                 {
+                    "title": "Installation 01",
+                    "pageLink": "installation-01"
+                },
+                {
                     "title": "Over Drive",
                     "pageLink": "over-drive"
                 },

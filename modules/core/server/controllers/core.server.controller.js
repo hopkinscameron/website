@@ -109,6 +109,7 @@ exports.sendEmail = function (req, res) {
     req.checkBody('firstName', 'First name is required').notEmpty();
     req.checkBody('lastName', 'Last name is required').notEmpty();
     req.checkBody('email', 'Email is required').notEmpty();
+    req.checkBody('email', 'Email is not a valid email').isEmail();
     req.checkBody('subject', 'Subject is required').notEmpty();
     req.checkBody('message', 'Message is required').notEmpty();
 

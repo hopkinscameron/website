@@ -11,6 +11,16 @@ headerModule.controller('HeaderController', ['$scope', '$rootScope', '$location'
     // get the header information
     getHeaderInformation();
     
+    // close the nav bar on link click
+    $('.nav-link').on('click', function(){
+        $('.navbar-collapse').collapse('hide');
+    });
+
+    // close the nav bar on non nav bar click
+    $(document).on('click',function(){
+        $('.navbar-collapse').collapse('hide');
+    })
+    
     // on refresh
     $rootScope.$on('refreshHeader', function (event, data) {
         // initialize variables

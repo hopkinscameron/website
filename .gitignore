@@ -60,6 +60,4 @@ node_modules/
 # log files
 *.log
 
-# build files
-build/
-public/dist/
+# build files build/ public/dist/

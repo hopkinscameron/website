@@ -38,7 +38,6 @@
     "geoip-lite": "^1.2.1",
     "glob": "^7.1.2",
     "helmet": "^3.8.1",
-    "imagemin-pngquant": "^5.0.1",
     "lodash": "^4.17.4",
     "lusca": "^1.4.1",
     "method-override": "^2.3.9",

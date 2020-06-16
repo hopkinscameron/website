@@ -1,12 +1,12 @@
 {
-    "footerNote": "Copyright &copy; 2016 - 2018 Cameron Hopkins",
+    "footerNote": "Copyright &copy; 2016 - 2020 Cameron Hopkins",
     "socialMediaLinks": [
         {
             "type": "LinkedIn",
             "img": "/dist/img/linkedin-white.svg",
             "title": "Cameron Hopkins LinkedIn",
             "link": "https://www.linkedin.com/in/cameron-hopkins-7a67a5a4"
-        }
+        },
         {
             "type": "YouTube",
             "img": "/dist/img/youtube-play-white.svg",
